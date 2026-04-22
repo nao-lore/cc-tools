@@ -403,7 +403,7 @@
       "category": "Text & String Tools",
       "description": "Inspect every character in a string: codepoint, name, category",
       "spec": "Input any text and list each character with its Unicode code point (U+XXXX), official Unicode name, category (letter, digit, symbol, etc.), and UTF-8 byte sequence. Detects invisible and unusual characters.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "html-color-names",
@@ -412,7 +412,7 @@
       "category": "Color Tools",
       "description": "Browse all 148 CSS named colors with hex and RGB values",
       "spec": "Displays all CSS named colors in a searchable grid. Click any color to copy its name, hex, or RGB value. Filter by hue range or alphabetically. Shows each color as a large swatch.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "gradient-to-css",
@@ -421,7 +421,7 @@
       "category": "CSS Tools",
       "description": "Sample colors from an uploaded gradient image and generate CSS gradient",
       "spec": "Upload an image with a gradient. The tool samples colors along a horizontal or vertical axis and generates a multi-stop CSS linear-gradient that approximates the original image gradient.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "font-pair-preview",
@@ -430,7 +430,7 @@
       "category": "CSS Tools",
       "description": "Preview Google Fonts pairings for headings and body text",
       "spec": "Select two Google Fonts from a curated list and preview heading + body text combinations. Adjust font size, weight, and line height. Outputs the Google Fonts import URL and CSS font-family rules.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-counter",
@@ -439,7 +439,7 @@
       "category": "CSS Tools",
       "description": "Generate CSS counter-based automatic numbering systems",
       "spec": "Configure counter name, scope (whole page, section, subsection), and format (decimal, lower-alpha, roman). Preview the numbering on a sample document structure. Outputs counter-reset, counter-increment, and content CSS.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "nth-child-tester",
@@ -448,7 +448,7 @@
       "category": "CSS Tools",
       "description": "Visually test CSS :nth-child, :nth-of-type, and :nth-last-child expressions",
       "spec": "Input any An+B expression and a configurable number of elements. Highlights which elements match the selector in real time. Explains the formula in plain English and shows matching indices.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "color-blindness-sim",
@@ -457,7 +457,7 @@
       "category": "Color Tools",
       "description": "Simulate how colors appear with different types of color blindness",
       "spec": "Input a color palette or upload an image. Applies simulation filters for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia. Side-by-side before/after comparison using CSS filters and canvas transforms.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "tailwind-config-viewer",
@@ -466,7 +466,7 @@
       "category": "CSS Tools",
       "description": "Paste a Tailwind config and browse all generated tokens",
       "spec": "Accepts a tailwind.config.js JSON object and parses the theme section. Displays all colors, spacing, typography, border radius, and shadow tokens as visual swatches and values. Search across all tokens.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "network-latency-sim",
@@ -475,7 +475,7 @@
       "category": "Developer Tools",
       "description": "Simulate slow network throttling to plan loading UX",
       "spec": "Input payload sizes (HTML, CSS, JS, images) and select a network speed preset (2G, 3G, LTE, Cable). Calculates estimated load times for each resource and total page load. Visualizes a waterfall chart.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "http-response-builder",
@@ -484,7 +484,7 @@
       "category": "Developer Tools",
       "description": "Compose and format HTTP responses for documentation or mocking",
       "spec": "Select a status code, add headers, and compose a body in JSON, HTML, or plain text. Outputs a formatted raw HTTP response string. Useful for writing API docs or configuring mock servers.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "color-token-generator",
@@ -493,7 +493,7 @@
       "category": "Color Tools",
       "description": "Generate design tokens from a color palette in JSON, CSS, or SCSS format",
       "spec": "Input named colors with hex values. Outputs design tokens as CSS custom properties, SCSS variables, or JSON (Style Dictionary format). Supports auto-generating tint/shade scales for each color.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "csp-builder",
@@ -502,7 +502,7 @@
       "category": "Developer Tools",
       "description": "Build Content-Security-Policy headers interactively",
       "spec": "Toggle directives (script-src, style-src, img-src, etc.) and add allowed sources with autocomplete. Real-time preview of the CSP header string. Explains each directive and validates the output.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "password-policy-tester",
