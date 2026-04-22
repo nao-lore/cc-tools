@@ -781,7 +781,7 @@
       "category": "Finance",
       "description": "Calculate the real value of money adjusted for inflation",
       "spec": "Input an amount, a starting year, and an ending year (or manual inflation rate). Uses the CPI formula to calculate the inflation-adjusted equivalent value. Explains purchasing power erosion.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "roi-calculator",
@@ -790,7 +790,7 @@
       "category": "Finance",
       "description": "Calculate Return on Investment and annualized ROI",
       "spec": "Input initial investment, final value, and investment duration in years. Calculates simple ROI percentage, annualized (CAGR) ROI, and total gain/loss. Compares ROI against a benchmark rate.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "bmi-english",
@@ -799,7 +799,7 @@
       "category": "Health & Fitness",
       "description": "Calculate BMI and ideal weight range in metric or imperial",
       "spec": "Input height and weight in metric or imperial units. Calculates BMI, displays the WHO category (underweight, normal, overweight, obese), and shows the healthy weight range for the given height.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "calorie-burn",
@@ -808,7 +808,7 @@
       "category": "Health & Fitness",
       "description": "Estimate calories burned for common exercises using MET values",
       "spec": "Select an activity from a list of 40+ exercises, input body weight and duration. Calculates calories burned using MET (Metabolic Equivalent of Task) values. Shows equivalent food calories.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "water-intake",
@@ -817,7 +817,7 @@
       "category": "Health & Fitness",
       "description": "Calculate recommended daily water intake based on body weight and activity",
       "spec": "Input body weight (kg or lbs), activity level (sedentary to very active), and climate. Calculates recommended daily water intake in liters and cups. Adjusts for exercise duration.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "heart-rate-zones",
@@ -826,7 +826,7 @@
       "category": "Health & Fitness",
       "description": "Calculate target heart rate training zones",
       "spec": "Input age and optional resting heart rate. Calculates max heart rate and five training zones (recovery, endurance, aerobic, threshold, anaerobic) using both the simple and Karvonen methods.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "macro-calculator",
@@ -835,7 +835,7 @@
       "category": "Health & Fitness",
       "description": "Calculate daily protein, carb, and fat targets for fitness goals",
       "spec": "Input age, gender, height, weight, activity level, and goal (cut, maintain, bulk). Calculates TDEE and breaks down daily calories into protein, carbohydrates, and fat macros in grams.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "timezone-world-clock",
@@ -844,7 +844,7 @@
       "category": "Productivity",
       "description": "Display current time in multiple time zones simultaneously",
       "spec": "Add multiple cities/time zones from a searchable list and see all current times in a card grid that updates every second. Shows time, date, UTC offset, and whether the timezone is in DST.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "meeting-time-planner",
@@ -853,7 +853,7 @@
       "category": "Productivity",
       "description": "Find overlapping working hours across multiple time zones",
       "spec": "Add team members with their time zones and working hours. Highlights the time slots where all selected members are within working hours. Outputs suggested meeting times and their local time in each zone.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "pomodoro-timer",
@@ -862,7 +862,7 @@
       "category": "Productivity",
       "description": "Customizable Pomodoro technique timer with session tracking",
       "spec": "Configurable work session (default 25 min), short break (5 min), and long break (15 min) durations. Tracks completed sessions per day. Browser notifications on timer end. Session history table.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "habit-tracker",
@@ -871,7 +871,7 @@
       "category": "Productivity",
       "description": "Track daily habits with a visual streak calendar",
       "spec": "Add up to 10 habits and mark them complete each day. Shows a GitHub-style contribution heatmap for each habit. Calculates current streak, longest streak, and completion rate. Data persisted in localStorage.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "decision-matrix",
@@ -880,7 +880,7 @@
       "category": "Productivity",
       "description": "Weighted decision matrix for comparing options across criteria",
       "spec": "Add options and criteria with weights (1-10). Score each option per criterion. Calculates weighted totals and ranks options automatically. Visual bar chart of final scores.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "text-to-speech-preview",
