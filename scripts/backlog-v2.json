@@ -133,7 +133,7 @@
       "category": "Text & String Tools",
       "description": "Calculate Flesch-Kincaid and other readability scores",
       "spec": "Accepts any English text and computes Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index. Displays sentence count, word count, syllable count, and a plain-English grade interpretation.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "lorem-ipsum-jp",
@@ -142,7 +142,7 @@
       "category": "Text & String Tools",
       "description": "日本語ダミーテキストをワンクリックで生成",
       "spec": "文字数・段落数・文体（である調・ですます調）を指定して日本語ダミーテキストを生成。和文組版練習や画面デザインのプレースホルダーに最適。コピーボタン付き。",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "text-case-converter",
@@ -151,7 +151,7 @@
       "category": "Text & String Tools",
       "description": "Convert text between camelCase, snake_case, PascalCase, kebab-case",
       "spec": "Input any text or identifier and convert to camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, or Title Case simultaneously. Handles multi-word phrases and acronyms intelligently.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "string-escape",
@@ -160,7 +160,7 @@
       "category": "Text & String Tools",
       "description": "Escape and unescape strings for JSON, JS, SQL, regex, and HTML",
       "spec": "Select a target format (JSON, JavaScript, SQL, HTML, Regex, CSV) and toggle between escape and unescape mode. Processes multi-line input and highlights changed characters in the output.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "text-line-sorter",
@@ -169,7 +169,7 @@
       "category": "Text & String Tools",
       "description": "Sort lines alphabetically, numerically, or randomly; remove duplicates",
       "spec": "Accepts multi-line text and offers sort modes: alphabetical, reverse alphabetical, numeric, random shuffle. One-click deduplication. Options for case-insensitive sort and trimming whitespace.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "text-columnarizer",
@@ -178,7 +178,7 @@
       "category": "Text & String Tools",
       "description": "Split text into columns by delimiter and reformat",
       "spec": "Paste delimited text (CSV, TSV, pipe, custom) and visualize it as a table. Reorder columns, delete columns, change the output delimiter, and copy or download the result.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "number-base-converter",
@@ -187,7 +187,7 @@
       "category": "Developer Tools",
       "description": "Convert numbers between binary, octal, decimal, hex, and custom bases",
       "spec": "Input any number in any standard base (2–36) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "bitwise-calculator",
@@ -196,7 +196,7 @@
       "category": "Developer Tools",
       "description": "Perform bitwise AND, OR, XOR, NOT, and shift operations",
       "spec": "Enter two integer operands and select a bitwise operation. Displays operands and result in binary, hex, and decimal. Shows 8-bit and 32-bit visual bit diagrams.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "color-contrast-checker",
@@ -205,7 +205,7 @@
       "category": "Color Tools",
       "description": "Check foreground/background color contrast ratio for WCAG compliance",
       "spec": "Pick or input two colors (hex, RGB, HSL) and see their contrast ratio. Reports WCAG AA and AAA pass/fail for normal text, large text, and UI components. Shows sample text on background.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "color-mixer",
@@ -214,7 +214,7 @@
       "category": "Color Tools",
       "description": "Mix two or more colors and preview the result",
       "spec": "Add multiple colors with individual weight sliders. Preview the blended color in real-time. Output in hex, RGB, and HSL. Supports RGB and LAB color space blending modes.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "color-harmonies",
@@ -223,7 +223,7 @@
       "category": "Color Tools",
       "description": "Generate complementary, triadic, and analogous color schemes from a base color",
       "spec": "Pick a base color and view complementary, split-complementary, triadic, tetradic, and analogous harmonies. Preview all swatches with hex codes. Export as CSS custom properties or JSON.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-variables-generator",
@@ -232,7 +232,7 @@
       "category": "CSS Tools",
       "description": "Generate a complete CSS custom properties theme from a brand color",
       "spec": "Input a primary brand color and generate a full set of CSS custom properties including 10 tints/shades, semantic tokens (primary, secondary, accent, surface, text), and dark mode overrides.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "tailwind-color-finder",
