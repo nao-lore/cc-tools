@@ -79,7 +79,7 @@
       "category": "Developer Tools",
       "description": "Minify HTML by removing whitespace and comments",
       "spec": "Takes raw HTML and strips comments, collapses whitespace, and optionally removes optional tags. Shows original vs. minified byte count and compression ratio.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "sitemap-generator",
@@ -88,7 +88,7 @@
       "category": "SEO Tools",
       "description": "Generate sitemap.xml from a list of URLs",
       "spec": "User inputs a list of URLs one per line, with optional last-modified date, change frequency, and priority per URL. Outputs a valid sitemap.xml string ready to copy or download.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "canonical-tag-checker",
@@ -97,7 +97,7 @@
       "category": "SEO Tools",
       "description": "Validate and generate canonical link tags",
       "spec": "Input a URL and the tool generates the correct canonical link tag HTML. Also parses pasted HTML to extract and validate existing canonical tags against the page URL.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "structured-data-builder",
@@ -106,7 +106,7 @@
       "category": "SEO Tools",
       "description": "Visual builder for JSON-LD structured data (Schema.org)",
       "spec": "Supports Article, Product, BreadcrumbList, FAQ, and LocalBusiness schema types. Form fields map to schema properties with validation. Outputs formatted JSON-LD script tag.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "twitter-card-preview",
@@ -115,7 +115,7 @@
       "category": "SEO Tools",
       "description": "Preview how your page appears in Twitter/X cards",
       "spec": "Input meta tag values (title, description, image URL, card type) and see a live preview of both summary and summary_large_image card formats. Also generates the required meta tag HTML.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "keyword-density",
@@ -124,7 +124,7 @@
       "category": "SEO Tools",
       "description": "Analyze keyword frequency and density in any text",
       "spec": "Paste any text and the tool calculates word and phrase frequency, highlighting the top 20 keywords with their count and density percentage. Filters common stop words. Useful for SEO content audits.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "readability-score",
@@ -133,7 +133,7 @@
       "category": "Text & String Tools",
       "description": "Calculate Flesch-Kincaid and other readability scores",
       "spec": "Accepts any English text and computes Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index. Displays sentence count, word count, syllable count, and a plain-English grade interpretation.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "lorem-ipsum-jp",
@@ -142,7 +142,7 @@
       "category": "Text & String Tools",
       "description": "日本語ダミーテキストをワンクリックで生成",
       "spec": "文字数・段落数・文体（である調・ですます調）を指定して日本語ダミーテキストを生成。和文組版練習や画面デザインのプレースホルダーに最適。コピーボタン付き。",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "text-case-converter",
@@ -151,7 +151,7 @@
       "category": "Text & String Tools",
       "description": "Convert text between camelCase, snake_case, PascalCase, kebab-case",
       "spec": "Input any text or identifier and convert to camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, or Title Case simultaneously. Handles multi-word phrases and acronyms intelligently.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "string-escape",
@@ -160,7 +160,7 @@
       "category": "Text & String Tools",
       "description": "Escape and unescape strings for JSON, JS, SQL, regex, and HTML",
       "spec": "Select a target format (JSON, JavaScript, SQL, HTML, Regex, CSV) and toggle between escape and unescape mode. Processes multi-line input and highlights changed characters in the output.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "text-line-sorter",
@@ -169,7 +169,7 @@
       "category": "Text & String Tools",
       "description": "Sort lines alphabetically, numerically, or randomly; remove duplicates",
       "spec": "Accepts multi-line text and offers sort modes: alphabetical, reverse alphabetical, numeric, random shuffle. One-click deduplication. Options for case-insensitive sort and trimming whitespace.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "text-columnarizer",
@@ -178,7 +178,7 @@
       "category": "Text & String Tools",
       "description": "Split text into columns by delimiter and reformat",
       "spec": "Paste delimited text (CSV, TSV, pipe, custom) and visualize it as a table. Reorder columns, delete columns, change the output delimiter, and copy or download the result.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "number-base-converter",
