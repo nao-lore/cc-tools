@@ -943,7 +943,7 @@
       "category": "Developer Tools",
       "description": "Compare two .env files to find missing or different variables",
       "spec": "Paste two .env files side by side. Highlights variables present in one but missing from the other, and variables with different values. Useful for syncing .env.example with production configs.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "ascii-flowchart",
@@ -952,7 +952,7 @@
       "category": "Developer Tools",
       "description": "Convert a simple node-edge list into an ASCII flowchart",
       "spec": "Describe a flowchart with nodes (rectangles or diamonds) and arrows in a simple DSL. Renders the flowchart as ASCII art using box-drawing characters. Useful for inline documentation and READMEs.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-unit-converter",
@@ -961,7 +961,7 @@
       "category": "CSS Tools",
       "description": "Convert between px, rem, em, vw, vh, pt, and more",
       "spec": "Input a value and source unit, select a target unit, and optionally set the root font size (default 16px) and viewport dimensions. Converts between px, rem, em, vw, vh, vmin, vmax, pt, and cm.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "line-height-calculator",
@@ -970,7 +970,7 @@
       "category": "CSS Tools",
       "description": "Calculate optimal line-height for a given font size and measure",
       "spec": "Input font size (px), line width (characters), and font weight. Calculates the recommended unitless line-height using typographic best practices. Shows the equivalent in px, rem, and em.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "type-scale-generator",
@@ -979,7 +979,7 @@
       "category": "CSS Tools",
       "description": "Generate a modular typographic scale with CSS output",
       "spec": "Set a base font size and a scale ratio (minor third, major third, golden ratio, etc.). Generates a typographic scale with 8 steps. Preview the scale with sample text. Output as CSS custom properties or Tailwind extend config.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "viewport-unit-calc",
@@ -988,7 +988,7 @@
       "category": "CSS Tools",
       "description": "Calculate vw/vh pixel values at common breakpoints",
       "spec": "Input a vw or vh value and see its pixel equivalent at preset viewport widths (360, 768, 1024, 1280, 1440, 1920px). Also reverse-calculates what vw value equals a target pixel size at a given viewport.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "open-graph-builder",
@@ -997,7 +997,7 @@
       "category": "SEO Tools",
       "description": "Generate Open Graph meta tags for articles, websites, and products",
       "spec": "Form fields for og:title, og:description, og:image, og:url, og:type, og:site_name. Live preview of how the link will look when shared on social platforms. Outputs the complete og: meta tag block.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "hreflang-generator",
@@ -1006,7 +1006,7 @@
       "category": "SEO Tools",
       "description": "Generate hreflang link tags for multilingual SEO",
       "spec": "Add language/region variants with their URLs. Generates the complete set of <link rel='alternate' hreflang='x-default'> tags including x-default. Validates that every page has a self-referencing hreflang tag.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "favicon-checker",
@@ -1015,7 +1015,7 @@
       "category": "SEO Tools",
       "description": "Check what favicon sizes and formats a site needs",
       "spec": "Lists all recommended favicon sizes and formats (16x16, 32x32, apple-touch-icon, 180x180, manifest icons, MS tiles). User checks off which they have. Outputs the corresponding HTML link tags for each.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "slug-generator",
@@ -1024,7 +1024,7 @@
       "category": "SEO Tools",
       "description": "Convert article titles to SEO-friendly URL slugs",
       "spec": "Input any text (including Japanese, accented characters, special symbols) and generate a clean URL slug: lowercased, spaces to hyphens, diacritics normalized, non-ASCII removed or transliterated. Configurable separator.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "reading-time",
@@ -1033,7 +1033,7 @@
       "category": "Text & String Tools",
       "description": "Estimate reading time for any text content",
       "spec": "Paste any text and calculate estimated reading time at configurable WPM (default 200 WPM). Shows word count, character count, sentence count, and paragraph count alongside the time estimate. Supports multiple reading speed presets.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "text-stats",
@@ -1042,7 +1042,7 @@
       "category": "Text & String Tools",
       "description": "Comprehensive text analytics: word frequency, sentence length, complexity",
       "spec": "Paste any text and get a full statistics dashboard: word count, unique words, lexical diversity, average word length, average sentence length, longest word, most frequent words, and paragraph count.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "sprintf-formatter",
