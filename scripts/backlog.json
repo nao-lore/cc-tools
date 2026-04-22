@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "description": "cc-factory tool backlog. Tools are built in order. Mark 'done' after deployment.",
+    "weekly_target": 20,
+    "daily_target": 3
+  },
+  "tools": [
+    {
+      "slug": "mojicode-converter",
+      "name": "文字コード変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "UTF-8, Shift_JIS, EUC-JP間の文字コード変換とエンコード確認",
+      "spec": "Input: テキスト入力 or ファイルアップロード. Output: 各文字コードでのバイト列(hex表示), 文字コード自動判定, 変換結果のコピー/ダウンロード. エンコード一覧: UTF-8, Shift_JIS, EUC-JP, ISO-2022-JP, UTF-16.",
+      "status": "pending"
+    },
+    {
+      "slug": "kyuujitai",
+      "name": "旧字体変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "新字体と旧字体を相互変換",
+      "spec": "Input: テキスト. Output: 新字体→旧字体 / 旧字体→新字体の双方向変換. 変換された文字をハイライト表示. 主要な新旧字体マッピング(500文字以上)を内蔵. コピーボタン.",
+      "status": "pending"
+    },
+    {
+      "slug": "keigo-converter",
+      "name": "敬語変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "普通語から敬語(尊敬語・謙譲語・丁寧語)への変換",
+      "spec": "Input: 普通の文章. Output: 尊敬語版, 謙譲語版, 丁寧語版の3パターン表示. 主要な動詞変換辞書(行く→いらっしゃる/参る, 食べる→召し上がる/いただく 等50組以上). ビジネスメール例文テンプレート付き.",
+      "status": "pending"
+    },
+    {
+      "slug": "tategaki",
+      "name": "縦書き変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "横書きテキストを縦書き表示に変換",
+      "spec": "Input: テキスト. Output: CSS writing-mode: vertical-rl での縦書きプレビュー. フォント選択(明朝/ゴシック), フォントサイズ調整, 行間調整. 画像としてダウンロード(canvas). 原稿用紙風表示モード.",
+      "status": "pending"
+    },
+    {
+      "slug": "nengou-hayami",
+      "name": "年号早見表",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "西暦と年号(令和/平成/昭和/大正/明治)の一覧表",
+      "spec": "明治元年(1868)〜現在までの全年号対応表. 検索: 西暦入力→年号表示, 年号入力→西暦表示. 各年の主な出来事(オプション). 年齢早見(その年生まれの人の現在年齢). 印刷用レイアウト.",
+      "status": "pending"
+    },
+    {
+      "slug": "taijibooritsu",
+      "name": "体脂肪率計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "体脂肪率の推定計算と判定",
+      "spec": "Input: 性別, 年齢, 身長, 体重, ウエスト周囲径(Navy法). Output: 推定体脂肪率, 判定(やせ/標準-/標準+/軽肥満/肥満), 除脂肪体重, 体脂肪量. BMI連携表示. 判定基準表(男女別・年齢別).",
+      "status": "pending"
+    },
+    {
+      "slug": "gitignore-generator",
+      "name": ".gitignore Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate .gitignore files for any project type",
+      "spec": "Searchable list of templates: Node.js, Python, Java, Go, Rust, Ruby, Swift, Kotlin, Unity, Unreal, macOS, Windows, Linux, JetBrains, VSCode, etc (50+ templates). Multi-select and combine. Preview generated file. Copy button. Templates based on github/gitignore repo patterns.",
+      "status": "pending"
+    },
+    {
+      "slug": "license-generator",
+      "name": "License Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate open source license files with your details",
+      "spec": "License selection: MIT, Apache 2.0, GPL v3, BSD 2/3-Clause, ISC, MPL 2.0, Unlicense, CC0, LGPL, AGPL. Input: author name, year. Output: formatted license text. Comparison table showing permissions/conditions/limitations. Copy and download buttons.",
+      "status": "pending"
+    },
+    {
+      "slug": "curl-converter",
+      "name": "cURL Converter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Convert cURL commands to code in various languages",
+      "spec": "Input: cURL command string. Output: equivalent code in JavaScript(fetch), Python(requests), Go(net/http), PHP(curl), Ruby(net/http), Java(HttpClient), C#(HttpClient), Rust(reqwest). Parse headers, body, method, auth. Syntax highlighted output. Copy button per language.",
+      "status": "pending"
+    },
+    {
+      "slug": "ip-calculator",
+      "name": "IP Subnet Calculator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Calculate IP subnets, CIDR ranges, and network details",
+      "spec": "Input: IP address + subnet mask or CIDR notation. Output: network address, broadcast address, first/last usable host, number of hosts, wildcard mask, binary representation. Subnet table for common masks. IPv4 and IPv6 support. CIDR to range converter.",
+      "status": "pending"
+    },
+    {
+      "slug": "csv-viewer",
+      "name": "CSV Viewer",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "View and explore CSV files in a sortable table",
+      "spec": "Input: paste CSV or upload file. Output: interactive table with sort by column, search/filter, column resize. Auto-detect delimiter (comma, tab, semicolon, pipe). Row count, column count stats. Export filtered results. Handle large files (virtual scroll for 10K+ rows).",
+      "status": "pending"
+    },
+    {
+      "slug": "htaccess-generator",
+      "name": ".htaccess Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate Apache .htaccess rules visually",
+      "spec": "Modules: redirects (301/302), rewrite rules, custom error pages, password protection, CORS headers, gzip compression, cache control, block IPs, force HTTPS, www redirect. Toggle each module on/off. Preview combined .htaccess output. Copy button. Validation warnings.",
+      "status": "pending"
+    },
+    {
+      "slug": "crontab-validator",
+      "name": "Crontab Validator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Validate and explain crontab expressions with next run times",
+      "spec": "Input: crontab expression (5 or 6 fields). Output: human-readable explanation, next 10 run times, validation errors. Visual cron builder as alternative input. Support for special strings (@hourly, @daily etc). Diff from existing cron-generator: this focuses on VALIDATION and explaining existing expressions, not building new ones.",
+      "status": "pending"
+    },
+    {
+      "slug": "docker-run-generator",
+      "name": "Docker Run Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build docker run commands with a visual interface",
+      "spec": "Visual form: image name, container name, ports (-p), volumes (-v), env vars (-e), network, restart policy, memory/cpu limits, entrypoint, command. Toggle: detached mode, remove on exit, privileged. Generate docker run command + equivalent docker-compose.yml. Copy both.",
+      "status": "pending"
+    },
+    {
+      "slug": "readme-generator",
+      "name": "README Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate professional README.md files from a form",
+      "spec": "Form fields: project name, description, badges (npm/license/build), features list, installation steps, usage examples, tech stack, contributing guidelines, license. Toggle sections on/off. Live Markdown preview. Copy raw markdown. Multiple templates: minimal, standard, detailed.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-filter",
+      "name": "CSS Filter Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Create CSS filter effects with a visual editor",
+      "spec": "Sliders: blur, brightness, contrast, grayscale, hue-rotate, invert, opacity, saturate, sepia, drop-shadow. Live preview on sample image (user can upload their own). Combined CSS filter output. Reset individual/all. Preset combinations (vintage, noir, warm, cool, etc). Copy CSS.",
+      "status": "pending"
+    },
+    {
+      "slug": "sass-to-css",
+      "name": "SASS/SCSS to CSS",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Convert SASS/SCSS syntax to plain CSS",
+      "spec": "Input: SCSS or SASS (indented) code. Output: compiled CSS. Handle: nesting, variables, mixins, extends, math operations, color functions. Error highlighting for invalid syntax. Side-by-side input/output. Pure JS compilation (no server). Copy output.",
+      "status": "pending"
+    },
+    {
+      "slug": "suuji-kanji",
+      "name": "数字漢字変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "数字を漢数字に変換（大字対応）",
+      "spec": "Input: 数字(例: 12345). Output: 通常漢数字(一万二千三百四十五), 大字(壱萬弐阡参百四拾伍), 位取り式(1万2345). 逆変換(漢数字→数字)も対応. 金額表示(金壱萬弐阡参百四拾伍円也). 領収書用フォーマット.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-name-jp",
+      "name": "日本の伝統色",
+      "market": "JP",
+      "category": "Color Tools",
+      "description": "日本の伝統色一覧とカラーコード検索",
+      "spec": "日本の伝統色200色以上: 色名(読み), HEX, RGB, 説明. 検索・フィルタ(色相別). カラーパレット表示. クリックでHEXコピー. 色名から最も近い伝統色を検索. 季節別・カテゴリ別表示(春/夏/秋/冬, 赤系/青系/緑系等).",
+      "status": "pending"
+    },
+    {
+      "slug": "timestamp-converter-jp",
+      "name": "日時変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "Unixタイムスタンプと日本時間の相互変換",
+      "spec": "Input: Unixタイムスタンプ or 日付時刻. Output: JST日時, UTC日時, Unixタイムスタンプ(秒/ミリ秒), ISO 8601形式, 和暦表示. 現在時刻のタイムスタンプをワンクリック取得. 相対時間表示(○分前、○日後).",
+      "status": "pending"
+    },
+    {
+      "slug": "qr-reader",
+      "name": "QR Code Reader",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Read and decode QR codes from images",
+      "spec": "Input: upload image, paste from clipboard, or use camera. Output: decoded text/URL, QR code type. Support: QR Code, Data Matrix, Code 128, EAN-13. Use jsQR or similar pure-JS library approach (implement QR decoding in-browser). History of scanned codes. Copy result.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-path",
+      "name": "JSONPath Tester",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Test JSONPath expressions against JSON data",
+      "spec": "Input: JSON data + JSONPath expression. Output: matched results highlighted. JSONPath syntax reference sidebar. Auto-complete suggestions. Example expressions. Tree view of JSON structure. Support standard JSONPath syntax ($, .., *, [], ?()).",
+      "status": "pending"
+    },
+    {
+      "slug": "diff-viewer",
+      "name": "Side-by-Side Diff",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Visual side-by-side text comparison with syntax highlighting",
+      "spec": "Input: two text areas (original/modified). Output: side-by-side diff view with line-level and character-level highlighting. Unified diff view toggle. Line numbers. Stats (added/removed/changed lines). Copy diff as unified patch. Ignore whitespace option.",
+      "status": "pending"
+    },
+    {
+      "slug": "svg-optimizer",
+      "name": "SVG Optimizer",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Optimize and minify SVG files",
+      "spec": "Input: paste SVG code or upload file. Output: optimized SVG with size reduction %. Options: remove comments, remove metadata, remove empty attrs, minify paths, convert shapes to paths, remove dimensions. Before/after preview. Download optimized SVG. Based on SVGO-like optimization rules implemented in JS.",
+      "status": "pending"
+    },
+    {
+      "slug": "emoji-search",
+      "name": "Emoji Search",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Search and copy emojis by name or keyword",
+      "spec": "Searchable emoji database (Unicode 15+, 1800+ emojis). Categories: Smileys, People, Animals, Food, Travel, Activities, Objects, Symbols, Flags. Click to copy. Recently used section. Skin tone selector. Show emoji name, Unicode codepoint, shortcode (:smile:). Grid layout.",
+      "status": "pending"
+    },
+    {
+      "slug": "jwt-generator",
+      "name": "JWT Generator",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "description": "Generate JSON Web Tokens with custom claims",
+      "spec": "Input: header (algorithm select: HS256/HS384/HS512/RS256), payload (JSON editor with common claims: iss, sub, aud, exp, iat, nbf), secret key. Output: encoded JWT, decoded preview. Set expiration with date picker. Quick-add standard claims. Copy token. Differs from jwt-decoder: this CREATES tokens.",
+      "status": "pending"
+    },
+    {
+      "slug": "password-strength",
+      "name": "Password Strength Checker",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Check password strength and get improvement suggestions",
+      "spec": "Input: password field (with show/hide toggle). Output: strength score (0-100), strength label (Very Weak to Very Strong), visual bar, crack time estimate. Checks: length, uppercase, lowercase, numbers, symbols, common patterns, dictionary words, sequential chars. Suggestions for improvement. All client-side, no data sent.",
+      "status": "pending"
+    },
+    {
+      "slug": "unit-converter",
+      "name": "Unit Converter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Convert between various units of measurement",
+      "spec": "Categories: Length, Weight, Temperature, Volume, Area, Speed, Data Size, Time, Pressure, Energy. Each category has 10+ units. Bidirectional conversion. Quick swap button. Common conversions highlighted. Formula display. Bookmark favorites.",
+      "status": "pending"
+    },
+    {
+      "slug": "toml-formatter",
+      "name": "TOML Formatter",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Format, validate, and convert TOML files",
+      "spec": "Input: TOML text. Output: formatted/prettified TOML, validation results, TOML→JSON conversion, JSON→TOML conversion. Syntax error highlighting with line numbers. Tree view of parsed structure. Copy output.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-text-shadow",
+      "name": "CSS Text Shadow",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Create CSS text-shadow effects with a visual editor",
+      "spec": "Sliders: offset-x, offset-y, blur-radius, color (with alpha). Multiple shadows support (add/remove layers). Live preview with custom text input. Font size/family adjustment. Presets: neon glow, 3D, retro, emboss, fire. Copy CSS text-shadow value.",
+      "status": "pending"
+    }
+  ]
+}

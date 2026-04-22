@@ -67,6 +67,12 @@ export const tools: Tool[] = [
   { slug: "bmi-keisan", name: "BMI計算", description: "身長と体重からBMI値と肥満度を判定", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "waribiki-keisan", name: "割引計算", description: "割引率から割引後の価格・税込価格を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "loan-simulator", name: "ローン計算", description: "ローンの毎月返済額・総返済額をシミュレーション", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "tedori-keisan", name: "手取り計算", description: "額面年収から手取り月額・年額を概算計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "risoku-keisan", name: "利息計算", description: "単利・複利の利息額と元利合計を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "tsumitate-sim", name: "積立シミュレーション", description: "毎月の積立額から最終積立額・運用益を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "denki-keisan", name: "電気代計算", description: "家電の消費電力から電気料金を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "calorie-keisan", name: "カロリー計算", description: "基礎代謝量と1日の消費カロリーを計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "menseki-keisan", name: "面積計算", description: "8図形の面積計算と坪・畳変換", market: "JP", category: "Japanese Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
