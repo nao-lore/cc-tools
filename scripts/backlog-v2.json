@@ -1,202 +1,1804 @@
-{"tools": [
-  {"slug": "json-schema-validator", "name": "JSON Schema Validator", "market": "EN", "category": "Developer Tools", "description": "Validate JSON data against a JSON Schema definition", "spec": "Takes a JSON Schema and a JSON document as inputs. Validates the document against the schema and reports all validation errors with paths. Supports Draft-07 schema features implemented in-browser."},
-  {"slug": "graphql-query-builder", "name": "GraphQL Query Builder", "market": "EN", "category": "Developer Tools", "description": "Visual builder for GraphQL queries and mutations", "spec": "Lets users paste a GraphQL schema SDL and visually construct queries by selecting fields, adding arguments, and nesting fragments. Outputs a formatted GraphQL query string ready to copy."},
-  {"slug": "env-parser", "name": ".env File Parser", "market": "EN", "category": "Developer Tools", "description": "Parse, validate, and convert .env files to JSON or YAML", "spec": "Accepts raw .env file content and parses key-value pairs, comments, and quoted values. Outputs to JSON or YAML. Detects duplicates and invalid lines."},
-  {"slug": "jwt-inspector", "name": "JWT Inspector", "market": "EN", "category": "Developer Tools", "description": "Deep inspect JWT tokens — header, payload, expiry, claims", "spec": "Decodes a JWT without verification and displays header and payload in formatted JSON. Shows expiry countdown, issued-at time, and highlights standard claims (iss, sub, aud). Flags expired tokens."},
-  {"slug": "http-header-builder", "name": "HTTP Header Builder", "market": "EN", "category": "Developer Tools", "description": "Build and validate HTTP request/response headers", "spec": "Provides a form-based interface to compose HTTP headers by name and value. Validates common headers against their spec, warns about deprecated or insecure values, and outputs a ready-to-copy header block."},
-  {"slug": "markdown-table-editor", "name": "Markdown Table Editor", "market": "EN", "category": "Developer Tools", "description": "Spreadsheet-style editor that outputs Markdown tables", "spec": "Grid UI for entering tabular data with add/remove row and column controls. Outputs properly formatted GitHub-Flavored Markdown tables. Supports alignment options per column (left, center, right)."},
-  {"slug": "regex-cheatsheet", "name": "Regex Cheatsheet & Tester", "market": "EN", "category": "Developer Tools", "description": "Interactive regex reference with live match highlighting", "spec": "Sidebar shows categorized regex tokens (anchors, quantifiers, groups, lookarounds) with explanations. Live test input highlights all matches as the pattern is typed. Shows match groups in a table."},
-  {"slug": "openapi-explorer", "name": "OpenAPI / Swagger Explorer", "market": "EN", "category": "Developer Tools", "description": "Paste OpenAPI YAML/JSON and browse endpoints interactively", "spec": "Parses OpenAPI 3.x or Swagger 2.0 spec and renders a collapsible list of endpoints grouped by tag. Shows request parameters, request body schema, and response schemas for each endpoint."},
-  {"slug": "html-minifier", "name": "HTML Minifier", "market": "EN", "category": "Developer Tools", "description": "Minify HTML by removing whitespace and comments", "spec": "Takes raw HTML and strips comments, collapses whitespace, and optionally removes optional tags. Shows original vs. minified byte count and compression ratio."},
-  {"slug": "sitemap-generator", "name": "Sitemap XML Generator", "market": "EN", "category": "SEO Tools", "description": "Generate sitemap.xml from a list of URLs", "spec": "User inputs a list of URLs one per line, with optional last-modified date, change frequency, and priority per URL. Outputs a valid sitemap.xml string ready to copy or download."},
-  {"slug": "canonical-tag-checker", "name": "Canonical Tag Checker", "market": "EN", "category": "SEO Tools", "description": "Validate and generate canonical link tags", "spec": "Input a URL and the tool generates the correct canonical link tag HTML. Also parses pasted HTML to extract and validate existing canonical tags against the page URL."},
-  {"slug": "structured-data-builder", "name": "Structured Data Builder", "market": "EN", "category": "SEO Tools", "description": "Visual builder for JSON-LD structured data (Schema.org)", "spec": "Supports Article, Product, BreadcrumbList, FAQ, and LocalBusiness schema types. Form fields map to schema properties with validation. Outputs formatted JSON-LD script tag."},
-  {"slug": "twitter-card-preview", "name": "Twitter Card Preview", "market": "EN", "category": "SEO Tools", "description": "Preview how your page appears in Twitter/X cards", "spec": "Input meta tag values (title, description, image URL, card type) and see a live preview of both summary and summary_large_image card formats. Also generates the required meta tag HTML."},
-  {"slug": "keyword-density", "name": "Keyword Density Analyzer", "market": "EN", "category": "SEO Tools", "description": "Analyze keyword frequency and density in any text", "spec": "Paste any text and the tool calculates word and phrase frequency, highlighting the top 20 keywords with their count and density percentage. Filters common stop words. Useful for SEO content audits."},
-  {"slug": "readability-score", "name": "Readability Score", "market": "EN", "category": "Text & String Tools", "description": "Calculate Flesch-Kincaid and other readability scores", "spec": "Accepts any English text and computes Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index. Displays sentence count, word count, syllable count, and a plain-English grade interpretation."},
-  {"slug": "lorem-ipsum-jp", "name": "Lorem Ipsum JP (ダミーテキスト生成)", "market": "JP", "category": "Text & String Tools", "description": "日本語ダミーテキストをワンクリックで生成", "spec": "文字数・段落数・文体（である調・ですます調）を指定して日本語ダミーテキストを生成。和文組版練習や画面デザインのプレースホルダーに最適。コピーボタン付き。"},
-  {"slug": "text-case-converter", "name": "Text Case Converter", "market": "EN", "category": "Text & String Tools", "description": "Convert text between camelCase, snake_case, PascalCase, kebab-case", "spec": "Input any text or identifier and convert to camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, or Title Case simultaneously. Handles multi-word phrases and acronyms intelligently."},
-  {"slug": "string-escape", "name": "String Escape / Unescape", "market": "EN", "category": "Text & String Tools", "description": "Escape and unescape strings for JSON, JS, SQL, regex, and HTML", "spec": "Select a target format (JSON, JavaScript, SQL, HTML, Regex, CSV) and toggle between escape and unescape mode. Processes multi-line input and highlights changed characters in the output."},
-  {"slug": "text-line-sorter", "name": "Text Line Sorter & Deduplicator", "market": "EN", "category": "Text & String Tools", "description": "Sort lines alphabetically, numerically, or randomly; remove duplicates", "spec": "Accepts multi-line text and offers sort modes: alphabetical, reverse alphabetical, numeric, random shuffle. One-click deduplication. Options for case-insensitive sort and trimming whitespace."},
-  {"slug": "text-columnarizer", "name": "Text to Columns", "market": "EN", "category": "Text & String Tools", "description": "Split text into columns by delimiter and reformat", "spec": "Paste delimited text (CSV, TSV, pipe, custom) and visualize it as a table. Reorder columns, delete columns, change the output delimiter, and copy or download the result."},
-  {"slug": "number-base-converter", "name": "Number Base Converter", "market": "EN", "category": "Developer Tools", "description": "Convert numbers between binary, octal, decimal, hex, and custom bases", "spec": "Input any number in any standard base (2–36) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values."},
-  {"slug": "bitwise-calculator", "name": "Bitwise Calculator", "market": "EN", "category": "Developer Tools", "description": "Perform bitwise AND, OR, XOR, NOT, and shift operations", "spec": "Enter two integer operands and select a bitwise operation. Displays operands and result in binary, hex, and decimal. Shows 8-bit and 32-bit visual bit diagrams."},
-  {"slug": "color-contrast-checker", "name": "Color Contrast Checker", "market": "EN", "category": "Color Tools", "description": "Check foreground/background color contrast ratio for WCAG compliance", "spec": "Pick or input two colors (hex, RGB, HSL) and see their contrast ratio. Reports WCAG AA and AAA pass/fail for normal text, large text, and UI components. Shows sample text on background."},
-  {"slug": "color-mixer", "name": "Color Mixer", "market": "EN", "category": "Color Tools", "description": "Mix two or more colors and preview the result", "spec": "Add multiple colors with individual weight sliders. Preview the blended color in real-time. Output in hex, RGB, and HSL. Supports RGB and LAB color space blending modes."},
-  {"slug": "color-harmonies", "name": "Color Harmonies Generator", "market": "EN", "category": "Color Tools", "description": "Generate complementary, triadic, and analogous color schemes from a base color", "spec": "Pick a base color and view complementary, split-complementary, triadic, tetradic, and analogous harmonies. Preview all swatches with hex codes. Export as CSS custom properties or JSON."},
-  {"slug": "css-variables-generator", "name": "CSS Variables Generator", "market": "EN", "category": "CSS Tools", "description": "Generate a complete CSS custom properties theme from a brand color", "spec": "Input a primary brand color and generate a full set of CSS custom properties including 10 tints/shades, semantic tokens (primary, secondary, accent, surface, text), and dark mode overrides."},
-  {"slug": "tailwind-color-finder", "name": "Tailwind Color Finder", "market": "EN", "category": "CSS Tools", "description": "Find the closest Tailwind CSS color class to any hex value", "spec": "Input any hex color and the tool calculates the closest match across all Tailwind CSS color palettes using color distance. Shows the matched class name, the actual color, and the delta-E difference."},
-  {"slug": "css-clip-path", "name": "CSS Clip-Path Generator", "market": "EN", "category": "CSS Tools", "description": "Visually create clip-path polygon shapes for CSS", "spec": "Interactive canvas with draggable points to define a polygon clip-path. Switch between polygon, circle, and ellipse modes. Live preview on a sample element. Copies the clip-path CSS rule."},
-  {"slug": "css-transform", "name": "CSS Transform Builder", "market": "EN", "category": "CSS Tools", "description": "Visual builder for CSS transform functions", "spec": "Sliders and inputs for translate, rotate, scale, skew, and perspective. Live preview on a sample box. Shows the composed transform CSS string. Toggle 2D vs 3D transform mode."},
-  {"slug": "css-specificity", "name": "CSS Specificity Calculator", "market": "EN", "category": "CSS Tools", "description": "Calculate and compare CSS selector specificity", "spec": "Input one or more CSS selectors and calculate their specificity as (a, b, c) tuples per the CSS spec. Compare multiple selectors side by side and visualize which one wins in a conflict."},
-  {"slug": "media-query-builder", "name": "Media Query Builder", "market": "EN", "category": "CSS Tools", "description": "Build responsive CSS media queries with a visual editor", "spec": "Choose breakpoint type (min-width, max-width, orientation, etc.) and combine multiple conditions. Preview which devices each query targets. Outputs the final @media rule ready to paste."},
-  {"slug": "svg-path-editor", "name": "SVG Path Editor", "market": "EN", "category": "Image Tools", "description": "Edit and visualize SVG path (d attribute) commands", "spec": "Paste an SVG path d-string and see it rendered on a canvas. Each path command (M, L, C, A, Z, etc.) is listed with editable parameters. Editing updates the path preview in real-time."},
-  {"slug": "image-color-picker", "name": "Image Color Picker", "market": "EN", "category": "Image Tools", "description": "Upload an image and pick colors from anywhere on it", "spec": "Upload an image and move a crosshair picker over it to sample hex, RGB, and HSL values. Click to lock a color sample. Shows last 12 sampled colors as swatches with copy buttons."},
-  {"slug": "image-metadata-viewer", "name": "Image Metadata Viewer", "market": "EN", "category": "Image Tools", "description": "View EXIF and file metadata from uploaded images", "spec": "Upload any JPEG, PNG, or WebP image and extract file metadata (size, dimensions, type) and EXIF data (camera model, GPS, exposure settings). Displays in a clean key-value table."},
-  {"slug": "css-sprite-generator", "name": "CSS Sprite Position Calculator", "market": "EN", "category": "Image Tools", "description": "Calculate background-position values for CSS sprites", "spec": "Input sprite sheet dimensions and individual sprite tile size. Generates a table of background-position values for each sprite by row/column. Outputs CSS class snippets for each tile."},
-  {"slug": "ascii-table-generator", "name": "ASCII Table Generator", "market": "EN", "category": "Text & String Tools", "description": "Convert CSV or tabular data into ASCII art tables", "spec": "Paste CSV data or enter values in a grid. Renders as an ASCII art table with border styles (classic, single-line, double-line, markdown). Adjusts column widths automatically."},
-  {"slug": "json-tree-viewer", "name": "JSON Tree Viewer", "market": "EN", "category": "Data Format Tools", "description": "Visualize JSON as an interactive collapsible tree", "spec": "Paste JSON and explore it as a collapsible, color-coded tree. Supports search/filter within the tree. Click any node to copy its path or value. Handles large JSON with virtual rendering."},
-  {"slug": "json-diff", "name": "JSON Diff", "market": "EN", "category": "Data Format Tools", "description": "Compare two JSON objects and highlight differences", "spec": "Two-pane input for JSON objects. Diffs them deeply, showing added, removed, and changed keys with color coding. Supports nested objects and arrays. Outputs a summary of all changes."},
-  {"slug": "csv-to-json", "name": "CSV to JSON Converter", "market": "EN", "category": "Data Format Tools", "description": "Convert CSV data to JSON array with column header mapping", "spec": "Paste CSV or upload a file. Detects delimiter automatically. Maps the first row to object keys. Options for output as array of objects, array of arrays, or keyed by a column. Download or copy output."},
-  {"slug": "json-to-typescript", "name": "JSON to TypeScript Interface", "market": "EN", "category": "Developer Tools", "description": "Generate TypeScript interfaces from JSON data", "spec": "Paste a JSON object or array and auto-generate TypeScript interfaces with proper types (string, number, boolean, null, nested interfaces). Handles arrays, optional fields, and union types."},
-  {"slug": "xml-to-json", "name": "XML to JSON Converter", "market": "EN", "category": "Data Format Tools", "description": "Convert XML documents to JSON representation", "spec": "Accepts XML input and converts to JSON following a configurable schema (attributes as keys, text as value, etc.). Pretty-prints the output. Handles namespaces and CDATA sections."},
-  {"slug": "toml-to-json", "name": "TOML to JSON Converter", "market": "EN", "category": "Data Format Tools", "description": "Convert TOML configuration files to JSON", "spec": "Parses TOML syntax (strings, integers, floats, booleans, arrays, tables, datetime) and converts to equivalent JSON. Validates TOML syntax and reports errors with line numbers."},
-  {"slug": "ini-to-json", "name": "INI to JSON Converter", "market": "EN", "category": "Data Format Tools", "description": "Convert INI/config files to JSON objects", "spec": "Parses INI format with sections and key-value pairs. Converts to a nested JSON object where sections become top-level keys. Handles comments and multi-value keys."},
-  {"slug": "protobuf-decoder", "name": "Protobuf Binary Decoder", "market": "EN", "category": "Developer Tools", "description": "Decode base64-encoded Protobuf binary messages", "spec": "Paste a base64-encoded Protobuf binary payload and decode it to field numbers and wire types without a schema. Displays raw field numbers, types (varint, length-delimited, etc.), and values."},
-  {"slug": "unicode-inspector", "name": "Unicode Inspector", "market": "EN", "category": "Text & String Tools", "description": "Inspect every character in a string: codepoint, name, category", "spec": "Input any text and list each character with its Unicode code point (U+XXXX), official Unicode name, category (letter, digit, symbol, etc.), and UTF-8 byte sequence. Detects invisible and unusual characters."},
-  {"slug": "html-color-names", "name": "HTML Color Names Explorer", "market": "EN", "category": "Color Tools", "description": "Browse all 148 CSS named colors with hex and RGB values", "spec": "Displays all CSS named colors in a searchable grid. Click any color to copy its name, hex, or RGB value. Filter by hue range or alphabetically. Shows each color as a large swatch."},
-  {"slug": "gradient-to-css", "name": "Gradient Image to CSS", "market": "EN", "category": "CSS Tools", "description": "Sample colors from an uploaded gradient image and generate CSS gradient", "spec": "Upload an image with a gradient. The tool samples colors along a horizontal or vertical axis and generates a multi-stop CSS linear-gradient that approximates the original image gradient."},
-  {"slug": "font-pair-preview", "name": "Font Pair Preview", "market": "EN", "category": "CSS Tools", "description": "Preview Google Fonts pairings for headings and body text", "spec": "Select two Google Fonts from a curated list and preview heading + body text combinations. Adjust font size, weight, and line height. Outputs the Google Fonts import URL and CSS font-family rules."},
-  {"slug": "css-counter", "name": "CSS Counter Generator", "market": "EN", "category": "CSS Tools", "description": "Generate CSS counter-based automatic numbering systems", "spec": "Configure counter name, scope (whole page, section, subsection), and format (decimal, lower-alpha, roman). Preview the numbering on a sample document structure. Outputs counter-reset, counter-increment, and content CSS."},
-  {"slug": "nth-child-tester", "name": "CSS :nth-child Tester", "market": "EN", "category": "CSS Tools", "description": "Visually test CSS :nth-child, :nth-of-type, and :nth-last-child expressions", "spec": "Input any An+B expression and a configurable number of elements. Highlights which elements match the selector in real time. Explains the formula in plain English and shows matching indices."},
-  {"slug": "color-blindness-sim", "name": "Color Blindness Simulator", "market": "EN", "category": "Color Tools", "description": "Simulate how colors appear with different types of color blindness", "spec": "Input a color palette or upload an image. Applies simulation filters for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia. Side-by-side before/after comparison using CSS filters and canvas transforms."},
-  {"slug": "tailwind-config-viewer", "name": "Tailwind Config Viewer", "market": "EN", "category": "CSS Tools", "description": "Paste a Tailwind config and browse all generated tokens", "spec": "Accepts a tailwind.config.js JSON object and parses the theme section. Displays all colors, spacing, typography, border radius, and shadow tokens as visual swatches and values. Search across all tokens."},
-  {"slug": "network-latency-sim", "name": "Network Latency Simulator", "market": "EN", "category": "Developer Tools", "description": "Simulate slow network throttling to plan loading UX", "spec": "Input payload sizes (HTML, CSS, JS, images) and select a network speed preset (2G, 3G, LTE, Cable). Calculates estimated load times for each resource and total page load. Visualizes a waterfall chart."},
-  {"slug": "http-response-builder", "name": "HTTP Response Builder", "market": "EN", "category": "Developer Tools", "description": "Compose and format HTTP responses for documentation or mocking", "spec": "Select a status code, add headers, and compose a body in JSON, HTML, or plain text. Outputs a formatted raw HTTP response string. Useful for writing API docs or configuring mock servers."},
-  {"slug": "color-token-generator", "name": "Design Token Generator", "market": "EN", "category": "Color Tools", "description": "Generate design tokens from a color palette in JSON, CSS, or SCSS format", "spec": "Input named colors with hex values. Outputs design tokens as CSS custom properties, SCSS variables, or JSON (Style Dictionary format). Supports auto-generating tint/shade scales for each color."},
-  {"slug": "csp-builder", "name": "Content Security Policy Builder", "market": "EN", "category": "Developer Tools", "description": "Build Content-Security-Policy headers interactively", "spec": "Toggle directives (script-src, style-src, img-src, etc.) and add allowed sources with autocomplete. Real-time preview of the CSP header string. Explains each directive and validates the output."},
-  {"slug": "password-policy-tester", "name": "Password Policy Tester", "market": "EN", "category": "Developer Tools", "description": "Test a password against configurable policy rules", "spec": "Define a password policy (min length, uppercase, numbers, symbols, no common words, no repeated chars). Input a password and see which rules pass and fail. Shows a policy compliance score."},
-  {"slug": "cors-header-builder", "name": "CORS Header Builder", "market": "EN", "category": "Developer Tools", "description": "Build correct CORS response headers for any scenario", "spec": "Select allowed origins, methods, and headers. Toggle credentials and preflight cache settings. Outputs the complete set of Access-Control-* response headers. Explains each header's purpose."},
-  {"slug": "semantic-version-bumper", "name": "Semantic Version Bumper", "market": "EN", "category": "Developer Tools", "description": "Calculate the next semver version from a current version and change type", "spec": "Input the current semver string and select the change type (major, minor, patch, prerelease). Outputs the bumped version. Also parses and compares two semver strings to determine which is greater."},
-  {"slug": "changelog-formatter", "name": "Changelog Formatter", "market": "EN", "category": "Developer Tools", "description": "Format a list of git commit messages into a structured changelog", "spec": "Paste raw git commit messages and the tool groups them by type (feat, fix, chore, docs, refactor) based on Conventional Commits. Outputs a formatted Markdown changelog section for a given version."},
-  {"slug": "package-json-checker", "name": "package.json Linter", "market": "EN", "category": "Developer Tools", "description": "Validate and analyze package.json for common issues", "spec": "Paste package.json content and check for missing required fields, inconsistent version ranges (^ vs ~), deprecated scripts, and potential security flags. Lists all dependencies with their version constraints."},
-  {"slug": "json-to-zod", "name": "JSON to Zod Schema", "market": "EN", "category": "Developer Tools", "description": "Generate a Zod validation schema from a JSON sample", "spec": "Paste a JSON object and auto-generate the corresponding Zod schema with z.string(), z.number(), z.object(), z.array(), and z.optional() as appropriate. Handles nested structures and arrays."},
-  {"slug": "sql-to-json", "name": "SQL SELECT to JSON", "market": "EN", "category": "Data Format Tools", "description": "Convert SQL INSERT statements to JSON array", "spec": "Paste SQL INSERT INTO statements and extract the values into a JSON array of objects using column names from the INSERT statement. Handles multiple rows and quoted string values."},
-  {"slug": "dns-record-builder", "name": "DNS Record Builder", "market": "EN", "category": "Developer Tools", "description": "Generate DNS record zone file entries for common record types", "spec": "Select a record type (A, AAAA, CNAME, MX, TXT, SRV, NS) and fill in the fields. Outputs the correctly formatted zone file line. Includes common presets for Google Workspace, SPF, DKIM, and DMARC."},
-  {"slug": "robots-txt-parser", "name": "robots.txt Parser", "market": "EN", "category": "SEO Tools", "description": "Parse and visualize a robots.txt file as a structured table", "spec": "Paste a robots.txt file and parse all user-agent rules. Test a specific URL + user-agent combination to see if it is allowed or disallowed. Highlights conflicting rules."},
-  {"slug": "utm-builder", "name": "UTM Parameter Builder", "market": "EN", "category": "SEO Tools", "description": "Build UTM-tagged URLs for campaign tracking", "spec": "Input a base URL and fill in utm_source, utm_medium, utm_campaign, utm_term, and utm_content fields. Outputs the tagged URL with proper encoding. Also parses an existing UTM URL and extracts all parameters."},
-  {"slug": "link-checker", "name": "Link Extractor & Checker", "market": "EN", "category": "SEO Tools", "description": "Extract all links from pasted HTML and categorize them", "spec": "Paste raw HTML and extract all anchor href values. Categorizes links as internal, external, or anchor links. Checks for obviously broken patterns (empty href, javascript:, malformed URLs). Outputs a table with link text and URL."},
-  {"slug": "schema-markup-tester", "name": "Schema Markup Tester", "market": "EN", "category": "SEO Tools", "description": "Validate JSON-LD and microdata structured data markup", "spec": "Paste a JSON-LD script block and validate it against common Schema.org types. Checks required and recommended properties, reports missing fields, and shows a preview of how Google might render the rich result."},
-  {"slug": "css-loader-generator", "name": "CSS Loader Generator", "market": "EN", "category": "CSS Tools", "description": "Generate pure CSS loading spinners and skeleton animations", "spec": "Choose from spinner, dots, bars, pulse, or skeleton loader types. Customize color, size, and speed with sliders. Preview the animation live. Outputs pure CSS with no dependencies."},
-  {"slug": "css-reset-builder", "name": "CSS Reset Builder", "market": "EN", "category": "CSS Tools", "description": "Generate a modern CSS reset tailored to your needs", "spec": "Toggle reset categories (box model, typography, lists, forms, media, accessibility) and see the generated CSS reset update in real time. Explains what each section does. Choose from Modern CSS Reset, Normalize.css approach, or Bare-bones style."},
-  {"slug": "breakpoint-visualizer", "name": "Breakpoint Visualizer", "market": "EN", "category": "CSS Tools", "description": "Visualize common CSS breakpoints for popular frameworks", "spec": "Displays breakpoints for Bootstrap, Tailwind CSS, Material UI, and custom setups side by side on a ruler. Enter a custom viewport width to see which breakpoints are active. Shows the corresponding media query for each."},
-  {"slug": "image-aspect-crop", "name": "Image Aspect Ratio Crop Calculator", "market": "EN", "category": "Image Tools", "description": "Calculate crop coordinates to achieve a target aspect ratio", "spec": "Input original image dimensions (width x height) and the desired target aspect ratio. Calculates the largest possible crop area centered in the image and outputs the x, y, width, height crop coordinates."},
-  {"slug": "webp-info", "name": "WebP / Image Format Info", "market": "EN", "category": "Image Tools", "description": "Detect image format, dimensions, and color depth from a file", "spec": "Upload any image file (JPEG, PNG, WebP, GIF, AVIF) and read its file header to determine the exact format, dimensions, bit depth, and whether it has transparency. Does not re-encode the image."},
-  {"slug": "lorem-picsum-builder", "name": "Placeholder Image URL Builder", "market": "EN", "category": "Image Tools", "description": "Build placeholder image URLs from popular services", "spec": "Select a placeholder service (picsum.photos, placehold.co, via.placeholder.com) and configure width, height, background color, text, and seed. Outputs the URL and shows a live preview of the placeholder."},
-  {"slug": "svg-wave-generator", "name": "SVG Wave Generator", "market": "EN", "category": "Image Tools", "description": "Generate smooth wave SVG dividers for web pages", "spec": "Configure wave amplitude, frequency, color, and number of layers. Toggle between wave types (gentle, sharp, layered). Preview on a colored background. Exports inline SVG or a standalone file."},
-  {"slug": "number-formatter", "name": "Number Formatter", "market": "EN", "category": "Math & Science", "description": "Format numbers with locale-specific separators, currency, and units", "spec": "Input a number and select a locale (en-US, ja-JP, de-DE, etc.) and format type (decimal, currency, percent, unit). Shows the formatted output and the Intl.NumberFormat options that produce it."},
-  {"slug": "percentage-calculator", "name": "Percentage Calculator", "market": "EN", "category": "Math & Science", "description": "Calculate percentages, percent change, and percent of total", "spec": "Three calculation modes: (1) X% of Y, (2) X is what % of Y, (3) percent change from X to Y. Shows formula and step-by-step calculation. Handles negative numbers and percentage points."},
-  {"slug": "scientific-notation", "name": "Scientific Notation Converter", "market": "EN", "category": "Math & Science", "description": "Convert numbers between standard and scientific notation", "spec": "Input any number in standard decimal or scientific notation (e.g. 6.02e23) and convert between forms. Handles very large and very small numbers. Shows significant figures and engineering notation."},
-  {"slug": "matrix-calculator", "name": "Matrix Calculator", "market": "EN", "category": "Math & Science", "description": "Add, multiply, transpose, and find determinant of matrices", "spec": "Input matrices up to 5x5 using a grid UI. Supports addition, subtraction, scalar multiplication, matrix multiplication, transpose, and determinant. Shows step-by-step calculation for 2x2 and 3x3 matrices."},
-  {"slug": "statistics-calculator", "name": "Descriptive Statistics Calculator", "market": "EN", "category": "Math & Science", "description": "Calculate mean, median, mode, std deviation from a data set", "spec": "Input a list of numbers (comma or newline separated). Calculates mean, median, mode, range, variance, standard deviation, min, max, quartiles (Q1, Q3), and IQR. Draws a simple text-based histogram."},
-  {"slug": "roman-numeral", "name": "Roman Numeral Converter", "market": "EN", "category": "Math & Science", "description": "Convert between Arabic and Roman numerals", "spec": "Bidirectional converter for integers 1–3999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol."},
-  {"slug": "prime-checker", "name": "Prime Number Checker", "market": "EN", "category": "Math & Science", "description": "Check if a number is prime and find prime factors", "spec": "Input any positive integer and determine if it is prime. If composite, shows the complete prime factorization. Also generates a list of all primes up to a given limit using the Sieve of Eratosthenes."},
-  {"slug": "gcd-lcm-calculator", "name": "GCD & LCM Calculator", "market": "EN", "category": "Math & Science", "description": "Calculate Greatest Common Divisor and Least Common Multiple", "spec": "Input two or more integers and calculate GCD and LCM. Shows Euclidean algorithm steps for GCD and the prime factorization method for LCM. Handles up to 10 numbers simultaneously."},
-  {"slug": "currency-formatter", "name": "Currency Format Previewer", "market": "EN", "category": "Finance", "description": "Preview how a number formats as currency in different locales", "spec": "Input an amount and see it formatted as USD, EUR, JPY, GBP, KRW, and 10 other currencies using the browser's Intl.NumberFormat. Shows symbol placement, decimal, and thousands separator differences."},
-  {"slug": "compound-interest", "name": "Compound Interest Calculator", "market": "EN", "category": "Finance", "description": "Calculate compound interest with monthly contribution support", "spec": "Input principal, annual rate, compounding frequency, duration, and optional monthly contribution. Shows final balance, total contributions, total interest earned. Draws a year-by-year growth chart with a bar visualization."},
-  {"slug": "mortgage-calculator", "name": "Mortgage Calculator", "market": "EN", "category": "Finance", "description": "Calculate monthly mortgage payment, total interest, and amortization", "spec": "Input loan amount, interest rate, and term in years. Calculates monthly payment using the amortization formula. Shows a year-by-year breakdown of principal vs. interest paid and remaining balance."},
-  {"slug": "inflation-calculator", "name": "Inflation Calculator", "market": "EN", "category": "Finance", "description": "Calculate the real value of money adjusted for inflation", "spec": "Input an amount, a starting year, and an ending year (or manual inflation rate). Uses the CPI formula to calculate the inflation-adjusted equivalent value. Explains purchasing power erosion."},
-  {"slug": "roi-calculator", "name": "ROI Calculator", "market": "EN", "category": "Finance", "description": "Calculate Return on Investment and annualized ROI", "spec": "Input initial investment, final value, and investment duration in years. Calculates simple ROI percentage, annualized (CAGR) ROI, and total gain/loss. Compares ROI against a benchmark rate."},
-  {"slug": "bmi-english", "name": "BMI & Healthy Weight Calculator", "market": "EN", "category": "Health & Fitness", "description": "Calculate BMI and ideal weight range in metric or imperial", "spec": "Input height and weight in metric or imperial units. Calculates BMI, displays the WHO category (underweight, normal, overweight, obese), and shows the healthy weight range for the given height."},
-  {"slug": "calorie-burn", "name": "Calorie Burn Estimator", "market": "EN", "category": "Health & Fitness", "description": "Estimate calories burned for common exercises using MET values", "spec": "Select an activity from a list of 40+ exercises, input body weight and duration. Calculates calories burned using MET (Metabolic Equivalent of Task) values. Shows equivalent food calories."},
-  {"slug": "water-intake", "name": "Daily Water Intake Calculator", "market": "EN", "category": "Health & Fitness", "description": "Calculate recommended daily water intake based on body weight and activity", "spec": "Input body weight (kg or lbs), activity level (sedentary to very active), and climate. Calculates recommended daily water intake in liters and cups. Adjusts for exercise duration."},
-  {"slug": "heart-rate-zones", "name": "Heart Rate Zone Calculator", "market": "EN", "category": "Health & Fitness", "description": "Calculate target heart rate training zones", "spec": "Input age and optional resting heart rate. Calculates max heart rate and five training zones (recovery, endurance, aerobic, threshold, anaerobic) using both the simple and Karvonen methods."},
-  {"slug": "macro-calculator", "name": "Macronutrient Calculator", "market": "EN", "category": "Health & Fitness", "description": "Calculate daily protein, carb, and fat targets for fitness goals", "spec": "Input age, gender, height, weight, activity level, and goal (cut, maintain, bulk). Calculates TDEE and breaks down daily calories into protein, carbohydrates, and fat macros in grams."},
-  {"slug": "timezone-world-clock", "name": "World Clock", "market": "EN", "category": "Productivity", "description": "Display current time in multiple time zones simultaneously", "spec": "Add multiple cities/time zones from a searchable list and see all current times in a card grid that updates every second. Shows time, date, UTC offset, and whether the timezone is in DST."},
-  {"slug": "meeting-time-planner", "name": "Meeting Time Planner", "market": "EN", "category": "Productivity", "description": "Find overlapping working hours across multiple time zones", "spec": "Add team members with their time zones and working hours. Highlights the time slots where all selected members are within working hours. Outputs suggested meeting times and their local time in each zone."},
-  {"slug": "pomodoro-timer", "name": "Pomodoro Timer", "market": "EN", "category": "Productivity", "description": "Customizable Pomodoro technique timer with session tracking", "spec": "Configurable work session (default 25 min), short break (5 min), and long break (15 min) durations. Tracks completed sessions per day. Browser notifications on timer end. Session history table."},
-  {"slug": "habit-tracker", "name": "Habit Tracker", "market": "EN", "category": "Productivity", "description": "Track daily habits with a visual streak calendar", "spec": "Add up to 10 habits and mark them complete each day. Shows a GitHub-style contribution heatmap for each habit. Calculates current streak, longest streak, and completion rate. Data persisted in localStorage."},
-  {"slug": "decision-matrix", "name": "Decision Matrix", "market": "EN", "category": "Productivity", "description": "Weighted decision matrix for comparing options across criteria", "spec": "Add options and criteria with weights (1-10). Score each option per criterion. Calculates weighted totals and ranks options automatically. Visual bar chart of final scores."},
-  {"slug": "text-to-speech-preview", "name": "TTS Pronunciation Checker", "market": "EN", "category": "Text & String Tools", "description": "Use the browser's Speech Synthesis API to hear text spoken aloud", "spec": "Input text and select from available system voices and languages. Adjust rate, pitch, and volume. Click play to hear the text. Useful for checking pronunciation of words and UI copy."},
-  {"slug": "typing-speed-test", "name": "Typing Speed Test", "market": "EN", "category": "Productivity", "description": "Measure typing speed (WPM) and accuracy with sample texts", "spec": "Displays a paragraph of sample text. User types to match it. Tracks WPM in real time, highlights errors, and shows final accuracy percentage and time taken on completion. Multiple difficulty levels."},
-  {"slug": "markdown-lint", "name": "Markdown Linter", "market": "EN", "category": "Developer Tools", "description": "Lint Markdown for common style and syntax issues", "spec": "Paste Markdown and check for issues like inconsistent heading levels, bare URLs, long lines, trailing spaces, and missing blank lines around headings. Shows inline error locations with fix suggestions."},
-  {"slug": "diff-to-patch", "name": "Diff to Patch File Converter", "market": "EN", "category": "Developer Tools", "description": "Format a unified diff as a .patch file", "spec": "Paste a unified diff and format it as a valid .patch file with proper headers (From, Date, Subject). Optionally set the commit message, author, and file paths. Outputs a git-apply compatible patch file."},
-  {"slug": "gitflow-visualizer", "name": "Git Flow Visualizer", "market": "EN", "category": "Developer Tools", "description": "Visualize a Git log as a branch diagram", "spec": "Paste git log --oneline --graph output and render it as an interactive, colorized branch diagram. Each commit is clickable. Shows branch names and merge points clearly."},
-  {"slug": "code-snippet-formatter", "name": "Code Snippet Formatter", "market": "EN", "category": "Developer Tools", "description": "Format and syntax-highlight code snippets for sharing", "spec": "Paste code in any popular language (JS, Python, Rust, Go, SQL, etc.). Applies syntax highlighting and line numbers. Choose a theme (dark/light). Outputs a styled HTML snippet ready to embed in a blog post."},
-  {"slug": "env-diff", "name": ".env File Diff", "market": "EN", "category": "Developer Tools", "description": "Compare two .env files to find missing or different variables", "spec": "Paste two .env files side by side. Highlights variables present in one but missing from the other, and variables with different values. Useful for syncing .env.example with production configs."},
-  {"slug": "ascii-flowchart", "name": "ASCII Flowchart Generator", "market": "EN", "category": "Developer Tools", "description": "Convert a simple node-edge list into an ASCII flowchart", "spec": "Describe a flowchart with nodes (rectangles or diamonds) and arrows in a simple DSL. Renders the flowchart as ASCII art using box-drawing characters. Useful for inline documentation and READMEs."},
-  {"slug": "css-unit-converter", "name": "CSS Unit Converter", "market": "EN", "category": "CSS Tools", "description": "Convert between px, rem, em, vw, vh, pt, and more", "spec": "Input a value and source unit, select a target unit, and optionally set the root font size (default 16px) and viewport dimensions. Converts between px, rem, em, vw, vh, vmin, vmax, pt, and cm."},
-  {"slug": "line-height-calculator", "name": "Line Height Calculator", "market": "EN", "category": "CSS Tools", "description": "Calculate optimal line-height for a given font size and measure", "spec": "Input font size (px), line width (characters), and font weight. Calculates the recommended unitless line-height using typographic best practices. Shows the equivalent in px, rem, and em."},
-  {"slug": "type-scale-generator", "name": "Typographic Scale Generator", "market": "EN", "category": "CSS Tools", "description": "Generate a modular typographic scale with CSS output", "spec": "Set a base font size and a scale ratio (minor third, major third, golden ratio, etc.). Generates a typographic scale with 8 steps. Preview the scale with sample text. Output as CSS custom properties or Tailwind extend config."},
-  {"slug": "viewport-unit-calc", "name": "Viewport Unit Calculator", "market": "EN", "category": "CSS Tools", "description": "Calculate vw/vh pixel values at common breakpoints", "spec": "Input a vw or vh value and see its pixel equivalent at preset viewport widths (360, 768, 1024, 1280, 1440, 1920px). Also reverse-calculates what vw value equals a target pixel size at a given viewport."},
-  {"slug": "open-graph-builder", "name": "Open Graph Tag Builder", "market": "EN", "category": "SEO Tools", "description": "Generate Open Graph meta tags for articles, websites, and products", "spec": "Form fields for og:title, og:description, og:image, og:url, og:type, og:site_name. Live preview of how the link will look when shared on social platforms. Outputs the complete og: meta tag block."},
-  {"slug": "hreflang-generator", "name": "Hreflang Tag Generator", "market": "EN", "category": "SEO Tools", "description": "Generate hreflang link tags for multilingual SEO", "spec": "Add language/region variants with their URLs. Generates the complete set of <link rel='alternate' hreflang='x-default'> tags including x-default. Validates that every page has a self-referencing hreflang tag."},
-  {"slug": "favicon-checker", "name": "Favicon Requirements Checker", "market": "EN", "category": "SEO Tools", "description": "Check what favicon sizes and formats a site needs", "spec": "Lists all recommended favicon sizes and formats (16x16, 32x32, apple-touch-icon, 180x180, manifest icons, MS tiles). User checks off which they have. Outputs the corresponding HTML link tags for each."},
-  {"slug": "slug-generator", "name": "URL Slug Generator", "market": "EN", "category": "SEO Tools", "description": "Convert article titles to SEO-friendly URL slugs", "spec": "Input any text (including Japanese, accented characters, special symbols) and generate a clean URL slug: lowercased, spaces to hyphens, diacritics normalized, non-ASCII removed or transliterated. Configurable separator."},
-  {"slug": "reading-time", "name": "Reading Time Estimator", "market": "EN", "category": "Text & String Tools", "description": "Estimate reading time for any text content", "spec": "Paste any text and calculate estimated reading time at configurable WPM (default 200 WPM). Shows word count, character count, sentence count, and paragraph count alongside the time estimate. Supports multiple reading speed presets."},
-  {"slug": "text-stats", "name": "Text Statistics Dashboard", "market": "EN", "category": "Text & String Tools", "description": "Comprehensive text analytics: word frequency, sentence length, complexity", "spec": "Paste any text and get a full statistics dashboard: word count, unique words, lexical diversity, average word length, average sentence length, longest word, most frequent words, and paragraph count."},
-  {"slug": "sprintf-formatter", "name": "sprintf / printf Formatter", "market": "EN", "category": "Developer Tools", "description": "Test and preview printf/sprintf format strings", "spec": "Input a format string with % placeholders (%d, %s, %f, %x, etc.) and provide argument values. Shows the formatted output. Supports C-style printf, Python %-formatting, and Go fmt.Sprintf conventions."},
-  {"slug": "color-shade-picker", "name": "Color Shade Picker", "market": "EN", "category": "Color Tools", "description": "Generate 10-step tint and shade scale for any color", "spec": "Pick any color and generate 10 tints (mixed toward white) and 10 shades (mixed toward black). Displays each step as a swatch with hex code. Exports as CSS custom properties or Tailwind palette JSON."},
-  {"slug": "tailwind-arbitrary", "name": "Tailwind Arbitrary Value Generator", "market": "EN", "category": "CSS Tools", "description": "Generate Tailwind CSS arbitrary value classes for custom values", "spec": "Input any CSS property and value and get the corresponding Tailwind arbitrary value class (e.g. w-[123px], text-[#ff0000], grid-cols-[1fr_2fr]). Supports all major utility groups."},
-  {"slug": "image-data-uri", "name": "Image Data URI Generator", "market": "EN", "category": "Image Tools", "description": "Convert small images to inline data: URI for CSS or HTML", "spec": "Upload a small image (PNG, SVG, GIF) and generate its data: URI string. Shows the resulting URI size and warns if it exceeds 4KB (typical recommendation for inline use). Copy button for CSS background-image use."},
-  {"slug": "canvas-image-editor", "name": "Canvas Image Resizer", "market": "EN", "category": "Image Tools", "description": "Resize and convert images client-side using HTML Canvas", "spec": "Upload an image and set target width, height (with optional aspect ratio lock), and output format (JPEG, PNG, WebP). Uses HTML Canvas to resize and re-encode. Shows original vs. output file sizes. Download the result."},
-  {"slug": "morse-code", "name": "Morse Code Translator", "market": "EN", "category": "Text & String Tools", "description": "Translate text to and from Morse code with audio playback", "spec": "Bidirectional translation between text and Morse code dots/dashes. Uses the Web Audio API to play the Morse code as audio beeps at configurable speed (WPM) and frequency (Hz)."},
-  {"slug": "braille-converter", "name": "Braille Translator", "market": "EN", "category": "Text & String Tools", "description": "Convert English text to Grade 1 Braille Unicode characters", "spec": "Input English text and display the corresponding Grade 1 (uncontracted) Braille Unicode characters. Each character is shown above its Braille cell. Supports letters, digits, and common punctuation."},
-  {"slug": "keyboard-shortcut-finder", "name": "Keyboard Shortcut Cheatsheet", "market": "EN", "category": "Productivity", "description": "Searchable keyboard shortcuts for VS Code, Chrome, macOS, Windows", "spec": "Searchable database of keyboard shortcuts for VS Code, Chrome DevTools, macOS, Windows, and Figma. Filter by application and OS. Shows modifier keys as visual key caps. Mark favorites for a personal quick reference."},
-  {"slug": "color-picker-history", "name": "Color Picker with History", "market": "EN", "category": "Color Tools", "description": "Pick colors with a full-featured picker and persistent history", "spec": "Full HSL/RGB/Hex color picker with eyedropper hint. Saves last 20 picked colors in localStorage. One-click copy in any format (hex, rgb(), hsl(), Tailwind class). Import/export color history as JSON."},
-  {"slug": "stopwatch-lap", "name": "Stopwatch with Lap Timer", "market": "EN", "category": "Productivity", "description": "Precise stopwatch with lap recording and statistics", "spec": "Start/stop/reset stopwatch with millisecond precision. Record lap times with a lap button. Shows a table of all lap times with the split (time since last lap). Highlights fastest and slowest laps."},
-  {"slug": "countdown-timer", "name": "Countdown Timer", "market": "EN", "category": "Productivity", "description": "Set a countdown to any date or duration with browser notifications", "spec": "Set a countdown by duration (HH:MM:SS) or to a specific date/time. Displays days, hours, minutes, seconds in large digits. Sends a browser notification on completion. Persists countdown target in localStorage."},
-  {"slug": "color-temperature", "name": "Color Temperature Calculator", "market": "EN", "category": "Color Tools", "description": "Convert between color temperature (Kelvin) and RGB values", "spec": "Slide a color temperature range from 1000K (candlelight) to 10000K (blue sky). Shows the approximate RGB and hex color for each temperature. Useful for lighting design and color grading reference."},
-  {"slug": "html-table-builder", "name": "HTML Table Builder", "market": "EN", "category": "Developer Tools", "description": "Visual spreadsheet editor that generates HTML table code", "spec": "Spreadsheet-style grid to enter tabular data. Configure column headers, cell alignment, colspan/rowspan, and table caption. Outputs clean HTML with optional Bootstrap or Tailwind CSS classes."},
-  {"slug": "sql-query-formatter", "name": "SQL Query Beautifier with Explainer", "market": "EN", "category": "Developer Tools", "description": "Format SQL and add inline comments explaining each clause", "spec": "Paste a SQL query and get it beautifully formatted (indented, capitalized keywords). Toggle an explain mode that adds inline comments describing what each clause (SELECT, JOIN, WHERE, GROUP BY) does."},
-  {"slug": "api-mock-builder", "name": "API Mock Response Builder", "market": "EN", "category": "Developer Tools", "description": "Build fake API response JSON from a field schema", "spec": "Define a response schema by adding fields with types (string, number, boolean, date, uuid, email, name, array, nested object). Click Generate to produce a realistic fake JSON response. Generate multiple records at once."},
-  {"slug": "text-truncator", "name": "Text Truncator & Ellipsis Tester", "market": "EN", "category": "Text & String Tools", "description": "Preview how text truncates at various lengths with ellipsis", "spec": "Input long text and configure max character or word count, truncation position (end, middle, start), and ellipsis character. Preview the truncated output. Also shows what CSS text-overflow settings produce for a given container width."},
-  {"slug": "tailwind-cheatsheet", "name": "Tailwind CSS Cheatsheet", "market": "EN", "category": "CSS Tools", "description": "Searchable reference for all Tailwind CSS utility classes", "spec": "Full searchable cheatsheet of Tailwind CSS v3 utility classes grouped by category. Filter by category or type a class name prefix to find matching classes. Shows the generated CSS for each class on hover."},
-  {"slug": "css-easing-visualizer", "name": "CSS Easing Visualizer", "market": "EN", "category": "CSS Tools", "description": "Visualize and create CSS cubic-bezier easing curves", "spec": "Interactive bezier curve editor with draggable control points. Live animation preview on a bouncing ball. Includes a library of named easings (ease-in-out, spring, bounce, etc.). Copies the cubic-bezier() value."},
-  {"slug": "nengou-calculator", "name": "元号・西暦変換ツール", "market": "JP", "category": "Japanese Tools", "description": "元号（令和・平成・昭和・大正・明治）と西暦を双方向変換", "spec": "西暦年を入力して対応する元号表記に変換、または元号と年を入力して西暦に変換。令和・平成・昭和・大正・明治に対応。和暦表記（漢数字）でも出力可能。"},
-  {"slug": "postal-code-jp", "name": "郵便番号フォーマッター", "market": "JP", "category": "Japanese Tools", "description": "郵便番号をフォーマット・バリデーションする", "spec": "数字7桁の入力から〒xxx-xxxx形式に自動フォーマット。ハイフンなし・ありどちらも受け付け、正規表現でバリデーション。複数行の郵便番号リストを一括変換する機能付き。"},
-  {"slug": "hiragana-katakana", "name": "ひらがな・カタカナ変換", "market": "JP", "category": "Japanese Tools", "description": "ひらがなとカタカナを相互変換", "spec": "入力テキストのひらがなをカタカナに、またはカタカナをひらがなに変換。半角カタカナ⇔全角カタカナ変換も対応。文章全体または選択範囲のみ変換するモードを切り替え可能。"},
-  {"slug": "han-zen-converter", "name": "全角・半角文字変換", "market": "JP", "category": "Japanese Tools", "description": "英数字・記号・カタカナの全角↔半角を一括変換", "spec": "テキストを貼り付けて全角英数字を半角に、または半角カタカナを全角に一括変換。英数字のみ・記号のみ・カタカナのみなど変換対象を選択できる。変更箇所をハイライト表示。"},
-  {"slug": "keigo-checker", "name": "敬語チェッカー", "market": "JP", "category": "Japanese Tools", "description": "ビジネスメール文章の敬語・丁寧語を確認", "spec": "テキストを入力すると、よく間違われる二重敬語・過剰敬語・敬語の混在をルールベースで検出してハイライト表示。各指摘に修正案を提示。ビジネスメールの最終確認ツール。"},
-  {"slug": "okurigana-checker", "name": "送り仮名チェッカー", "market": "JP", "category": "Japanese Tools", "description": "送り仮名の付け方をルールに基づきチェック", "spec": "テキストを入力し、文化庁「送り仮名の付け方」に基づいた送り仮名の誤りをルールベースで検出。よく間違われる動詞・形容詞・名詞の送り仮名ルールを辞書として内蔵。"},
-  {"slug": "nenreki-jisan", "name": "年齢・学年早見表", "market": "JP", "category": "Japanese Tools", "description": "生年月日から年齢・学年・干支を自動計算", "spec": "生年月日を入力すると現在の年齢（満年齢・数え年）、日本の学校制度における学年、干支、星座を表示。未来日付を入力すれば何歳になるかも計算。"},
-  {"slug": "furigana-generator", "name": "ふりがな生成ツール", "market": "JP", "category": "Japanese Tools", "description": "漢字テキストにルビ（ふりがな）HTMLタグを付与", "spec": "漢字とその読みをペアで入力して <ruby><rb>漢字</rb><rt>よみ</rt></ruby> 形式のHTMLを生成。複数の漢字を一括登録して文章全体に適用する機能付き。"},
-  {"slug": "nihongo-romaji", "name": "日本語ローマ字変換", "market": "JP", "category": "Japanese Tools", "description": "ひらがな・カタカナをローマ字（ヘボン式・訓令式）に変換", "spec": "ひらがなまたはカタカナを入力してヘボン式・訓令式・日本式ローマ字に変換。長音・拗音・促音・撥音すべて対応。パスポート向けヘボン式モードあり。"},
-  {"slug": "hanzi-jp-diff", "name": "旧字体・新字体 変換", "market": "JP", "category": "Japanese Tools", "description": "旧字体（旧漢字）と新字体を相互変換", "spec": "テキストを入力して旧字体を新字体に、または新字体を旧字体に変換。対応する字形の対応表を内蔵。変換できなかった文字は元のまま保持して明示。"},
-  {"slug": "gengou-timeline", "name": "元号タイムライン", "market": "JP", "category": "Japanese Tools", "description": "明治以降の元号を視覚的なタイムラインで表示", "spec": "明治・大正・昭和・平成・令和の期間を横軸タイムラインで表示。任意の西暦年をホバーすると対応する元号年が表示。各元号の開始・終了年と在位日数を確認できる。"},
-  {"slug": "japanese-counter", "name": "日本語助数詞ガイド", "market": "JP", "category": "Japanese Tools", "description": "物・動物・薄いもの等の正しい助数詞を調べる", "spec": "数える対象（本・冊・匹・羽・枚・個等）で検索または選択すると、その助数詞の読み方と1〜10の数え方を表形式で表示。よく間違われる助数詞を特集する関連リスト付き。"},
-  {"slug": "bunsho-keishiki", "name": "文書テンプレート整形ツール", "market": "JP", "category": "Japanese Tools", "description": "ビジネス文書の形式（拝啓・敬具・時候の挨拶）を整える", "spec": "ビジネスレターの本文を入力すると、頭語・結語（拝啓〜敬具）・時候の挨拶を月別に自動挿入して正式な書式に整形。縦書き用（縦書きHTML）への変換オプション付き。"},
-  {"slug": "yen-kanji", "name": "金額漢字変換", "market": "JP", "category": "Japanese Tools", "description": "数字の金額を漢数字・大字（壱・弐・参）に変換", "spec": "半角数字の金額を入力して通常の漢数字（一二三）と正式な大字（壱弐参）の両方に変換。請求書・領収書・小切手などの正式書類向け。「円也」付きフォーマットも選択可能。"},
-  {"slug": "koyomi-keisan", "name": "日本の祝日計算ツール", "market": "JP", "category": "Japanese Tools", "description": "任意の年の祝日一覧と営業日数を計算", "spec": "年を入力すると内閣府規定に基づく国民の祝日（振替休日含む）の一覧を表示。月ごとの営業日数（土日祝を除く日数）も計算。開始日・終了日を指定した期間の営業日数計算機能付き。"},
-  {"slug": "jimaku-formatter", "name": "字幕・ルビ整形ツール", "market": "JP", "category": "Japanese Tools", "description": "動画字幕テキストをSRT/VTT形式に変換", "spec": "タイムコードと字幕テキストを入力してSRT・WebVTT形式の字幕ファイルを生成。既存のSRT/VTTを貼り付けて整形・バリデーションも可能。行長制限チェック機能付き。"},
-  {"slug": "waribiki-zeikomi", "name": "割引・税込み計算ツール", "market": "JP", "category": "Finance", "description": "税込み価格・割引後価格を素早く計算", "spec": "本体価格を入力して消費税（8%/10%）込みの価格を計算。複数の割引率（%OFF・円引き）を組み合わせた最終価格も計算可能。逆算（税込み価格から税抜きを算出）にも対応。"},
-  {"slug": "shakai-hoken", "name": "社会保険料 概算計算ツール", "market": "JP", "category": "Finance", "description": "月収から社会保険料（健康保険・年金・雇用保険）の概算を計算", "spec": "月収・年齢・都道府県を入力して健康保険料・厚生年金保険料・雇用保険料の概算を計算。手取り概算額と控除一覧を表形式で表示。協会けんぽ料率ベース。"},
-  {"slug": "furusato-nozei", "name": "ふるさと納税 上限額シミュレーター", "market": "JP", "category": "Finance", "description": "年収・家族構成からふるさと納税の控除上限額を試算", "spec": "年収・家族構成（配偶者・扶養子の有無）・住宅ローン控除額を入力してふるさと納税の実質負担2,000円となる上限寄付額を試算。ワンストップ特例と確定申告の違いも説明。"},
-  {"slug": "kyuyo-meisai", "name": "給与明細チェッカー", "market": "JP", "category": "Finance", "description": "給与明細の各控除額を確認・検証する", "spec": "支給項目と控除項目を入力して手取り額を自動計算。所得税・住民税・健康保険・厚生年金の概算と比較して明細の数値に大きなズレがないか確認。月次推移も記録可能（localStorage）。"},
-  {"slug": "haken-hiryou", "name": "派遣料金・マージン率 計算", "market": "JP", "category": "Finance", "description": "派遣料金から時給・マージン率を逆算", "spec": "派遣単価（時間/日/月）と稼働時間を入力して派遣スタッフへの時給換算と推定マージン率を計算。厚生労働省の平均マージン率と比較表示。"},
-  {"slug": "teinengo-nenkin", "name": "老齢年金 受給額試算", "market": "JP", "category": "Finance", "description": "納付期間と平均月収から老齢厚生年金・基礎年金の概算を試算", "spec": "平均標準報酬月額・納付月数・生年月日を入力して老齢基礎年金と老齢厚生年金の月額概算を計算。繰上げ・繰下げ受給による増減額も計算。公的年金等控除後の手取り概算付き。"},
-  {"slug": "menseki-tani", "name": "面積・坪数変換ツール", "market": "JP", "category": "Math & Science", "description": "㎡・坪・畳の面積単位を相互変換", "spec": "平方メートル・坪・畳（江戸間・京間・団地間）を相互変換。部屋の縦×横から面積を計算する入力モードも搭載。不動産物件探しや引越し計画に便利。"},
-  {"slug": "dosage-calculator", "name": "薬剤量計算ツール", "market": "JP", "category": "Health & Fitness", "description": "体重別の薬剤投与量を計算（医療・看護向け）", "spec": "薬剤名・体重あたりの投与量（mg/kg）・患者体重を入力して総投与量を計算。錠剤や内服液の1回あたりの量（錠数・mL）も計算。免責事項を明示した参考ツール。"},
-  {"slug": "water-hardness", "name": "水の硬度計算ツール", "market": "JP", "category": "Health & Fitness", "description": "水のカルシウム・マグネシウム濃度から硬度を計算", "spec": "カルシウム濃度（mg/L）とマグネシウム濃度（mg/L）を入力してWHO基準の硬度（炭酸カルシウム換算mg/L）を計算。軟水・中程度の硬水・硬水の分類も表示。"},
-  {"slug": "shohi-zei-keisan", "name": "消費税計算ツール", "market": "JP", "category": "Finance", "description": "消費税込み・抜き・税額を瞬時に計算", "spec": "金額と税率（8%/10%）を入力して税抜き・税込み・消費税額を計算。複数商品の合計に対する消費税計算（インボイス対応・端数処理選択）機能付き。"},
-  {"slug": "color-code-jp", "name": "日本の伝統色コード集", "market": "JP", "category": "Color Tools", "description": "日本の伝統色と慣用色名のカラーコードを検索", "spec": "460色以上の日本の伝統色（JIS慣用色名）をカラーコードと共に収録。色名・よみ・HEX・RGB・Munsell値を表示。色相・明度・彩度でフィルタリング。色名でテキスト検索可能。"},
-  {"slug": "jis-color-codes", "name": "JIS安全色 ガイドライン", "market": "JP", "category": "Color Tools", "description": "JIS Z 9103で定められた安全色8色の仕様を表示", "spec": "JIS Z 9103の安全色（赤・黄赤・黄・緑・青・赤紫・白・黒）のカラーコード・Munsell値・用途を一覧表示。安全標識の対比色の組み合わせ推奨リスト付き。"},
-  {"slug": "kanji-stroke-order", "name": "漢字筆順検索ツール", "market": "JP", "category": "Education", "description": "漢字を入力して筆順（書き順）をアニメーション表示", "spec": "常用漢字2136字のSVGストローク順データを内蔵。漢字を入力してアニメーションまたはステップ表示で筆順を確認。読み・画数・部首・Unicode情報も表示。"},
-  {"slug": "kana-quiz", "name": "ひらがな・カタカナ クイズ", "market": "JP", "category": "Education", "description": "五十音のひらがな・カタカナを練習するフラッシュカード", "spec": "ランダムに出題されるひらがな・カタカナのフラッシュカード。ローマ字で回答して正誤判定。苦手な文字を集中練習するモード・行（あ行・か行等）別練習モード付き。正答率をlocalStorageで記録。"},
-  {"slug": "kanji-quiz", "name": "漢字読み方クイズ", "market": "JP", "category": "Education", "description": "JLPT N5〜N1レベルの漢字読み問題を出題", "spec": "JLPTレベル（N5〜N1）を選択してランダム出題。漢字の読み方（ひらがな）を入力して正誤判定。出題語の意味・例文も表示。正答・誤答履歴をlocalStorageで管理しセッション内の正答率を表示。"},
-  {"slug": "multiplication-table", "name": "九九 練習ツール", "market": "JP", "category": "Education", "description": "九九を練習・暗記するためのインタラクティブツール", "spec": "閲覧モード（九九表）と練習モード（ランダム出題）を切り替え可能。練習モードでは九九の式を表示して答えを入力、タイム計測付き。苦手な段を強化練習できるフィルター付き。"},
-  {"slug": "periodic-table", "name": "Periodic Table Explorer", "market": "EN", "category": "Education", "description": "Interactive periodic table with element details on click", "spec": "Full periodic table displayed in standard layout with color coding by element category (alkali metals, halogens, noble gases, etc.). Click any element to view atomic number, mass, electron configuration, and common uses."},
-  {"slug": "fraction-calculator", "name": "Fraction Calculator", "market": "EN", "category": "Math & Science", "description": "Add, subtract, multiply, and divide fractions with step-by-step solutions", "spec": "Input two fractions and select an operation. Calculates the result in simplified form and shows all intermediate steps (finding LCD, converting, simplifying). Converts result to decimal and mixed number."},
-  {"slug": "trigonometry-calc", "name": "Trigonometry Calculator", "market": "EN", "category": "Math & Science", "description": "Calculate all trig functions and inverse trig in degrees or radians", "spec": "Input an angle in degrees or radians and see sin, cos, tan, sec, csc, cot values. Or input a ratio and get the inverse (arcsin, arccos, arctan). Unit circle visualization with the angle plotted."},
-  {"slug": "quadratic-solver", "name": "Quadratic Equation Solver", "market": "EN", "category": "Math & Science", "description": "Solve quadratic equations and visualize the parabola", "spec": "Input coefficients a, b, c for ax² + bx + c = 0. Calculates roots using the quadratic formula (including complex roots). Shows discriminant, vertex, and axis of symmetry. Simple SVG parabola visualization."},
-  {"slug": "ip-subnet-calculator", "name": "IP Subnet Calculator", "market": "EN", "category": "Developer Tools", "description": "Calculate network address, broadcast, and host range from IP/CIDR", "spec": "Input an IP address with CIDR notation (e.g. 192.168.1.0/24) and calculate network address, broadcast address, first/last host, number of hosts, and subnet mask. Shows binary representation of all values."},
-  {"slug": "mac-address-lookup", "name": "MAC Address OUI Lookup", "market": "EN", "category": "Developer Tools", "description": "Look up the manufacturer/vendor of a MAC address from the OUI prefix", "spec": "Input a MAC address and identify the vendor from the first 3 octets (OUI). Bundled with the top 500 vendor prefixes for common network equipment brands. Validates MAC address format."},
-  {"slug": "lorem-json", "name": "Lorem JSON Generator", "market": "EN", "category": "Developer Tools", "description": "Generate structured fake JSON data from a template schema", "spec": "Define a JSON template with faker-style placeholders ({{name}}, {{email}}, {{uuid}}, {{int(1,100)}}, etc.). Generate N records based on the template. Download or copy as JSON array. Built-in random data generators for common field types."},
-  {"slug": "html-entities-reference", "name": "HTML Entities Reference", "market": "EN", "category": "Developer Tools", "description": "Searchable reference of all HTML character entities", "spec": "Search by entity name, character, or Unicode codepoint across all standard HTML entities. Shows the entity name, numeric reference, character, and Unicode info. Click any entity to copy it."},
-  {"slug": "email-subject-line-tester", "name": "Email Subject Line Tester", "market": "EN", "category": "Productivity", "description": "Analyze email subject lines for length, emojis, and spam triggers", "spec": "Input an email subject line and get: character/word count, preview at 40/60/80 char truncation, spam word detection, emoji presence, ALL CAPS flag, punctuation overuse warning, and a mobile preview simulation."},
-  {"slug": "csv-sql-query", "name": "CSV SQL Query Tool", "market": "EN", "category": "Data Format Tools", "description": "Run SQL SELECT queries on uploaded CSV files in the browser", "spec": "Upload a CSV file and query it with SQL (SELECT, WHERE, ORDER BY, GROUP BY, LIMIT) using a client-side SQL engine. Results shown in a paginated table. Download query results as a new CSV."},
-  {"slug": "yaml-validator", "name": "YAML Validator & Prettifier", "market": "EN", "category": "Data Format Tools", "description": "Validate YAML syntax and pretty-print with consistent indentation", "spec": "Paste YAML content and validate it for syntax errors with line-specific error messages. Pretty-print with configurable indent size (2 or 4 spaces). Convert to JSON output. Detects duplicate keys."},
-  {"slug": "dns-propagation-sim", "name": "DNS Record Validator", "market": "EN", "category": "Developer Tools", "description": "Validate the syntax of DNS zone file records", "spec": "Paste DNS zone file records and validate syntax for A, AAAA, CNAME, MX, TXT, SRV, NS, and SOA record types. Highlights format errors with specific messages. Checks for common misconfigurations like missing trailing dots."},
-  {"slug": "html-accessibility-checker", "name": "HTML Accessibility Quick Checker", "market": "EN", "category": "Developer Tools", "description": "Check pasted HTML for basic accessibility issues", "spec": "Paste HTML markup and scan for: missing alt attributes on images, form inputs without labels, empty button/link text, missing lang attribute, and heading level skips. Lists issues with the affected HTML element and fix suggestions."},
-  {"slug": "css-keyframe-generator", "name": "CSS Keyframe Animation Generator", "market": "EN", "category": "CSS Tools", "description": "Build multi-step CSS @keyframes animations visually", "spec": "Add keyframe stops at any percentage (0%, 50%, 100%, etc.) and configure CSS properties (opacity, transform, color) at each stop. Live preview of the animation on a sample element. Outputs the @keyframes rule and animation shorthand."},
-  {"slug": "character-counter-jp", "name": "文字数カウンター（詳細版）", "market": "JP", "category": "Japanese Tools", "description": "全角・半角・ひらがな・漢字など文字種別の文字数を詳細カウント", "spec": "テキストを入力して全文字数・全角文字数・半角文字数・ひらがな数・カタカナ数・漢字数・英数字数・スペース数を分類カウント。SNS・出版・校正など文字種別の制限がある場面に最適。"},
-  {"slug": "soudan-record", "name": "議事録テンプレート生成ツール", "market": "JP", "category": "Productivity", "description": "会議・打ち合わせの議事録テンプレートをワンクリック生成", "spec": "日時・参加者・アジェンダを入力して整形された議事録テンプレートを生成。決定事項・ToDo・次回開催日のセクションを含むMarkdown形式で出力。コピー一発でそのまま使用可能。"},
-  {"slug": "contract-date-calc", "name": "契約期間計算ツール", "market": "JP", "category": "Productivity", "description": "契約開始日と期間から満了日・更新日を計算", "spec": "契約開始日と契約期間（ヶ月・年単位）を入力して契約満了日・次回更新日・残り日数を計算。自動更新の場合の通知期限も逆算。複数契約を一覧管理（localStorage）。"},
-  {"slug": "color-gradient-palette", "name": "グラデーションパレット生成", "market": "JP", "category": "Color Tools", "description": "2色間のグラデーションから均等分割したカラーパレットを生成", "spec": "開始色と終了色を指定して、その間を均等に分割した指定ステップ数のカラーパレットを生成。RGB・HSL・LAB色空間でのグラデーション補間モードを選択可能。各色のHEXコードをコピーできる。"},
-  {"slug": "number-to-words", "name": "Number to Words Converter", "market": "EN", "category": "Text & String Tools", "description": "Convert numbers to English words (e.g. 1234 → 'one thousand two hundred thirty-four')", "spec": "Input any integer up to 999 trillion and convert to its English word form. Supports ordinal form (first, second, third...). Also converts to currency words (e.g. 'one thousand two hundred thirty-four dollars and fifty cents')."},
-  {"slug": "palindrome-checker", "name": "Palindrome & Anagram Checker", "market": "EN", "category": "Text & String Tools", "description": "Check if a word or phrase is a palindrome, and find anagrams", "spec": "Check if input text is a palindrome (ignoring spaces, punctuation, case). Separately, input two words to check if they are anagrams of each other. Shows the character frequency comparison for anagram check."},
-  {"slug": "days-between-dates", "name": "Days Between Dates Calculator", "market": "EN", "category": "Productivity", "description": "Calculate the exact number of days between two dates", "spec": "Input two dates and calculate the total days between them, weeks and days, months and days, and years and days. Shows working days (excluding weekends) and optionally holidays. Counts up to today from a past date or down to a future date."},
-  {"slug": "word-frequency", "name": "Word Frequency Counter", "market": "EN", "category": "Text & String Tools", "description": "Count word frequency in any text and visualize with a bar chart", "spec": "Paste text and count the frequency of every word. Display as a sortable table or a horizontal bar chart. Filter out stop words. Export as CSV. Toggle case-sensitivity and punctuation stripping."},
-  {"slug": "css-triangle-generator", "name": "CSS Triangle Generator", "market": "EN", "category": "CSS Tools", "description": "Generate CSS-only triangles using the border trick", "spec": "Configure triangle direction (up, down, left, right, diagonal), size, and color. Live preview and outputs the complete CSS using the border trick (border-color transparent). Also provides the modern clip-path equivalent."},
-  {"slug": "caniuse-compat", "name": "CSS Feature Compatibility Checker", "market": "EN", "category": "Developer Tools", "description": "Check browser support for CSS properties and HTML features", "spec": "Input a CSS property or HTML feature name and look it up in a bundled compatibility dataset. Shows browser support percentages for Chrome, Firefox, Safari, and Edge. Recommends polyfills or fallbacks for low-support features."},
-  {"slug": "http-curl-builder", "name": "cURL Command Builder", "market": "EN", "category": "Developer Tools", "description": "Build cURL commands with a form-based visual interface", "spec": "Select HTTP method, input URL, add headers and query parameters via form fields, and compose a request body. Generates the corresponding cURL command. Toggle between curl, HTTPie, and Fetch API output formats."},
-  {"slug": "json-minifier", "name": "JSON Minifier", "market": "EN", "category": "Data Format Tools", "description": "Remove all whitespace from JSON to minimize file size", "spec": "Paste formatted JSON and strip all unnecessary whitespace to produce minified output. Shows original vs. minified byte count and savings percentage. Also reverses (pretty-prints) minified JSON."},
-  {"slug": "base58-converter", "name": "Base58 / Base32 Encoder", "market": "EN", "category": "Developer Tools", "description": "Encode and decode strings in Base58 and Base32 formats", "spec": "Input text or hex data and encode/decode in Base58 (Bitcoin alphabet) or Base32 (RFC 4648). Shows the encoded output and the byte representation. Useful for cryptocurrency addresses and TOTP secrets."},
-  {"slug": "ip-geolocation-sim", "name": "IP Address Class Analyzer", "market": "EN", "category": "Developer Tools", "description": "Analyze an IPv4 address: class, type, reserved range check", "spec": "Input any IPv4 address and determine its class (A/B/C/D/E), whether it is private (RFC 1918), loopback, link-local, multicast, or public. Shows the default subnet mask for its class and its binary form."},
-  {"slug": "html-color-picker", "name": "HTML Color Code Picker", "market": "EN", "category": "Color Tools", "description": "Visual HSL/HSV color picker with all format outputs", "spec": "Full-featured HSL and HSV color picker with spectrum canvas and hue/saturation sliders. Input and output in Hex, RGB, HSL, HSV, and CSS named color. Supports alpha channel transparency. Copy buttons for each format."},
-  {"slug": "curl-to-fetch", "name": "cURL to Fetch Converter", "market": "EN", "category": "Developer Tools", "description": "Convert a cURL command to a JavaScript Fetch API call", "spec": "Paste any cURL command and convert it to an equivalent JavaScript fetch() call with async/await syntax. Also converts to Axios syntax. Handles headers, request body, method, and authentication flags."},
-  {"slug": "aspect-ratio-calculator", "name": "Aspect Ratio Calculator", "market": "EN", "category": "Math & Science", "description": "Calculate and convert aspect ratios for video and image dimensions", "spec": "Input width and height and calculate the simplified aspect ratio (e.g. 16:9). Reverse: input an aspect ratio and one dimension to calculate the other. Common presets: 16:9, 4:3, 21:9, 1:1, 9:16 (vertical)."},
-  {"slug": "git-commit-message", "name": "Git Commit Message Linter", "market": "EN", "category": "Developer Tools", "description": "Validate and score git commit messages against Conventional Commits", "spec": "Paste a commit message and validate against the Conventional Commits specification: check type, optional scope, subject line length, body separation, and footer format. Scores the message and suggests improvements."},
-  {"slug": "webpack-bundle-analyzer", "name": "Module Size Estimator", "market": "EN", "category": "Developer Tools", "description": "Estimate how much a list of npm packages adds to a bundle", "spec": "Input a list of npm package names and lookup their minified+gzipped sizes from a bundled dataset of the top 500 packages. Shows each package's size, cumulative total, and load time estimate on 3G/LTE."},
-  {"slug": "hakken-generator", "name": "ビジネス文書フレーズ集", "market": "JP", "category": "Japanese Tools", "description": "ビジネスメール・文書でよく使うフレーズを場面別に検索", "spec": "依頼・お礼・お詫び・断り・催促・報告など場面を選択して使えるビジネスフレーズを一覧表示。フレーズをクリックしてクリップボードにコピー。キーワード検索で目的のフレーズを素早く見つけられる。"}
-]}
+{
+  "tools": [
+    {
+      "slug": "json-schema-validator",
+      "name": "JSON Schema Validator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Validate JSON data against a JSON Schema definition",
+      "spec": "Takes a JSON Schema and a JSON document as inputs. Validates the document against the schema and reports all validation errors with paths. Supports Draft-07 schema features implemented in-browser.",
+      "status": "pending"
+    },
+    {
+      "slug": "graphql-query-builder",
+      "name": "GraphQL Query Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Visual builder for GraphQL queries and mutations",
+      "spec": "Lets users paste a GraphQL schema SDL and visually construct queries by selecting fields, adding arguments, and nesting fragments. Outputs a formatted GraphQL query string ready to copy.",
+      "status": "pending"
+    },
+    {
+      "slug": "env-parser",
+      "name": ".env File Parser",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Parse, validate, and convert .env files to JSON or YAML",
+      "spec": "Accepts raw .env file content and parses key-value pairs, comments, and quoted values. Outputs to JSON or YAML. Detects duplicates and invalid lines.",
+      "status": "pending"
+    },
+    {
+      "slug": "jwt-inspector",
+      "name": "JWT Inspector",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Deep inspect JWT tokens — header, payload, expiry, claims",
+      "spec": "Decodes a JWT without verification and displays header and payload in formatted JSON. Shows expiry countdown, issued-at time, and highlights standard claims (iss, sub, aud). Flags expired tokens.",
+      "status": "pending"
+    },
+    {
+      "slug": "http-header-builder",
+      "name": "HTTP Header Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build and validate HTTP request/response headers",
+      "spec": "Provides a form-based interface to compose HTTP headers by name and value. Validates common headers against their spec, warns about deprecated or insecure values, and outputs a ready-to-copy header block.",
+      "status": "pending"
+    },
+    {
+      "slug": "markdown-table-editor",
+      "name": "Markdown Table Editor",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Spreadsheet-style editor that outputs Markdown tables",
+      "spec": "Grid UI for entering tabular data with add/remove row and column controls. Outputs properly formatted GitHub-Flavored Markdown tables. Supports alignment options per column (left, center, right).",
+      "status": "pending"
+    },
+    {
+      "slug": "regex-cheatsheet",
+      "name": "Regex Cheatsheet & Tester",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Interactive regex reference with live match highlighting",
+      "spec": "Sidebar shows categorized regex tokens (anchors, quantifiers, groups, lookarounds) with explanations. Live test input highlights all matches as the pattern is typed. Shows match groups in a table.",
+      "status": "pending"
+    },
+    {
+      "slug": "openapi-explorer",
+      "name": "OpenAPI / Swagger Explorer",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Paste OpenAPI YAML/JSON and browse endpoints interactively",
+      "spec": "Parses OpenAPI 3.x or Swagger 2.0 spec and renders a collapsible list of endpoints grouped by tag. Shows request parameters, request body schema, and response schemas for each endpoint.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-minifier",
+      "name": "HTML Minifier",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Minify HTML by removing whitespace and comments",
+      "spec": "Takes raw HTML and strips comments, collapses whitespace, and optionally removes optional tags. Shows original vs. minified byte count and compression ratio.",
+      "status": "pending"
+    },
+    {
+      "slug": "sitemap-generator",
+      "name": "Sitemap XML Generator",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Generate sitemap.xml from a list of URLs",
+      "spec": "User inputs a list of URLs one per line, with optional last-modified date, change frequency, and priority per URL. Outputs a valid sitemap.xml string ready to copy or download.",
+      "status": "pending"
+    },
+    {
+      "slug": "canonical-tag-checker",
+      "name": "Canonical Tag Checker",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Validate and generate canonical link tags",
+      "spec": "Input a URL and the tool generates the correct canonical link tag HTML. Also parses pasted HTML to extract and validate existing canonical tags against the page URL.",
+      "status": "pending"
+    },
+    {
+      "slug": "structured-data-builder",
+      "name": "Structured Data Builder",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Visual builder for JSON-LD structured data (Schema.org)",
+      "spec": "Supports Article, Product, BreadcrumbList, FAQ, and LocalBusiness schema types. Form fields map to schema properties with validation. Outputs formatted JSON-LD script tag.",
+      "status": "pending"
+    },
+    {
+      "slug": "twitter-card-preview",
+      "name": "Twitter Card Preview",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Preview how your page appears in Twitter/X cards",
+      "spec": "Input meta tag values (title, description, image URL, card type) and see a live preview of both summary and summary_large_image card formats. Also generates the required meta tag HTML.",
+      "status": "pending"
+    },
+    {
+      "slug": "keyword-density",
+      "name": "Keyword Density Analyzer",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Analyze keyword frequency and density in any text",
+      "spec": "Paste any text and the tool calculates word and phrase frequency, highlighting the top 20 keywords with their count and density percentage. Filters common stop words. Useful for SEO content audits.",
+      "status": "pending"
+    },
+    {
+      "slug": "readability-score",
+      "name": "Readability Score",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Calculate Flesch-Kincaid and other readability scores",
+      "spec": "Accepts any English text and computes Flesch Reading Ease, Flesch-Kincaid Grade Level, and Gunning Fog Index. Displays sentence count, word count, syllable count, and a plain-English grade interpretation.",
+      "status": "pending"
+    },
+    {
+      "slug": "lorem-ipsum-jp",
+      "name": "Lorem Ipsum JP (ダミーテキスト生成)",
+      "market": "JP",
+      "category": "Text & String Tools",
+      "description": "日本語ダミーテキストをワンクリックで生成",
+      "spec": "文字数・段落数・文体（である調・ですます調）を指定して日本語ダミーテキストを生成。和文組版練習や画面デザインのプレースホルダーに最適。コピーボタン付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "text-case-converter",
+      "name": "Text Case Converter",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Convert text between camelCase, snake_case, PascalCase, kebab-case",
+      "spec": "Input any text or identifier and convert to camelCase, PascalCase, snake_case, kebab-case, SCREAMING_SNAKE_CASE, or Title Case simultaneously. Handles multi-word phrases and acronyms intelligently.",
+      "status": "pending"
+    },
+    {
+      "slug": "string-escape",
+      "name": "String Escape / Unescape",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Escape and unescape strings for JSON, JS, SQL, regex, and HTML",
+      "spec": "Select a target format (JSON, JavaScript, SQL, HTML, Regex, CSV) and toggle between escape and unescape mode. Processes multi-line input and highlights changed characters in the output.",
+      "status": "pending"
+    },
+    {
+      "slug": "text-line-sorter",
+      "name": "Text Line Sorter & Deduplicator",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Sort lines alphabetically, numerically, or randomly; remove duplicates",
+      "spec": "Accepts multi-line text and offers sort modes: alphabetical, reverse alphabetical, numeric, random shuffle. One-click deduplication. Options for case-insensitive sort and trimming whitespace.",
+      "status": "pending"
+    },
+    {
+      "slug": "text-columnarizer",
+      "name": "Text to Columns",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Split text into columns by delimiter and reformat",
+      "spec": "Paste delimited text (CSV, TSV, pipe, custom) and visualize it as a table. Reorder columns, delete columns, change the output delimiter, and copy or download the result.",
+      "status": "pending"
+    },
+    {
+      "slug": "number-base-converter",
+      "name": "Number Base Converter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Convert numbers between binary, octal, decimal, hex, and custom bases",
+      "spec": "Input any number in any standard base (2–36) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values.",
+      "status": "pending"
+    },
+    {
+      "slug": "bitwise-calculator",
+      "name": "Bitwise Calculator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Perform bitwise AND, OR, XOR, NOT, and shift operations",
+      "spec": "Enter two integer operands and select a bitwise operation. Displays operands and result in binary, hex, and decimal. Shows 8-bit and 32-bit visual bit diagrams.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-contrast-checker",
+      "name": "Color Contrast Checker",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Check foreground/background color contrast ratio for WCAG compliance",
+      "spec": "Pick or input two colors (hex, RGB, HSL) and see their contrast ratio. Reports WCAG AA and AAA pass/fail for normal text, large text, and UI components. Shows sample text on background.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-mixer",
+      "name": "Color Mixer",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Mix two or more colors and preview the result",
+      "spec": "Add multiple colors with individual weight sliders. Preview the blended color in real-time. Output in hex, RGB, and HSL. Supports RGB and LAB color space blending modes.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-harmonies",
+      "name": "Color Harmonies Generator",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Generate complementary, triadic, and analogous color schemes from a base color",
+      "spec": "Pick a base color and view complementary, split-complementary, triadic, tetradic, and analogous harmonies. Preview all swatches with hex codes. Export as CSS custom properties or JSON.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-variables-generator",
+      "name": "CSS Variables Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate a complete CSS custom properties theme from a brand color",
+      "spec": "Input a primary brand color and generate a full set of CSS custom properties including 10 tints/shades, semantic tokens (primary, secondary, accent, surface, text), and dark mode overrides.",
+      "status": "pending"
+    },
+    {
+      "slug": "tailwind-color-finder",
+      "name": "Tailwind Color Finder",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Find the closest Tailwind CSS color class to any hex value",
+      "spec": "Input any hex color and the tool calculates the closest match across all Tailwind CSS color palettes using color distance. Shows the matched class name, the actual color, and the delta-E difference.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-clip-path",
+      "name": "CSS Clip-Path Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Visually create clip-path polygon shapes for CSS",
+      "spec": "Interactive canvas with draggable points to define a polygon clip-path. Switch between polygon, circle, and ellipse modes. Live preview on a sample element. Copies the clip-path CSS rule.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-transform",
+      "name": "CSS Transform Builder",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Visual builder for CSS transform functions",
+      "spec": "Sliders and inputs for translate, rotate, scale, skew, and perspective. Live preview on a sample box. Shows the composed transform CSS string. Toggle 2D vs 3D transform mode.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-specificity",
+      "name": "CSS Specificity Calculator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Calculate and compare CSS selector specificity",
+      "spec": "Input one or more CSS selectors and calculate their specificity as (a, b, c) tuples per the CSS spec. Compare multiple selectors side by side and visualize which one wins in a conflict.",
+      "status": "pending"
+    },
+    {
+      "slug": "media-query-builder",
+      "name": "Media Query Builder",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Build responsive CSS media queries with a visual editor",
+      "spec": "Choose breakpoint type (min-width, max-width, orientation, etc.) and combine multiple conditions. Preview which devices each query targets. Outputs the final @media rule ready to paste.",
+      "status": "pending"
+    },
+    {
+      "slug": "svg-path-editor",
+      "name": "SVG Path Editor",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Edit and visualize SVG path (d attribute) commands",
+      "spec": "Paste an SVG path d-string and see it rendered on a canvas. Each path command (M, L, C, A, Z, etc.) is listed with editable parameters. Editing updates the path preview in real-time.",
+      "status": "pending"
+    },
+    {
+      "slug": "image-color-picker",
+      "name": "Image Color Picker",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Upload an image and pick colors from anywhere on it",
+      "spec": "Upload an image and move a crosshair picker over it to sample hex, RGB, and HSL values. Click to lock a color sample. Shows last 12 sampled colors as swatches with copy buttons.",
+      "status": "pending"
+    },
+    {
+      "slug": "image-metadata-viewer",
+      "name": "Image Metadata Viewer",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "View EXIF and file metadata from uploaded images",
+      "spec": "Upload any JPEG, PNG, or WebP image and extract file metadata (size, dimensions, type) and EXIF data (camera model, GPS, exposure settings). Displays in a clean key-value table.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-sprite-generator",
+      "name": "CSS Sprite Position Calculator",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Calculate background-position values for CSS sprites",
+      "spec": "Input sprite sheet dimensions and individual sprite tile size. Generates a table of background-position values for each sprite by row/column. Outputs CSS class snippets for each tile.",
+      "status": "pending"
+    },
+    {
+      "slug": "ascii-table-generator",
+      "name": "ASCII Table Generator",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Convert CSV or tabular data into ASCII art tables",
+      "spec": "Paste CSV data or enter values in a grid. Renders as an ASCII art table with border styles (classic, single-line, double-line, markdown). Adjusts column widths automatically.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-tree-viewer",
+      "name": "JSON Tree Viewer",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Visualize JSON as an interactive collapsible tree",
+      "spec": "Paste JSON and explore it as a collapsible, color-coded tree. Supports search/filter within the tree. Click any node to copy its path or value. Handles large JSON with virtual rendering.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-diff",
+      "name": "JSON Diff",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Compare two JSON objects and highlight differences",
+      "spec": "Two-pane input for JSON objects. Diffs them deeply, showing added, removed, and changed keys with color coding. Supports nested objects and arrays. Outputs a summary of all changes.",
+      "status": "pending"
+    },
+    {
+      "slug": "csv-to-json",
+      "name": "CSV to JSON Converter",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Convert CSV data to JSON array with column header mapping",
+      "spec": "Paste CSV or upload a file. Detects delimiter automatically. Maps the first row to object keys. Options for output as array of objects, array of arrays, or keyed by a column. Download or copy output.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-to-typescript",
+      "name": "JSON to TypeScript Interface",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate TypeScript interfaces from JSON data",
+      "spec": "Paste a JSON object or array and auto-generate TypeScript interfaces with proper types (string, number, boolean, null, nested interfaces). Handles arrays, optional fields, and union types.",
+      "status": "pending"
+    },
+    {
+      "slug": "xml-to-json",
+      "name": "XML to JSON Converter",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Convert XML documents to JSON representation",
+      "spec": "Accepts XML input and converts to JSON following a configurable schema (attributes as keys, text as value, etc.). Pretty-prints the output. Handles namespaces and CDATA sections.",
+      "status": "pending"
+    },
+    {
+      "slug": "toml-to-json",
+      "name": "TOML to JSON Converter",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Convert TOML configuration files to JSON",
+      "spec": "Parses TOML syntax (strings, integers, floats, booleans, arrays, tables, datetime) and converts to equivalent JSON. Validates TOML syntax and reports errors with line numbers.",
+      "status": "pending"
+    },
+    {
+      "slug": "ini-to-json",
+      "name": "INI to JSON Converter",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Convert INI/config files to JSON objects",
+      "spec": "Parses INI format with sections and key-value pairs. Converts to a nested JSON object where sections become top-level keys. Handles comments and multi-value keys.",
+      "status": "pending"
+    },
+    {
+      "slug": "protobuf-decoder",
+      "name": "Protobuf Binary Decoder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Decode base64-encoded Protobuf binary messages",
+      "spec": "Paste a base64-encoded Protobuf binary payload and decode it to field numbers and wire types without a schema. Displays raw field numbers, types (varint, length-delimited, etc.), and values.",
+      "status": "pending"
+    },
+    {
+      "slug": "unicode-inspector",
+      "name": "Unicode Inspector",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Inspect every character in a string: codepoint, name, category",
+      "spec": "Input any text and list each character with its Unicode code point (U+XXXX), official Unicode name, category (letter, digit, symbol, etc.), and UTF-8 byte sequence. Detects invisible and unusual characters.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-color-names",
+      "name": "HTML Color Names Explorer",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Browse all 148 CSS named colors with hex and RGB values",
+      "spec": "Displays all CSS named colors in a searchable grid. Click any color to copy its name, hex, or RGB value. Filter by hue range or alphabetically. Shows each color as a large swatch.",
+      "status": "pending"
+    },
+    {
+      "slug": "gradient-to-css",
+      "name": "Gradient Image to CSS",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Sample colors from an uploaded gradient image and generate CSS gradient",
+      "spec": "Upload an image with a gradient. The tool samples colors along a horizontal or vertical axis and generates a multi-stop CSS linear-gradient that approximates the original image gradient.",
+      "status": "pending"
+    },
+    {
+      "slug": "font-pair-preview",
+      "name": "Font Pair Preview",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Preview Google Fonts pairings for headings and body text",
+      "spec": "Select two Google Fonts from a curated list and preview heading + body text combinations. Adjust font size, weight, and line height. Outputs the Google Fonts import URL and CSS font-family rules.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-counter",
+      "name": "CSS Counter Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate CSS counter-based automatic numbering systems",
+      "spec": "Configure counter name, scope (whole page, section, subsection), and format (decimal, lower-alpha, roman). Preview the numbering on a sample document structure. Outputs counter-reset, counter-increment, and content CSS.",
+      "status": "pending"
+    },
+    {
+      "slug": "nth-child-tester",
+      "name": "CSS :nth-child Tester",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Visually test CSS :nth-child, :nth-of-type, and :nth-last-child expressions",
+      "spec": "Input any An+B expression and a configurable number of elements. Highlights which elements match the selector in real time. Explains the formula in plain English and shows matching indices.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-blindness-sim",
+      "name": "Color Blindness Simulator",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Simulate how colors appear with different types of color blindness",
+      "spec": "Input a color palette or upload an image. Applies simulation filters for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia. Side-by-side before/after comparison using CSS filters and canvas transforms.",
+      "status": "pending"
+    },
+    {
+      "slug": "tailwind-config-viewer",
+      "name": "Tailwind Config Viewer",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Paste a Tailwind config and browse all generated tokens",
+      "spec": "Accepts a tailwind.config.js JSON object and parses the theme section. Displays all colors, spacing, typography, border radius, and shadow tokens as visual swatches and values. Search across all tokens.",
+      "status": "pending"
+    },
+    {
+      "slug": "network-latency-sim",
+      "name": "Network Latency Simulator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Simulate slow network throttling to plan loading UX",
+      "spec": "Input payload sizes (HTML, CSS, JS, images) and select a network speed preset (2G, 3G, LTE, Cable). Calculates estimated load times for each resource and total page load. Visualizes a waterfall chart.",
+      "status": "pending"
+    },
+    {
+      "slug": "http-response-builder",
+      "name": "HTTP Response Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Compose and format HTTP responses for documentation or mocking",
+      "spec": "Select a status code, add headers, and compose a body in JSON, HTML, or plain text. Outputs a formatted raw HTTP response string. Useful for writing API docs or configuring mock servers.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-token-generator",
+      "name": "Design Token Generator",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Generate design tokens from a color palette in JSON, CSS, or SCSS format",
+      "spec": "Input named colors with hex values. Outputs design tokens as CSS custom properties, SCSS variables, or JSON (Style Dictionary format). Supports auto-generating tint/shade scales for each color.",
+      "status": "pending"
+    },
+    {
+      "slug": "csp-builder",
+      "name": "Content Security Policy Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build Content-Security-Policy headers interactively",
+      "spec": "Toggle directives (script-src, style-src, img-src, etc.) and add allowed sources with autocomplete. Real-time preview of the CSP header string. Explains each directive and validates the output.",
+      "status": "pending"
+    },
+    {
+      "slug": "password-policy-tester",
+      "name": "Password Policy Tester",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Test a password against configurable policy rules",
+      "spec": "Define a password policy (min length, uppercase, numbers, symbols, no common words, no repeated chars). Input a password and see which rules pass and fail. Shows a policy compliance score.",
+      "status": "pending"
+    },
+    {
+      "slug": "cors-header-builder",
+      "name": "CORS Header Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build correct CORS response headers for any scenario",
+      "spec": "Select allowed origins, methods, and headers. Toggle credentials and preflight cache settings. Outputs the complete set of Access-Control-* response headers. Explains each header's purpose.",
+      "status": "pending"
+    },
+    {
+      "slug": "semantic-version-bumper",
+      "name": "Semantic Version Bumper",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Calculate the next semver version from a current version and change type",
+      "spec": "Input the current semver string and select the change type (major, minor, patch, prerelease). Outputs the bumped version. Also parses and compares two semver strings to determine which is greater.",
+      "status": "pending"
+    },
+    {
+      "slug": "changelog-formatter",
+      "name": "Changelog Formatter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Format a list of git commit messages into a structured changelog",
+      "spec": "Paste raw git commit messages and the tool groups them by type (feat, fix, chore, docs, refactor) based on Conventional Commits. Outputs a formatted Markdown changelog section for a given version.",
+      "status": "pending"
+    },
+    {
+      "slug": "package-json-checker",
+      "name": "package.json Linter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Validate and analyze package.json for common issues",
+      "spec": "Paste package.json content and check for missing required fields, inconsistent version ranges (^ vs ~), deprecated scripts, and potential security flags. Lists all dependencies with their version constraints.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-to-zod",
+      "name": "JSON to Zod Schema",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate a Zod validation schema from a JSON sample",
+      "spec": "Paste a JSON object and auto-generate the corresponding Zod schema with z.string(), z.number(), z.object(), z.array(), and z.optional() as appropriate. Handles nested structures and arrays.",
+      "status": "pending"
+    },
+    {
+      "slug": "sql-to-json",
+      "name": "SQL SELECT to JSON",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Convert SQL INSERT statements to JSON array",
+      "spec": "Paste SQL INSERT INTO statements and extract the values into a JSON array of objects using column names from the INSERT statement. Handles multiple rows and quoted string values.",
+      "status": "pending"
+    },
+    {
+      "slug": "dns-record-builder",
+      "name": "DNS Record Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate DNS record zone file entries for common record types",
+      "spec": "Select a record type (A, AAAA, CNAME, MX, TXT, SRV, NS) and fill in the fields. Outputs the correctly formatted zone file line. Includes common presets for Google Workspace, SPF, DKIM, and DMARC.",
+      "status": "pending"
+    },
+    {
+      "slug": "robots-txt-parser",
+      "name": "robots.txt Parser",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Parse and visualize a robots.txt file as a structured table",
+      "spec": "Paste a robots.txt file and parse all user-agent rules. Test a specific URL + user-agent combination to see if it is allowed or disallowed. Highlights conflicting rules.",
+      "status": "pending"
+    },
+    {
+      "slug": "utm-builder",
+      "name": "UTM Parameter Builder",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Build UTM-tagged URLs for campaign tracking",
+      "spec": "Input a base URL and fill in utm_source, utm_medium, utm_campaign, utm_term, and utm_content fields. Outputs the tagged URL with proper encoding. Also parses an existing UTM URL and extracts all parameters.",
+      "status": "pending"
+    },
+    {
+      "slug": "link-checker",
+      "name": "Link Extractor & Checker",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Extract all links from pasted HTML and categorize them",
+      "spec": "Paste raw HTML and extract all anchor href values. Categorizes links as internal, external, or anchor links. Checks for obviously broken patterns (empty href, javascript:, malformed URLs). Outputs a table with link text and URL.",
+      "status": "pending"
+    },
+    {
+      "slug": "schema-markup-tester",
+      "name": "Schema Markup Tester",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Validate JSON-LD and microdata structured data markup",
+      "spec": "Paste a JSON-LD script block and validate it against common Schema.org types. Checks required and recommended properties, reports missing fields, and shows a preview of how Google might render the rich result.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-loader-generator",
+      "name": "CSS Loader Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate pure CSS loading spinners and skeleton animations",
+      "spec": "Choose from spinner, dots, bars, pulse, or skeleton loader types. Customize color, size, and speed with sliders. Preview the animation live. Outputs pure CSS with no dependencies.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-reset-builder",
+      "name": "CSS Reset Builder",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate a modern CSS reset tailored to your needs",
+      "spec": "Toggle reset categories (box model, typography, lists, forms, media, accessibility) and see the generated CSS reset update in real time. Explains what each section does. Choose from Modern CSS Reset, Normalize.css approach, or Bare-bones style.",
+      "status": "pending"
+    },
+    {
+      "slug": "breakpoint-visualizer",
+      "name": "Breakpoint Visualizer",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Visualize common CSS breakpoints for popular frameworks",
+      "spec": "Displays breakpoints for Bootstrap, Tailwind CSS, Material UI, and custom setups side by side on a ruler. Enter a custom viewport width to see which breakpoints are active. Shows the corresponding media query for each.",
+      "status": "pending"
+    },
+    {
+      "slug": "image-aspect-crop",
+      "name": "Image Aspect Ratio Crop Calculator",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Calculate crop coordinates to achieve a target aspect ratio",
+      "spec": "Input original image dimensions (width x height) and the desired target aspect ratio. Calculates the largest possible crop area centered in the image and outputs the x, y, width, height crop coordinates.",
+      "status": "pending"
+    },
+    {
+      "slug": "webp-info",
+      "name": "WebP / Image Format Info",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Detect image format, dimensions, and color depth from a file",
+      "spec": "Upload any image file (JPEG, PNG, WebP, GIF, AVIF) and read its file header to determine the exact format, dimensions, bit depth, and whether it has transparency. Does not re-encode the image.",
+      "status": "pending"
+    },
+    {
+      "slug": "lorem-picsum-builder",
+      "name": "Placeholder Image URL Builder",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Build placeholder image URLs from popular services",
+      "spec": "Select a placeholder service (picsum.photos, placehold.co, via.placeholder.com) and configure width, height, background color, text, and seed. Outputs the URL and shows a live preview of the placeholder.",
+      "status": "pending"
+    },
+    {
+      "slug": "svg-wave-generator",
+      "name": "SVG Wave Generator",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Generate smooth wave SVG dividers for web pages",
+      "spec": "Configure wave amplitude, frequency, color, and number of layers. Toggle between wave types (gentle, sharp, layered). Preview on a colored background. Exports inline SVG or a standalone file.",
+      "status": "pending"
+    },
+    {
+      "slug": "number-formatter",
+      "name": "Number Formatter",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Format numbers with locale-specific separators, currency, and units",
+      "spec": "Input a number and select a locale (en-US, ja-JP, de-DE, etc.) and format type (decimal, currency, percent, unit). Shows the formatted output and the Intl.NumberFormat options that produce it.",
+      "status": "pending"
+    },
+    {
+      "slug": "percentage-calculator",
+      "name": "Percentage Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Calculate percentages, percent change, and percent of total",
+      "spec": "Three calculation modes: (1) X% of Y, (2) X is what % of Y, (3) percent change from X to Y. Shows formula and step-by-step calculation. Handles negative numbers and percentage points.",
+      "status": "pending"
+    },
+    {
+      "slug": "scientific-notation",
+      "name": "Scientific Notation Converter",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Convert numbers between standard and scientific notation",
+      "spec": "Input any number in standard decimal or scientific notation (e.g. 6.02e23) and convert between forms. Handles very large and very small numbers. Shows significant figures and engineering notation.",
+      "status": "pending"
+    },
+    {
+      "slug": "matrix-calculator",
+      "name": "Matrix Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Add, multiply, transpose, and find determinant of matrices",
+      "spec": "Input matrices up to 5x5 using a grid UI. Supports addition, subtraction, scalar multiplication, matrix multiplication, transpose, and determinant. Shows step-by-step calculation for 2x2 and 3x3 matrices.",
+      "status": "pending"
+    },
+    {
+      "slug": "statistics-calculator",
+      "name": "Descriptive Statistics Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Calculate mean, median, mode, std deviation from a data set",
+      "spec": "Input a list of numbers (comma or newline separated). Calculates mean, median, mode, range, variance, standard deviation, min, max, quartiles (Q1, Q3), and IQR. Draws a simple text-based histogram.",
+      "status": "pending"
+    },
+    {
+      "slug": "roman-numeral",
+      "name": "Roman Numeral Converter",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Convert between Arabic and Roman numerals",
+      "spec": "Bidirectional converter for integers 1–3999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol.",
+      "status": "pending"
+    },
+    {
+      "slug": "prime-checker",
+      "name": "Prime Number Checker",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Check if a number is prime and find prime factors",
+      "spec": "Input any positive integer and determine if it is prime. If composite, shows the complete prime factorization. Also generates a list of all primes up to a given limit using the Sieve of Eratosthenes.",
+      "status": "pending"
+    },
+    {
+      "slug": "gcd-lcm-calculator",
+      "name": "GCD & LCM Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Calculate Greatest Common Divisor and Least Common Multiple",
+      "spec": "Input two or more integers and calculate GCD and LCM. Shows Euclidean algorithm steps for GCD and the prime factorization method for LCM. Handles up to 10 numbers simultaneously.",
+      "status": "pending"
+    },
+    {
+      "slug": "currency-formatter",
+      "name": "Currency Format Previewer",
+      "market": "EN",
+      "category": "Finance",
+      "description": "Preview how a number formats as currency in different locales",
+      "spec": "Input an amount and see it formatted as USD, EUR, JPY, GBP, KRW, and 10 other currencies using the browser's Intl.NumberFormat. Shows symbol placement, decimal, and thousands separator differences.",
+      "status": "pending"
+    },
+    {
+      "slug": "compound-interest",
+      "name": "Compound Interest Calculator",
+      "market": "EN",
+      "category": "Finance",
+      "description": "Calculate compound interest with monthly contribution support",
+      "spec": "Input principal, annual rate, compounding frequency, duration, and optional monthly contribution. Shows final balance, total contributions, total interest earned. Draws a year-by-year growth chart with a bar visualization.",
+      "status": "pending"
+    },
+    {
+      "slug": "mortgage-calculator",
+      "name": "Mortgage Calculator",
+      "market": "EN",
+      "category": "Finance",
+      "description": "Calculate monthly mortgage payment, total interest, and amortization",
+      "spec": "Input loan amount, interest rate, and term in years. Calculates monthly payment using the amortization formula. Shows a year-by-year breakdown of principal vs. interest paid and remaining balance.",
+      "status": "pending"
+    },
+    {
+      "slug": "inflation-calculator",
+      "name": "Inflation Calculator",
+      "market": "EN",
+      "category": "Finance",
+      "description": "Calculate the real value of money adjusted for inflation",
+      "spec": "Input an amount, a starting year, and an ending year (or manual inflation rate). Uses the CPI formula to calculate the inflation-adjusted equivalent value. Explains purchasing power erosion.",
+      "status": "pending"
+    },
+    {
+      "slug": "roi-calculator",
+      "name": "ROI Calculator",
+      "market": "EN",
+      "category": "Finance",
+      "description": "Calculate Return on Investment and annualized ROI",
+      "spec": "Input initial investment, final value, and investment duration in years. Calculates simple ROI percentage, annualized (CAGR) ROI, and total gain/loss. Compares ROI against a benchmark rate.",
+      "status": "pending"
+    },
+    {
+      "slug": "bmi-english",
+      "name": "BMI & Healthy Weight Calculator",
+      "market": "EN",
+      "category": "Health & Fitness",
+      "description": "Calculate BMI and ideal weight range in metric or imperial",
+      "spec": "Input height and weight in metric or imperial units. Calculates BMI, displays the WHO category (underweight, normal, overweight, obese), and shows the healthy weight range for the given height.",
+      "status": "pending"
+    },
+    {
+      "slug": "calorie-burn",
+      "name": "Calorie Burn Estimator",
+      "market": "EN",
+      "category": "Health & Fitness",
+      "description": "Estimate calories burned for common exercises using MET values",
+      "spec": "Select an activity from a list of 40+ exercises, input body weight and duration. Calculates calories burned using MET (Metabolic Equivalent of Task) values. Shows equivalent food calories.",
+      "status": "pending"
+    },
+    {
+      "slug": "water-intake",
+      "name": "Daily Water Intake Calculator",
+      "market": "EN",
+      "category": "Health & Fitness",
+      "description": "Calculate recommended daily water intake based on body weight and activity",
+      "spec": "Input body weight (kg or lbs), activity level (sedentary to very active), and climate. Calculates recommended daily water intake in liters and cups. Adjusts for exercise duration.",
+      "status": "pending"
+    },
+    {
+      "slug": "heart-rate-zones",
+      "name": "Heart Rate Zone Calculator",
+      "market": "EN",
+      "category": "Health & Fitness",
+      "description": "Calculate target heart rate training zones",
+      "spec": "Input age and optional resting heart rate. Calculates max heart rate and five training zones (recovery, endurance, aerobic, threshold, anaerobic) using both the simple and Karvonen methods.",
+      "status": "pending"
+    },
+    {
+      "slug": "macro-calculator",
+      "name": "Macronutrient Calculator",
+      "market": "EN",
+      "category": "Health & Fitness",
+      "description": "Calculate daily protein, carb, and fat targets for fitness goals",
+      "spec": "Input age, gender, height, weight, activity level, and goal (cut, maintain, bulk). Calculates TDEE and breaks down daily calories into protein, carbohydrates, and fat macros in grams.",
+      "status": "pending"
+    },
+    {
+      "slug": "timezone-world-clock",
+      "name": "World Clock",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Display current time in multiple time zones simultaneously",
+      "spec": "Add multiple cities/time zones from a searchable list and see all current times in a card grid that updates every second. Shows time, date, UTC offset, and whether the timezone is in DST.",
+      "status": "pending"
+    },
+    {
+      "slug": "meeting-time-planner",
+      "name": "Meeting Time Planner",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Find overlapping working hours across multiple time zones",
+      "spec": "Add team members with their time zones and working hours. Highlights the time slots where all selected members are within working hours. Outputs suggested meeting times and their local time in each zone.",
+      "status": "pending"
+    },
+    {
+      "slug": "pomodoro-timer",
+      "name": "Pomodoro Timer",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Customizable Pomodoro technique timer with session tracking",
+      "spec": "Configurable work session (default 25 min), short break (5 min), and long break (15 min) durations. Tracks completed sessions per day. Browser notifications on timer end. Session history table.",
+      "status": "pending"
+    },
+    {
+      "slug": "habit-tracker",
+      "name": "Habit Tracker",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Track daily habits with a visual streak calendar",
+      "spec": "Add up to 10 habits and mark them complete each day. Shows a GitHub-style contribution heatmap for each habit. Calculates current streak, longest streak, and completion rate. Data persisted in localStorage.",
+      "status": "pending"
+    },
+    {
+      "slug": "decision-matrix",
+      "name": "Decision Matrix",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Weighted decision matrix for comparing options across criteria",
+      "spec": "Add options and criteria with weights (1-10). Score each option per criterion. Calculates weighted totals and ranks options automatically. Visual bar chart of final scores.",
+      "status": "pending"
+    },
+    {
+      "slug": "text-to-speech-preview",
+      "name": "TTS Pronunciation Checker",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Use the browser's Speech Synthesis API to hear text spoken aloud",
+      "spec": "Input text and select from available system voices and languages. Adjust rate, pitch, and volume. Click play to hear the text. Useful for checking pronunciation of words and UI copy.",
+      "status": "pending"
+    },
+    {
+      "slug": "typing-speed-test",
+      "name": "Typing Speed Test",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Measure typing speed (WPM) and accuracy with sample texts",
+      "spec": "Displays a paragraph of sample text. User types to match it. Tracks WPM in real time, highlights errors, and shows final accuracy percentage and time taken on completion. Multiple difficulty levels.",
+      "status": "pending"
+    },
+    {
+      "slug": "markdown-lint",
+      "name": "Markdown Linter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Lint Markdown for common style and syntax issues",
+      "spec": "Paste Markdown and check for issues like inconsistent heading levels, bare URLs, long lines, trailing spaces, and missing blank lines around headings. Shows inline error locations with fix suggestions.",
+      "status": "pending"
+    },
+    {
+      "slug": "diff-to-patch",
+      "name": "Diff to Patch File Converter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Format a unified diff as a .patch file",
+      "spec": "Paste a unified diff and format it as a valid .patch file with proper headers (From, Date, Subject). Optionally set the commit message, author, and file paths. Outputs a git-apply compatible patch file.",
+      "status": "pending"
+    },
+    {
+      "slug": "gitflow-visualizer",
+      "name": "Git Flow Visualizer",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Visualize a Git log as a branch diagram",
+      "spec": "Paste git log --oneline --graph output and render it as an interactive, colorized branch diagram. Each commit is clickable. Shows branch names and merge points clearly.",
+      "status": "pending"
+    },
+    {
+      "slug": "code-snippet-formatter",
+      "name": "Code Snippet Formatter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Format and syntax-highlight code snippets for sharing",
+      "spec": "Paste code in any popular language (JS, Python, Rust, Go, SQL, etc.). Applies syntax highlighting and line numbers. Choose a theme (dark/light). Outputs a styled HTML snippet ready to embed in a blog post.",
+      "status": "pending"
+    },
+    {
+      "slug": "env-diff",
+      "name": ".env File Diff",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Compare two .env files to find missing or different variables",
+      "spec": "Paste two .env files side by side. Highlights variables present in one but missing from the other, and variables with different values. Useful for syncing .env.example with production configs.",
+      "status": "pending"
+    },
+    {
+      "slug": "ascii-flowchart",
+      "name": "ASCII Flowchart Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Convert a simple node-edge list into an ASCII flowchart",
+      "spec": "Describe a flowchart with nodes (rectangles or diamonds) and arrows in a simple DSL. Renders the flowchart as ASCII art using box-drawing characters. Useful for inline documentation and READMEs.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-unit-converter",
+      "name": "CSS Unit Converter",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Convert between px, rem, em, vw, vh, pt, and more",
+      "spec": "Input a value and source unit, select a target unit, and optionally set the root font size (default 16px) and viewport dimensions. Converts between px, rem, em, vw, vh, vmin, vmax, pt, and cm.",
+      "status": "pending"
+    },
+    {
+      "slug": "line-height-calculator",
+      "name": "Line Height Calculator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Calculate optimal line-height for a given font size and measure",
+      "spec": "Input font size (px), line width (characters), and font weight. Calculates the recommended unitless line-height using typographic best practices. Shows the equivalent in px, rem, and em.",
+      "status": "pending"
+    },
+    {
+      "slug": "type-scale-generator",
+      "name": "Typographic Scale Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate a modular typographic scale with CSS output",
+      "spec": "Set a base font size and a scale ratio (minor third, major third, golden ratio, etc.). Generates a typographic scale with 8 steps. Preview the scale with sample text. Output as CSS custom properties or Tailwind extend config.",
+      "status": "pending"
+    },
+    {
+      "slug": "viewport-unit-calc",
+      "name": "Viewport Unit Calculator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Calculate vw/vh pixel values at common breakpoints",
+      "spec": "Input a vw or vh value and see its pixel equivalent at preset viewport widths (360, 768, 1024, 1280, 1440, 1920px). Also reverse-calculates what vw value equals a target pixel size at a given viewport.",
+      "status": "pending"
+    },
+    {
+      "slug": "open-graph-builder",
+      "name": "Open Graph Tag Builder",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Generate Open Graph meta tags for articles, websites, and products",
+      "spec": "Form fields for og:title, og:description, og:image, og:url, og:type, og:site_name. Live preview of how the link will look when shared on social platforms. Outputs the complete og: meta tag block.",
+      "status": "pending"
+    },
+    {
+      "slug": "hreflang-generator",
+      "name": "Hreflang Tag Generator",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Generate hreflang link tags for multilingual SEO",
+      "spec": "Add language/region variants with their URLs. Generates the complete set of <link rel='alternate' hreflang='x-default'> tags including x-default. Validates that every page has a self-referencing hreflang tag.",
+      "status": "pending"
+    },
+    {
+      "slug": "favicon-checker",
+      "name": "Favicon Requirements Checker",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Check what favicon sizes and formats a site needs",
+      "spec": "Lists all recommended favicon sizes and formats (16x16, 32x32, apple-touch-icon, 180x180, manifest icons, MS tiles). User checks off which they have. Outputs the corresponding HTML link tags for each.",
+      "status": "pending"
+    },
+    {
+      "slug": "slug-generator",
+      "name": "URL Slug Generator",
+      "market": "EN",
+      "category": "SEO Tools",
+      "description": "Convert article titles to SEO-friendly URL slugs",
+      "spec": "Input any text (including Japanese, accented characters, special symbols) and generate a clean URL slug: lowercased, spaces to hyphens, diacritics normalized, non-ASCII removed or transliterated. Configurable separator.",
+      "status": "pending"
+    },
+    {
+      "slug": "reading-time",
+      "name": "Reading Time Estimator",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Estimate reading time for any text content",
+      "spec": "Paste any text and calculate estimated reading time at configurable WPM (default 200 WPM). Shows word count, character count, sentence count, and paragraph count alongside the time estimate. Supports multiple reading speed presets.",
+      "status": "pending"
+    },
+    {
+      "slug": "text-stats",
+      "name": "Text Statistics Dashboard",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Comprehensive text analytics: word frequency, sentence length, complexity",
+      "spec": "Paste any text and get a full statistics dashboard: word count, unique words, lexical diversity, average word length, average sentence length, longest word, most frequent words, and paragraph count.",
+      "status": "pending"
+    },
+    {
+      "slug": "sprintf-formatter",
+      "name": "sprintf / printf Formatter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Test and preview printf/sprintf format strings",
+      "spec": "Input a format string with % placeholders (%d, %s, %f, %x, etc.) and provide argument values. Shows the formatted output. Supports C-style printf, Python %-formatting, and Go fmt.Sprintf conventions.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-shade-picker",
+      "name": "Color Shade Picker",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Generate 10-step tint and shade scale for any color",
+      "spec": "Pick any color and generate 10 tints (mixed toward white) and 10 shades (mixed toward black). Displays each step as a swatch with hex code. Exports as CSS custom properties or Tailwind palette JSON.",
+      "status": "pending"
+    },
+    {
+      "slug": "tailwind-arbitrary",
+      "name": "Tailwind Arbitrary Value Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate Tailwind CSS arbitrary value classes for custom values",
+      "spec": "Input any CSS property and value and get the corresponding Tailwind arbitrary value class (e.g. w-[123px], text-[#ff0000], grid-cols-[1fr_2fr]). Supports all major utility groups.",
+      "status": "pending"
+    },
+    {
+      "slug": "image-data-uri",
+      "name": "Image Data URI Generator",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Convert small images to inline data: URI for CSS or HTML",
+      "spec": "Upload a small image (PNG, SVG, GIF) and generate its data: URI string. Shows the resulting URI size and warns if it exceeds 4KB (typical recommendation for inline use). Copy button for CSS background-image use.",
+      "status": "pending"
+    },
+    {
+      "slug": "canvas-image-editor",
+      "name": "Canvas Image Resizer",
+      "market": "EN",
+      "category": "Image Tools",
+      "description": "Resize and convert images client-side using HTML Canvas",
+      "spec": "Upload an image and set target width, height (with optional aspect ratio lock), and output format (JPEG, PNG, WebP). Uses HTML Canvas to resize and re-encode. Shows original vs. output file sizes. Download the result.",
+      "status": "pending"
+    },
+    {
+      "slug": "morse-code",
+      "name": "Morse Code Translator",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Translate text to and from Morse code with audio playback",
+      "spec": "Bidirectional translation between text and Morse code dots/dashes. Uses the Web Audio API to play the Morse code as audio beeps at configurable speed (WPM) and frequency (Hz).",
+      "status": "pending"
+    },
+    {
+      "slug": "braille-converter",
+      "name": "Braille Translator",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Convert English text to Grade 1 Braille Unicode characters",
+      "spec": "Input English text and display the corresponding Grade 1 (uncontracted) Braille Unicode characters. Each character is shown above its Braille cell. Supports letters, digits, and common punctuation.",
+      "status": "pending"
+    },
+    {
+      "slug": "keyboard-shortcut-finder",
+      "name": "Keyboard Shortcut Cheatsheet",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Searchable keyboard shortcuts for VS Code, Chrome, macOS, Windows",
+      "spec": "Searchable database of keyboard shortcuts for VS Code, Chrome DevTools, macOS, Windows, and Figma. Filter by application and OS. Shows modifier keys as visual key caps. Mark favorites for a personal quick reference.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-picker-history",
+      "name": "Color Picker with History",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Pick colors with a full-featured picker and persistent history",
+      "spec": "Full HSL/RGB/Hex color picker with eyedropper hint. Saves last 20 picked colors in localStorage. One-click copy in any format (hex, rgb(), hsl(), Tailwind class). Import/export color history as JSON.",
+      "status": "pending"
+    },
+    {
+      "slug": "stopwatch-lap",
+      "name": "Stopwatch with Lap Timer",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Precise stopwatch with lap recording and statistics",
+      "spec": "Start/stop/reset stopwatch with millisecond precision. Record lap times with a lap button. Shows a table of all lap times with the split (time since last lap). Highlights fastest and slowest laps.",
+      "status": "pending"
+    },
+    {
+      "slug": "countdown-timer",
+      "name": "Countdown Timer",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Set a countdown to any date or duration with browser notifications",
+      "spec": "Set a countdown by duration (HH:MM:SS) or to a specific date/time. Displays days, hours, minutes, seconds in large digits. Sends a browser notification on completion. Persists countdown target in localStorage.",
+      "status": "pending"
+    },
+    {
+      "slug": "color-temperature",
+      "name": "Color Temperature Calculator",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Convert between color temperature (Kelvin) and RGB values",
+      "spec": "Slide a color temperature range from 1000K (candlelight) to 10000K (blue sky). Shows the approximate RGB and hex color for each temperature. Useful for lighting design and color grading reference.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-table-builder",
+      "name": "HTML Table Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Visual spreadsheet editor that generates HTML table code",
+      "spec": "Spreadsheet-style grid to enter tabular data. Configure column headers, cell alignment, colspan/rowspan, and table caption. Outputs clean HTML with optional Bootstrap or Tailwind CSS classes.",
+      "status": "pending"
+    },
+    {
+      "slug": "sql-query-formatter",
+      "name": "SQL Query Beautifier with Explainer",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Format SQL and add inline comments explaining each clause",
+      "spec": "Paste a SQL query and get it beautifully formatted (indented, capitalized keywords). Toggle an explain mode that adds inline comments describing what each clause (SELECT, JOIN, WHERE, GROUP BY) does.",
+      "status": "pending"
+    },
+    {
+      "slug": "api-mock-builder",
+      "name": "API Mock Response Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build fake API response JSON from a field schema",
+      "spec": "Define a response schema by adding fields with types (string, number, boolean, date, uuid, email, name, array, nested object). Click Generate to produce a realistic fake JSON response. Generate multiple records at once.",
+      "status": "pending"
+    },
+    {
+      "slug": "text-truncator",
+      "name": "Text Truncator & Ellipsis Tester",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Preview how text truncates at various lengths with ellipsis",
+      "spec": "Input long text and configure max character or word count, truncation position (end, middle, start), and ellipsis character. Preview the truncated output. Also shows what CSS text-overflow settings produce for a given container width.",
+      "status": "pending"
+    },
+    {
+      "slug": "tailwind-cheatsheet",
+      "name": "Tailwind CSS Cheatsheet",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Searchable reference for all Tailwind CSS utility classes",
+      "spec": "Full searchable cheatsheet of Tailwind CSS v3 utility classes grouped by category. Filter by category or type a class name prefix to find matching classes. Shows the generated CSS for each class on hover.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-easing-visualizer",
+      "name": "CSS Easing Visualizer",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Visualize and create CSS cubic-bezier easing curves",
+      "spec": "Interactive bezier curve editor with draggable control points. Live animation preview on a bouncing ball. Includes a library of named easings (ease-in-out, spring, bounce, etc.). Copies the cubic-bezier() value.",
+      "status": "pending"
+    },
+    {
+      "slug": "nengou-calculator",
+      "name": "元号・西暦変換ツール",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "元号（令和・平成・昭和・大正・明治）と西暦を双方向変換",
+      "spec": "西暦年を入力して対応する元号表記に変換、または元号と年を入力して西暦に変換。令和・平成・昭和・大正・明治に対応。和暦表記（漢数字）でも出力可能。",
+      "status": "pending"
+    },
+    {
+      "slug": "postal-code-jp",
+      "name": "郵便番号フォーマッター",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "郵便番号をフォーマット・バリデーションする",
+      "spec": "数字7桁の入力から〒xxx-xxxx形式に自動フォーマット。ハイフンなし・ありどちらも受け付け、正規表現でバリデーション。複数行の郵便番号リストを一括変換する機能付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "hiragana-katakana",
+      "name": "ひらがな・カタカナ変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "ひらがなとカタカナを相互変換",
+      "spec": "入力テキストのひらがなをカタカナに、またはカタカナをひらがなに変換。半角カタカナ⇔全角カタカナ変換も対応。文章全体または選択範囲のみ変換するモードを切り替え可能。",
+      "status": "pending"
+    },
+    {
+      "slug": "han-zen-converter",
+      "name": "全角・半角文字変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "英数字・記号・カタカナの全角↔半角を一括変換",
+      "spec": "テキストを貼り付けて全角英数字を半角に、または半角カタカナを全角に一括変換。英数字のみ・記号のみ・カタカナのみなど変換対象を選択できる。変更箇所をハイライト表示。",
+      "status": "pending"
+    },
+    {
+      "slug": "keigo-checker",
+      "name": "敬語チェッカー",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "ビジネスメール文章の敬語・丁寧語を確認",
+      "spec": "テキストを入力すると、よく間違われる二重敬語・過剰敬語・敬語の混在をルールベースで検出してハイライト表示。各指摘に修正案を提示。ビジネスメールの最終確認ツール。",
+      "status": "pending"
+    },
+    {
+      "slug": "okurigana-checker",
+      "name": "送り仮名チェッカー",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "送り仮名の付け方をルールに基づきチェック",
+      "spec": "テキストを入力し、文化庁「送り仮名の付け方」に基づいた送り仮名の誤りをルールベースで検出。よく間違われる動詞・形容詞・名詞の送り仮名ルールを辞書として内蔵。",
+      "status": "pending"
+    },
+    {
+      "slug": "nenreki-jisan",
+      "name": "年齢・学年早見表",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "生年月日から年齢・学年・干支を自動計算",
+      "spec": "生年月日を入力すると現在の年齢（満年齢・数え年）、日本の学校制度における学年、干支、星座を表示。未来日付を入力すれば何歳になるかも計算。",
+      "status": "pending"
+    },
+    {
+      "slug": "furigana-generator",
+      "name": "ふりがな生成ツール",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "漢字テキストにルビ（ふりがな）HTMLタグを付与",
+      "spec": "漢字とその読みをペアで入力して <ruby><rb>漢字</rb><rt>よみ</rt></ruby> 形式のHTMLを生成。複数の漢字を一括登録して文章全体に適用する機能付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "nihongo-romaji",
+      "name": "日本語ローマ字変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "ひらがな・カタカナをローマ字（ヘボン式・訓令式）に変換",
+      "spec": "ひらがなまたはカタカナを入力してヘボン式・訓令式・日本式ローマ字に変換。長音・拗音・促音・撥音すべて対応。パスポート向けヘボン式モードあり。",
+      "status": "pending"
+    },
+    {
+      "slug": "hanzi-jp-diff",
+      "name": "旧字体・新字体 変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "旧字体（旧漢字）と新字体を相互変換",
+      "spec": "テキストを入力して旧字体を新字体に、または新字体を旧字体に変換。対応する字形の対応表を内蔵。変換できなかった文字は元のまま保持して明示。",
+      "status": "pending"
+    },
+    {
+      "slug": "gengou-timeline",
+      "name": "元号タイムライン",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "明治以降の元号を視覚的なタイムラインで表示",
+      "spec": "明治・大正・昭和・平成・令和の期間を横軸タイムラインで表示。任意の西暦年をホバーすると対応する元号年が表示。各元号の開始・終了年と在位日数を確認できる。",
+      "status": "pending"
+    },
+    {
+      "slug": "japanese-counter",
+      "name": "日本語助数詞ガイド",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "物・動物・薄いもの等の正しい助数詞を調べる",
+      "spec": "数える対象（本・冊・匹・羽・枚・個等）で検索または選択すると、その助数詞の読み方と1〜10の数え方を表形式で表示。よく間違われる助数詞を特集する関連リスト付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "bunsho-keishiki",
+      "name": "文書テンプレート整形ツール",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "ビジネス文書の形式（拝啓・敬具・時候の挨拶）を整える",
+      "spec": "ビジネスレターの本文を入力すると、頭語・結語（拝啓〜敬具）・時候の挨拶を月別に自動挿入して正式な書式に整形。縦書き用（縦書きHTML）への変換オプション付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "yen-kanji",
+      "name": "金額漢字変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "数字の金額を漢数字・大字（壱・弐・参）に変換",
+      "spec": "半角数字の金額を入力して通常の漢数字（一二三）と正式な大字（壱弐参）の両方に変換。請求書・領収書・小切手などの正式書類向け。「円也」付きフォーマットも選択可能。",
+      "status": "pending"
+    },
+    {
+      "slug": "koyomi-keisan",
+      "name": "日本の祝日計算ツール",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "任意の年の祝日一覧と営業日数を計算",
+      "spec": "年を入力すると内閣府規定に基づく国民の祝日（振替休日含む）の一覧を表示。月ごとの営業日数（土日祝を除く日数）も計算。開始日・終了日を指定した期間の営業日数計算機能付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "jimaku-formatter",
+      "name": "字幕・ルビ整形ツール",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "動画字幕テキストをSRT/VTT形式に変換",
+      "spec": "タイムコードと字幕テキストを入力してSRT・WebVTT形式の字幕ファイルを生成。既存のSRT/VTTを貼り付けて整形・バリデーションも可能。行長制限チェック機能付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "waribiki-zeikomi",
+      "name": "割引・税込み計算ツール",
+      "market": "JP",
+      "category": "Finance",
+      "description": "税込み価格・割引後価格を素早く計算",
+      "spec": "本体価格を入力して消費税（8%/10%）込みの価格を計算。複数の割引率（%OFF・円引き）を組み合わせた最終価格も計算可能。逆算（税込み価格から税抜きを算出）にも対応。",
+      "status": "pending"
+    },
+    {
+      "slug": "shakai-hoken",
+      "name": "社会保険料 概算計算ツール",
+      "market": "JP",
+      "category": "Finance",
+      "description": "月収から社会保険料（健康保険・年金・雇用保険）の概算を計算",
+      "spec": "月収・年齢・都道府県を入力して健康保険料・厚生年金保険料・雇用保険料の概算を計算。手取り概算額と控除一覧を表形式で表示。協会けんぽ料率ベース。",
+      "status": "pending"
+    },
+    {
+      "slug": "furusato-nozei",
+      "name": "ふるさと納税 上限額シミュレーター",
+      "market": "JP",
+      "category": "Finance",
+      "description": "年収・家族構成からふるさと納税の控除上限額を試算",
+      "spec": "年収・家族構成（配偶者・扶養子の有無）・住宅ローン控除額を入力してふるさと納税の実質負担2,000円となる上限寄付額を試算。ワンストップ特例と確定申告の違いも説明。",
+      "status": "pending"
+    },
+    {
+      "slug": "kyuyo-meisai",
+      "name": "給与明細チェッカー",
+      "market": "JP",
+      "category": "Finance",
+      "description": "給与明細の各控除額を確認・検証する",
+      "spec": "支給項目と控除項目を入力して手取り額を自動計算。所得税・住民税・健康保険・厚生年金の概算と比較して明細の数値に大きなズレがないか確認。月次推移も記録可能（localStorage）。",
+      "status": "pending"
+    },
+    {
+      "slug": "haken-hiryou",
+      "name": "派遣料金・マージン率 計算",
+      "market": "JP",
+      "category": "Finance",
+      "description": "派遣料金から時給・マージン率を逆算",
+      "spec": "派遣単価（時間/日/月）と稼働時間を入力して派遣スタッフへの時給換算と推定マージン率を計算。厚生労働省の平均マージン率と比較表示。",
+      "status": "pending"
+    },
+    {
+      "slug": "teinengo-nenkin",
+      "name": "老齢年金 受給額試算",
+      "market": "JP",
+      "category": "Finance",
+      "description": "納付期間と平均月収から老齢厚生年金・基礎年金の概算を試算",
+      "spec": "平均標準報酬月額・納付月数・生年月日を入力して老齢基礎年金と老齢厚生年金の月額概算を計算。繰上げ・繰下げ受給による増減額も計算。公的年金等控除後の手取り概算付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "menseki-tani",
+      "name": "面積・坪数変換ツール",
+      "market": "JP",
+      "category": "Math & Science",
+      "description": "㎡・坪・畳の面積単位を相互変換",
+      "spec": "平方メートル・坪・畳（江戸間・京間・団地間）を相互変換。部屋の縦×横から面積を計算する入力モードも搭載。不動産物件探しや引越し計画に便利。",
+      "status": "pending"
+    },
+    {
+      "slug": "dosage-calculator",
+      "name": "薬剤量計算ツール",
+      "market": "JP",
+      "category": "Health & Fitness",
+      "description": "体重別の薬剤投与量を計算（医療・看護向け）",
+      "spec": "薬剤名・体重あたりの投与量（mg/kg）・患者体重を入力して総投与量を計算。錠剤や内服液の1回あたりの量（錠数・mL）も計算。免責事項を明示した参考ツール。",
+      "status": "pending"
+    },
+    {
+      "slug": "water-hardness",
+      "name": "水の硬度計算ツール",
+      "market": "JP",
+      "category": "Health & Fitness",
+      "description": "水のカルシウム・マグネシウム濃度から硬度を計算",
+      "spec": "カルシウム濃度（mg/L）とマグネシウム濃度（mg/L）を入力してWHO基準の硬度（炭酸カルシウム換算mg/L）を計算。軟水・中程度の硬水・硬水の分類も表示。",
+      "status": "pending"
+    },
+    {
+      "slug": "shohi-zei-keisan",
+      "name": "消費税計算ツール",
+      "market": "JP",
+      "category": "Finance",
+      "description": "消費税込み・抜き・税額を瞬時に計算",
+      "spec": "金額と税率（8%/10%）を入力して税抜き・税込み・消費税額を計算。複数商品の合計に対する消費税計算（インボイス対応・端数処理選択）機能付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "color-code-jp",
+      "name": "日本の伝統色コード集",
+      "market": "JP",
+      "category": "Color Tools",
+      "description": "日本の伝統色と慣用色名のカラーコードを検索",
+      "spec": "460色以上の日本の伝統色（JIS慣用色名）をカラーコードと共に収録。色名・よみ・HEX・RGB・Munsell値を表示。色相・明度・彩度でフィルタリング。色名でテキスト検索可能。",
+      "status": "pending"
+    },
+    {
+      "slug": "jis-color-codes",
+      "name": "JIS安全色 ガイドライン",
+      "market": "JP",
+      "category": "Color Tools",
+      "description": "JIS Z 9103で定められた安全色8色の仕様を表示",
+      "spec": "JIS Z 9103の安全色（赤・黄赤・黄・緑・青・赤紫・白・黒）のカラーコード・Munsell値・用途を一覧表示。安全標識の対比色の組み合わせ推奨リスト付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "kanji-stroke-order",
+      "name": "漢字筆順検索ツール",
+      "market": "JP",
+      "category": "Education",
+      "description": "漢字を入力して筆順（書き順）をアニメーション表示",
+      "spec": "常用漢字2136字のSVGストローク順データを内蔵。漢字を入力してアニメーションまたはステップ表示で筆順を確認。読み・画数・部首・Unicode情報も表示。",
+      "status": "pending"
+    },
+    {
+      "slug": "kana-quiz",
+      "name": "ひらがな・カタカナ クイズ",
+      "market": "JP",
+      "category": "Education",
+      "description": "五十音のひらがな・カタカナを練習するフラッシュカード",
+      "spec": "ランダムに出題されるひらがな・カタカナのフラッシュカード。ローマ字で回答して正誤判定。苦手な文字を集中練習するモード・行（あ行・か行等）別練習モード付き。正答率をlocalStorageで記録。",
+      "status": "pending"
+    },
+    {
+      "slug": "kanji-quiz",
+      "name": "漢字読み方クイズ",
+      "market": "JP",
+      "category": "Education",
+      "description": "JLPT N5〜N1レベルの漢字読み問題を出題",
+      "spec": "JLPTレベル（N5〜N1）を選択してランダム出題。漢字の読み方（ひらがな）を入力して正誤判定。出題語の意味・例文も表示。正答・誤答履歴をlocalStorageで管理しセッション内の正答率を表示。",
+      "status": "pending"
+    },
+    {
+      "slug": "multiplication-table",
+      "name": "九九 練習ツール",
+      "market": "JP",
+      "category": "Education",
+      "description": "九九を練習・暗記するためのインタラクティブツール",
+      "spec": "閲覧モード（九九表）と練習モード（ランダム出題）を切り替え可能。練習モードでは九九の式を表示して答えを入力、タイム計測付き。苦手な段を強化練習できるフィルター付き。",
+      "status": "pending"
+    },
+    {
+      "slug": "periodic-table",
+      "name": "Periodic Table Explorer",
+      "market": "EN",
+      "category": "Education",
+      "description": "Interactive periodic table with element details on click",
+      "spec": "Full periodic table displayed in standard layout with color coding by element category (alkali metals, halogens, noble gases, etc.). Click any element to view atomic number, mass, electron configuration, and common uses.",
+      "status": "pending"
+    },
+    {
+      "slug": "fraction-calculator",
+      "name": "Fraction Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Add, subtract, multiply, and divide fractions with step-by-step solutions",
+      "spec": "Input two fractions and select an operation. Calculates the result in simplified form and shows all intermediate steps (finding LCD, converting, simplifying). Converts result to decimal and mixed number.",
+      "status": "pending"
+    },
+    {
+      "slug": "trigonometry-calc",
+      "name": "Trigonometry Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Calculate all trig functions and inverse trig in degrees or radians",
+      "spec": "Input an angle in degrees or radians and see sin, cos, tan, sec, csc, cot values. Or input a ratio and get the inverse (arcsin, arccos, arctan). Unit circle visualization with the angle plotted.",
+      "status": "pending"
+    },
+    {
+      "slug": "quadratic-solver",
+      "name": "Quadratic Equation Solver",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Solve quadratic equations and visualize the parabola",
+      "spec": "Input coefficients a, b, c for ax² + bx + c = 0. Calculates roots using the quadratic formula (including complex roots). Shows discriminant, vertex, and axis of symmetry. Simple SVG parabola visualization.",
+      "status": "pending"
+    },
+    {
+      "slug": "ip-subnet-calculator",
+      "name": "IP Subnet Calculator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Calculate network address, broadcast, and host range from IP/CIDR",
+      "spec": "Input an IP address with CIDR notation (e.g. 192.168.1.0/24) and calculate network address, broadcast address, first/last host, number of hosts, and subnet mask. Shows binary representation of all values.",
+      "status": "pending"
+    },
+    {
+      "slug": "mac-address-lookup",
+      "name": "MAC Address OUI Lookup",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Look up the manufacturer/vendor of a MAC address from the OUI prefix",
+      "spec": "Input a MAC address and identify the vendor from the first 3 octets (OUI). Bundled with the top 500 vendor prefixes for common network equipment brands. Validates MAC address format.",
+      "status": "pending"
+    },
+    {
+      "slug": "lorem-json",
+      "name": "Lorem JSON Generator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Generate structured fake JSON data from a template schema",
+      "spec": "Define a JSON template with faker-style placeholders ({{name}}, {{email}}, {{uuid}}, {{int(1,100)}}, etc.). Generate N records based on the template. Download or copy as JSON array. Built-in random data generators for common field types.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-entities-reference",
+      "name": "HTML Entities Reference",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Searchable reference of all HTML character entities",
+      "spec": "Search by entity name, character, or Unicode codepoint across all standard HTML entities. Shows the entity name, numeric reference, character, and Unicode info. Click any entity to copy it.",
+      "status": "pending"
+    },
+    {
+      "slug": "email-subject-line-tester",
+      "name": "Email Subject Line Tester",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Analyze email subject lines for length, emojis, and spam triggers",
+      "spec": "Input an email subject line and get: character/word count, preview at 40/60/80 char truncation, spam word detection, emoji presence, ALL CAPS flag, punctuation overuse warning, and a mobile preview simulation.",
+      "status": "pending"
+    },
+    {
+      "slug": "csv-sql-query",
+      "name": "CSV SQL Query Tool",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Run SQL SELECT queries on uploaded CSV files in the browser",
+      "spec": "Upload a CSV file and query it with SQL (SELECT, WHERE, ORDER BY, GROUP BY, LIMIT) using a client-side SQL engine. Results shown in a paginated table. Download query results as a new CSV.",
+      "status": "pending"
+    },
+    {
+      "slug": "yaml-validator",
+      "name": "YAML Validator & Prettifier",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Validate YAML syntax and pretty-print with consistent indentation",
+      "spec": "Paste YAML content and validate it for syntax errors with line-specific error messages. Pretty-print with configurable indent size (2 or 4 spaces). Convert to JSON output. Detects duplicate keys.",
+      "status": "pending"
+    },
+    {
+      "slug": "dns-propagation-sim",
+      "name": "DNS Record Validator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Validate the syntax of DNS zone file records",
+      "spec": "Paste DNS zone file records and validate syntax for A, AAAA, CNAME, MX, TXT, SRV, NS, and SOA record types. Highlights format errors with specific messages. Checks for common misconfigurations like missing trailing dots.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-accessibility-checker",
+      "name": "HTML Accessibility Quick Checker",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Check pasted HTML for basic accessibility issues",
+      "spec": "Paste HTML markup and scan for: missing alt attributes on images, form inputs without labels, empty button/link text, missing lang attribute, and heading level skips. Lists issues with the affected HTML element and fix suggestions.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-keyframe-generator",
+      "name": "CSS Keyframe Animation Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Build multi-step CSS @keyframes animations visually",
+      "spec": "Add keyframe stops at any percentage (0%, 50%, 100%, etc.) and configure CSS properties (opacity, transform, color) at each stop. Live preview of the animation on a sample element. Outputs the @keyframes rule and animation shorthand.",
+      "status": "pending"
+    },
+    {
+      "slug": "character-counter-jp",
+      "name": "文字数カウンター（詳細版）",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "全角・半角・ひらがな・漢字など文字種別の文字数を詳細カウント",
+      "spec": "テキストを入力して全文字数・全角文字数・半角文字数・ひらがな数・カタカナ数・漢字数・英数字数・スペース数を分類カウント。SNS・出版・校正など文字種別の制限がある場面に最適。",
+      "status": "pending"
+    },
+    {
+      "slug": "soudan-record",
+      "name": "議事録テンプレート生成ツール",
+      "market": "JP",
+      "category": "Productivity",
+      "description": "会議・打ち合わせの議事録テンプレートをワンクリック生成",
+      "spec": "日時・参加者・アジェンダを入力して整形された議事録テンプレートを生成。決定事項・ToDo・次回開催日のセクションを含むMarkdown形式で出力。コピー一発でそのまま使用可能。",
+      "status": "pending"
+    },
+    {
+      "slug": "contract-date-calc",
+      "name": "契約期間計算ツール",
+      "market": "JP",
+      "category": "Productivity",
+      "description": "契約開始日と期間から満了日・更新日を計算",
+      "spec": "契約開始日と契約期間（ヶ月・年単位）を入力して契約満了日・次回更新日・残り日数を計算。自動更新の場合の通知期限も逆算。複数契約を一覧管理（localStorage）。",
+      "status": "pending"
+    },
+    {
+      "slug": "color-gradient-palette",
+      "name": "グラデーションパレット生成",
+      "market": "JP",
+      "category": "Color Tools",
+      "description": "2色間のグラデーションから均等分割したカラーパレットを生成",
+      "spec": "開始色と終了色を指定して、その間を均等に分割した指定ステップ数のカラーパレットを生成。RGB・HSL・LAB色空間でのグラデーション補間モードを選択可能。各色のHEXコードをコピーできる。",
+      "status": "pending"
+    },
+    {
+      "slug": "number-to-words",
+      "name": "Number to Words Converter",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Convert numbers to English words (e.g. 1234 → 'one thousand two hundred thirty-four')",
+      "spec": "Input any integer up to 999 trillion and convert to its English word form. Supports ordinal form (first, second, third...). Also converts to currency words (e.g. 'one thousand two hundred thirty-four dollars and fifty cents').",
+      "status": "pending"
+    },
+    {
+      "slug": "palindrome-checker",
+      "name": "Palindrome & Anagram Checker",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Check if a word or phrase is a palindrome, and find anagrams",
+      "spec": "Check if input text is a palindrome (ignoring spaces, punctuation, case). Separately, input two words to check if they are anagrams of each other. Shows the character frequency comparison for anagram check.",
+      "status": "pending"
+    },
+    {
+      "slug": "days-between-dates",
+      "name": "Days Between Dates Calculator",
+      "market": "EN",
+      "category": "Productivity",
+      "description": "Calculate the exact number of days between two dates",
+      "spec": "Input two dates and calculate the total days between them, weeks and days, months and days, and years and days. Shows working days (excluding weekends) and optionally holidays. Counts up to today from a past date or down to a future date.",
+      "status": "pending"
+    },
+    {
+      "slug": "word-frequency",
+      "name": "Word Frequency Counter",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "description": "Count word frequency in any text and visualize with a bar chart",
+      "spec": "Paste text and count the frequency of every word. Display as a sortable table or a horizontal bar chart. Filter out stop words. Export as CSV. Toggle case-sensitivity and punctuation stripping.",
+      "status": "pending"
+    },
+    {
+      "slug": "css-triangle-generator",
+      "name": "CSS Triangle Generator",
+      "market": "EN",
+      "category": "CSS Tools",
+      "description": "Generate CSS-only triangles using the border trick",
+      "spec": "Configure triangle direction (up, down, left, right, diagonal), size, and color. Live preview and outputs the complete CSS using the border trick (border-color transparent). Also provides the modern clip-path equivalent.",
+      "status": "pending"
+    },
+    {
+      "slug": "caniuse-compat",
+      "name": "CSS Feature Compatibility Checker",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Check browser support for CSS properties and HTML features",
+      "spec": "Input a CSS property or HTML feature name and look it up in a bundled compatibility dataset. Shows browser support percentages for Chrome, Firefox, Safari, and Edge. Recommends polyfills or fallbacks for low-support features.",
+      "status": "pending"
+    },
+    {
+      "slug": "http-curl-builder",
+      "name": "cURL Command Builder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Build cURL commands with a form-based visual interface",
+      "spec": "Select HTTP method, input URL, add headers and query parameters via form fields, and compose a request body. Generates the corresponding cURL command. Toggle between curl, HTTPie, and Fetch API output formats.",
+      "status": "pending"
+    },
+    {
+      "slug": "json-minifier",
+      "name": "JSON Minifier",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "description": "Remove all whitespace from JSON to minimize file size",
+      "spec": "Paste formatted JSON and strip all unnecessary whitespace to produce minified output. Shows original vs. minified byte count and savings percentage. Also reverses (pretty-prints) minified JSON.",
+      "status": "pending"
+    },
+    {
+      "slug": "base58-converter",
+      "name": "Base58 / Base32 Encoder",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Encode and decode strings in Base58 and Base32 formats",
+      "spec": "Input text or hex data and encode/decode in Base58 (Bitcoin alphabet) or Base32 (RFC 4648). Shows the encoded output and the byte representation. Useful for cryptocurrency addresses and TOTP secrets.",
+      "status": "pending"
+    },
+    {
+      "slug": "ip-geolocation-sim",
+      "name": "IP Address Class Analyzer",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Analyze an IPv4 address: class, type, reserved range check",
+      "spec": "Input any IPv4 address and determine its class (A/B/C/D/E), whether it is private (RFC 1918), loopback, link-local, multicast, or public. Shows the default subnet mask for its class and its binary form.",
+      "status": "pending"
+    },
+    {
+      "slug": "html-color-picker",
+      "name": "HTML Color Code Picker",
+      "market": "EN",
+      "category": "Color Tools",
+      "description": "Visual HSL/HSV color picker with all format outputs",
+      "spec": "Full-featured HSL and HSV color picker with spectrum canvas and hue/saturation sliders. Input and output in Hex, RGB, HSL, HSV, and CSS named color. Supports alpha channel transparency. Copy buttons for each format.",
+      "status": "pending"
+    },
+    {
+      "slug": "curl-to-fetch",
+      "name": "cURL to Fetch Converter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Convert a cURL command to a JavaScript Fetch API call",
+      "spec": "Paste any cURL command and convert it to an equivalent JavaScript fetch() call with async/await syntax. Also converts to Axios syntax. Handles headers, request body, method, and authentication flags.",
+      "status": "pending"
+    },
+    {
+      "slug": "aspect-ratio-calculator",
+      "name": "Aspect Ratio Calculator",
+      "market": "EN",
+      "category": "Math & Science",
+      "description": "Calculate and convert aspect ratios for video and image dimensions",
+      "spec": "Input width and height and calculate the simplified aspect ratio (e.g. 16:9). Reverse: input an aspect ratio and one dimension to calculate the other. Common presets: 16:9, 4:3, 21:9, 1:1, 9:16 (vertical).",
+      "status": "pending"
+    },
+    {
+      "slug": "git-commit-message",
+      "name": "Git Commit Message Linter",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Validate and score git commit messages against Conventional Commits",
+      "spec": "Paste a commit message and validate against the Conventional Commits specification: check type, optional scope, subject line length, body separation, and footer format. Scores the message and suggests improvements.",
+      "status": "pending"
+    },
+    {
+      "slug": "webpack-bundle-analyzer",
+      "name": "Module Size Estimator",
+      "market": "EN",
+      "category": "Developer Tools",
+      "description": "Estimate how much a list of npm packages adds to a bundle",
+      "spec": "Input a list of npm package names and lookup their minified+gzipped sizes from a bundled dataset of the top 500 packages. Shows each package's size, cumulative total, and load time estimate on 3G/LTE.",
+      "status": "pending"
+    },
+    {
+      "slug": "hakken-generator",
+      "name": "ビジネス文書フレーズ集",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "description": "ビジネスメール・文書でよく使うフレーズを場面別に検索",
+      "spec": "依頼・お礼・お詫び・断り・催促・報告など場面を選択して使えるビジネスフレーズを一覧表示。フレーズをクリックしてクリップボードにコピー。キーワード検索で目的のフレーズを素早く見つけられる。",
+      "status": "pending"
+    }
+  ]
+}
