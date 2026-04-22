@@ -61,6 +61,12 @@ export const tools: Tool[] = [
   { slug: "zenkaku-hankaku", name: "全角半角変換", description: "Convert between fullwidth and halfwidth characters", market: "JP", category: "Japanese Tools", oldUrl: "https://zenkaku-hankaku.vercel.app" },
   { slug: "furigana", name: "ふりがな変換", description: "Add furigana readings to Japanese text", market: "JP", category: "Japanese Tools", oldUrl: "https://furigana-beta.vercel.app" },
   { slug: "tax-calculator", name: "税金計算", description: "Calculate Japanese consumption tax", market: "JP", category: "Japanese Tools", oldUrl: "https://tax-calculator-lilac-three.vercel.app" },
+  { slug: "nenrei-keisan", name: "年齢計算", description: "生年月日から満年齢・数え年・干支・星座を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "moji-count", name: "文字数カウント", description: "ひらがな・カタカナ・漢字別にリアルタイムカウント", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "nissuu-keisan", name: "日数計算", description: "日付間の日数や○日後・○日前の日付を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "bmi-keisan", name: "BMI計算", description: "身長と体重からBMI値と肥満度を判定", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "waribiki-keisan", name: "割引計算", description: "割引率から割引後の価格・税込価格を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "loan-simulator", name: "ローン計算", description: "ローンの毎月返済額・総返済額をシミュレーション", market: "JP", category: "Japanese Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
