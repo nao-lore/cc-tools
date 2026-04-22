@@ -349,7 +349,7 @@
       "category": "Data Format Tools",
       "description": "Convert CSV data to JSON array with column header mapping",
       "spec": "Paste CSV or upload a file. Detects delimiter automatically. Maps the first row to object keys. Options for output as array of objects, array of arrays, or keyed by a column. Download or copy output.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "json-to-typescript",
@@ -358,7 +358,7 @@
       "category": "Developer Tools",
       "description": "Generate TypeScript interfaces from JSON data",
       "spec": "Paste a JSON object or array and auto-generate TypeScript interfaces with proper types (string, number, boolean, null, nested interfaces). Handles arrays, optional fields, and union types.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "xml-to-json",
@@ -367,7 +367,7 @@
       "category": "Data Format Tools",
       "description": "Convert XML documents to JSON representation",
       "spec": "Accepts XML input and converts to JSON following a configurable schema (attributes as keys, text as value, etc.). Pretty-prints the output. Handles namespaces and CDATA sections.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "toml-to-json",
@@ -376,7 +376,7 @@
       "category": "Data Format Tools",
       "description": "Convert TOML configuration files to JSON",
       "spec": "Parses TOML syntax (strings, integers, floats, booleans, arrays, tables, datetime) and converts to equivalent JSON. Validates TOML syntax and reports errors with line numbers.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "ini-to-json",
@@ -385,7 +385,7 @@
       "category": "Data Format Tools",
       "description": "Convert INI/config files to JSON objects",
       "spec": "Parses INI format with sections and key-value pairs. Converts to a nested JSON object where sections become top-level keys. Handles comments and multi-value keys.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "protobuf-decoder",
@@ -394,7 +394,7 @@
       "category": "Developer Tools",
       "description": "Decode base64-encoded Protobuf binary messages",
       "spec": "Paste a base64-encoded Protobuf binary payload and decode it to field numbers and wire types without a schema. Displays raw field numbers, types (varint, length-delimited, etc.), and values.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "unicode-inspector",
@@ -403,7 +403,7 @@
       "category": "Text & String Tools",
       "description": "Inspect every character in a string: codepoint, name, category",
       "spec": "Input any text and list each character with its Unicode code point (U+XXXX), official Unicode name, category (letter, digit, symbol, etc.), and UTF-8 byte sequence. Detects invisible and unusual characters.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "html-color-names",
@@ -412,7 +412,7 @@
       "category": "Color Tools",
       "description": "Browse all 148 CSS named colors with hex and RGB values",
       "spec": "Displays all CSS named colors in a searchable grid. Click any color to copy its name, hex, or RGB value. Filter by hue range or alphabetically. Shows each color as a large swatch.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "gradient-to-css",
@@ -421,7 +421,7 @@
       "category": "CSS Tools",
       "description": "Sample colors from an uploaded gradient image and generate CSS gradient",
       "spec": "Upload an image with a gradient. The tool samples colors along a horizontal or vertical axis and generates a multi-stop CSS linear-gradient that approximates the original image gradient.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "font-pair-preview",
@@ -430,7 +430,7 @@
       "category": "CSS Tools",
       "description": "Preview Google Fonts pairings for headings and body text",
       "spec": "Select two Google Fonts from a curated list and preview heading + body text combinations. Adjust font size, weight, and line height. Outputs the Google Fonts import URL and CSS font-family rules.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-counter",
@@ -439,7 +439,7 @@
       "category": "CSS Tools",
       "description": "Generate CSS counter-based automatic numbering systems",
       "spec": "Configure counter name, scope (whole page, section, subsection), and format (decimal, lower-alpha, roman). Preview the numbering on a sample document structure. Outputs counter-reset, counter-increment, and content CSS.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "nth-child-tester",
@@ -448,7 +448,7 @@
       "category": "CSS Tools",
       "description": "Visually test CSS :nth-child, :nth-of-type, and :nth-last-child expressions",
       "spec": "Input any An+B expression and a configurable number of elements. Highlights which elements match the selector in real time. Explains the formula in plain English and shows matching indices.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "color-blindness-sim",
