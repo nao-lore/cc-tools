@@ -194,6 +194,77 @@ export const JP_COLORS: JpColor[] = [
   { name: "消炭色", reading: "けしずみいろ", hex: "#404040", category: "灰系", season: "冬", description: "消し炭のような暗い灰色。" },
   { name: "鉛色", reading: "なまりいろ", hex: "#909090", category: "灰系", season: "冬", description: "鉛のような重みのある灰色。" },
   { name: "素鼠", reading: "すねずみ", hex: "#989898", category: "灰系", season: "通年", description: "何も加工していない鼠色。標準的な灰色。" },
+
+  // 赤系 追加
+  { name: "中紅花", reading: "なかくれない", hex: "#E8546A", category: "赤系", season: "通年", description: "紅花の中程度の染色。やや明るめの赤。" },
+  { name: "赤紅", reading: "あかべに", hex: "#D02040", category: "赤系", season: "通年", description: "赤みの強い紅色。艶やかな深紅。" },
+  { name: "一斤染", reading: "いっこんぞめ", hex: "#F0B8B0", category: "赤系", season: "春", description: "紅花一斤で染めた淡い赤。薄くやさしい色。" },
+  { name: "紅緋", reading: "べにひ", hex: "#E8283C", category: "赤系", season: "通年", description: "紅と緋を合わせた鮮やかな赤。" },
+  { name: "赤朽葉", reading: "あかくちば", hex: "#C06040", category: "赤系", season: "秋", description: "赤みがかった朽葉色。秋の情景を映す色。" },
+  { name: "唐紅", reading: "からくれない", hex: "#D03060", category: "赤系", season: "通年", description: "中国渡来の技法で染めた濃い紅色。" },
+  { name: "薔薇色", reading: "ばらいろ", hex: "#E8406A", category: "赤系", season: "春", description: "薔薇の花のような鮮やかなピンク。" },
+
+  // 橙系 追加
+  { name: "曙色", reading: "あけぼのいろ", hex: "#F0A070", category: "橙系", season: "春", description: "夜明けの空のような淡い赤橙色。" },
+  { name: "蘗色", reading: "きわだいろ", hex: "#E8C000", category: "橙系", season: "通年", description: "黄蘗の樹皮から染めた鮮やかな黄橙色。" },
+  { name: "黄支子色", reading: "きくちなしいろ", hex: "#F0C040", category: "橙系", season: "通年", description: "支子（クチナシ）で染めた黄みのオレンジ。" },
+  { name: "浅緋", reading: "うすひ", hex: "#F4A080", category: "橙系", season: "通年", description: "薄い緋色。淡いオレンジがかった赤。" },
+
+  // 黄系 追加
+  { name: "木蘭色", reading: "もくらんいろ", hex: "#D4B080", category: "黄系", season: "通年", description: "木蘭の花のような淡い黄褐色。" },
+  { name: "黄朽葉色", reading: "きくちばいろ", hex: "#C8A040", category: "黄系", season: "秋", description: "黄みがかった朽葉色。枯れ葉の色合い。" },
+  { name: "女郎花色", reading: "おみなえしいろ", hex: "#E8D840", category: "黄系", season: "秋", description: "女郎花の花のような鮮やかな黄色。" },
+  { name: "中黄", reading: "ちゅうき", hex: "#F0D000", category: "黄系", season: "通年", description: "中程度の純粋な黄色。" },
+  { name: "蜂蜜色", reading: "はちみついろ", hex: "#F0C030", category: "黄系", season: "通年", description: "蜂蜜のような温かみのある黄色。" },
+  { name: "肥後煤竹", reading: "ひごすすたけ", hex: "#B09050", category: "黄系", season: "通年", description: "肥後国（熊本）の煤竹のような暗い黄茶色。" },
+
+  // 緑系 追加
+  { name: "裏葉色", reading: "うらはいろ", hex: "#789060", category: "緑系", season: "夏", description: "葉の裏側のような銀みがかった緑色。" },
+  { name: "木賊色", reading: "とくさいろ", hex: "#406050", category: "緑系", season: "通年", description: "木賊（トクサ）のような濃い灰緑色。" },
+  { name: "緑青", reading: "ろくしょう", hex: "#3A8060", category: "緑系", season: "通年", description: "銅の錆から生まれた深い青緑色。日本画の顔料。" },
+  { name: "御召茶", reading: "おめしちゃ", hex: "#607050", category: "緑系", season: "通年", description: "御召縮緬の緑みがかった茶色。" },
+  { name: "夏虫色", reading: "なつむしいろ", hex: "#80B880", category: "緑系", season: "夏", description: "夏の虫（蛾の幼虫）のような淡い緑色。" },
+  { name: "深川鼠", reading: "ふかがわねずみ", hex: "#708090", category: "緑系", season: "通年", description: "江戸の深川で好まれた青みがかった灰緑色。" },
+  { name: "白緑", reading: "びゃくろく", hex: "#C8E0C0", category: "緑系", season: "春", description: "白みがかった淡い緑色。春の若草の色。" },
+
+  // 青系 追加
+  { name: "花浅葱", reading: "はなあさぎ", hex: "#1E90D0", category: "青系", season: "夏", description: "花のように鮮やかな浅葱色。明るい青。" },
+  { name: "薄花色", reading: "うすはないろ", hex: "#A0C8E8", category: "青系", season: "春", description: "薄い青花色。やわらかな水色。" },
+  { name: "瓶覗", reading: "かめのぞき", hex: "#C8E8F0", category: "青系", season: "夏", description: "藍染の甕を覗いた時のような極めて薄い青。" },
+  { name: "青白", reading: "あおしろ", hex: "#D8EAF0", category: "青系", season: "通年", description: "青みがかった白。清澄な色。" },
+  { name: "露草色", reading: "つゆくさいろ", hex: "#4488CC", category: "青系", season: "夏", description: "露草の花のような鮮やかな青色。" },
+  { name: "鉄紺", reading: "てつこん", hex: "#18203A", category: "青系", season: "冬", description: "鉄のような深い紺色。非常に暗い青。" },
+  { name: "海松藍", reading: "みるあい", hex: "#4A6858", category: "青系", season: "通年", description: "海松色に藍を加えた深い青緑色。" },
+  { name: "薄藍", reading: "うすあい", hex: "#8090C0", category: "青系", season: "通年", description: "薄い藍色。淡い青みがかった色。" },
+
+  // 紫系 追加
+  { name: "赤紫", reading: "あかむらさき", hex: "#B03878", category: "紫系", season: "通年", description: "赤みが強い紫。情熱的な色。" },
+  { name: "滅紫", reading: "けしむらさき", hex: "#6A3858", category: "紫系", season: "冬", description: "くすんで暗い紫色。渋みのある色。" },
+  { name: "古代紫", reading: "こだいむらさき", hex: "#785880", category: "紫系", season: "通年", description: "古代より伝わる落ち着いた紫色。" },
+  { name: "赤藤色", reading: "あかふじいろ", hex: "#C090B8", category: "紫系", season: "春", description: "赤みがかった藤色。やわらかな赤紫。" },
+  { name: "紫苑色", reading: "しおんいろ", hex: "#8878B8", category: "紫系", season: "秋", description: "紫苑の花のような青みがかった紫色。" },
+  { name: "鳩羽色", reading: "はとばいろ", hex: "#907898", category: "紫系", season: "通年", description: "鳩の羽のような灰みがかった薄紫色。" },
+
+  // 茶系 追加
+  { name: "檜皮色", reading: "ひわだいろ", hex: "#8B4020", category: "茶系", season: "通年", description: "檜の皮のような赤茶色。" },
+  { name: "黒茶", reading: "くろちゃ", hex: "#3C2010", category: "茶系", season: "冬", description: "黒みがかった茶色。非常に暗い茶色。" },
+  { name: "赤白橡", reading: "あかしろつるばみ", hex: "#C09060", category: "茶系", season: "秋", description: "橡実の赤みがかった薄い茶色。" },
+  { name: "丁子茶", reading: "ちょうじちゃ", hex: "#B07040", category: "茶系", season: "通年", description: "丁子色に近い黄みがかった茶色。" },
+  { name: "焦茶", reading: "こげちゃ", hex: "#3A1A00", category: "茶系", season: "冬", description: "焦げた茶のような非常に暗い茶色。" },
+  { name: "銀煤竹", reading: "ぎんすすたけ", hex: "#8A7060", category: "茶系", season: "通年", description: "銀みがかった煤竹色。灰みの茶色。" },
+
+  // 灰系 追加
+  { name: "湊鼠", reading: "みなとねずみ", hex: "#7080A0", category: "灰系", season: "通年", description: "港の色のような青みがかった灰色。" },
+  { name: "紅消鼠", reading: "べにけしねず", hex: "#887080", category: "灰系", season: "通年", description: "紅を消したような赤みがかった鼠色。" },
+  { name: "暁鼠", reading: "あかつきねず", hex: "#C0A8A8", category: "灰系", season: "通年", description: "夜明けの空のような淡い赤みの灰色。" },
+  { name: "錆鼠", reading: "さびねずみ", hex: "#706060", category: "灰系", season: "秋", description: "錆のような赤みがかった暗い灰色。" },
+  { name: "牡丹鼠", reading: "ぼたんねず", hex: "#A088A0", category: "灰系", season: "春", description: "牡丹色がかった薄い紫灰色。" },
+
+  // 白黒系 追加
+  { name: "練色", reading: "ねりいろ", hex: "#F0E8D0", category: "白黒系", season: "通年", description: "絹糸を練った時のような温かみのある白。" },
+  { name: "絹鼠", reading: "きぬねずみ", hex: "#D0C8C0", category: "白黒系", season: "通年", description: "絹の光沢のような淡い灰白色。" },
+  { name: "灰白色", reading: "かいはくしょく", hex: "#E8E4DC", category: "白黒系", season: "通年", description: "灰みがかった白色。やわらかな白。" },
+  { name: "薄墨色", reading: "うすすみいろ", hex: "#505050", category: "白黒系", season: "通年", description: "薄く溶いた墨のような暗い灰色。" },
 ];
 
 export const CATEGORIES = ["赤系", "橙系", "黄系", "緑系", "青系", "紫系", "茶系", "灰系", "白黒系"] as const;
