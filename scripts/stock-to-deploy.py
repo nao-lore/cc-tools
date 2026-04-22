@@ -117,7 +117,7 @@ def main():
     elif args and args[0].isdigit():
         count = int(args[0])
     else:
-        count = 3  # default daily batch size
+        count = 5  # default daily batch size (ramp up after SC monitoring)
 
     pending = list_pending()
     if not pending:

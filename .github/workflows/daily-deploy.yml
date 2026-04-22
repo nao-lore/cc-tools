@@ -9,7 +9,7 @@ on:
       count:
         description: 'Number of tools to deploy'
         required: false
-        default: '3'
+        default: '5'
 
 permissions:
   contents: write
