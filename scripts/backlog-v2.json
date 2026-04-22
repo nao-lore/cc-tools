@@ -889,7 +889,7 @@
       "category": "Text & String Tools",
       "description": "Use the browser's Speech Synthesis API to hear text spoken aloud",
       "spec": "Input text and select from available system voices and languages. Adjust rate, pitch, and volume. Click play to hear the text. Useful for checking pronunciation of words and UI copy.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "typing-speed-test",
@@ -898,7 +898,7 @@
       "category": "Productivity",
       "description": "Measure typing speed (WPM) and accuracy with sample texts",
       "spec": "Displays a paragraph of sample text. User types to match it. Tracks WPM in real time, highlights errors, and shows final accuracy percentage and time taken on completion. Multiple difficulty levels.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "markdown-lint",
@@ -907,7 +907,7 @@
       "category": "Developer Tools",
       "description": "Lint Markdown for common style and syntax issues",
       "spec": "Paste Markdown and check for issues like inconsistent heading levels, bare URLs, long lines, trailing spaces, and missing blank lines around headings. Shows inline error locations with fix suggestions.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "diff-to-patch",
@@ -916,7 +916,7 @@
       "category": "Developer Tools",
       "description": "Format a unified diff as a .patch file",
       "spec": "Paste a unified diff and format it as a valid .patch file with proper headers (From, Date, Subject). Optionally set the commit message, author, and file paths. Outputs a git-apply compatible patch file.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "gitflow-visualizer",
@@ -925,7 +925,7 @@
       "category": "Developer Tools",
       "description": "Visualize a Git log as a branch diagram",
       "spec": "Paste git log --oneline --graph output and render it as an interactive, colorized branch diagram. Each commit is clickable. Shows branch names and merge points clearly.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "code-snippet-formatter",
@@ -934,7 +934,7 @@
       "category": "Developer Tools",
       "description": "Format and syntax-highlight code snippets for sharing",
       "spec": "Paste code in any popular language (JS, Python, Rust, Go, SQL, etc.). Applies syntax highlighting and line numbers. Choose a theme (dark/light). Outputs a styled HTML snippet ready to embed in a blog post.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "env-diff",
@@ -943,7 +943,7 @@
       "category": "Developer Tools",
       "description": "Compare two .env files to find missing or different variables",
       "spec": "Paste two .env files side by side. Highlights variables present in one but missing from the other, and variables with different values. Useful for syncing .env.example with production configs.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "ascii-flowchart",
@@ -952,7 +952,7 @@
       "category": "Developer Tools",
       "description": "Convert a simple node-edge list into an ASCII flowchart",
       "spec": "Describe a flowchart with nodes (rectangles or diamonds) and arrows in a simple DSL. Renders the flowchart as ASCII art using box-drawing characters. Useful for inline documentation and READMEs.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-unit-converter",
@@ -961,7 +961,7 @@
       "category": "CSS Tools",
       "description": "Convert between px, rem, em, vw, vh, pt, and more",
       "spec": "Input a value and source unit, select a target unit, and optionally set the root font size (default 16px) and viewport dimensions. Converts between px, rem, em, vw, vh, vmin, vmax, pt, and cm.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "line-height-calculator",
@@ -970,7 +970,7 @@
       "category": "CSS Tools",
       "description": "Calculate optimal line-height for a given font size and measure",
       "spec": "Input font size (px), line width (characters), and font weight. Calculates the recommended unitless line-height using typographic best practices. Shows the equivalent in px, rem, and em.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "type-scale-generator",
@@ -979,7 +979,7 @@
       "category": "CSS Tools",
       "description": "Generate a modular typographic scale with CSS output",
       "spec": "Set a base font size and a scale ratio (minor third, major third, golden ratio, etc.). Generates a typographic scale with 8 steps. Preview the scale with sample text. Output as CSS custom properties or Tailwind extend config.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "viewport-unit-calc",
@@ -988,7 +988,7 @@
       "category": "CSS Tools",
       "description": "Calculate vw/vh pixel values at common breakpoints",
       "spec": "Input a vw or vh value and see its pixel equivalent at preset viewport widths (360, 768, 1024, 1280, 1440, 1920px). Also reverse-calculates what vw value equals a target pixel size at a given viewport.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "open-graph-builder",
