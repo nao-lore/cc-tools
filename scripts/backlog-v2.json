@@ -241,7 +241,7 @@
       "category": "CSS Tools",
       "description": "Find the closest Tailwind CSS color class to any hex value",
       "spec": "Input any hex color and the tool calculates the closest match across all Tailwind CSS color palettes using color distance. Shows the matched class name, the actual color, and the delta-E difference.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-clip-path",
@@ -250,7 +250,7 @@
       "category": "CSS Tools",
       "description": "Visually create clip-path polygon shapes for CSS",
       "spec": "Interactive canvas with draggable points to define a polygon clip-path. Switch between polygon, circle, and ellipse modes. Live preview on a sample element. Copies the clip-path CSS rule.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-transform",
@@ -259,7 +259,7 @@
       "category": "CSS Tools",
       "description": "Visual builder for CSS transform functions",
       "spec": "Sliders and inputs for translate, rotate, scale, skew, and perspective. Live preview on a sample box. Shows the composed transform CSS string. Toggle 2D vs 3D transform mode.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-specificity",
@@ -268,7 +268,7 @@
       "category": "CSS Tools",
       "description": "Calculate and compare CSS selector specificity",
       "spec": "Input one or more CSS selectors and calculate their specificity as (a, b, c) tuples per the CSS spec. Compare multiple selectors side by side and visualize which one wins in a conflict.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "media-query-builder",
@@ -277,7 +277,7 @@
       "category": "CSS Tools",
       "description": "Build responsive CSS media queries with a visual editor",
       "spec": "Choose breakpoint type (min-width, max-width, orientation, etc.) and combine multiple conditions. Preview which devices each query targets. Outputs the final @media rule ready to paste.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "svg-path-editor",
@@ -286,7 +286,7 @@
       "category": "Image Tools",
       "description": "Edit and visualize SVG path (d attribute) commands",
       "spec": "Paste an SVG path d-string and see it rendered on a canvas. Each path command (M, L, C, A, Z, etc.) is listed with editable parameters. Editing updates the path preview in real-time.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "image-color-picker",
@@ -295,7 +295,7 @@
       "category": "Image Tools",
       "description": "Upload an image and pick colors from anywhere on it",
       "spec": "Upload an image and move a crosshair picker over it to sample hex, RGB, and HSL values. Click to lock a color sample. Shows last 12 sampled colors as swatches with copy buttons.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "image-metadata-viewer",
@@ -304,7 +304,7 @@
       "category": "Image Tools",
       "description": "View EXIF and file metadata from uploaded images",
       "spec": "Upload any JPEG, PNG, or WebP image and extract file metadata (size, dimensions, type) and EXIF data (camera model, GPS, exposure settings). Displays in a clean key-value table.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-sprite-generator",
@@ -313,7 +313,7 @@
       "category": "Image Tools",
       "description": "Calculate background-position values for CSS sprites",
       "spec": "Input sprite sheet dimensions and individual sprite tile size. Generates a table of background-position values for each sprite by row/column. Outputs CSS class snippets for each tile.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "ascii-table-generator",
@@ -322,7 +322,7 @@
       "category": "Text & String Tools",
       "description": "Convert CSV or tabular data into ASCII art tables",
       "spec": "Paste CSV data or enter values in a grid. Renders as an ASCII art table with border styles (classic, single-line, double-line, markdown). Adjusts column widths automatically.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "json-tree-viewer",
@@ -331,7 +331,7 @@
       "category": "Data Format Tools",
       "description": "Visualize JSON as an interactive collapsible tree",
       "spec": "Paste JSON and explore it as a collapsible, color-coded tree. Supports search/filter within the tree. Click any node to copy its path or value. Handles large JSON with virtual rendering.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "json-diff",
@@ -340,7 +340,7 @@
       "category": "Data Format Tools",
       "description": "Compare two JSON objects and highlight differences",
       "spec": "Two-pane input for JSON objects. Diffs them deeply, showing added, removed, and changed keys with color coding. Supports nested objects and arrays. Outputs a summary of all changes.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "csv-to-json",
