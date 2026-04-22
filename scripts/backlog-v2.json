@@ -673,7 +673,7 @@
       "category": "Image Tools",
       "description": "Generate smooth wave SVG dividers for web pages",
       "spec": "Configure wave amplitude, frequency, color, and number of layers. Toggle between wave types (gentle, sharp, layered). Preview on a colored background. Exports inline SVG or a standalone file.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "number-formatter",
@@ -682,7 +682,7 @@
       "category": "Math & Science",
       "description": "Format numbers with locale-specific separators, currency, and units",
       "spec": "Input a number and select a locale (en-US, ja-JP, de-DE, etc.) and format type (decimal, currency, percent, unit). Shows the formatted output and the Intl.NumberFormat options that produce it.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "percentage-calculator",
@@ -691,7 +691,7 @@
       "category": "Math & Science",
       "description": "Calculate percentages, percent change, and percent of total",
       "spec": "Three calculation modes: (1) X% of Y, (2) X is what % of Y, (3) percent change from X to Y. Shows formula and step-by-step calculation. Handles negative numbers and percentage points.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "scientific-notation",
@@ -700,7 +700,7 @@
       "category": "Math & Science",
       "description": "Convert numbers between standard and scientific notation",
       "spec": "Input any number in standard decimal or scientific notation (e.g. 6.02e23) and convert between forms. Handles very large and very small numbers. Shows significant figures and engineering notation.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "matrix-calculator",
@@ -709,7 +709,7 @@
       "category": "Math & Science",
       "description": "Add, multiply, transpose, and find determinant of matrices",
       "spec": "Input matrices up to 5x5 using a grid UI. Supports addition, subtraction, scalar multiplication, matrix multiplication, transpose, and determinant. Shows step-by-step calculation for 2x2 and 3x3 matrices.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "statistics-calculator",
@@ -718,7 +718,7 @@
       "category": "Math & Science",
       "description": "Calculate mean, median, mode, std deviation from a data set",
       "spec": "Input a list of numbers (comma or newline separated). Calculates mean, median, mode, range, variance, standard deviation, min, max, quartiles (Q1, Q3), and IQR. Draws a simple text-based histogram.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "roman-numeral",
@@ -727,7 +727,7 @@
       "category": "Math & Science",
       "description": "Convert between Arabic and Roman numerals",
       "spec": "Bidirectional converter for integers 1–3999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "prime-checker",
@@ -736,7 +736,7 @@
       "category": "Math & Science",
       "description": "Check if a number is prime and find prime factors",
       "spec": "Input any positive integer and determine if it is prime. If composite, shows the complete prime factorization. Also generates a list of all primes up to a given limit using the Sieve of Eratosthenes.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "gcd-lcm-calculator",
@@ -745,7 +745,7 @@
       "category": "Math & Science",
       "description": "Calculate Greatest Common Divisor and Least Common Multiple",
       "spec": "Input two or more integers and calculate GCD and LCM. Shows Euclidean algorithm steps for GCD and the prime factorization method for LCM. Handles up to 10 numbers simultaneously.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "currency-formatter",
@@ -754,7 +754,7 @@
       "category": "Finance",
       "description": "Preview how a number formats as currency in different locales",
       "spec": "Input an amount and see it formatted as USD, EUR, JPY, GBP, KRW, and 10 other currencies using the browser's Intl.NumberFormat. Shows symbol placement, decimal, and thousands separator differences.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "compound-interest",
@@ -763,7 +763,7 @@
       "category": "Finance",
       "description": "Calculate compound interest with monthly contribution support",
       "spec": "Input principal, annual rate, compounding frequency, duration, and optional monthly contribution. Shows final balance, total contributions, total interest earned. Draws a year-by-year growth chart with a bar visualization.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "mortgage-calculator",
@@ -772,7 +772,7 @@
       "category": "Finance",
       "description": "Calculate monthly mortgage payment, total interest, and amortization",
       "spec": "Input loan amount, interest rate, and term in years. Calculates monthly payment using the amortization formula. Shows a year-by-year breakdown of principal vs. interest paid and remaining balance.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "inflation-calculator",
