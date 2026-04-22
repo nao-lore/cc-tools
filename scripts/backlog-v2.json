@@ -511,7 +511,7 @@
       "category": "Developer Tools",
       "description": "Test a password against configurable policy rules",
       "spec": "Define a password policy (min length, uppercase, numbers, symbols, no common words, no repeated chars). Input a password and see which rules pass and fail. Shows a policy compliance score.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "cors-header-builder",
@@ -520,7 +520,7 @@
       "category": "Developer Tools",
       "description": "Build correct CORS response headers for any scenario",
       "spec": "Select allowed origins, methods, and headers. Toggle credentials and preflight cache settings. Outputs the complete set of Access-Control-* response headers. Explains each header's purpose.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "semantic-version-bumper",
@@ -529,7 +529,7 @@
       "category": "Developer Tools",
       "description": "Calculate the next semver version from a current version and change type",
       "spec": "Input the current semver string and select the change type (major, minor, patch, prerelease). Outputs the bumped version. Also parses and compares two semver strings to determine which is greater.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "changelog-formatter",
@@ -538,7 +538,7 @@
       "category": "Developer Tools",
       "description": "Format a list of git commit messages into a structured changelog",
       "spec": "Paste raw git commit messages and the tool groups them by type (feat, fix, chore, docs, refactor) based on Conventional Commits. Outputs a formatted Markdown changelog section for a given version.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "package-json-checker",
@@ -547,7 +547,7 @@
       "category": "Developer Tools",
       "description": "Validate and analyze package.json for common issues",
       "spec": "Paste package.json content and check for missing required fields, inconsistent version ranges (^ vs ~), deprecated scripts, and potential security flags. Lists all dependencies with their version constraints.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "json-to-zod",
@@ -556,7 +556,7 @@
       "category": "Developer Tools",
       "description": "Generate a Zod validation schema from a JSON sample",
       "spec": "Paste a JSON object and auto-generate the corresponding Zod schema with z.string(), z.number(), z.object(), z.array(), and z.optional() as appropriate. Handles nested structures and arrays.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "sql-to-json",
@@ -565,7 +565,7 @@
       "category": "Data Format Tools",
       "description": "Convert SQL INSERT statements to JSON array",
       "spec": "Paste SQL INSERT INTO statements and extract the values into a JSON array of objects using column names from the INSERT statement. Handles multiple rows and quoted string values.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "dns-record-builder",
@@ -574,7 +574,7 @@
       "category": "Developer Tools",
       "description": "Generate DNS record zone file entries for common record types",
       "spec": "Select a record type (A, AAAA, CNAME, MX, TXT, SRV, NS) and fill in the fields. Outputs the correctly formatted zone file line. Includes common presets for Google Workspace, SPF, DKIM, and DMARC.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "robots-txt-parser",
@@ -583,7 +583,7 @@
       "category": "SEO Tools",
       "description": "Parse and visualize a robots.txt file as a structured table",
       "spec": "Paste a robots.txt file and parse all user-agent rules. Test a specific URL + user-agent combination to see if it is allowed or disallowed. Highlights conflicting rules.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "utm-builder",
@@ -592,7 +592,7 @@
       "category": "SEO Tools",
       "description": "Build UTM-tagged URLs for campaign tracking",
       "spec": "Input a base URL and fill in utm_source, utm_medium, utm_campaign, utm_term, and utm_content fields. Outputs the tagged URL with proper encoding. Also parses an existing UTM URL and extracts all parameters.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "link-checker",
@@ -601,7 +601,7 @@
       "category": "SEO Tools",
       "description": "Extract all links from pasted HTML and categorize them",
       "spec": "Paste raw HTML and extract all anchor href values. Categorizes links as internal, external, or anchor links. Checks for obviously broken patterns (empty href, javascript:, malformed URLs). Outputs a table with link text and URL.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "schema-markup-tester",
@@ -610,7 +610,7 @@
       "category": "SEO Tools",
       "description": "Validate JSON-LD and microdata structured data markup",
       "spec": "Paste a JSON-LD script block and validate it against common Schema.org types. Checks required and recommended properties, reports missing fields, and shows a preview of how Google might render the rich result.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-loader-generator",
