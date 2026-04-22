@@ -7,7 +7,7 @@
       "category": "Developer Tools",
       "description": "Validate JSON data against a JSON Schema definition",
       "spec": "Takes a JSON Schema and a JSON document as inputs. Validates the document against the schema and reports all validation errors with paths. Supports Draft-07 schema features implemented in-browser.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "graphql-query-builder",
@@ -16,7 +16,7 @@
       "category": "Developer Tools",
       "description": "Visual builder for GraphQL queries and mutations",
       "spec": "Lets users paste a GraphQL schema SDL and visually construct queries by selecting fields, adding arguments, and nesting fragments. Outputs a formatted GraphQL query string ready to copy.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "env-parser",
@@ -25,7 +25,7 @@
       "category": "Developer Tools",
       "description": "Parse, validate, and convert .env files to JSON or YAML",
       "spec": "Accepts raw .env file content and parses key-value pairs, comments, and quoted values. Outputs to JSON or YAML. Detects duplicates and invalid lines.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "jwt-inspector",
@@ -43,7 +43,7 @@
       "category": "Developer Tools",
       "description": "Build and validate HTTP request/response headers",
       "spec": "Provides a form-based interface to compose HTTP headers by name and value. Validates common headers against their spec, warns about deprecated or insecure values, and outputs a ready-to-copy header block.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "markdown-table-editor",
@@ -61,7 +61,7 @@
       "category": "Developer Tools",
       "description": "Interactive regex reference with live match highlighting",
       "spec": "Sidebar shows categorized regex tokens (anchors, quantifiers, groups, lookarounds) with explanations. Live test input highlights all matches as the pattern is typed. Shows match groups in a table.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "openapi-explorer",
@@ -70,7 +70,7 @@
       "category": "Developer Tools",
       "description": "Paste OpenAPI YAML/JSON and browse endpoints interactively",
       "spec": "Parses OpenAPI 3.x or Swagger 2.0 spec and renders a collapsible list of endpoints grouped by tag. Shows request parameters, request body schema, and response schemas for each endpoint.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "html-minifier",
@@ -79,7 +79,7 @@
       "category": "Developer Tools",
       "description": "Minify HTML by removing whitespace and comments",
       "spec": "Takes raw HTML and strips comments, collapses whitespace, and optionally removes optional tags. Shows original vs. minified byte count and compression ratio.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "sitemap-generator",
@@ -88,7 +88,7 @@
       "category": "SEO Tools",
       "description": "Generate sitemap.xml from a list of URLs",
       "spec": "User inputs a list of URLs one per line, with optional last-modified date, change frequency, and priority per URL. Outputs a valid sitemap.xml string ready to copy or download.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "canonical-tag-checker",
@@ -97,7 +97,7 @@
       "category": "SEO Tools",
       "description": "Validate and generate canonical link tags",
       "spec": "Input a URL and the tool generates the correct canonical link tag HTML. Also parses pasted HTML to extract and validate existing canonical tags against the page URL.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "structured-data-builder",
@@ -106,7 +106,7 @@
       "category": "SEO Tools",
       "description": "Visual builder for JSON-LD structured data (Schema.org)",
       "spec": "Supports Article, Product, BreadcrumbList, FAQ, and LocalBusiness schema types. Form fields map to schema properties with validation. Outputs formatted JSON-LD script tag.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "twitter-card-preview",
@@ -115,7 +115,7 @@
       "category": "SEO Tools",
       "description": "Preview how your page appears in Twitter/X cards",
       "spec": "Input meta tag values (title, description, image URL, card type) and see a live preview of both summary and summary_large_image card formats. Also generates the required meta tag HTML.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "keyword-density",
@@ -124,7 +124,7 @@
       "category": "SEO Tools",
       "description": "Analyze keyword frequency and density in any text",
       "spec": "Paste any text and the tool calculates word and phrase frequency, highlighting the top 20 keywords with their count and density percentage. Filters common stop words. Useful for SEO content audits.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "readability-score",
