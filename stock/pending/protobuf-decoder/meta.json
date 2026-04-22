@@ -1,0 +1,1 @@
+{"slug":"protobuf-decoder","name":"Protobuf Binary Decoder","description":"Decode base64-encoded Protobuf binary messages","market":"EN","category":"Developer Tools","title":"Protobuf Binary Decoder","metaDescription":"Decode Protobuf binary messages without a schema. See field numbers, wire types, and values. Supports base64 and hex input."}

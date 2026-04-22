@@ -295,7 +295,7 @@
       "category": "Image Tools",
       "description": "Upload an image and pick colors from anywhere on it",
       "spec": "Upload an image and move a crosshair picker over it to sample hex, RGB, and HSL values. Click to lock a color sample. Shows last 12 sampled colors as swatches with copy buttons.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "image-metadata-viewer",
@@ -304,7 +304,7 @@
       "category": "Image Tools",
       "description": "View EXIF and file metadata from uploaded images",
       "spec": "Upload any JPEG, PNG, or WebP image and extract file metadata (size, dimensions, type) and EXIF data (camera model, GPS, exposure settings). Displays in a clean key-value table.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-sprite-generator",
@@ -313,7 +313,7 @@
       "category": "Image Tools",
       "description": "Calculate background-position values for CSS sprites",
       "spec": "Input sprite sheet dimensions and individual sprite tile size. Generates a table of background-position values for each sprite by row/column. Outputs CSS class snippets for each tile.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "ascii-table-generator",
@@ -322,7 +322,7 @@
       "category": "Text & String Tools",
       "description": "Convert CSV or tabular data into ASCII art tables",
       "spec": "Paste CSV data or enter values in a grid. Renders as an ASCII art table with border styles (classic, single-line, double-line, markdown). Adjusts column widths automatically.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "json-tree-viewer",
@@ -331,7 +331,7 @@
       "category": "Data Format Tools",
       "description": "Visualize JSON as an interactive collapsible tree",
       "spec": "Paste JSON and explore it as a collapsible, color-coded tree. Supports search/filter within the tree. Click any node to copy its path or value. Handles large JSON with virtual rendering.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "json-diff",
@@ -340,7 +340,7 @@
       "category": "Data Format Tools",
       "description": "Compare two JSON objects and highlight differences",
       "spec": "Two-pane input for JSON objects. Diffs them deeply, showing added, removed, and changed keys with color coding. Supports nested objects and arrays. Outputs a summary of all changes.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "csv-to-json",
@@ -349,7 +349,7 @@
       "category": "Data Format Tools",
       "description": "Convert CSV data to JSON array with column header mapping",
       "spec": "Paste CSV or upload a file. Detects delimiter automatically. Maps the first row to object keys. Options for output as array of objects, array of arrays, or keyed by a column. Download or copy output.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "json-to-typescript",
@@ -358,7 +358,7 @@
       "category": "Developer Tools",
       "description": "Generate TypeScript interfaces from JSON data",
       "spec": "Paste a JSON object or array and auto-generate TypeScript interfaces with proper types (string, number, boolean, null, nested interfaces). Handles arrays, optional fields, and union types.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "xml-to-json",
@@ -367,7 +367,7 @@
       "category": "Data Format Tools",
       "description": "Convert XML documents to JSON representation",
       "spec": "Accepts XML input and converts to JSON following a configurable schema (attributes as keys, text as value, etc.). Pretty-prints the output. Handles namespaces and CDATA sections.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "toml-to-json",
@@ -376,7 +376,7 @@
       "category": "Data Format Tools",
       "description": "Convert TOML configuration files to JSON",
       "spec": "Parses TOML syntax (strings, integers, floats, booleans, arrays, tables, datetime) and converts to equivalent JSON. Validates TOML syntax and reports errors with line numbers.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "ini-to-json",
@@ -385,7 +385,7 @@
       "category": "Data Format Tools",
       "description": "Convert INI/config files to JSON objects",
       "spec": "Parses INI format with sections and key-value pairs. Converts to a nested JSON object where sections become top-level keys. Handles comments and multi-value keys.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "protobuf-decoder",
@@ -394,7 +394,7 @@
       "category": "Developer Tools",
       "description": "Decode base64-encoded Protobuf binary messages",
       "spec": "Paste a base64-encoded Protobuf binary payload and decode it to field numbers and wire types without a schema. Displays raw field numbers, types (varint, length-delimited, etc.), and values.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "unicode-inspector",
