@@ -7,7 +7,7 @@
       "category": "Developer Tools",
       "description": "Validate JSON data against a JSON Schema definition",
       "spec": "Takes a JSON Schema and a JSON document as inputs. Validates the document against the schema and reports all validation errors with paths. Supports Draft-07 schema features implemented in-browser.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "graphql-query-builder",
@@ -16,7 +16,7 @@
       "category": "Developer Tools",
       "description": "Visual builder for GraphQL queries and mutations",
       "spec": "Lets users paste a GraphQL schema SDL and visually construct queries by selecting fields, adding arguments, and nesting fragments. Outputs a formatted GraphQL query string ready to copy.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "env-parser",
@@ -25,7 +25,7 @@
       "category": "Developer Tools",
       "description": "Parse, validate, and convert .env files to JSON or YAML",
       "spec": "Accepts raw .env file content and parses key-value pairs, comments, and quoted values. Outputs to JSON or YAML. Detects duplicates and invalid lines.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "jwt-inspector",
@@ -34,7 +34,7 @@
       "category": "Developer Tools",
       "description": "Deep inspect JWT tokens — header, payload, expiry, claims",
       "spec": "Decodes a JWT without verification and displays header and payload in formatted JSON. Shows expiry countdown, issued-at time, and highlights standard claims (iss, sub, aud). Flags expired tokens.",
-      "status": "pending"
+      "status": "skip-duplicate"
     },
     {
       "slug": "http-header-builder",
@@ -43,7 +43,7 @@
       "category": "Developer Tools",
       "description": "Build and validate HTTP request/response headers",
       "spec": "Provides a form-based interface to compose HTTP headers by name and value. Validates common headers against their spec, warns about deprecated or insecure values, and outputs a ready-to-copy header block.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "markdown-table-editor",
@@ -52,7 +52,7 @@
       "category": "Developer Tools",
       "description": "Spreadsheet-style editor that outputs Markdown tables",
       "spec": "Grid UI for entering tabular data with add/remove row and column controls. Outputs properly formatted GitHub-Flavored Markdown tables. Supports alignment options per column (left, center, right).",
-      "status": "pending"
+      "status": "skip-duplicate"
     },
     {
       "slug": "regex-cheatsheet",
@@ -61,7 +61,7 @@
       "category": "Developer Tools",
       "description": "Interactive regex reference with live match highlighting",
       "spec": "Sidebar shows categorized regex tokens (anchors, quantifiers, groups, lookarounds) with explanations. Live test input highlights all matches as the pattern is typed. Shows match groups in a table.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "openapi-explorer",
@@ -70,7 +70,7 @@
       "category": "Developer Tools",
       "description": "Paste OpenAPI YAML/JSON and browse endpoints interactively",
       "spec": "Parses OpenAPI 3.x or Swagger 2.0 spec and renders a collapsible list of endpoints grouped by tag. Shows request parameters, request body schema, and response schemas for each endpoint.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "html-minifier",
