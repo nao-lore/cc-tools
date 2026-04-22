@@ -187,7 +187,7 @@
       "category": "Developer Tools",
       "description": "Convert numbers between binary, octal, decimal, hex, and custom bases",
       "spec": "Input any number in any standard base (2–36) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "bitwise-calculator",
@@ -196,7 +196,7 @@
       "category": "Developer Tools",
       "description": "Perform bitwise AND, OR, XOR, NOT, and shift operations",
       "spec": "Enter two integer operands and select a bitwise operation. Displays operands and result in binary, hex, and decimal. Shows 8-bit and 32-bit visual bit diagrams.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "color-contrast-checker",
@@ -205,7 +205,7 @@
       "category": "Color Tools",
       "description": "Check foreground/background color contrast ratio for WCAG compliance",
       "spec": "Pick or input two colors (hex, RGB, HSL) and see their contrast ratio. Reports WCAG AA and AAA pass/fail for normal text, large text, and UI components. Shows sample text on background.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "color-mixer",
@@ -214,7 +214,7 @@
       "category": "Color Tools",
       "description": "Mix two or more colors and preview the result",
       "spec": "Add multiple colors with individual weight sliders. Preview the blended color in real-time. Output in hex, RGB, and HSL. Supports RGB and LAB color space blending modes.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "color-harmonies",
@@ -223,7 +223,7 @@
       "category": "Color Tools",
       "description": "Generate complementary, triadic, and analogous color schemes from a base color",
       "spec": "Pick a base color and view complementary, split-complementary, triadic, tetradic, and analogous harmonies. Preview all swatches with hex codes. Export as CSS custom properties or JSON.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-variables-generator",
@@ -232,7 +232,7 @@
       "category": "CSS Tools",
       "description": "Generate a complete CSS custom properties theme from a brand color",
       "spec": "Input a primary brand color and generate a full set of CSS custom properties including 10 tints/shades, semantic tokens (primary, secondary, accent, surface, text), and dark mode overrides.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "tailwind-color-finder",
@@ -241,7 +241,7 @@
       "category": "CSS Tools",
       "description": "Find the closest Tailwind CSS color class to any hex value",
       "spec": "Input any hex color and the tool calculates the closest match across all Tailwind CSS color palettes using color distance. Shows the matched class name, the actual color, and the delta-E difference.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-clip-path",
@@ -250,7 +250,7 @@
       "category": "CSS Tools",
       "description": "Visually create clip-path polygon shapes for CSS",
       "spec": "Interactive canvas with draggable points to define a polygon clip-path. Switch between polygon, circle, and ellipse modes. Live preview on a sample element. Copies the clip-path CSS rule.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-transform",
@@ -259,7 +259,7 @@
       "category": "CSS Tools",
       "description": "Visual builder for CSS transform functions",
       "spec": "Sliders and inputs for translate, rotate, scale, skew, and perspective. Live preview on a sample box. Shows the composed transform CSS string. Toggle 2D vs 3D transform mode.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-specificity",
@@ -268,7 +268,7 @@
       "category": "CSS Tools",
       "description": "Calculate and compare CSS selector specificity",
       "spec": "Input one or more CSS selectors and calculate their specificity as (a, b, c) tuples per the CSS spec. Compare multiple selectors side by side and visualize which one wins in a conflict.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "media-query-builder",
@@ -277,7 +277,7 @@
       "category": "CSS Tools",
       "description": "Build responsive CSS media queries with a visual editor",
       "spec": "Choose breakpoint type (min-width, max-width, orientation, etc.) and combine multiple conditions. Preview which devices each query targets. Outputs the final @media rule ready to paste.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "svg-path-editor",
@@ -286,7 +286,7 @@
       "category": "Image Tools",
       "description": "Edit and visualize SVG path (d attribute) commands",
       "spec": "Paste an SVG path d-string and see it rendered on a canvas. Each path command (M, L, C, A, Z, etc.) is listed with editable parameters. Editing updates the path preview in real-time.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "image-color-picker",
