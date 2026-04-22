@@ -457,7 +457,7 @@
       "category": "Color Tools",
       "description": "Simulate how colors appear with different types of color blindness",
       "spec": "Input a color palette or upload an image. Applies simulation filters for Protanopia, Deuteranopia, Tritanopia, and Achromatopsia. Side-by-side before/after comparison using CSS filters and canvas transforms.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "tailwind-config-viewer",
@@ -466,7 +466,7 @@
       "category": "CSS Tools",
       "description": "Paste a Tailwind config and browse all generated tokens",
       "spec": "Accepts a tailwind.config.js JSON object and parses the theme section. Displays all colors, spacing, typography, border radius, and shadow tokens as visual swatches and values. Search across all tokens.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "network-latency-sim",
@@ -475,7 +475,7 @@
       "category": "Developer Tools",
       "description": "Simulate slow network throttling to plan loading UX",
       "spec": "Input payload sizes (HTML, CSS, JS, images) and select a network speed preset (2G, 3G, LTE, Cable). Calculates estimated load times for each resource and total page load. Visualizes a waterfall chart.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "http-response-builder",
@@ -484,7 +484,7 @@
       "category": "Developer Tools",
       "description": "Compose and format HTTP responses for documentation or mocking",
       "spec": "Select a status code, add headers, and compose a body in JSON, HTML, or plain text. Outputs a formatted raw HTTP response string. Useful for writing API docs or configuring mock servers.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "color-token-generator",
@@ -493,7 +493,7 @@
       "category": "Color Tools",
       "description": "Generate design tokens from a color palette in JSON, CSS, or SCSS format",
       "spec": "Input named colors with hex values. Outputs design tokens as CSS custom properties, SCSS variables, or JSON (Style Dictionary format). Supports auto-generating tint/shade scales for each color.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "csp-builder",
@@ -502,7 +502,7 @@
       "category": "Developer Tools",
       "description": "Build Content-Security-Policy headers interactively",
       "spec": "Toggle directives (script-src, style-src, img-src, etc.) and add allowed sources with autocomplete. Real-time preview of the CSP header string. Explains each directive and validates the output.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "password-policy-tester",
@@ -511,7 +511,7 @@
       "category": "Developer Tools",
       "description": "Test a password against configurable policy rules",
       "spec": "Define a password policy (min length, uppercase, numbers, symbols, no common words, no repeated chars). Input a password and see which rules pass and fail. Shows a policy compliance score.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "cors-header-builder",
@@ -520,7 +520,7 @@
       "category": "Developer Tools",
       "description": "Build correct CORS response headers for any scenario",
       "spec": "Select allowed origins, methods, and headers. Toggle credentials and preflight cache settings. Outputs the complete set of Access-Control-* response headers. Explains each header's purpose.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "semantic-version-bumper",
@@ -529,7 +529,7 @@
       "category": "Developer Tools",
       "description": "Calculate the next semver version from a current version and change type",
       "spec": "Input the current semver string and select the change type (major, minor, patch, prerelease). Outputs the bumped version. Also parses and compares two semver strings to determine which is greater.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "changelog-formatter",
@@ -538,7 +538,7 @@
       "category": "Developer Tools",
       "description": "Format a list of git commit messages into a structured changelog",
       "spec": "Paste raw git commit messages and the tool groups them by type (feat, fix, chore, docs, refactor) based on Conventional Commits. Outputs a formatted Markdown changelog section for a given version.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "package-json-checker",
@@ -547,7 +547,7 @@
       "category": "Developer Tools",
       "description": "Validate and analyze package.json for common issues",
       "spec": "Paste package.json content and check for missing required fields, inconsistent version ranges (^ vs ~), deprecated scripts, and potential security flags. Lists all dependencies with their version constraints.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "json-to-zod",
@@ -556,7 +556,7 @@
       "category": "Developer Tools",
       "description": "Generate a Zod validation schema from a JSON sample",
       "spec": "Paste a JSON object and auto-generate the corresponding Zod schema with z.string(), z.number(), z.object(), z.array(), and z.optional() as appropriate. Handles nested structures and arrays.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "sql-to-json",
