@@ -565,7 +565,7 @@
       "category": "Data Format Tools",
       "description": "Convert SQL INSERT statements to JSON array",
       "spec": "Paste SQL INSERT INTO statements and extract the values into a JSON array of objects using column names from the INSERT statement. Handles multiple rows and quoted string values.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "dns-record-builder",
@@ -574,7 +574,7 @@
       "category": "Developer Tools",
       "description": "Generate DNS record zone file entries for common record types",
       "spec": "Select a record type (A, AAAA, CNAME, MX, TXT, SRV, NS) and fill in the fields. Outputs the correctly formatted zone file line. Includes common presets for Google Workspace, SPF, DKIM, and DMARC.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "robots-txt-parser",
@@ -583,7 +583,7 @@
       "category": "SEO Tools",
       "description": "Parse and visualize a robots.txt file as a structured table",
       "spec": "Paste a robots.txt file and parse all user-agent rules. Test a specific URL + user-agent combination to see if it is allowed or disallowed. Highlights conflicting rules.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "utm-builder",
@@ -592,7 +592,7 @@
       "category": "SEO Tools",
       "description": "Build UTM-tagged URLs for campaign tracking",
       "spec": "Input a base URL and fill in utm_source, utm_medium, utm_campaign, utm_term, and utm_content fields. Outputs the tagged URL with proper encoding. Also parses an existing UTM URL and extracts all parameters.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "link-checker",
@@ -601,7 +601,7 @@
       "category": "SEO Tools",
       "description": "Extract all links from pasted HTML and categorize them",
       "spec": "Paste raw HTML and extract all anchor href values. Categorizes links as internal, external, or anchor links. Checks for obviously broken patterns (empty href, javascript:, malformed URLs). Outputs a table with link text and URL.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "schema-markup-tester",
@@ -610,7 +610,7 @@
       "category": "SEO Tools",
       "description": "Validate JSON-LD and microdata structured data markup",
       "spec": "Paste a JSON-LD script block and validate it against common Schema.org types. Checks required and recommended properties, reports missing fields, and shows a preview of how Google might render the rich result.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-loader-generator",
@@ -619,7 +619,7 @@
       "category": "CSS Tools",
       "description": "Generate pure CSS loading spinners and skeleton animations",
       "spec": "Choose from spinner, dots, bars, pulse, or skeleton loader types. Customize color, size, and speed with sliders. Preview the animation live. Outputs pure CSS with no dependencies.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "css-reset-builder",
@@ -628,7 +628,7 @@
       "category": "CSS Tools",
       "description": "Generate a modern CSS reset tailored to your needs",
       "spec": "Toggle reset categories (box model, typography, lists, forms, media, accessibility) and see the generated CSS reset update in real time. Explains what each section does. Choose from Modern CSS Reset, Normalize.css approach, or Bare-bones style.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "breakpoint-visualizer",
@@ -637,7 +637,7 @@
       "category": "CSS Tools",
       "description": "Visualize common CSS breakpoints for popular frameworks",
       "spec": "Displays breakpoints for Bootstrap, Tailwind CSS, Material UI, and custom setups side by side on a ruler. Enter a custom viewport width to see which breakpoints are active. Shows the corresponding media query for each.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "image-aspect-crop",
@@ -646,7 +646,7 @@
       "category": "Image Tools",
       "description": "Calculate crop coordinates to achieve a target aspect ratio",
       "spec": "Input original image dimensions (width x height) and the desired target aspect ratio. Calculates the largest possible crop area centered in the image and outputs the x, y, width, height crop coordinates.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "webp-info",
@@ -655,7 +655,7 @@
       "category": "Image Tools",
       "description": "Detect image format, dimensions, and color depth from a file",
       "spec": "Upload any image file (JPEG, PNG, WebP, GIF, AVIF) and read its file header to determine the exact format, dimensions, bit depth, and whether it has transparency. Does not re-encode the image.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "lorem-picsum-builder",
@@ -664,7 +664,7 @@
       "category": "Image Tools",
       "description": "Build placeholder image URLs from popular services",
       "spec": "Select a placeholder service (picsum.photos, placehold.co, via.placeholder.com) and configure width, height, background color, text, and seed. Outputs the URL and shows a live preview of the placeholder.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "svg-wave-generator",
