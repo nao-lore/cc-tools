@@ -619,7 +619,7 @@
       "category": "CSS Tools",
       "description": "Generate pure CSS loading spinners and skeleton animations",
       "spec": "Choose from spinner, dots, bars, pulse, or skeleton loader types. Customize color, size, and speed with sliders. Preview the animation live. Outputs pure CSS with no dependencies.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "css-reset-builder",
@@ -628,7 +628,7 @@
       "category": "CSS Tools",
       "description": "Generate a modern CSS reset tailored to your needs",
       "spec": "Toggle reset categories (box model, typography, lists, forms, media, accessibility) and see the generated CSS reset update in real time. Explains what each section does. Choose from Modern CSS Reset, Normalize.css approach, or Bare-bones style.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "breakpoint-visualizer",
@@ -637,7 +637,7 @@
       "category": "CSS Tools",
       "description": "Visualize common CSS breakpoints for popular frameworks",
       "spec": "Displays breakpoints for Bootstrap, Tailwind CSS, Material UI, and custom setups side by side on a ruler. Enter a custom viewport width to see which breakpoints are active. Shows the corresponding media query for each.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "image-aspect-crop",
@@ -646,7 +646,7 @@
       "category": "Image Tools",
       "description": "Calculate crop coordinates to achieve a target aspect ratio",
       "spec": "Input original image dimensions (width x height) and the desired target aspect ratio. Calculates the largest possible crop area centered in the image and outputs the x, y, width, height crop coordinates.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "webp-info",
@@ -655,7 +655,7 @@
       "category": "Image Tools",
       "description": "Detect image format, dimensions, and color depth from a file",
       "spec": "Upload any image file (JPEG, PNG, WebP, GIF, AVIF) and read its file header to determine the exact format, dimensions, bit depth, and whether it has transparency. Does not re-encode the image.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "lorem-picsum-builder",
@@ -664,7 +664,7 @@
       "category": "Image Tools",
       "description": "Build placeholder image URLs from popular services",
       "spec": "Select a placeholder service (picsum.photos, placehold.co, via.placeholder.com) and configure width, height, background color, text, and seed. Outputs the URL and shows a live preview of the placeholder.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "svg-wave-generator",
@@ -673,7 +673,7 @@
       "category": "Image Tools",
       "description": "Generate smooth wave SVG dividers for web pages",
       "spec": "Configure wave amplitude, frequency, color, and number of layers. Toggle between wave types (gentle, sharp, layered). Preview on a colored background. Exports inline SVG or a standalone file.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "number-formatter",
@@ -682,7 +682,7 @@
       "category": "Math & Science",
       "description": "Format numbers with locale-specific separators, currency, and units",
       "spec": "Input a number and select a locale (en-US, ja-JP, de-DE, etc.) and format type (decimal, currency, percent, unit). Shows the formatted output and the Intl.NumberFormat options that produce it.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "percentage-calculator",
@@ -691,7 +691,7 @@
       "category": "Math & Science",
       "description": "Calculate percentages, percent change, and percent of total",
       "spec": "Three calculation modes: (1) X% of Y, (2) X is what % of Y, (3) percent change from X to Y. Shows formula and step-by-step calculation. Handles negative numbers and percentage points.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "scientific-notation",
@@ -700,7 +700,7 @@
       "category": "Math & Science",
       "description": "Convert numbers between standard and scientific notation",
       "spec": "Input any number in standard decimal or scientific notation (e.g. 6.02e23) and convert between forms. Handles very large and very small numbers. Shows significant figures and engineering notation.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "matrix-calculator",
@@ -709,7 +709,7 @@
       "category": "Math & Science",
       "description": "Add, multiply, transpose, and find determinant of matrices",
       "spec": "Input matrices up to 5x5 using a grid UI. Supports addition, subtraction, scalar multiplication, matrix multiplication, transpose, and determinant. Shows step-by-step calculation for 2x2 and 3x3 matrices.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "statistics-calculator",
@@ -718,7 +718,7 @@
       "category": "Math & Science",
       "description": "Calculate mean, median, mode, std deviation from a data set",
       "spec": "Input a list of numbers (comma or newline separated). Calculates mean, median, mode, range, variance, standard deviation, min, max, quartiles (Q1, Q3), and IQR. Draws a simple text-based histogram.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "roman-numeral",
