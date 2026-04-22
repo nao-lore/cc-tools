@@ -21,119 +21,119 @@ const categories: Category[] = [
     name: "Text & String Tools",
     color: "#3b82f6",
     tools: [
-      { slug: "mdtable", url: "https://mdtable.vercel.app", name: "Markdown Table Generator", description: "Create and edit Markdown tables visually", market: "EN" },
-      { slug: "text-diff", url: "https://text-diff-mu.vercel.app", name: "Text Diff Checker", description: "Compare two texts and highlight differences", market: "EN" },
-      { slug: "word-counter", url: "https://word-counter-seven-khaki.vercel.app", name: "Word & Character Counter", description: "Count words, characters, sentences, and paragraphs", market: "EN" },
-      { slug: "markdown-preview", url: "https://markdown-preview-pi-sandy.vercel.app", name: "Markdown Live Preview", description: "Write Markdown and preview rendered output in real time", market: "EN" },
-      { slug: "dummy-text", url: "https://dummy-text-murex.vercel.app", name: "Placeholder Text Generator", description: "Generate lorem ipsum and other placeholder text", market: "EN" },
-      { slug: "ascii-art", url: "https://ascii-art-mu.vercel.app", name: "ASCII Art Generator", description: "Convert text into ASCII art with various fonts", market: "EN" },
+      { slug: "mdtable", url: "/mdtable", name: "Markdown Table Generator", description: "Create and edit Markdown tables visually", market: "EN" },
+      { slug: "text-diff", url: "/text-diff", name: "Text Diff Checker", description: "Compare two texts and highlight differences", market: "EN" },
+      { slug: "word-counter", url: "/word-counter", name: "Word & Character Counter", description: "Count words, characters, sentences, and paragraphs", market: "EN" },
+      { slug: "markdown-preview", url: "/markdown-preview", name: "Markdown Live Preview", description: "Write Markdown and preview rendered output in real time", market: "EN" },
+      { slug: "dummy-text", url: "/dummy-text", name: "Placeholder Text Generator", description: "Generate lorem ipsum and other placeholder text", market: "EN" },
+      { slug: "ascii-art", url: "/ascii-art", name: "ASCII Art Generator", description: "Convert text into ASCII art with various fonts", market: "EN" },
     ],
   },
   {
     name: "Data Format Tools",
     color: "#10b981",
     tools: [
-      { slug: "json-formatter", url: "https://json-formatter-topaz-pi.vercel.app", name: "JSON Formatter & Validator", description: "Format, validate, and beautify JSON data", market: "EN" },
-      { slug: "json-to-csv", url: "https://json-to-csv-rho.vercel.app", name: "JSON to CSV Converter", description: "Convert JSON arrays to CSV format", market: "EN" },
-      { slug: "yaml-to-json", url: "https://yaml-to-json-theta.vercel.app", name: "YAML to JSON Converter", description: "Convert between YAML and JSON formats", market: "EN" },
-      { slug: "xml-formatter", url: "https://xml-formatter-xi.vercel.app", name: "XML Formatter", description: "Format and prettify XML documents", market: "EN" },
-      { slug: "sql-formatter", url: "https://sql-formatter-liart.vercel.app", name: "SQL Formatter", description: "Format and beautify SQL queries", market: "EN" },
-      { slug: "html-to-markdown", url: "https://html-to-markdown-kappa.vercel.app", name: "HTML to Markdown", description: "Convert HTML markup to Markdown syntax", market: "EN" },
+      { slug: "json-formatter", url: "/json-formatter", name: "JSON Formatter & Validator", description: "Format, validate, and beautify JSON data", market: "EN" },
+      { slug: "json-to-csv", url: "/json-to-csv", name: "JSON to CSV Converter", description: "Convert JSON arrays to CSV format", market: "EN" },
+      { slug: "yaml-to-json", url: "/yaml-to-json", name: "YAML to JSON Converter", description: "Convert between YAML and JSON formats", market: "EN" },
+      { slug: "xml-formatter", url: "/xml-formatter", name: "XML Formatter", description: "Format and prettify XML documents", market: "EN" },
+      { slug: "sql-formatter", url: "/sql-formatter", name: "SQL Formatter", description: "Format and beautify SQL queries", market: "EN" },
+      { slug: "html-to-markdown", url: "/html-to-markdown", name: "HTML to Markdown", description: "Convert HTML markup to Markdown syntax", market: "EN" },
     ],
   },
   {
     name: "Encoding & Decoding",
     color: "#8b5cf6",
     tools: [
-      { slug: "base64-tools", url: "https://base64-tools-three.vercel.app", name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", market: "EN" },
-      { slug: "url-encoder", url: "https://url-encoder-pi.vercel.app", name: "URL Encoder/Decoder", description: "Encode and decode URL components", market: "EN" },
-      { slug: "html-entity", url: "https://html-entity-sigma.vercel.app", name: "HTML Entity Encoder", description: "Encode and decode HTML entities", market: "EN" },
-      { slug: "jwt-decoder", url: "https://jwt-decoder-five.vercel.app", name: "JWT Decoder", description: "Decode and inspect JSON Web Tokens", market: "EN" },
-      { slug: "image-to-base64", url: "https://image-to-base64-five.vercel.app", name: "Image to Base64", description: "Convert images to Base64 encoded strings", market: "EN" },
-      { slug: "hash-generator", url: "https://hash-generator-coral.vercel.app", name: "Hash Generator", description: "Generate MD5, SHA-1, SHA-256, and other hashes", market: "EN" },
-      { slug: "binary-converter", url: "https://binary-converter-one.vercel.app", name: "Binary/Decimal/Hex Converter", description: "Convert between binary, decimal, and hexadecimal", market: "EN" },
+      { slug: "base64-tools", url: "/base64-tools", name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", market: "EN" },
+      { slug: "url-encoder", url: "/url-encoder", name: "URL Encoder/Decoder", description: "Encode and decode URL components", market: "EN" },
+      { slug: "html-entity", url: "/html-entity", name: "HTML Entity Encoder", description: "Encode and decode HTML entities", market: "EN" },
+      { slug: "jwt-decoder", url: "/jwt-decoder", name: "JWT Decoder", description: "Decode and inspect JSON Web Tokens", market: "EN" },
+      { slug: "image-to-base64", url: "/image-to-base64", name: "Image to Base64", description: "Convert images to Base64 encoded strings", market: "EN" },
+      { slug: "hash-generator", url: "/hash-generator", name: "Hash Generator", description: "Generate MD5, SHA-1, SHA-256, and other hashes", market: "EN" },
+      { slug: "binary-converter", url: "/binary-converter", name: "Binary/Decimal/Hex Converter", description: "Convert between binary, decimal, and hexadecimal", market: "EN" },
     ],
   },
   {
     name: "CSS Tools",
     color: "#f59e0b",
     tools: [
-      { slug: "css-gradient", url: "https://css-gradient-beta.vercel.app", name: "CSS Gradient Generator", description: "Create linear and radial CSS gradients visually", market: "EN" },
-      { slug: "css-box-shadow", url: "https://css-box-shadow-gamma.vercel.app", name: "CSS Box Shadow", description: "Design box shadows with a visual editor", market: "EN" },
-      { slug: "css-flexbox", url: "https://css-flexbox-rho.vercel.app", name: "CSS Flexbox Generator", description: "Build flexbox layouts with a visual playground", market: "EN" },
-      { slug: "css-grid", url: "https://css-grid-two-mocha.vercel.app", name: "CSS Grid Generator", description: "Create CSS Grid layouts visually", market: "EN" },
-      { slug: "css-animation", url: "https://css-animation-tawny.vercel.app", name: "CSS Animation Generator", description: "Build CSS keyframe animations with a visual editor", market: "EN" },
-      { slug: "border-radius", url: "https://border-radius-nine.vercel.app", name: "Border Radius Generator", description: "Create custom border radius values visually", market: "EN" },
-      { slug: "tailwindconvert", url: "https://tailwindconvert.vercel.app", name: "CSS to Tailwind Converter", description: "Convert vanilla CSS to Tailwind CSS utility classes", market: "EN" },
-      { slug: "px-to-rem", url: "https://px-to-rem-rust.vercel.app", name: "PX to REM Converter", description: "Convert pixel values to REM units", market: "EN" },
+      { slug: "css-gradient", url: "/css-gradient", name: "CSS Gradient Generator", description: "Create linear and radial CSS gradients visually", market: "EN" },
+      { slug: "css-box-shadow", url: "/css-box-shadow", name: "CSS Box Shadow", description: "Design box shadows with a visual editor", market: "EN" },
+      { slug: "css-flexbox", url: "/css-flexbox", name: "CSS Flexbox Generator", description: "Build flexbox layouts with a visual playground", market: "EN" },
+      { slug: "css-grid", url: "/css-grid", name: "CSS Grid Generator", description: "Create CSS Grid layouts visually", market: "EN" },
+      { slug: "css-animation", url: "/css-animation", name: "CSS Animation Generator", description: "Build CSS keyframe animations with a visual editor", market: "EN" },
+      { slug: "border-radius", url: "/border-radius", name: "Border Radius Generator", description: "Create custom border radius values visually", market: "EN" },
+      { slug: "tailwindconvert", url: "/tailwindconvert", name: "CSS to Tailwind Converter", description: "Convert vanilla CSS to Tailwind CSS utility classes", market: "EN" },
+      { slug: "px-to-rem", url: "/px-to-rem", name: "PX to REM Converter", description: "Convert pixel values to REM units", market: "EN" },
     ],
   },
   {
     name: "Color Tools",
     color: "#ec4899",
     tools: [
-      { slug: "color-converter", url: "https://color-converter-inky.vercel.app", name: "Color Converter", description: "Convert between HEX, RGB, HSL, and other color formats", market: "EN" },
-      { slug: "color-palette", url: "https://color-palette-sand.vercel.app", name: "Color Palette Generator", description: "Generate harmonious color palettes", market: "EN" },
+      { slug: "color-converter", url: "/color-converter", name: "Color Converter", description: "Convert between HEX, RGB, HSL, and other color formats", market: "EN" },
+      { slug: "color-palette", url: "/color-palette", name: "Color Palette Generator", description: "Generate harmonious color palettes", market: "EN" },
     ],
   },
   {
     name: "Image Tools",
     color: "#06b6d4",
     tools: [
-      { slug: "svg-to-png", url: "https://svg-to-png-six.vercel.app", name: "SVG to PNG Converter", description: "Convert SVG files to PNG images", market: "EN" },
-      { slug: "image-compressor", url: "https://image-compressor-eight-tawny.vercel.app", name: "Image Compressor", description: "Compress images without losing quality", market: "EN" },
-      { slug: "favicon-generator", url: "https://favicon-generator-psi.vercel.app", name: "Favicon Generator", description: "Generate favicons from text, emoji, or images", market: "EN" },
-      { slug: "placeholder-image", url: "https://placeholder-image-fmq8sxvq6-naos-projects-52ff71e9.vercel.app", name: "Placeholder Image Generator", description: "Create placeholder images with custom dimensions", market: "EN" },
-      { slug: "qr-generator", url: "https://qr-generator-ten-wheat.vercel.app", name: "QR Code Generator", description: "Generate QR codes from text or URLs", market: "EN" },
+      { slug: "svg-to-png", url: "/svg-to-png", name: "SVG to PNG Converter", description: "Convert SVG files to PNG images", market: "EN" },
+      { slug: "image-compressor", url: "/image-compressor", name: "Image Compressor", description: "Compress images without losing quality", market: "EN" },
+      { slug: "favicon-generator", url: "/favicon-generator", name: "Favicon Generator", description: "Generate favicons from text, emoji, or images", market: "EN" },
+      { slug: "placeholder-image", url: "/placeholder-image", name: "Placeholder Image Generator", description: "Create placeholder images with custom dimensions", market: "EN" },
+      { slug: "qr-generator", url: "/qr-generator", name: "QR Code Generator", description: "Generate QR codes from text or URLs", market: "EN" },
     ],
   },
   {
     name: "Developer Tools",
     color: "#ef4444",
     tools: [
-      { slug: "regex-tester", url: "https://regex-tester-three.vercel.app", name: "Regex Tester", description: "Test and debug regular expressions with live matching", market: "EN" },
-      { slug: "uuid-generator", url: "https://uuid-generator-eight-psi.vercel.app", name: "UUID Generator", description: "Generate UUID v4 identifiers", market: "EN" },
-      { slug: "cron-generator", url: "https://cron-generator-beryl.vercel.app", name: "Cron Expression Generator", description: "Build and validate cron schedule expressions", market: "EN" },
-      { slug: "epoch-converter", url: "https://epoch-converter-eosin.vercel.app", name: "Unix Timestamp Converter", description: "Convert between Unix timestamps and dates", market: "EN" },
-      { slug: "chmod-calculator", url: "https://chmod-calculator-gules.vercel.app", name: "Chmod Calculator", description: "Calculate file permission values", market: "EN" },
-      { slug: "http-status", url: "https://http-status-eight.vercel.app", name: "HTTP Status Codes", description: "Reference for all HTTP status codes", market: "EN" },
-      { slug: "password-generator", url: "https://password-generator-sepia-beta.vercel.app", name: "Password Generator", description: "Generate secure random passwords", market: "EN" },
+      { slug: "regex-tester", url: "/regex-tester", name: "Regex Tester", description: "Test and debug regular expressions with live matching", market: "EN" },
+      { slug: "uuid-generator", url: "/uuid-generator", name: "UUID Generator", description: "Generate UUID v4 identifiers", market: "EN" },
+      { slug: "cron-generator", url: "/cron-generator", name: "Cron Expression Generator", description: "Build and validate cron schedule expressions", market: "EN" },
+      { slug: "epoch-converter", url: "/epoch-converter", name: "Unix Timestamp Converter", description: "Convert between Unix timestamps and dates", market: "EN" },
+      { slug: "chmod-calculator", url: "/chmod-calculator", name: "Chmod Calculator", description: "Calculate file permission values", market: "EN" },
+      { slug: "http-status", url: "/http-status", name: "HTTP Status Codes", description: "Reference for all HTTP status codes", market: "EN" },
+      { slug: "password-generator", url: "/password-generator", name: "Password Generator", description: "Generate secure random passwords", market: "EN" },
     ],
   },
   {
     name: "SEO Tools",
     color: "#84cc16",
     tools: [
-      { slug: "meta-tag-generator", url: "https://meta-tag-generator-indol.vercel.app", name: "Meta Tag Generator", description: "Generate HTML meta tags for SEO", market: "EN" },
-      { slug: "og-image-preview", url: "https://og-image-preview-eight.vercel.app", name: "OG Image Preview", description: "Preview Open Graph images for social sharing", market: "EN" },
-      { slug: "robots-txt-generator", url: "https://robots-txt-generator-nine.vercel.app", name: "Robots.txt Generator", description: "Generate robots.txt files for search engines", market: "EN" },
+      { slug: "meta-tag-generator", url: "/meta-tag-generator", name: "Meta Tag Generator", description: "Generate HTML meta tags for SEO", market: "EN" },
+      { slug: "og-image-preview", url: "/og-image-preview", name: "OG Image Preview", description: "Preview Open Graph images for social sharing", market: "EN" },
+      { slug: "robots-txt-generator", url: "/robots-txt-generator", name: "Robots.txt Generator", description: "Generate robots.txt files for search engines", market: "EN" },
     ],
   },
   {
     name: "Minifier Tools",
     color: "#f97316",
     tools: [
-      { slug: "minify-js", url: "https://minify-js.vercel.app", name: "JavaScript Minifier", description: "Minify JavaScript code to reduce file size", market: "EN" },
-      { slug: "minify-css", url: "https://minify-css.vercel.app", name: "CSS Minifier", description: "Minify CSS stylesheets to reduce file size", market: "EN" },
+      { slug: "minify-js", url: "/minify-js", name: "JavaScript Minifier", description: "Minify JavaScript code to reduce file size", market: "EN" },
+      { slug: "minify-css", url: "/minify-css", name: "CSS Minifier", description: "Minify CSS stylesheets to reduce file size", market: "EN" },
     ],
   },
   {
     name: "Time & Date",
     color: "#6366f1",
     tools: [
-      { slug: "timezone-converter", url: "https://timezone-converter-rouge-two.vercel.app", name: "Time Zone Converter", description: "Convert times between different time zones", market: "EN" },
-      { slug: "aspect-ratio", url: "https://aspect-ratio-pi.vercel.app", name: "Aspect Ratio Calculator", description: "Calculate and convert aspect ratios", market: "EN" },
+      { slug: "timezone-converter", url: "/timezone-converter", name: "Time Zone Converter", description: "Convert times between different time zones", market: "EN" },
+      { slug: "aspect-ratio", url: "/aspect-ratio", name: "Aspect Ratio Calculator", description: "Calculate and convert aspect ratios", market: "EN" },
     ],
   },
   {
     name: "Japanese Tools",
     color: "#e11d48",
     tools: [
-      { slug: "eigyoubi", url: "https://eigyoubi.vercel.app", name: "営業日数計算", description: "Calculate business days between dates", market: "JP" },
-      { slug: "wareki-converter", url: "https://wareki-converter-mu.vercel.app", name: "和暦西暦変換", description: "Convert between Japanese and Western calendar years", market: "JP" },
-      { slug: "zenkaku-hankaku", url: "https://zenkaku-hankaku.vercel.app", name: "全角半角変換", description: "Convert between fullwidth and halfwidth characters", market: "JP" },
-      { slug: "furigana", url: "https://furigana-beta.vercel.app", name: "ふりがな変換", description: "Add furigana readings to Japanese text", market: "JP" },
-      { slug: "tax-calculator", url: "https://tax-calculator-lilac-three.vercel.app", name: "税金計算", description: "Calculate Japanese consumption tax", market: "JP" },
+      { slug: "eigyoubi", url: "/eigyoubi", name: "営業日数計算", description: "Calculate business days between dates", market: "JP" },
+      { slug: "wareki-converter", url: "/wareki-converter", name: "和暦西暦変換", description: "Convert between Japanese and Western calendar years", market: "JP" },
+      { slug: "zenkaku-hankaku", url: "/zenkaku-hankaku", name: "全角半角変換", description: "Convert between fullwidth and halfwidth characters", market: "JP" },
+      { slug: "furigana", url: "/furigana", name: "ふりがな変換", description: "Add furigana readings to Japanese text", market: "JP" },
+      { slug: "tax-calculator", url: "/tax-calculator", name: "税金計算", description: "Calculate Japanese consumption tax", market: "JP" },
     ],
   },
 ];
@@ -144,8 +144,7 @@ function ToolCard({ tool, categoryColor }: { tool: Tool; categoryColor: string }
   return (
     <a
       href={tool.url}
-      target="_blank"
-      rel="noopener noreferrer"
+            
       className="group block rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-gray-300 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -347,8 +346,7 @@ export default function Home() {
             </p>
             <a
               href="https://github.com/nao-lore"
-              target="_blank"
-              rel="noopener noreferrer"
+                            
               className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-600 transition-colors"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

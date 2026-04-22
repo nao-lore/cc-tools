@@ -1,0 +1,296 @@
+"use client";
+
+import { useState, useCallback, useRef } from "react";
+
+function minifyCss(css: string): string {
+  if (!css.trim()) return "";
+
+  let result = css;
+
+  // Remove comments (/* ... */) but preserve strings
+  // We process character by character to handle strings correctly
+  let output = "";
+  let i = 0;
+  while (i < result.length) {
+    // Check for strings (single or double quotes)
+    if (result[i] === '"' || result[i] === "'") {
+      const quote = result[i];
+      output += quote;
+      i++;
+      while (i < result.length && result[i] !== quote) {
+        if (result[i] === "\\") {
+          output += result[i];
+          i++;
+          if (i < result.length) {
+            output += result[i];
+            i++;
+          }
+        } else {
+          output += result[i];
+          i++;
+        }
+      }
+      if (i < result.length) {
+        output += result[i]; // closing quote
+        i++;
+      }
+    }
+    // Check for comments
+    else if (result[i] === "/" && i + 1 < result.length && result[i + 1] === "*") {
+      i += 2;
+      while (i + 1 < result.length && !(result[i] === "*" && result[i + 1] === "/")) {
+        i++;
+      }
+      i += 2; // skip */
+    }
+    else {
+      output += result[i];
+      i++;
+    }
+  }
+  result = output;
+
+  // Remove newlines and tabs
+  result = result.replace(/[\n\r\t]/g, " ");
+
+  // Collapse multiple spaces into one
+  result = result.replace(/ {2,}/g, " ");
+
+  // Remove spaces around { } : ; ,
+  result = result.replace(/\s*\{\s*/g, "{");
+  result = result.replace(/\s*\}\s*/g, "}");
+  result = result.replace(/\s*;\s*/g, ";");
+  result = result.replace(/\s*:\s*/g, ":");
+  result = result.replace(/\s*,\s*/g, ",");
+
+  // Remove last semicolon before closing brace
+  result = result.replace(/;}/g, "}");
+
+  // Remove leading/trailing whitespace
+  result = result.trim();
+
+  return result;
+}
+
+function beautifyCss(css: string): string {
+  if (!css.trim()) return "";
+
+  let result = css.trim();
+  let output = "";
+  let indent = 0;
+  let i = 0;
+  const indentStr = "  ";
+
+  while (i < result.length) {
+    // Handle strings
+    if (result[i] === '"' || result[i] === "'") {
+      const quote = result[i];
+      output += quote;
+      i++;
+      while (i < result.length && result[i] !== quote) {
+        if (result[i] === "\\") {
+          output += result[i];
+          i++;
+          if (i < result.length) {
+            output += result[i];
+            i++;
+          }
+        } else {
+          output += result[i];
+          i++;
+        }
+      }
+      if (i < result.length) {
+        output += result[i];
+        i++;
+      }
+      continue;
+    }
+
+    // Handle comments
+    if (result[i] === "/" && i + 1 < result.length && result[i + 1] === "*") {
+      output += "/* ";
+      i += 2;
+      while (i + 1 < result.length && !(result[i] === "*" && result[i + 1] === "/")) {
+        output += result[i];
+        i++;
+      }
+      output += " */\n" + indentStr.repeat(indent);
+      i += 2;
+      continue;
+    }
+
+    if (result[i] === "{") {
+      output += " {\n";
+      indent++;
+      output += indentStr.repeat(indent);
+      i++;
+      // skip whitespace after {
+      while (i < result.length && result[i] === " ") i++;
+    } else if (result[i] === "}") {
+      indent = Math.max(0, indent - 1);
+      // remove trailing whitespace before }
+      output = output.replace(/\s+$/, "");
+      output += "\n" + indentStr.repeat(indent) + "}\n";
+      if (indent > 0) {
+        output += indentStr.repeat(indent);
+      } else {
+        output += "\n";
+      }
+      i++;
+      // skip whitespace after }
+      while (i < result.length && result[i] === " ") i++;
+    } else if (result[i] === ";") {
+      output += ";\n" + indentStr.repeat(indent);
+      i++;
+      // skip whitespace after ;
+      while (i < result.length && result[i] === " ") i++;
+    } else if (result[i] === ":") {
+      output += ": ";
+      i++;
+      // skip whitespace after :
+      while (i < result.length && result[i] === " ") i++;
+    } else if (result[i] === ",") {
+      output += ", ";
+      i++;
+      while (i < result.length && result[i] === " ") i++;
+    } else {
+      output += result[i];
+      i++;
+    }
+  }
+
+  // Clean up extra blank lines
+  output = output.replace(/\n{3,}/g, "\n\n");
+  output = output.trim() + "\n";
+
+  return output;
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return "0 B";
+  if (bytes < 1024) return `${bytes} B`;
+  return `${(bytes / 1024).toFixed(1)} KB`;
+}
+
+export default function CssMinifier() {
+  const [input, setInput] = useState("");
+  const [copied, setCopied] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const minified = minifyCss(input);
+  const originalBytes = new TextEncoder().encode(input).length;
+  const minifiedBytes = new TextEncoder().encode(minified).length;
+  const savings = originalBytes > 0 ? originalBytes - minifiedBytes : 0;
+  const savingsPercent =
+    originalBytes > 0 ? ((savings / originalBytes) * 100).toFixed(1) : "0.0";
+
+  const handleCopy = useCallback(async () => {
+    if (!minified) return;
+    try {
+      await navigator.clipboard.writeText(minified);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = minified;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [minified]);
+
+  const handleClear = useCallback(() => {
+    setInput("");
+    textareaRef.current?.focus();
+  }, []);
+
+  const handleBeautify = useCallback(() => {
+    if (!input.trim()) return;
+    setInput(beautifyCss(input));
+  }, [input]);
+
+  return (
+    <div className="space-y-4">
+      {/* Stats bar */}
+      {input.trim() && (
+        <div className="flex flex-wrap gap-4 text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+          <span>
+            Original: <strong className="text-gray-900">{formatBytes(originalBytes)}</strong>
+          </span>
+          <span>
+            Minified: <strong className="text-gray-900">{formatBytes(minifiedBytes)}</strong>
+          </span>
+          <span>
+            Savings:{" "}
+            <strong className="text-green-700">
+              {formatBytes(savings)} ({savingsPercent}%)
+            </strong>
+          </span>
+        </div>
+      )}
+
+      {/* Editor panels */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Input */}
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm font-semibold text-gray-700">Input CSS</label>
+            <div className="flex gap-2">
+              <button
+                onClick={handleBeautify}
+                disabled={!input.trim()}
+                className="px-3 py-1 text-xs font-medium rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                Beautify
+              </button>
+              <button
+                onClick={handleClear}
+                disabled={!input}
+                className="px-3 py-1 text-xs font-medium rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={`/* Paste your CSS here */\n\nbody {\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}`}
+            className="w-full h-80 p-4 font-mono text-sm border border-gray-300 rounded-lg bg-white resize-y focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400 placeholder:text-gray-400"
+            spellCheck={false}
+          />
+        </div>
+
+        {/* Output */}
+        <div className="flex flex-col">
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm font-semibold text-gray-700">Minified Output</label>
+            <button
+              onClick={handleCopy}
+              disabled={!minified}
+              className="px-3 py-1 text-xs font-medium rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              {copied ? (
+                <span className="text-green-600">Copied!</span>
+              ) : (
+                "Copy"
+              )}
+            </button>
+          </div>
+          <textarea
+            value={minified}
+            readOnly
+            placeholder="Minified CSS will appear here..."
+            className="w-full h-80 p-4 font-mono text-sm border border-gray-200 rounded-lg bg-gray-50 resize-y focus:outline-none placeholder:text-gray-400"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

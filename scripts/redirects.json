@@ -1,0 +1,585 @@
+[
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "mdtable.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/mdtable",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "text-diff-mu.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/text-diff",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "word-counter-seven-khaki.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/word-counter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "markdown-preview-pi-sandy.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/markdown-preview",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "dummy-text-murex.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/dummy-text",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "ascii-art-mu.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/ascii-art",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "json-formatter-topaz-pi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/json-formatter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "json-to-csv-rho.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/json-to-csv",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "yaml-to-json-theta.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/yaml-to-json",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "xml-formatter-xi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/xml-formatter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "sql-formatter-liart.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/sql-formatter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "html-to-markdown-kappa.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/html-to-markdown",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "base64-tools-three.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/base64-tools",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "url-encoder-pi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/url-encoder",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "html-entity-sigma.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/html-entity",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "jwt-decoder-five.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/jwt-decoder",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "image-to-base64-five.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/image-to-base64",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "hash-generator-coral.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/hash-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "binary-converter-one.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/binary-converter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "css-gradient-beta.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/css-gradient",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "css-box-shadow-gamma.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/css-box-shadow",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "css-flexbox-rho.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/css-flexbox",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "css-grid-two-mocha.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/css-grid",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "css-animation-tawny.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/css-animation",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "border-radius-nine.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/border-radius",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "tailwindconvert.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/tailwindconvert",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "px-to-rem-rust.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/px-to-rem",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "color-converter-inky.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/color-converter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "color-palette-sand.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/color-palette",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "svg-to-png-six.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/svg-to-png",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "image-compressor-eight-tawny.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/image-compressor",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "favicon-generator-psi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/favicon-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "placeholder-image-fmq8sxvq6-naos-projects-52ff71e9.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/placeholder-image",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "qr-generator-ten-wheat.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/qr-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "regex-tester-three.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/regex-tester",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "uuid-generator-eight-psi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/uuid-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "cron-generator-beryl.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/cron-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "epoch-converter-eosin.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/epoch-converter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "chmod-calculator-gules.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/chmod-calculator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "http-status-eight.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/http-status",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "password-generator-sepia-beta.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/password-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "meta-tag-generator-indol.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/meta-tag-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "og-image-preview-eight.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/og-image-preview",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "robots-txt-generator-nine.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/robots-txt-generator",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "minify-js.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/minify-js",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "minify-css.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/minify-css",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "timezone-converter-rouge-two.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/timezone-converter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "aspect-ratio-pi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/aspect-ratio",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "eigyoubi.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/eigyoubi",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "wareki-converter-mu.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/wareki-converter",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "zenkaku-hankaku.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/zenkaku-hankaku",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "furigana-beta.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/furigana",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "tax-calculator-lilac-three.vercel.app"
+      }
+    ],
+    "destination": "https://tools.loresync.dev/tax-calculator",
+    "permanent": true
+  }
+]

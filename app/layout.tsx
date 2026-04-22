@@ -13,10 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tools.loresync.dev"),
   verification: {
     google: "uRTAz7j8N8jDW5BzJaGn-wzrFY5C7KNStVLMKlGzo_4",
   },
-  title: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
+  title: {
+    default: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
+    template: "%s | cc-tools",
+  },
   description:
     "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more. No signup required.",
   keywords: [
@@ -33,7 +37,7 @@ export const metadata: Metadata = {
     title: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
     description:
       "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more. No signup required.",
-    url: "https://cc-tools.vercel.app",
+    url: "https://tools.loresync.dev",
     siteName: "cc-tools",
     type: "website",
     locale: "en_US",
@@ -49,7 +53,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://cc-tools.vercel.app",
+    canonical: "https://tools.loresync.dev",
   },
 };
 
@@ -73,7 +77,7 @@ export default function RootLayout({
               name: "cc-tools - Free Online Developer Tools",
               description:
                 "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more.",
-              url: "https://cc-tools.vercel.app",
+              url: "https://tools.loresync.dev",
             }),
           }}
         />

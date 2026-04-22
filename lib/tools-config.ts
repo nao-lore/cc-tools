@@ -1,0 +1,80 @@
+export interface Tool {
+  slug: string;
+  name: string;
+  description: string;
+  market: "EN" | "JP";
+  category: string;
+  oldUrl: string;
+}
+
+export const tools: Tool[] = [
+  { slug: "mdtable", name: "Markdown Table Generator", description: "Create and edit Markdown tables visually", market: "EN", category: "Text & String Tools", oldUrl: "https://mdtable.vercel.app" },
+  { slug: "text-diff", name: "Text Diff Checker", description: "Compare two texts and highlight differences", market: "EN", category: "Text & String Tools", oldUrl: "https://text-diff-mu.vercel.app" },
+  { slug: "word-counter", name: "Word & Character Counter", description: "Count words, characters, sentences, and paragraphs", market: "EN", category: "Text & String Tools", oldUrl: "https://word-counter-seven-khaki.vercel.app" },
+  { slug: "markdown-preview", name: "Markdown Live Preview", description: "Write Markdown and preview rendered output in real time", market: "EN", category: "Text & String Tools", oldUrl: "https://markdown-preview-pi-sandy.vercel.app" },
+  { slug: "dummy-text", name: "Placeholder Text Generator", description: "Generate lorem ipsum and other placeholder text", market: "EN", category: "Text & String Tools", oldUrl: "https://dummy-text-murex.vercel.app" },
+  { slug: "ascii-art", name: "ASCII Art Generator", description: "Convert text into ASCII art with various fonts", market: "EN", category: "Text & String Tools", oldUrl: "https://ascii-art-mu.vercel.app" },
+  { slug: "json-formatter", name: "JSON Formatter & Validator", description: "Format, validate, and beautify JSON data", market: "EN", category: "Data Format Tools", oldUrl: "https://json-formatter-topaz-pi.vercel.app" },
+  { slug: "json-to-csv", name: "JSON to CSV Converter", description: "Convert JSON arrays to CSV format", market: "EN", category: "Data Format Tools", oldUrl: "https://json-to-csv-rho.vercel.app" },
+  { slug: "yaml-to-json", name: "YAML to JSON Converter", description: "Convert between YAML and JSON formats", market: "EN", category: "Data Format Tools", oldUrl: "https://yaml-to-json-theta.vercel.app" },
+  { slug: "xml-formatter", name: "XML Formatter", description: "Format and prettify XML documents", market: "EN", category: "Data Format Tools", oldUrl: "https://xml-formatter-xi.vercel.app" },
+  { slug: "sql-formatter", name: "SQL Formatter", description: "Format and beautify SQL queries", market: "EN", category: "Data Format Tools", oldUrl: "https://sql-formatter-liart.vercel.app" },
+  { slug: "html-to-markdown", name: "HTML to Markdown", description: "Convert HTML markup to Markdown syntax", market: "EN", category: "Data Format Tools", oldUrl: "https://html-to-markdown-kappa.vercel.app" },
+  { slug: "base64-tools", name: "Base64 Encoder/Decoder", description: "Encode and decode Base64 strings", market: "EN", category: "Encoding & Decoding", oldUrl: "https://base64-tools-three.vercel.app" },
+  { slug: "url-encoder", name: "URL Encoder/Decoder", description: "Encode and decode URL components", market: "EN", category: "Encoding & Decoding", oldUrl: "https://url-encoder-pi.vercel.app" },
+  { slug: "html-entity", name: "HTML Entity Encoder", description: "Encode and decode HTML entities", market: "EN", category: "Encoding & Decoding", oldUrl: "https://html-entity-sigma.vercel.app" },
+  { slug: "jwt-decoder", name: "JWT Decoder", description: "Decode and inspect JSON Web Tokens", market: "EN", category: "Encoding & Decoding", oldUrl: "https://jwt-decoder-five.vercel.app" },
+  { slug: "image-to-base64", name: "Image to Base64", description: "Convert images to Base64 encoded strings", market: "EN", category: "Encoding & Decoding", oldUrl: "https://image-to-base64-five.vercel.app" },
+  { slug: "hash-generator", name: "Hash Generator", description: "Generate MD5, SHA-1, SHA-256, and other hashes", market: "EN", category: "Encoding & Decoding", oldUrl: "https://hash-generator-coral.vercel.app" },
+  { slug: "binary-converter", name: "Binary/Decimal/Hex Converter", description: "Convert between binary, decimal, and hexadecimal", market: "EN", category: "Encoding & Decoding", oldUrl: "https://binary-converter-one.vercel.app" },
+  { slug: "css-gradient", name: "CSS Gradient Generator", description: "Create linear and radial CSS gradients visually", market: "EN", category: "CSS Tools", oldUrl: "https://css-gradient-beta.vercel.app" },
+  { slug: "css-box-shadow", name: "CSS Box Shadow", description: "Design box shadows with a visual editor", market: "EN", category: "CSS Tools", oldUrl: "https://css-box-shadow-gamma.vercel.app" },
+  { slug: "css-flexbox", name: "CSS Flexbox Generator", description: "Build flexbox layouts with a visual playground", market: "EN", category: "CSS Tools", oldUrl: "https://css-flexbox-rho.vercel.app" },
+  { slug: "css-grid", name: "CSS Grid Generator", description: "Create CSS Grid layouts visually", market: "EN", category: "CSS Tools", oldUrl: "https://css-grid-two-mocha.vercel.app" },
+  { slug: "css-animation", name: "CSS Animation Generator", description: "Build CSS keyframe animations with a visual editor", market: "EN", category: "CSS Tools", oldUrl: "https://css-animation-tawny.vercel.app" },
+  { slug: "border-radius", name: "Border Radius Generator", description: "Create custom border radius values visually", market: "EN", category: "CSS Tools", oldUrl: "https://border-radius-nine.vercel.app" },
+  { slug: "tailwindconvert", name: "CSS to Tailwind Converter", description: "Convert vanilla CSS to Tailwind CSS utility classes", market: "EN", category: "CSS Tools", oldUrl: "https://tailwindconvert.vercel.app" },
+  { slug: "px-to-rem", name: "PX to REM Converter", description: "Convert pixel values to REM units", market: "EN", category: "CSS Tools", oldUrl: "https://px-to-rem-rust.vercel.app" },
+  { slug: "color-converter", name: "Color Converter", description: "Convert between HEX, RGB, HSL, and other color formats", market: "EN", category: "Color Tools", oldUrl: "https://color-converter-inky.vercel.app" },
+  { slug: "color-palette", name: "Color Palette Generator", description: "Generate harmonious color palettes", market: "EN", category: "Color Tools", oldUrl: "https://color-palette-sand.vercel.app" },
+  { slug: "svg-to-png", name: "SVG to PNG Converter", description: "Convert SVG files to PNG images", market: "EN", category: "Image Tools", oldUrl: "https://svg-to-png-six.vercel.app" },
+  { slug: "image-compressor", name: "Image Compressor", description: "Compress images without losing quality", market: "EN", category: "Image Tools", oldUrl: "https://image-compressor-eight-tawny.vercel.app" },
+  { slug: "favicon-generator", name: "Favicon Generator", description: "Generate favicons from text, emoji, or images", market: "EN", category: "Image Tools", oldUrl: "https://favicon-generator-psi.vercel.app" },
+  { slug: "placeholder-image", name: "Placeholder Image Generator", description: "Create placeholder images with custom dimensions", market: "EN", category: "Image Tools", oldUrl: "https://placeholder-image-fmq8sxvq6-naos-projects-52ff71e9.vercel.app" },
+  { slug: "qr-generator", name: "QR Code Generator", description: "Generate QR codes from text or URLs", market: "EN", category: "Image Tools", oldUrl: "https://qr-generator-ten-wheat.vercel.app" },
+  { slug: "regex-tester", name: "Regex Tester", description: "Test and debug regular expressions with live matching", market: "EN", category: "Developer Tools", oldUrl: "https://regex-tester-three.vercel.app" },
+  { slug: "uuid-generator", name: "UUID Generator", description: "Generate UUID v4 identifiers", market: "EN", category: "Developer Tools", oldUrl: "https://uuid-generator-eight-psi.vercel.app" },
+  { slug: "cron-generator", name: "Cron Expression Generator", description: "Build and validate cron schedule expressions", market: "EN", category: "Developer Tools", oldUrl: "https://cron-generator-beryl.vercel.app" },
+  { slug: "epoch-converter", name: "Unix Timestamp Converter", description: "Convert between Unix timestamps and dates", market: "EN", category: "Developer Tools", oldUrl: "https://epoch-converter-eosin.vercel.app" },
+  { slug: "chmod-calculator", name: "Chmod Calculator", description: "Calculate file permission values", market: "EN", category: "Developer Tools", oldUrl: "https://chmod-calculator-gules.vercel.app" },
+  { slug: "http-status", name: "HTTP Status Codes", description: "Reference for all HTTP status codes", market: "EN", category: "Developer Tools", oldUrl: "https://http-status-eight.vercel.app" },
+  { slug: "password-generator", name: "Password Generator", description: "Generate secure random passwords", market: "EN", category: "Developer Tools", oldUrl: "https://password-generator-sepia-beta.vercel.app" },
+  { slug: "meta-tag-generator", name: "Meta Tag Generator", description: "Generate HTML meta tags for SEO", market: "EN", category: "SEO Tools", oldUrl: "https://meta-tag-generator-indol.vercel.app" },
+  { slug: "og-image-preview", name: "OG Image Preview", description: "Preview Open Graph images for social sharing", market: "EN", category: "SEO Tools", oldUrl: "https://og-image-preview-eight.vercel.app" },
+  { slug: "robots-txt-generator", name: "Robots.txt Generator", description: "Generate robots.txt files for search engines", market: "EN", category: "SEO Tools", oldUrl: "https://robots-txt-generator-nine.vercel.app" },
+  { slug: "minify-js", name: "JavaScript Minifier", description: "Minify JavaScript code to reduce file size", market: "EN", category: "Minifier Tools", oldUrl: "https://minify-js.vercel.app" },
+  { slug: "minify-css", name: "CSS Minifier", description: "Minify CSS stylesheets to reduce file size", market: "EN", category: "Minifier Tools", oldUrl: "https://minify-css.vercel.app" },
+  { slug: "timezone-converter", name: "Time Zone Converter", description: "Convert times between different time zones", market: "EN", category: "Time & Date", oldUrl: "https://timezone-converter-rouge-two.vercel.app" },
+  { slug: "aspect-ratio", name: "Aspect Ratio Calculator", description: "Calculate and convert aspect ratios", market: "EN", category: "Time & Date", oldUrl: "https://aspect-ratio-pi.vercel.app" },
+  { slug: "eigyoubi", name: "営業日数計算", description: "Calculate business days between dates", market: "JP", category: "Japanese Tools", oldUrl: "https://eigyoubi.vercel.app" },
+  { slug: "wareki-converter", name: "和暦西暦変換", description: "Convert between Japanese and Western calendar years", market: "JP", category: "Japanese Tools", oldUrl: "https://wareki-converter-mu.vercel.app" },
+  { slug: "zenkaku-hankaku", name: "全角半角変換", description: "Convert between fullwidth and halfwidth characters", market: "JP", category: "Japanese Tools", oldUrl: "https://zenkaku-hankaku.vercel.app" },
+  { slug: "furigana", name: "ふりがな変換", description: "Add furigana readings to Japanese text", market: "JP", category: "Japanese Tools", oldUrl: "https://furigana-beta.vercel.app" },
+  { slug: "tax-calculator", name: "税金計算", description: "Calculate Japanese consumption tax", market: "JP", category: "Japanese Tools", oldUrl: "https://tax-calculator-lilac-three.vercel.app" },
+];
+
+export const categories = [...new Set(tools.map(t => t.category))];
+
+export function getToolsByCategory(category: string): Tool[] {
+  return tools.filter(t => t.category === category);
+}
+
+export function getRelatedTools(slug: string, limit = 5): Tool[] {
+  const tool = tools.find(t => t.slug === slug);
+  if (!tool) return [];
+  return tools.filter(t => t.slug !== slug && t.category === tool.category).slice(0, limit);
+}
+
+export function getAllSlugs(): string[] {
+  return tools.map(t => t.slug);
+}
