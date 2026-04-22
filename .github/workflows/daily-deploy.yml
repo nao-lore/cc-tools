@@ -1,0 +1,61 @@
+name: Daily Tool Deploy
+
+on:
+  schedule:
+    # 18:00 UTC = 03:00 JST (daily)
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'Number of tools to deploy'
+        required: false
+        default: '3'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Check pending stock
+        id: check
+        run: |
+          count=$(find stock/pending -name "meta.json" 2>/dev/null | wc -l)
+          echo "pending=$count" >> "$GITHUB_OUTPUT"
+          echo "$count tools pending in stock"
+
+      - name: Deploy tools from stock
+        if: steps.check.outputs.pending != '0'
+        run: |
+          N="${{ github.event.inputs.count || '3' }}"
+          python3 scripts/stock-to-deploy.py "$N"
+
+      - name: Commit and push
+        if: steps.check.outputs.pending != '0'
+        run: |
+          git config user.name "cc-factory-bot"
+          git config user.email "nao@loresync.dev"
+
+          DEPLOYED=$(git diff --name-only --diff-filter=A -- 'app/*/page.tsx' | wc -l | tr -d ' ')
+
+          if [ "$DEPLOYED" -gt 0 ]; then
+            git add app/ tools/ lib/
+
+            # List deployed slugs for commit message
+            SLUGS=$(git diff --cached --name-only -- 'app/*/page.tsx' | sed 's|app/||;s|/page.tsx||' | tr '\n' ', ' | sed 's/,$//')
+
+            git commit -m "feat: auto-deploy $DEPLOYED tools from stock
+
+Deployed: $SLUGS"
+            git push
+            echo "Deployed $DEPLOYED tools: $SLUGS"
+          else
+            echo "No new tools to deploy"
+          fi
