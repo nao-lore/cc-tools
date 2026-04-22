@@ -835,7 +835,7 @@
       "category": "Health & Fitness",
       "description": "Calculate daily protein, carb, and fat targets for fitness goals",
       "spec": "Input age, gender, height, weight, activity level, and goal (cut, maintain, bulk). Calculates TDEE and breaks down daily calories into protein, carbohydrates, and fat macros in grams.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "timezone-world-clock",
@@ -844,7 +844,7 @@
       "category": "Productivity",
       "description": "Display current time in multiple time zones simultaneously",
       "spec": "Add multiple cities/time zones from a searchable list and see all current times in a card grid that updates every second. Shows time, date, UTC offset, and whether the timezone is in DST.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "meeting-time-planner",
@@ -853,7 +853,7 @@
       "category": "Productivity",
       "description": "Find overlapping working hours across multiple time zones",
       "spec": "Add team members with their time zones and working hours. Highlights the time slots where all selected members are within working hours. Outputs suggested meeting times and their local time in each zone.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "pomodoro-timer",
@@ -862,7 +862,7 @@
       "category": "Productivity",
       "description": "Customizable Pomodoro technique timer with session tracking",
       "spec": "Configurable work session (default 25 min), short break (5 min), and long break (15 min) durations. Tracks completed sessions per day. Browser notifications on timer end. Session history table.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "habit-tracker",
@@ -871,7 +871,7 @@
       "category": "Productivity",
       "description": "Track daily habits with a visual streak calendar",
       "spec": "Add up to 10 habits and mark them complete each day. Shows a GitHub-style contribution heatmap for each habit. Calculates current streak, longest streak, and completion rate. Data persisted in localStorage.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "decision-matrix",
@@ -880,7 +880,7 @@
       "category": "Productivity",
       "description": "Weighted decision matrix for comparing options across criteria",
       "spec": "Add options and criteria with weights (1-10). Score each option per criterion. Calculates weighted totals and ranks options automatically. Visual bar chart of final scores.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "text-to-speech-preview",
@@ -889,7 +889,7 @@
       "category": "Text & String Tools",
       "description": "Use the browser's Speech Synthesis API to hear text spoken aloud",
       "spec": "Input text and select from available system voices and languages. Adjust rate, pitch, and volume. Click play to hear the text. Useful for checking pronunciation of words and UI copy.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "typing-speed-test",
@@ -898,7 +898,7 @@
       "category": "Productivity",
       "description": "Measure typing speed (WPM) and accuracy with sample texts",
       "spec": "Displays a paragraph of sample text. User types to match it. Tracks WPM in real time, highlights errors, and shows final accuracy percentage and time taken on completion. Multiple difficulty levels.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "markdown-lint",
@@ -907,7 +907,7 @@
       "category": "Developer Tools",
       "description": "Lint Markdown for common style and syntax issues",
       "spec": "Paste Markdown and check for issues like inconsistent heading levels, bare URLs, long lines, trailing spaces, and missing blank lines around headings. Shows inline error locations with fix suggestions.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "diff-to-patch",
@@ -916,7 +916,7 @@
       "category": "Developer Tools",
       "description": "Format a unified diff as a .patch file",
       "spec": "Paste a unified diff and format it as a valid .patch file with proper headers (From, Date, Subject). Optionally set the commit message, author, and file paths. Outputs a git-apply compatible patch file.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "gitflow-visualizer",
@@ -925,7 +925,7 @@
       "category": "Developer Tools",
       "description": "Visualize a Git log as a branch diagram",
       "spec": "Paste git log --oneline --graph output and render it as an interactive, colorized branch diagram. Each commit is clickable. Shows branch names and merge points clearly.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "code-snippet-formatter",
@@ -934,7 +934,7 @@
       "category": "Developer Tools",
       "description": "Format and syntax-highlight code snippets for sharing",
       "spec": "Paste code in any popular language (JS, Python, Rust, Go, SQL, etc.). Applies syntax highlighting and line numbers. Choose a theme (dark/light). Outputs a styled HTML snippet ready to embed in a blog post.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "env-diff",
