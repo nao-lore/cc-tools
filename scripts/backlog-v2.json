@@ -727,7 +727,7 @@
       "category": "Math & Science",
       "description": "Convert between Arabic and Roman numerals",
       "spec": "Bidirectional converter for integers 1–3999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "prime-checker",
@@ -736,7 +736,7 @@
       "category": "Math & Science",
       "description": "Check if a number is prime and find prime factors",
       "spec": "Input any positive integer and determine if it is prime. If composite, shows the complete prime factorization. Also generates a list of all primes up to a given limit using the Sieve of Eratosthenes.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "gcd-lcm-calculator",
@@ -745,7 +745,7 @@
       "category": "Math & Science",
       "description": "Calculate Greatest Common Divisor and Least Common Multiple",
       "spec": "Input two or more integers and calculate GCD and LCM. Shows Euclidean algorithm steps for GCD and the prime factorization method for LCM. Handles up to 10 numbers simultaneously.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "currency-formatter",
@@ -754,7 +754,7 @@
       "category": "Finance",
       "description": "Preview how a number formats as currency in different locales",
       "spec": "Input an amount and see it formatted as USD, EUR, JPY, GBP, KRW, and 10 other currencies using the browser's Intl.NumberFormat. Shows symbol placement, decimal, and thousands separator differences.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "compound-interest",
@@ -763,7 +763,7 @@
       "category": "Finance",
       "description": "Calculate compound interest with monthly contribution support",
       "spec": "Input principal, annual rate, compounding frequency, duration, and optional monthly contribution. Shows final balance, total contributions, total interest earned. Draws a year-by-year growth chart with a bar visualization.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "mortgage-calculator",
@@ -772,7 +772,7 @@
       "category": "Finance",
       "description": "Calculate monthly mortgage payment, total interest, and amortization",
       "spec": "Input loan amount, interest rate, and term in years. Calculates monthly payment using the amortization formula. Shows a year-by-year breakdown of principal vs. interest paid and remaining balance.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "inflation-calculator",
@@ -781,7 +781,7 @@
       "category": "Finance",
       "description": "Calculate the real value of money adjusted for inflation",
       "spec": "Input an amount, a starting year, and an ending year (or manual inflation rate). Uses the CPI formula to calculate the inflation-adjusted equivalent value. Explains purchasing power erosion.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "roi-calculator",
@@ -790,7 +790,7 @@
       "category": "Finance",
       "description": "Calculate Return on Investment and annualized ROI",
       "spec": "Input initial investment, final value, and investment duration in years. Calculates simple ROI percentage, annualized (CAGR) ROI, and total gain/loss. Compares ROI against a benchmark rate.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "bmi-english",
@@ -799,7 +799,7 @@
       "category": "Health & Fitness",
       "description": "Calculate BMI and ideal weight range in metric or imperial",
       "spec": "Input height and weight in metric or imperial units. Calculates BMI, displays the WHO category (underweight, normal, overweight, obese), and shows the healthy weight range for the given height.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "calorie-burn",
@@ -808,7 +808,7 @@
       "category": "Health & Fitness",
       "description": "Estimate calories burned for common exercises using MET values",
       "spec": "Select an activity from a list of 40+ exercises, input body weight and duration. Calculates calories burned using MET (Metabolic Equivalent of Task) values. Shows equivalent food calories.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "water-intake",
@@ -817,7 +817,7 @@
       "category": "Health & Fitness",
       "description": "Calculate recommended daily water intake based on body weight and activity",
       "spec": "Input body weight (kg or lbs), activity level (sedentary to very active), and climate. Calculates recommended daily water intake in liters and cups. Adjusts for exercise duration.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "heart-rate-zones",
@@ -826,7 +826,7 @@
       "category": "Health & Fitness",
       "description": "Calculate target heart rate training zones",
       "spec": "Input age and optional resting heart rate. Calculates max heart rate and five training zones (recovery, endurance, aerobic, threshold, anaerobic) using both the simple and Karvonen methods.",
-      "status": "pending"
+      "status": "building"
     },
     {
       "slug": "macro-calculator",
