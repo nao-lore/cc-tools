@@ -1,9 +1,1 @@
-{
-  "slug": "ai-model-comparison",
-  "name": "AIモデル比較",
-  "title": "AIモデル比較表 — ChatGPT / Claude / Gemini 料金・性能一覧",
-  "description": "主要AIモデル（GPT-4o, Claude Opus, Gemini Pro等）の料金・コンテキスト長・特徴を一覧比較",
-  "metaDescription": "ChatGPT (GPT-4o/4.1), Claude (Opus/Sonnet/Haiku), Gemini (Pro/Flash) の料金・コンテキスト長・最大出力・特徴を一覧比較。用途別おすすめモデル付き。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "ai-model-comparison", "name": "AIモデル比較", "title": "AIモデル比較表 — ChatGPT / Claude / Gemini 料金・性能一覧", "description": "主要AIモデル（GPT-4o, Claude Opus, Gemini Pro等）の料金・コンテキスト長・特徴を一覧比較", "metaDescription": "ChatGPT (GPT-4o/4.1), Claude (Opus/Sonnet/Haiku), Gemini (Pro/Flash) の料金・コンテキスト長・最大出力・特徴を一覧比較。用途別おすすめモデル付き。", "market": "JP", "category": "AI Tools", "tier": "D"}

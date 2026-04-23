@@ -1,9 +1,1 @@
-{
-  "slug": "withholding-tax-calculator",
-  "name": "源泉徴収税 計算",
-  "title": "源泉徴収税 計算 — フリーランス報酬の源泉徴収額を即計算",
-  "description": "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応",
-  "metaDescription": "フリーランス報酬の源泉徴収税を即座に計算。100万円以下（10.21%）/超（20.42%）の自動判定、消費税別の計算、手取り逆算機能付き。無料・登録不要。",
-  "market": "JP",
-  "category": "Business Tools"
-}
+{"slug": "withholding-tax-calculator", "name": "源泉徴収税 計算", "title": "源泉徴収税 計算 — フリーランス報酬の源泉徴収額を即計算", "description": "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応", "metaDescription": "フリーランス報酬の源泉徴収税を即座に計算。100万円以下（10.21%）/超（20.42%）の自動判定、消費税別の計算、手取り逆算機能付き。無料・登録不要。", "market": "JP", "category": "Business Tools", "tier": "S"}

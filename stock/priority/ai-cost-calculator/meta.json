@@ -1,9 +1,1 @@
-{
-  "slug": "ai-cost-calculator",
-  "name": "AI API コスト計算",
-  "title": "AI API コスト計算 — ChatGPT / Claude / Gemini 料金シミュレーター",
-  "description": "ChatGPT、Claude、Geminiの各モデルのAPI利用料金をリアルタイムで計算。トークン数・リクエスト数から月額コストを試算",
-  "metaDescription": "ChatGPT (GPT-4o)、Claude (Opus/Sonnet/Haiku)、Gemini (Pro/Flash) のAPI料金をトークン数から即座に計算。月額コストシミュレーション付き。無料・登録不要。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "ai-cost-calculator", "name": "AI API コスト計算", "title": "AI API コスト計算 — ChatGPT / Claude / Gemini 料金シミュレーター", "description": "ChatGPT、Claude、Geminiの各モデルのAPI利用料金をリアルタイムで計算。トークン数・リクエスト数から月額コストを試算", "metaDescription": "ChatGPT (GPT-4o)、Claude (Opus/Sonnet/Haiku)、Gemini (Pro/Flash) のAPI料金をトークン数から即座に計算。月額コストシミュレーション付き。無料・登録不要。", "market": "JP", "category": "AI Tools", "tier": "D"}

@@ -1,9 +1,1 @@
-{
-  "slug": "aws-s3-cost",
-  "name": "AWS S3 料金計算",
-  "title": "AWS S3 料金計算 — ストレージ・リクエスト・転送量からコスト試算",
-  "description": "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算",
-  "metaDescription": "AWS S3の月額料金を即計算。Standard/IA/Glacier/Express各クラスの料金比較。ストレージ容量・PUT/GET回数・データ転送量から総コスト試算。",
-  "market": "JP",
-  "category": "SaaS Pricing"
-}
+{"slug": "aws-s3-cost", "name": "AWS S3 料金計算", "title": "AWS S3 料金計算 — ストレージ・リクエスト・転送量からコスト試算", "description": "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算", "metaDescription": "AWS S3の月額料金を即計算。Standard/IA/Glacier/Express各クラスの料金比較。ストレージ容量・PUT/GET回数・データ転送量から総コスト試算。", "market": "JP", "category": "SaaS Pricing", "tier": "A"}

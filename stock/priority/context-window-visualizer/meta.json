@@ -1,9 +1,1 @@
-{
-  "slug": "context-window-visualizer",
-  "name": "コンテキストウィンドウ 可視化",
-  "title": "LLMコンテキストウィンドウ比較 — GPT/Claude/Geminiの文脈長を可視化",
-  "description": "主要LLMモデルのコンテキスト長をトークン・文字数・ページ数で視覚化",
-  "metaDescription": "GPT-4o(128K)、Claude Opus(200K)、Gemini Pro(1M)のコンテキストウィンドウを視覚的に比較。トークン数を文字数・A4ページ数・本の冊数に換算。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "context-window-visualizer", "name": "コンテキストウィンドウ 可視化", "title": "LLMコンテキストウィンドウ比較 — GPT/Claude/Geminiの文脈長を可視化", "description": "主要LLMモデルのコンテキスト長をトークン・文字数・ページ数で視覚化", "metaDescription": "GPT-4o(128K)、Claude Opus(200K)、Gemini Pro(1M)のコンテキストウィンドウを視覚的に比較。トークン数を文字数・A4ページ数・本の冊数に換算。", "market": "JP", "category": "AI Tools", "tier": "A"}

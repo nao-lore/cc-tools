@@ -1,9 +1,1 @@
-{
-  "slug": "azure-openai-cost",
-  "name": "Azure OpenAI 料金計算",
-  "title": "Azure OpenAI Service 料金計算 — リージョン別・デプロイ別コストシミュレーター",
-  "description": "Azure OpenAI Serviceの料金をリージョン・モデル・トークン数から試算",
-  "metaDescription": "Azure OpenAI Service（GPT-4o/GPT-4.1/o3）の料金をリージョン別に計算。PTU vs 従量課金の比較、月額シミュレーション付き。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "azure-openai-cost", "name": "Azure OpenAI 料金計算", "title": "Azure OpenAI Service 料金計算 — リージョン別・デプロイ別コストシミュレーター", "description": "Azure OpenAI Serviceの料金をリージョン・モデル・トークン数から試算", "metaDescription": "Azure OpenAI Service（GPT-4o/GPT-4.1/o3）の料金をリージョン別に計算。PTU vs 従量課金の比較、月額シミュレーション付き。", "market": "JP", "category": "AI Tools", "tier": "A"}

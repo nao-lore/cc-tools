@@ -1,9 +1,1 @@
-{
-  "slug": "aws-lambda-cost",
-  "name": "AWS Lambda 料金計算",
-  "title": "AWS Lambda 料金計算 — リクエスト数・実行時間・メモリ コストシミュレーター",
-  "description": "AWS Lambdaの月額コストをリクエスト数・実行時間・メモリサイズから試算",
-  "metaDescription": "AWS Lambdaの月額料金をシミュレーション。リクエスト数・実行時間・メモリ割当量・リージョン別料金を日本語で計算。無料枠対応。",
-  "market": "JP",
-  "category": "SaaS Pricing"
-}
+{"slug": "aws-lambda-cost", "name": "AWS Lambda 料金計算", "title": "AWS Lambda 料金計算 — リクエスト数・実行時間・メモリ コストシミュレーター", "description": "AWS Lambdaの月額コストをリクエスト数・実行時間・メモリサイズから試算", "metaDescription": "AWS Lambdaの月額料金をシミュレーション。リクエスト数・実行時間・メモリ割当量・リージョン別料金を日本語で計算。無料枠対応。", "market": "JP", "category": "SaaS Pricing", "tier": "D"}

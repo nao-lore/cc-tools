@@ -1,9 +1,1 @@
-{
-  "slug": "gemini-api-cost",
-  "name": "Gemini API コスト計算",
-  "title": "Gemini API 料金計算 — Pro / Flash コストシミュレーター",
-  "description": "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算",
-  "metaDescription": "Gemini API（2.5 Pro / 2.5 Flash / 2.0 Flash）の料金をトークン数から計算。コンテキスト長別料金・月額シミュレーション付き。無料・登録不要。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "gemini-api-cost", "name": "Gemini API コスト計算", "title": "Gemini API 料金計算 — Pro / Flash コストシミュレーター", "description": "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算", "metaDescription": "Gemini API（2.5 Pro / 2.5 Flash / 2.0 Flash）の料金をトークン数から計算。コンテキスト長別料金・月額シミュレーション付き。無料・登録不要。", "market": "JP", "category": "AI Tools", "tier": "D"}

@@ -1,9 +1,1 @@
-{
-  "slug": "supabase-pricing",
-  "name": "Supabase 料金試算",
-  "title": "Supabase 料金計算 — Free / Pro / Team コストシミュレーター",
-  "description": "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算",
-  "metaDescription": "Supabase（Free/Pro/Team）の月額料金をシミュレーション。データベース容量・ストレージ・認証MAU・Edge Functionsの従量課金を日本語で計算。",
-  "market": "JP",
-  "category": "SaaS Pricing"
-}
+{"slug": "supabase-pricing", "name": "Supabase 料金試算", "title": "Supabase 料金計算 — Free / Pro / Team コストシミュレーター", "description": "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算", "metaDescription": "Supabase（Free/Pro/Team）の月額料金をシミュレーション。データベース容量・ストレージ・認証MAU・Edge Functionsの従量課金を日本語で計算。", "market": "JP", "category": "SaaS Pricing", "tier": "D"}

@@ -1,9 +1,1 @@
-{
-  "slug": "elevenlabs-pricing",
-  "name": "ElevenLabs 料金試算",
-  "title": "ElevenLabs 料金計算 — 音声合成の文字数別コストシミュレーター",
-  "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
-  "metaDescription": "ElevenLabs（AI音声合成）の料金を文字数から即計算。Free/Starter/Creator/Pro/Scaleプランの比較、月間使用量シミュレーション付き。",
-  "market": "JP",
-  "category": "AI Tools"
-}
+{"slug": "elevenlabs-pricing", "name": "ElevenLabs 料金試算", "title": "ElevenLabs 料金計算 — 音声合成の文字数別コストシミュレーター", "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算", "metaDescription": "ElevenLabs（AI音声合成）の料金を文字数から即計算。Free/Starter/Creator/Pro/Scaleプランの比較、月間使用量シミュレーション付き。", "market": "JP", "category": "AI Tools", "tier": "A"}
