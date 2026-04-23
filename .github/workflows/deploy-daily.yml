@@ -41,10 +41,14 @@ jobs:
         run: |
           git config user.name "cc-factory-bot"
           git config user.email "nao@loresync.dev"
-          DEPLOYED=$(git diff --name-only --diff-filter=A -- 'app/*/page.tsx' | wc -l | tr -d ' ')
+          git add app/ tools/ lib/ stock/
+          DEPLOYED=$(git diff --cached --name-only --diff-filter=A -- 'app/*/page.tsx' | wc -l | tr -d ' ')
           if [ "$DEPLOYED" -gt 0 ]; then
-            git add app/ tools/ lib/ stock/
-            SLUGS=$(git diff --cached --name-only -- 'app/*/page.tsx' | sed 's|app/||;s|/page.tsx||' | tr '\n' ', ' | sed 's/,$//')
+            SLUGS=$(git diff --cached --name-only --diff-filter=A -- 'app/*/page.tsx' | sed 's|app/||;s|/page.tsx||' | tr '\n' ', ' | sed 's/,$//')
             git commit -m "feat: deploy $DEPLOYED tools — $SLUGS"
             git push
+            echo "Deployed $DEPLOYED tools: $SLUGS"
+          else
+            echo "No new tools to commit"
+            git reset HEAD
           fi
