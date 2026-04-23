@@ -74,6 +74,11 @@ export const tools: Tool[] = [
   { slug: "calorie-keisan", name: "カロリー計算", description: "基礎代謝量と1日の消費カロリーを計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "menseki-keisan", name: "面積計算", description: "8図形の面積計算と坪・畳変換", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "ascii-flowchart", name: "ASCII Flowchart Generator", description: "Convert a simple node-edge list into an ASCII flowchart", market: "EN", category: "Developer Tools", oldUrl: "" },
+  { slug: "ab-test-significance", name: "A/Bテスト 有意差計算", description: "A/BテストのCV数と訪問数からp値・信頼区間・必要サンプルサイズを計算", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "ai-coding-tool-comparison", name: "AIコーディングツール 料金比較", description: "主要AIコーディングツールの月額料金・機能・対応モデルを横断比較", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "ai-video-pricing", name: "AI動画生成 料金比較", description: "主要AI動画生成サービスの料金・生成時間・解像度・機能を横断比較", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "aojiro-shinkoku-sim", name: "青色申告 節税シミュレーター", description: "青色申告特別控除の3段階（65万/55万/10万）の適用条件と節税効果を可視化", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "auth-service-comparison", name: "認証SaaS 料金比較", description: "主要認証サービスの料金をMAU別に比較。無料枠・機能・SSO対応を一覧", market: "JP", category: "SaaS Pricing", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
