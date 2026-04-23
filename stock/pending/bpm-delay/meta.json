@@ -1,0 +1,1 @@
+{"slug":"bpm-delay","name":"BPM ↔ ディレイタイム(ms)","description":"BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出","market":"JP","category":"Music","title":"BPM⇔ディレイタイム変換","metaDescription":"BPMから音符別ディレイタイム(ms)を計算。1/4・1/8・1/16・付点・3連符対応。DTM・音楽制作向け。無料ツール。","tier":"A"}

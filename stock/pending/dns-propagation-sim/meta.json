@@ -1,0 +1,1 @@
+{"slug": "dns-propagation-sim", "name": "DNS Record Validator", "description": "Validate the syntax of DNS zone file records", "market": "EN", "category": "Developer Tools", "title": "DNS Record Syntax Validator", "metaDescription": "Validate DNS zone file records for A, AAAA, CNAME, MX, TXT, SRV, NS, SOA. Highlights errors. Checks trailing dots. Free tool.", "tier": "D"}

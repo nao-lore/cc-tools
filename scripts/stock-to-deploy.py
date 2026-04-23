@@ -23,8 +23,11 @@ APP_DIR = ROOT / "app"
 CONFIG_FILE = ROOT / "lib" / "tools-config.ts"
 
 
+TIER_ORDER = {"S": 0, "A": 1, "B": 2, "C": 3, "D": 4}
+
+
 def list_pending() -> list[dict]:
-    """List all pending tools with their metadata. Priority tools come first."""
+    """List all pending tools with their metadata. Priority tools come first, sorted by tier."""
     tools = []
     # Priority queue first, then regular pending
     for stock_dir in [PRIORITY_DIR, STOCK_DIR]:
@@ -36,6 +39,12 @@ def list_pending() -> list[dict]:
             meta["_dir"] = meta_file.parent
             meta["_priority"] = (stock_dir == PRIORITY_DIR)
             tools.append(meta)
+    # Sort: priority dir first, then by tier (S > A > B > C > D), then alphabetical
+    tools.sort(key=lambda t: (
+        0 if t["_priority"] else 1,
+        TIER_ORDER.get(t.get("tier", "D"), 4),
+        t["slug"],
+    ))
     return tools
 
 

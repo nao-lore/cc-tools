@@ -1,1 +1,1 @@
-{"slug":"timestamp-converter-jp","name":"日時変換","description":"Unixタイムスタンプと日本時間の相互変換","market":"JP","category":"Japanese Tools","title":"日時変換 - Unix時間⇔日本時間","metaDescription":"Unixタイムスタンプと日本時間(JST)を相互変換。ISO 8601、和暦表示にも対応。現在時刻のタイムスタンプも取得可能。"}
+{"slug": "timestamp-converter-jp", "name": "日時変換", "description": "Unixタイムスタンプと日本時間の相互変換", "market": "JP", "category": "Japanese Tools", "title": "日時変換 - Unix時間⇔日本時間", "metaDescription": "Unixタイムスタンプと日本時間(JST)を相互変換。ISO 8601、和暦表示にも対応。現在時刻のタイムスタンプも取得可能。", "tier": "D"}

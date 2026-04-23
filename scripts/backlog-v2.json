@@ -32,7 +32,7 @@
       "name": "JWT Inspector",
       "market": "EN",
       "category": "Developer Tools",
-      "description": "Deep inspect JWT tokens — header, payload, expiry, claims",
+      "description": "Deep inspect JWT tokens \u2014 header, payload, expiry, claims",
       "spec": "Decodes a JWT without verification and displays header and payload in formatted JSON. Shows expiry countdown, issued-at time, and highlights standard claims (iss, sub, aud). Flags expired tokens.",
       "status": "skip-duplicate"
     },
@@ -137,11 +137,11 @@
     },
     {
       "slug": "lorem-ipsum-jp",
-      "name": "Lorem Ipsum JP (ダミーテキスト生成)",
+      "name": "Lorem Ipsum JP (\u30c0\u30df\u30fc\u30c6\u30ad\u30b9\u30c8\u751f\u6210)",
       "market": "JP",
       "category": "Text & String Tools",
-      "description": "日本語ダミーテキストをワンクリックで生成",
-      "spec": "文字数・段落数・文体（である調・ですます調）を指定して日本語ダミーテキストを生成。和文組版練習や画面デザインのプレースホルダーに最適。コピーボタン付き。",
+      "description": "\u65e5\u672c\u8a9e\u30c0\u30df\u30fc\u30c6\u30ad\u30b9\u30c8\u3092\u30ef\u30f3\u30af\u30ea\u30c3\u30af\u3067\u751f\u6210",
+      "spec": "\u6587\u5b57\u6570\u30fb\u6bb5\u843d\u6570\u30fb\u6587\u4f53\uff08\u3067\u3042\u308b\u8abf\u30fb\u3067\u3059\u307e\u3059\u8abf\uff09\u3092\u6307\u5b9a\u3057\u3066\u65e5\u672c\u8a9e\u30c0\u30df\u30fc\u30c6\u30ad\u30b9\u30c8\u3092\u751f\u6210\u3002\u548c\u6587\u7d44\u7248\u7df4\u7fd2\u3084\u753b\u9762\u30c7\u30b6\u30a4\u30f3\u306e\u30d7\u30ec\u30fc\u30b9\u30db\u30eb\u30c0\u30fc\u306b\u6700\u9069\u3002\u30b3\u30d4\u30fc\u30dc\u30bf\u30f3\u4ed8\u304d\u3002",
       "status": "built"
     },
     {
@@ -186,7 +186,7 @@
       "market": "EN",
       "category": "Developer Tools",
       "description": "Convert numbers between binary, octal, decimal, hex, and custom bases",
-      "spec": "Input any number in any standard base (2–36) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values.",
+      "spec": "Input any number in any standard base (2\u201336) and see the conversion to all other bases simultaneously. Supports negative numbers and floating-point values.",
       "status": "built"
     },
     {
@@ -726,7 +726,7 @@
       "market": "EN",
       "category": "Math & Science",
       "description": "Convert between Arabic and Roman numerals",
-      "spec": "Bidirectional converter for integers 1–3999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol.",
+      "spec": "Bidirectional converter for integers 1\u20133999 and their Roman numeral equivalents. Input either form and get the other instantly. Shows the breakdown of each numeral symbol.",
       "status": "built"
     },
     {
@@ -1051,7 +1051,7 @@
       "category": "Developer Tools",
       "description": "Test and preview printf/sprintf format strings",
       "spec": "Input a format string with % placeholders (%d, %s, %f, %x, etc.) and provide argument values. Shows the formatted output. Supports C-style printf, Python %-formatting, and Go fmt.Sprintf conventions.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "color-shade-picker",
@@ -1060,7 +1060,7 @@
       "category": "Color Tools",
       "description": "Generate 10-step tint and shade scale for any color",
       "spec": "Pick any color and generate 10 tints (mixed toward white) and 10 shades (mixed toward black). Displays each step as a swatch with hex code. Exports as CSS custom properties or Tailwind palette JSON.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "tailwind-arbitrary",
@@ -1069,7 +1069,7 @@
       "category": "CSS Tools",
       "description": "Generate Tailwind CSS arbitrary value classes for custom values",
       "spec": "Input any CSS property and value and get the corresponding Tailwind arbitrary value class (e.g. w-[123px], text-[#ff0000], grid-cols-[1fr_2fr]). Supports all major utility groups.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "image-data-uri",
@@ -1078,7 +1078,7 @@
       "category": "Image Tools",
       "description": "Convert small images to inline data: URI for CSS or HTML",
       "spec": "Upload a small image (PNG, SVG, GIF) and generate its data: URI string. Shows the resulting URI size and warns if it exceeds 4KB (typical recommendation for inline use). Copy button for CSS background-image use.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "canvas-image-editor",
@@ -1087,7 +1087,7 @@
       "category": "Image Tools",
       "description": "Resize and convert images client-side using HTML Canvas",
       "spec": "Upload an image and set target width, height (with optional aspect ratio lock), and output format (JPEG, PNG, WebP). Uses HTML Canvas to resize and re-encode. Shows original vs. output file sizes. Download the result.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "morse-code",
@@ -1096,7 +1096,7 @@
       "category": "Text & String Tools",
       "description": "Translate text to and from Morse code with audio playback",
       "spec": "Bidirectional translation between text and Morse code dots/dashes. Uses the Web Audio API to play the Morse code as audio beeps at configurable speed (WPM) and frequency (Hz).",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "braille-converter",
@@ -1105,7 +1105,7 @@
       "category": "Text & String Tools",
       "description": "Convert English text to Grade 1 Braille Unicode characters",
       "spec": "Input English text and display the corresponding Grade 1 (uncontracted) Braille Unicode characters. Each character is shown above its Braille cell. Supports letters, digits, and common punctuation.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "keyboard-shortcut-finder",
@@ -1114,7 +1114,7 @@
       "category": "Productivity",
       "description": "Searchable keyboard shortcuts for VS Code, Chrome, macOS, Windows",
       "spec": "Searchable database of keyboard shortcuts for VS Code, Chrome DevTools, macOS, Windows, and Figma. Filter by application and OS. Shows modifier keys as visual key caps. Mark favorites for a personal quick reference.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "color-picker-history",
@@ -1123,7 +1123,7 @@
       "category": "Color Tools",
       "description": "Pick colors with a full-featured picker and persistent history",
       "spec": "Full HSL/RGB/Hex color picker with eyedropper hint. Saves last 20 picked colors in localStorage. One-click copy in any format (hex, rgb(), hsl(), Tailwind class). Import/export color history as JSON.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "stopwatch-lap",
@@ -1132,7 +1132,7 @@
       "category": "Productivity",
       "description": "Precise stopwatch with lap recording and statistics",
       "spec": "Start/stop/reset stopwatch with millisecond precision. Record lap times with a lap button. Shows a table of all lap times with the split (time since last lap). Highlights fastest and slowest laps.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "countdown-timer",
@@ -1141,7 +1141,7 @@
       "category": "Productivity",
       "description": "Set a countdown to any date or duration with browser notifications",
       "spec": "Set a countdown by duration (HH:MM:SS) or to a specific date/time. Displays days, hours, minutes, seconds in large digits. Sends a browser notification on completion. Persists countdown target in localStorage.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "color-temperature",
@@ -1150,7 +1150,7 @@
       "category": "Color Tools",
       "description": "Convert between color temperature (Kelvin) and RGB values",
       "spec": "Slide a color temperature range from 1000K (candlelight) to 10000K (blue sky). Shows the approximate RGB and hex color for each temperature. Useful for lighting design and color grading reference.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "html-table-builder",
@@ -1159,7 +1159,7 @@
       "category": "Developer Tools",
       "description": "Visual spreadsheet editor that generates HTML table code",
       "spec": "Spreadsheet-style grid to enter tabular data. Configure column headers, cell alignment, colspan/rowspan, and table caption. Outputs clean HTML with optional Bootstrap or Tailwind CSS classes.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "sql-query-formatter",
@@ -1168,7 +1168,7 @@
       "category": "Developer Tools",
       "description": "Format SQL and add inline comments explaining each clause",
       "spec": "Paste a SQL query and get it beautifully formatted (indented, capitalized keywords). Toggle an explain mode that adds inline comments describing what each clause (SELECT, JOIN, WHERE, GROUP BY) does.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "api-mock-builder",
@@ -1177,7 +1177,7 @@
       "category": "Developer Tools",
       "description": "Build fake API response JSON from a field schema",
       "spec": "Define a response schema by adding fields with types (string, number, boolean, date, uuid, email, name, array, nested object). Click Generate to produce a realistic fake JSON response. Generate multiple records at once.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "text-truncator",
@@ -1186,7 +1186,7 @@
       "category": "Text & String Tools",
       "description": "Preview how text truncates at various lengths with ellipsis",
       "spec": "Input long text and configure max character or word count, truncation position (end, middle, start), and ellipsis character. Preview the truncated output. Also shows what CSS text-overflow settings produce for a given container width.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "tailwind-cheatsheet",
@@ -1195,7 +1195,7 @@
       "category": "CSS Tools",
       "description": "Searchable reference for all Tailwind CSS utility classes",
       "spec": "Full searchable cheatsheet of Tailwind CSS v3 utility classes grouped by category. Filter by category or type a class name prefix to find matching classes. Shows the generated CSS for each class on hover.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "css-easing-visualizer",
@@ -1204,295 +1204,295 @@
       "category": "CSS Tools",
       "description": "Visualize and create CSS cubic-bezier easing curves",
       "spec": "Interactive bezier curve editor with draggable control points. Live animation preview on a bouncing ball. Includes a library of named easings (ease-in-out, spring, bounce, etc.). Copies the cubic-bezier() value.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "nengou-calculator",
-      "name": "元号・西暦変換ツール",
+      "name": "\u5143\u53f7\u30fb\u897f\u66a6\u5909\u63db\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "元号（令和・平成・昭和・大正・明治）と西暦を双方向変換",
-      "spec": "西暦年を入力して対応する元号表記に変換、または元号と年を入力して西暦に変換。令和・平成・昭和・大正・明治に対応。和暦表記（漢数字）でも出力可能。",
-      "status": "pending"
+      "description": "\u5143\u53f7\uff08\u4ee4\u548c\u30fb\u5e73\u6210\u30fb\u662d\u548c\u30fb\u5927\u6b63\u30fb\u660e\u6cbb\uff09\u3068\u897f\u66a6\u3092\u53cc\u65b9\u5411\u5909\u63db",
+      "spec": "\u897f\u66a6\u5e74\u3092\u5165\u529b\u3057\u3066\u5bfe\u5fdc\u3059\u308b\u5143\u53f7\u8868\u8a18\u306b\u5909\u63db\u3001\u307e\u305f\u306f\u5143\u53f7\u3068\u5e74\u3092\u5165\u529b\u3057\u3066\u897f\u66a6\u306b\u5909\u63db\u3002\u4ee4\u548c\u30fb\u5e73\u6210\u30fb\u662d\u548c\u30fb\u5927\u6b63\u30fb\u660e\u6cbb\u306b\u5bfe\u5fdc\u3002\u548c\u66a6\u8868\u8a18\uff08\u6f22\u6570\u5b57\uff09\u3067\u3082\u51fa\u529b\u53ef\u80fd\u3002",
+      "status": "built"
     },
     {
       "slug": "postal-code-jp",
-      "name": "郵便番号フォーマッター",
+      "name": "\u90f5\u4fbf\u756a\u53f7\u30d5\u30a9\u30fc\u30de\u30c3\u30bf\u30fc",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "郵便番号をフォーマット・バリデーションする",
-      "spec": "数字7桁の入力から〒xxx-xxxx形式に自動フォーマット。ハイフンなし・ありどちらも受け付け、正規表現でバリデーション。複数行の郵便番号リストを一括変換する機能付き。",
-      "status": "pending"
+      "description": "\u90f5\u4fbf\u756a\u53f7\u3092\u30d5\u30a9\u30fc\u30de\u30c3\u30c8\u30fb\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3059\u308b",
+      "spec": "\u6570\u5b577\u6841\u306e\u5165\u529b\u304b\u3089\u3012xxx-xxxx\u5f62\u5f0f\u306b\u81ea\u52d5\u30d5\u30a9\u30fc\u30de\u30c3\u30c8\u3002\u30cf\u30a4\u30d5\u30f3\u306a\u3057\u30fb\u3042\u308a\u3069\u3061\u3089\u3082\u53d7\u3051\u4ed8\u3051\u3001\u6b63\u898f\u8868\u73fe\u3067\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3002\u8907\u6570\u884c\u306e\u90f5\u4fbf\u756a\u53f7\u30ea\u30b9\u30c8\u3092\u4e00\u62ec\u5909\u63db\u3059\u308b\u6a5f\u80fd\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "hiragana-katakana",
-      "name": "ひらがな・カタカナ変換",
+      "name": "\u3072\u3089\u304c\u306a\u30fb\u30ab\u30bf\u30ab\u30ca\u5909\u63db",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "ひらがなとカタカナを相互変換",
-      "spec": "入力テキストのひらがなをカタカナに、またはカタカナをひらがなに変換。半角カタカナ⇔全角カタカナ変換も対応。文章全体または選択範囲のみ変換するモードを切り替え可能。",
-      "status": "pending"
+      "description": "\u3072\u3089\u304c\u306a\u3068\u30ab\u30bf\u30ab\u30ca\u3092\u76f8\u4e92\u5909\u63db",
+      "spec": "\u5165\u529b\u30c6\u30ad\u30b9\u30c8\u306e\u3072\u3089\u304c\u306a\u3092\u30ab\u30bf\u30ab\u30ca\u306b\u3001\u307e\u305f\u306f\u30ab\u30bf\u30ab\u30ca\u3092\u3072\u3089\u304c\u306a\u306b\u5909\u63db\u3002\u534a\u89d2\u30ab\u30bf\u30ab\u30ca\u21d4\u5168\u89d2\u30ab\u30bf\u30ab\u30ca\u5909\u63db\u3082\u5bfe\u5fdc\u3002\u6587\u7ae0\u5168\u4f53\u307e\u305f\u306f\u9078\u629e\u7bc4\u56f2\u306e\u307f\u5909\u63db\u3059\u308b\u30e2\u30fc\u30c9\u3092\u5207\u308a\u66ff\u3048\u53ef\u80fd\u3002",
+      "status": "built"
     },
     {
       "slug": "han-zen-converter",
-      "name": "全角・半角文字変換",
+      "name": "\u5168\u89d2\u30fb\u534a\u89d2\u6587\u5b57\u5909\u63db",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "英数字・記号・カタカナの全角↔半角を一括変換",
-      "spec": "テキストを貼り付けて全角英数字を半角に、または半角カタカナを全角に一括変換。英数字のみ・記号のみ・カタカナのみなど変換対象を選択できる。変更箇所をハイライト表示。",
-      "status": "pending"
+      "description": "\u82f1\u6570\u5b57\u30fb\u8a18\u53f7\u30fb\u30ab\u30bf\u30ab\u30ca\u306e\u5168\u89d2\u2194\u534a\u89d2\u3092\u4e00\u62ec\u5909\u63db",
+      "spec": "\u30c6\u30ad\u30b9\u30c8\u3092\u8cbc\u308a\u4ed8\u3051\u3066\u5168\u89d2\u82f1\u6570\u5b57\u3092\u534a\u89d2\u306b\u3001\u307e\u305f\u306f\u534a\u89d2\u30ab\u30bf\u30ab\u30ca\u3092\u5168\u89d2\u306b\u4e00\u62ec\u5909\u63db\u3002\u82f1\u6570\u5b57\u306e\u307f\u30fb\u8a18\u53f7\u306e\u307f\u30fb\u30ab\u30bf\u30ab\u30ca\u306e\u307f\u306a\u3069\u5909\u63db\u5bfe\u8c61\u3092\u9078\u629e\u3067\u304d\u308b\u3002\u5909\u66f4\u7b87\u6240\u3092\u30cf\u30a4\u30e9\u30a4\u30c8\u8868\u793a\u3002",
+      "status": "built"
     },
     {
       "slug": "keigo-checker",
-      "name": "敬語チェッカー",
+      "name": "\u656c\u8a9e\u30c1\u30a7\u30c3\u30ab\u30fc",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "ビジネスメール文章の敬語・丁寧語を確認",
-      "spec": "テキストを入力すると、よく間違われる二重敬語・過剰敬語・敬語の混在をルールベースで検出してハイライト表示。各指摘に修正案を提示。ビジネスメールの最終確認ツール。",
-      "status": "pending"
+      "description": "\u30d3\u30b8\u30cd\u30b9\u30e1\u30fc\u30eb\u6587\u7ae0\u306e\u656c\u8a9e\u30fb\u4e01\u5be7\u8a9e\u3092\u78ba\u8a8d",
+      "spec": "\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3059\u308b\u3068\u3001\u3088\u304f\u9593\u9055\u308f\u308c\u308b\u4e8c\u91cd\u656c\u8a9e\u30fb\u904e\u5270\u656c\u8a9e\u30fb\u656c\u8a9e\u306e\u6df7\u5728\u3092\u30eb\u30fc\u30eb\u30d9\u30fc\u30b9\u3067\u691c\u51fa\u3057\u3066\u30cf\u30a4\u30e9\u30a4\u30c8\u8868\u793a\u3002\u5404\u6307\u6458\u306b\u4fee\u6b63\u6848\u3092\u63d0\u793a\u3002\u30d3\u30b8\u30cd\u30b9\u30e1\u30fc\u30eb\u306e\u6700\u7d42\u78ba\u8a8d\u30c4\u30fc\u30eb\u3002",
+      "status": "built"
     },
     {
       "slug": "okurigana-checker",
-      "name": "送り仮名チェッカー",
+      "name": "\u9001\u308a\u4eee\u540d\u30c1\u30a7\u30c3\u30ab\u30fc",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "送り仮名の付け方をルールに基づきチェック",
-      "spec": "テキストを入力し、文化庁「送り仮名の付け方」に基づいた送り仮名の誤りをルールベースで検出。よく間違われる動詞・形容詞・名詞の送り仮名ルールを辞書として内蔵。",
-      "status": "pending"
+      "description": "\u9001\u308a\u4eee\u540d\u306e\u4ed8\u3051\u65b9\u3092\u30eb\u30fc\u30eb\u306b\u57fa\u3065\u304d\u30c1\u30a7\u30c3\u30af",
+      "spec": "\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3001\u6587\u5316\u5e81\u300c\u9001\u308a\u4eee\u540d\u306e\u4ed8\u3051\u65b9\u300d\u306b\u57fa\u3065\u3044\u305f\u9001\u308a\u4eee\u540d\u306e\u8aa4\u308a\u3092\u30eb\u30fc\u30eb\u30d9\u30fc\u30b9\u3067\u691c\u51fa\u3002\u3088\u304f\u9593\u9055\u308f\u308c\u308b\u52d5\u8a5e\u30fb\u5f62\u5bb9\u8a5e\u30fb\u540d\u8a5e\u306e\u9001\u308a\u4eee\u540d\u30eb\u30fc\u30eb\u3092\u8f9e\u66f8\u3068\u3057\u3066\u5185\u8535\u3002",
+      "status": "built"
     },
     {
       "slug": "nenreki-jisan",
-      "name": "年齢・学年早見表",
+      "name": "\u5e74\u9f62\u30fb\u5b66\u5e74\u65e9\u898b\u8868",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "生年月日から年齢・学年・干支を自動計算",
-      "spec": "生年月日を入力すると現在の年齢（満年齢・数え年）、日本の学校制度における学年、干支、星座を表示。未来日付を入力すれば何歳になるかも計算。",
-      "status": "pending"
+      "description": "\u751f\u5e74\u6708\u65e5\u304b\u3089\u5e74\u9f62\u30fb\u5b66\u5e74\u30fb\u5e72\u652f\u3092\u81ea\u52d5\u8a08\u7b97",
+      "spec": "\u751f\u5e74\u6708\u65e5\u3092\u5165\u529b\u3059\u308b\u3068\u73fe\u5728\u306e\u5e74\u9f62\uff08\u6e80\u5e74\u9f62\u30fb\u6570\u3048\u5e74\uff09\u3001\u65e5\u672c\u306e\u5b66\u6821\u5236\u5ea6\u306b\u304a\u3051\u308b\u5b66\u5e74\u3001\u5e72\u652f\u3001\u661f\u5ea7\u3092\u8868\u793a\u3002\u672a\u6765\u65e5\u4ed8\u3092\u5165\u529b\u3059\u308c\u3070\u4f55\u6b73\u306b\u306a\u308b\u304b\u3082\u8a08\u7b97\u3002",
+      "status": "built"
     },
     {
       "slug": "furigana-generator",
-      "name": "ふりがな生成ツール",
+      "name": "\u3075\u308a\u304c\u306a\u751f\u6210\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "漢字テキストにルビ（ふりがな）HTMLタグを付与",
-      "spec": "漢字とその読みをペアで入力して <ruby><rb>漢字</rb><rt>よみ</rt></ruby> 形式のHTMLを生成。複数の漢字を一括登録して文章全体に適用する機能付き。",
-      "status": "pending"
+      "description": "\u6f22\u5b57\u30c6\u30ad\u30b9\u30c8\u306b\u30eb\u30d3\uff08\u3075\u308a\u304c\u306a\uff09HTML\u30bf\u30b0\u3092\u4ed8\u4e0e",
+      "spec": "\u6f22\u5b57\u3068\u305d\u306e\u8aad\u307f\u3092\u30da\u30a2\u3067\u5165\u529b\u3057\u3066 <ruby><rb>\u6f22\u5b57</rb><rt>\u3088\u307f</rt></ruby> \u5f62\u5f0f\u306eHTML\u3092\u751f\u6210\u3002\u8907\u6570\u306e\u6f22\u5b57\u3092\u4e00\u62ec\u767b\u9332\u3057\u3066\u6587\u7ae0\u5168\u4f53\u306b\u9069\u7528\u3059\u308b\u6a5f\u80fd\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "nihongo-romaji",
-      "name": "日本語ローマ字変換",
+      "name": "\u65e5\u672c\u8a9e\u30ed\u30fc\u30de\u5b57\u5909\u63db",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "ひらがな・カタカナをローマ字（ヘボン式・訓令式）に変換",
-      "spec": "ひらがなまたはカタカナを入力してヘボン式・訓令式・日本式ローマ字に変換。長音・拗音・促音・撥音すべて対応。パスポート向けヘボン式モードあり。",
-      "status": "pending"
+      "description": "\u3072\u3089\u304c\u306a\u30fb\u30ab\u30bf\u30ab\u30ca\u3092\u30ed\u30fc\u30de\u5b57\uff08\u30d8\u30dc\u30f3\u5f0f\u30fb\u8a13\u4ee4\u5f0f\uff09\u306b\u5909\u63db",
+      "spec": "\u3072\u3089\u304c\u306a\u307e\u305f\u306f\u30ab\u30bf\u30ab\u30ca\u3092\u5165\u529b\u3057\u3066\u30d8\u30dc\u30f3\u5f0f\u30fb\u8a13\u4ee4\u5f0f\u30fb\u65e5\u672c\u5f0f\u30ed\u30fc\u30de\u5b57\u306b\u5909\u63db\u3002\u9577\u97f3\u30fb\u62d7\u97f3\u30fb\u4fc3\u97f3\u30fb\u64a5\u97f3\u3059\u3079\u3066\u5bfe\u5fdc\u3002\u30d1\u30b9\u30dd\u30fc\u30c8\u5411\u3051\u30d8\u30dc\u30f3\u5f0f\u30e2\u30fc\u30c9\u3042\u308a\u3002",
+      "status": "built"
     },
     {
       "slug": "hanzi-jp-diff",
-      "name": "旧字体・新字体 変換",
+      "name": "\u65e7\u5b57\u4f53\u30fb\u65b0\u5b57\u4f53 \u5909\u63db",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "旧字体（旧漢字）と新字体を相互変換",
-      "spec": "テキストを入力して旧字体を新字体に、または新字体を旧字体に変換。対応する字形の対応表を内蔵。変換できなかった文字は元のまま保持して明示。",
-      "status": "pending"
+      "description": "\u65e7\u5b57\u4f53\uff08\u65e7\u6f22\u5b57\uff09\u3068\u65b0\u5b57\u4f53\u3092\u76f8\u4e92\u5909\u63db",
+      "spec": "\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3066\u65e7\u5b57\u4f53\u3092\u65b0\u5b57\u4f53\u306b\u3001\u307e\u305f\u306f\u65b0\u5b57\u4f53\u3092\u65e7\u5b57\u4f53\u306b\u5909\u63db\u3002\u5bfe\u5fdc\u3059\u308b\u5b57\u5f62\u306e\u5bfe\u5fdc\u8868\u3092\u5185\u8535\u3002\u5909\u63db\u3067\u304d\u306a\u304b\u3063\u305f\u6587\u5b57\u306f\u5143\u306e\u307e\u307e\u4fdd\u6301\u3057\u3066\u660e\u793a\u3002",
+      "status": "built"
     },
     {
       "slug": "gengou-timeline",
-      "name": "元号タイムライン",
+      "name": "\u5143\u53f7\u30bf\u30a4\u30e0\u30e9\u30a4\u30f3",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "明治以降の元号を視覚的なタイムラインで表示",
-      "spec": "明治・大正・昭和・平成・令和の期間を横軸タイムラインで表示。任意の西暦年をホバーすると対応する元号年が表示。各元号の開始・終了年と在位日数を確認できる。",
-      "status": "pending"
+      "description": "\u660e\u6cbb\u4ee5\u964d\u306e\u5143\u53f7\u3092\u8996\u899a\u7684\u306a\u30bf\u30a4\u30e0\u30e9\u30a4\u30f3\u3067\u8868\u793a",
+      "spec": "\u660e\u6cbb\u30fb\u5927\u6b63\u30fb\u662d\u548c\u30fb\u5e73\u6210\u30fb\u4ee4\u548c\u306e\u671f\u9593\u3092\u6a2a\u8ef8\u30bf\u30a4\u30e0\u30e9\u30a4\u30f3\u3067\u8868\u793a\u3002\u4efb\u610f\u306e\u897f\u66a6\u5e74\u3092\u30db\u30d0\u30fc\u3059\u308b\u3068\u5bfe\u5fdc\u3059\u308b\u5143\u53f7\u5e74\u304c\u8868\u793a\u3002\u5404\u5143\u53f7\u306e\u958b\u59cb\u30fb\u7d42\u4e86\u5e74\u3068\u5728\u4f4d\u65e5\u6570\u3092\u78ba\u8a8d\u3067\u304d\u308b\u3002",
+      "status": "built"
     },
     {
       "slug": "japanese-counter",
-      "name": "日本語助数詞ガイド",
+      "name": "\u65e5\u672c\u8a9e\u52a9\u6570\u8a5e\u30ac\u30a4\u30c9",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "物・動物・薄いもの等の正しい助数詞を調べる",
-      "spec": "数える対象（本・冊・匹・羽・枚・個等）で検索または選択すると、その助数詞の読み方と1〜10の数え方を表形式で表示。よく間違われる助数詞を特集する関連リスト付き。",
-      "status": "pending"
+      "description": "\u7269\u30fb\u52d5\u7269\u30fb\u8584\u3044\u3082\u306e\u7b49\u306e\u6b63\u3057\u3044\u52a9\u6570\u8a5e\u3092\u8abf\u3079\u308b",
+      "spec": "\u6570\u3048\u308b\u5bfe\u8c61\uff08\u672c\u30fb\u518a\u30fb\u5339\u30fb\u7fbd\u30fb\u679a\u30fb\u500b\u7b49\uff09\u3067\u691c\u7d22\u307e\u305f\u306f\u9078\u629e\u3059\u308b\u3068\u3001\u305d\u306e\u52a9\u6570\u8a5e\u306e\u8aad\u307f\u65b9\u30681\u301c10\u306e\u6570\u3048\u65b9\u3092\u8868\u5f62\u5f0f\u3067\u8868\u793a\u3002\u3088\u304f\u9593\u9055\u308f\u308c\u308b\u52a9\u6570\u8a5e\u3092\u7279\u96c6\u3059\u308b\u95a2\u9023\u30ea\u30b9\u30c8\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "bunsho-keishiki",
-      "name": "文書テンプレート整形ツール",
+      "name": "\u6587\u66f8\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u6574\u5f62\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "ビジネス文書の形式（拝啓・敬具・時候の挨拶）を整える",
-      "spec": "ビジネスレターの本文を入力すると、頭語・結語（拝啓〜敬具）・時候の挨拶を月別に自動挿入して正式な書式に整形。縦書き用（縦書きHTML）への変換オプション付き。",
-      "status": "pending"
+      "description": "\u30d3\u30b8\u30cd\u30b9\u6587\u66f8\u306e\u5f62\u5f0f\uff08\u62dd\u5553\u30fb\u656c\u5177\u30fb\u6642\u5019\u306e\u6328\u62f6\uff09\u3092\u6574\u3048\u308b",
+      "spec": "\u30d3\u30b8\u30cd\u30b9\u30ec\u30bf\u30fc\u306e\u672c\u6587\u3092\u5165\u529b\u3059\u308b\u3068\u3001\u982d\u8a9e\u30fb\u7d50\u8a9e\uff08\u62dd\u5553\u301c\u656c\u5177\uff09\u30fb\u6642\u5019\u306e\u6328\u62f6\u3092\u6708\u5225\u306b\u81ea\u52d5\u633f\u5165\u3057\u3066\u6b63\u5f0f\u306a\u66f8\u5f0f\u306b\u6574\u5f62\u3002\u7e26\u66f8\u304d\u7528\uff08\u7e26\u66f8\u304dHTML\uff09\u3078\u306e\u5909\u63db\u30aa\u30d7\u30b7\u30e7\u30f3\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "yen-kanji",
-      "name": "金額漢字変換",
+      "name": "\u91d1\u984d\u6f22\u5b57\u5909\u63db",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "数字の金額を漢数字・大字（壱・弐・参）に変換",
-      "spec": "半角数字の金額を入力して通常の漢数字（一二三）と正式な大字（壱弐参）の両方に変換。請求書・領収書・小切手などの正式書類向け。「円也」付きフォーマットも選択可能。",
-      "status": "pending"
+      "description": "\u6570\u5b57\u306e\u91d1\u984d\u3092\u6f22\u6570\u5b57\u30fb\u5927\u5b57\uff08\u58f1\u30fb\u5f10\u30fb\u53c2\uff09\u306b\u5909\u63db",
+      "spec": "\u534a\u89d2\u6570\u5b57\u306e\u91d1\u984d\u3092\u5165\u529b\u3057\u3066\u901a\u5e38\u306e\u6f22\u6570\u5b57\uff08\u4e00\u4e8c\u4e09\uff09\u3068\u6b63\u5f0f\u306a\u5927\u5b57\uff08\u58f1\u5f10\u53c2\uff09\u306e\u4e21\u65b9\u306b\u5909\u63db\u3002\u8acb\u6c42\u66f8\u30fb\u9818\u53ce\u66f8\u30fb\u5c0f\u5207\u624b\u306a\u3069\u306e\u6b63\u5f0f\u66f8\u985e\u5411\u3051\u3002\u300c\u5186\u4e5f\u300d\u4ed8\u304d\u30d5\u30a9\u30fc\u30de\u30c3\u30c8\u3082\u9078\u629e\u53ef\u80fd\u3002",
+      "status": "built"
     },
     {
       "slug": "koyomi-keisan",
-      "name": "日本の祝日計算ツール",
+      "name": "\u65e5\u672c\u306e\u795d\u65e5\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "任意の年の祝日一覧と営業日数を計算",
-      "spec": "年を入力すると内閣府規定に基づく国民の祝日（振替休日含む）の一覧を表示。月ごとの営業日数（土日祝を除く日数）も計算。開始日・終了日を指定した期間の営業日数計算機能付き。",
-      "status": "pending"
+      "description": "\u4efb\u610f\u306e\u5e74\u306e\u795d\u65e5\u4e00\u89a7\u3068\u55b6\u696d\u65e5\u6570\u3092\u8a08\u7b97",
+      "spec": "\u5e74\u3092\u5165\u529b\u3059\u308b\u3068\u5185\u95a3\u5e9c\u898f\u5b9a\u306b\u57fa\u3065\u304f\u56fd\u6c11\u306e\u795d\u65e5\uff08\u632f\u66ff\u4f11\u65e5\u542b\u3080\uff09\u306e\u4e00\u89a7\u3092\u8868\u793a\u3002\u6708\u3054\u3068\u306e\u55b6\u696d\u65e5\u6570\uff08\u571f\u65e5\u795d\u3092\u9664\u304f\u65e5\u6570\uff09\u3082\u8a08\u7b97\u3002\u958b\u59cb\u65e5\u30fb\u7d42\u4e86\u65e5\u3092\u6307\u5b9a\u3057\u305f\u671f\u9593\u306e\u55b6\u696d\u65e5\u6570\u8a08\u7b97\u6a5f\u80fd\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "jimaku-formatter",
-      "name": "字幕・ルビ整形ツール",
+      "name": "\u5b57\u5e55\u30fb\u30eb\u30d3\u6574\u5f62\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "動画字幕テキストをSRT/VTT形式に変換",
-      "spec": "タイムコードと字幕テキストを入力してSRT・WebVTT形式の字幕ファイルを生成。既存のSRT/VTTを貼り付けて整形・バリデーションも可能。行長制限チェック機能付き。",
-      "status": "pending"
+      "description": "\u52d5\u753b\u5b57\u5e55\u30c6\u30ad\u30b9\u30c8\u3092SRT/VTT\u5f62\u5f0f\u306b\u5909\u63db",
+      "spec": "\u30bf\u30a4\u30e0\u30b3\u30fc\u30c9\u3068\u5b57\u5e55\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3066SRT\u30fbWebVTT\u5f62\u5f0f\u306e\u5b57\u5e55\u30d5\u30a1\u30a4\u30eb\u3092\u751f\u6210\u3002\u65e2\u5b58\u306eSRT/VTT\u3092\u8cbc\u308a\u4ed8\u3051\u3066\u6574\u5f62\u30fb\u30d0\u30ea\u30c7\u30fc\u30b7\u30e7\u30f3\u3082\u53ef\u80fd\u3002\u884c\u9577\u5236\u9650\u30c1\u30a7\u30c3\u30af\u6a5f\u80fd\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "waribiki-zeikomi",
-      "name": "割引・税込み計算ツール",
+      "name": "\u5272\u5f15\u30fb\u7a0e\u8fbc\u307f\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Finance",
-      "description": "税込み価格・割引後価格を素早く計算",
-      "spec": "本体価格を入力して消費税（8%/10%）込みの価格を計算。複数の割引率（%OFF・円引き）を組み合わせた最終価格も計算可能。逆算（税込み価格から税抜きを算出）にも対応。",
-      "status": "pending"
+      "description": "\u7a0e\u8fbc\u307f\u4fa1\u683c\u30fb\u5272\u5f15\u5f8c\u4fa1\u683c\u3092\u7d20\u65e9\u304f\u8a08\u7b97",
+      "spec": "\u672c\u4f53\u4fa1\u683c\u3092\u5165\u529b\u3057\u3066\u6d88\u8cbb\u7a0e\uff088%/10%\uff09\u8fbc\u307f\u306e\u4fa1\u683c\u3092\u8a08\u7b97\u3002\u8907\u6570\u306e\u5272\u5f15\u7387\uff08%OFF\u30fb\u5186\u5f15\u304d\uff09\u3092\u7d44\u307f\u5408\u308f\u305b\u305f\u6700\u7d42\u4fa1\u683c\u3082\u8a08\u7b97\u53ef\u80fd\u3002\u9006\u7b97\uff08\u7a0e\u8fbc\u307f\u4fa1\u683c\u304b\u3089\u7a0e\u629c\u304d\u3092\u7b97\u51fa\uff09\u306b\u3082\u5bfe\u5fdc\u3002",
+      "status": "built"
     },
     {
       "slug": "shakai-hoken",
-      "name": "社会保険料 概算計算ツール",
+      "name": "\u793e\u4f1a\u4fdd\u967a\u6599 \u6982\u7b97\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Finance",
-      "description": "月収から社会保険料（健康保険・年金・雇用保険）の概算を計算",
-      "spec": "月収・年齢・都道府県を入力して健康保険料・厚生年金保険料・雇用保険料の概算を計算。手取り概算額と控除一覧を表形式で表示。協会けんぽ料率ベース。",
-      "status": "pending"
+      "description": "\u6708\u53ce\u304b\u3089\u793e\u4f1a\u4fdd\u967a\u6599\uff08\u5065\u5eb7\u4fdd\u967a\u30fb\u5e74\u91d1\u30fb\u96c7\u7528\u4fdd\u967a\uff09\u306e\u6982\u7b97\u3092\u8a08\u7b97",
+      "spec": "\u6708\u53ce\u30fb\u5e74\u9f62\u30fb\u90fd\u9053\u5e9c\u770c\u3092\u5165\u529b\u3057\u3066\u5065\u5eb7\u4fdd\u967a\u6599\u30fb\u539a\u751f\u5e74\u91d1\u4fdd\u967a\u6599\u30fb\u96c7\u7528\u4fdd\u967a\u6599\u306e\u6982\u7b97\u3092\u8a08\u7b97\u3002\u624b\u53d6\u308a\u6982\u7b97\u984d\u3068\u63a7\u9664\u4e00\u89a7\u3092\u8868\u5f62\u5f0f\u3067\u8868\u793a\u3002\u5354\u4f1a\u3051\u3093\u307d\u6599\u7387\u30d9\u30fc\u30b9\u3002",
+      "status": "built"
     },
     {
       "slug": "furusato-nozei",
-      "name": "ふるさと納税 上限額シミュレーター",
+      "name": "\u3075\u308b\u3055\u3068\u7d0d\u7a0e \u4e0a\u9650\u984d\u30b7\u30df\u30e5\u30ec\u30fc\u30bf\u30fc",
       "market": "JP",
       "category": "Finance",
-      "description": "年収・家族構成からふるさと納税の控除上限額を試算",
-      "spec": "年収・家族構成（配偶者・扶養子の有無）・住宅ローン控除額を入力してふるさと納税の実質負担2,000円となる上限寄付額を試算。ワンストップ特例と確定申告の違いも説明。",
-      "status": "pending"
+      "description": "\u5e74\u53ce\u30fb\u5bb6\u65cf\u69cb\u6210\u304b\u3089\u3075\u308b\u3055\u3068\u7d0d\u7a0e\u306e\u63a7\u9664\u4e0a\u9650\u984d\u3092\u8a66\u7b97",
+      "spec": "\u5e74\u53ce\u30fb\u5bb6\u65cf\u69cb\u6210\uff08\u914d\u5076\u8005\u30fb\u6276\u990a\u5b50\u306e\u6709\u7121\uff09\u30fb\u4f4f\u5b85\u30ed\u30fc\u30f3\u63a7\u9664\u984d\u3092\u5165\u529b\u3057\u3066\u3075\u308b\u3055\u3068\u7d0d\u7a0e\u306e\u5b9f\u8cea\u8ca0\u62c52,000\u5186\u3068\u306a\u308b\u4e0a\u9650\u5bc4\u4ed8\u984d\u3092\u8a66\u7b97\u3002\u30ef\u30f3\u30b9\u30c8\u30c3\u30d7\u7279\u4f8b\u3068\u78ba\u5b9a\u7533\u544a\u306e\u9055\u3044\u3082\u8aac\u660e\u3002",
+      "status": "built"
     },
     {
       "slug": "kyuyo-meisai",
-      "name": "給与明細チェッカー",
+      "name": "\u7d66\u4e0e\u660e\u7d30\u30c1\u30a7\u30c3\u30ab\u30fc",
       "market": "JP",
       "category": "Finance",
-      "description": "給与明細の各控除額を確認・検証する",
-      "spec": "支給項目と控除項目を入力して手取り額を自動計算。所得税・住民税・健康保険・厚生年金の概算と比較して明細の数値に大きなズレがないか確認。月次推移も記録可能（localStorage）。",
-      "status": "pending"
+      "description": "\u7d66\u4e0e\u660e\u7d30\u306e\u5404\u63a7\u9664\u984d\u3092\u78ba\u8a8d\u30fb\u691c\u8a3c\u3059\u308b",
+      "spec": "\u652f\u7d66\u9805\u76ee\u3068\u63a7\u9664\u9805\u76ee\u3092\u5165\u529b\u3057\u3066\u624b\u53d6\u308a\u984d\u3092\u81ea\u52d5\u8a08\u7b97\u3002\u6240\u5f97\u7a0e\u30fb\u4f4f\u6c11\u7a0e\u30fb\u5065\u5eb7\u4fdd\u967a\u30fb\u539a\u751f\u5e74\u91d1\u306e\u6982\u7b97\u3068\u6bd4\u8f03\u3057\u3066\u660e\u7d30\u306e\u6570\u5024\u306b\u5927\u304d\u306a\u30ba\u30ec\u304c\u306a\u3044\u304b\u78ba\u8a8d\u3002\u6708\u6b21\u63a8\u79fb\u3082\u8a18\u9332\u53ef\u80fd\uff08localStorage\uff09\u3002",
+      "status": "built"
     },
     {
       "slug": "haken-hiryou",
-      "name": "派遣料金・マージン率 計算",
+      "name": "\u6d3e\u9063\u6599\u91d1\u30fb\u30de\u30fc\u30b8\u30f3\u7387 \u8a08\u7b97",
       "market": "JP",
       "category": "Finance",
-      "description": "派遣料金から時給・マージン率を逆算",
-      "spec": "派遣単価（時間/日/月）と稼働時間を入力して派遣スタッフへの時給換算と推定マージン率を計算。厚生労働省の平均マージン率と比較表示。",
-      "status": "pending"
+      "description": "\u6d3e\u9063\u6599\u91d1\u304b\u3089\u6642\u7d66\u30fb\u30de\u30fc\u30b8\u30f3\u7387\u3092\u9006\u7b97",
+      "spec": "\u6d3e\u9063\u5358\u4fa1\uff08\u6642\u9593/\u65e5/\u6708\uff09\u3068\u7a3c\u50cd\u6642\u9593\u3092\u5165\u529b\u3057\u3066\u6d3e\u9063\u30b9\u30bf\u30c3\u30d5\u3078\u306e\u6642\u7d66\u63db\u7b97\u3068\u63a8\u5b9a\u30de\u30fc\u30b8\u30f3\u7387\u3092\u8a08\u7b97\u3002\u539a\u751f\u52b4\u50cd\u7701\u306e\u5e73\u5747\u30de\u30fc\u30b8\u30f3\u7387\u3068\u6bd4\u8f03\u8868\u793a\u3002",
+      "status": "built"
     },
     {
       "slug": "teinengo-nenkin",
-      "name": "老齢年金 受給額試算",
+      "name": "\u8001\u9f62\u5e74\u91d1 \u53d7\u7d66\u984d\u8a66\u7b97",
       "market": "JP",
       "category": "Finance",
-      "description": "納付期間と平均月収から老齢厚生年金・基礎年金の概算を試算",
-      "spec": "平均標準報酬月額・納付月数・生年月日を入力して老齢基礎年金と老齢厚生年金の月額概算を計算。繰上げ・繰下げ受給による増減額も計算。公的年金等控除後の手取り概算付き。",
-      "status": "pending"
+      "description": "\u7d0d\u4ed8\u671f\u9593\u3068\u5e73\u5747\u6708\u53ce\u304b\u3089\u8001\u9f62\u539a\u751f\u5e74\u91d1\u30fb\u57fa\u790e\u5e74\u91d1\u306e\u6982\u7b97\u3092\u8a66\u7b97",
+      "spec": "\u5e73\u5747\u6a19\u6e96\u5831\u916c\u6708\u984d\u30fb\u7d0d\u4ed8\u6708\u6570\u30fb\u751f\u5e74\u6708\u65e5\u3092\u5165\u529b\u3057\u3066\u8001\u9f62\u57fa\u790e\u5e74\u91d1\u3068\u8001\u9f62\u539a\u751f\u5e74\u91d1\u306e\u6708\u984d\u6982\u7b97\u3092\u8a08\u7b97\u3002\u7e70\u4e0a\u3052\u30fb\u7e70\u4e0b\u3052\u53d7\u7d66\u306b\u3088\u308b\u5897\u6e1b\u984d\u3082\u8a08\u7b97\u3002\u516c\u7684\u5e74\u91d1\u7b49\u63a7\u9664\u5f8c\u306e\u624b\u53d6\u308a\u6982\u7b97\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "menseki-tani",
-      "name": "面積・坪数変換ツール",
+      "name": "\u9762\u7a4d\u30fb\u576a\u6570\u5909\u63db\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Math & Science",
-      "description": "㎡・坪・畳の面積単位を相互変換",
-      "spec": "平方メートル・坪・畳（江戸間・京間・団地間）を相互変換。部屋の縦×横から面積を計算する入力モードも搭載。不動産物件探しや引越し計画に便利。",
-      "status": "pending"
+      "description": "\u33a1\u30fb\u576a\u30fb\u7573\u306e\u9762\u7a4d\u5358\u4f4d\u3092\u76f8\u4e92\u5909\u63db",
+      "spec": "\u5e73\u65b9\u30e1\u30fc\u30c8\u30eb\u30fb\u576a\u30fb\u7573\uff08\u6c5f\u6238\u9593\u30fb\u4eac\u9593\u30fb\u56e3\u5730\u9593\uff09\u3092\u76f8\u4e92\u5909\u63db\u3002\u90e8\u5c4b\u306e\u7e26\u00d7\u6a2a\u304b\u3089\u9762\u7a4d\u3092\u8a08\u7b97\u3059\u308b\u5165\u529b\u30e2\u30fc\u30c9\u3082\u642d\u8f09\u3002\u4e0d\u52d5\u7523\u7269\u4ef6\u63a2\u3057\u3084\u5f15\u8d8a\u3057\u8a08\u753b\u306b\u4fbf\u5229\u3002",
+      "status": "built"
     },
     {
       "slug": "dosage-calculator",
-      "name": "薬剤量計算ツール",
+      "name": "\u85ac\u5264\u91cf\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Health & Fitness",
-      "description": "体重別の薬剤投与量を計算（医療・看護向け）",
-      "spec": "薬剤名・体重あたりの投与量（mg/kg）・患者体重を入力して総投与量を計算。錠剤や内服液の1回あたりの量（錠数・mL）も計算。免責事項を明示した参考ツール。",
-      "status": "pending"
+      "description": "\u4f53\u91cd\u5225\u306e\u85ac\u5264\u6295\u4e0e\u91cf\u3092\u8a08\u7b97\uff08\u533b\u7642\u30fb\u770b\u8b77\u5411\u3051\uff09",
+      "spec": "\u85ac\u5264\u540d\u30fb\u4f53\u91cd\u3042\u305f\u308a\u306e\u6295\u4e0e\u91cf\uff08mg/kg\uff09\u30fb\u60a3\u8005\u4f53\u91cd\u3092\u5165\u529b\u3057\u3066\u7dcf\u6295\u4e0e\u91cf\u3092\u8a08\u7b97\u3002\u9320\u5264\u3084\u5185\u670d\u6db2\u306e1\u56de\u3042\u305f\u308a\u306e\u91cf\uff08\u9320\u6570\u30fbmL\uff09\u3082\u8a08\u7b97\u3002\u514d\u8cac\u4e8b\u9805\u3092\u660e\u793a\u3057\u305f\u53c2\u8003\u30c4\u30fc\u30eb\u3002",
+      "status": "built"
     },
     {
       "slug": "water-hardness",
-      "name": "水の硬度計算ツール",
+      "name": "\u6c34\u306e\u786c\u5ea6\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Health & Fitness",
-      "description": "水のカルシウム・マグネシウム濃度から硬度を計算",
-      "spec": "カルシウム濃度（mg/L）とマグネシウム濃度（mg/L）を入力してWHO基準の硬度（炭酸カルシウム換算mg/L）を計算。軟水・中程度の硬水・硬水の分類も表示。",
-      "status": "pending"
+      "description": "\u6c34\u306e\u30ab\u30eb\u30b7\u30a6\u30e0\u30fb\u30de\u30b0\u30cd\u30b7\u30a6\u30e0\u6fc3\u5ea6\u304b\u3089\u786c\u5ea6\u3092\u8a08\u7b97",
+      "spec": "\u30ab\u30eb\u30b7\u30a6\u30e0\u6fc3\u5ea6\uff08mg/L\uff09\u3068\u30de\u30b0\u30cd\u30b7\u30a6\u30e0\u6fc3\u5ea6\uff08mg/L\uff09\u3092\u5165\u529b\u3057\u3066WHO\u57fa\u6e96\u306e\u786c\u5ea6\uff08\u70ad\u9178\u30ab\u30eb\u30b7\u30a6\u30e0\u63db\u7b97mg/L\uff09\u3092\u8a08\u7b97\u3002\u8edf\u6c34\u30fb\u4e2d\u7a0b\u5ea6\u306e\u786c\u6c34\u30fb\u786c\u6c34\u306e\u5206\u985e\u3082\u8868\u793a\u3002",
+      "status": "built"
     },
     {
       "slug": "shohi-zei-keisan",
-      "name": "消費税計算ツール",
+      "name": "\u6d88\u8cbb\u7a0e\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Finance",
-      "description": "消費税込み・抜き・税額を瞬時に計算",
-      "spec": "金額と税率（8%/10%）を入力して税抜き・税込み・消費税額を計算。複数商品の合計に対する消費税計算（インボイス対応・端数処理選択）機能付き。",
-      "status": "pending"
+      "description": "\u6d88\u8cbb\u7a0e\u8fbc\u307f\u30fb\u629c\u304d\u30fb\u7a0e\u984d\u3092\u77ac\u6642\u306b\u8a08\u7b97",
+      "spec": "\u91d1\u984d\u3068\u7a0e\u7387\uff088%/10%\uff09\u3092\u5165\u529b\u3057\u3066\u7a0e\u629c\u304d\u30fb\u7a0e\u8fbc\u307f\u30fb\u6d88\u8cbb\u7a0e\u984d\u3092\u8a08\u7b97\u3002\u8907\u6570\u5546\u54c1\u306e\u5408\u8a08\u306b\u5bfe\u3059\u308b\u6d88\u8cbb\u7a0e\u8a08\u7b97\uff08\u30a4\u30f3\u30dc\u30a4\u30b9\u5bfe\u5fdc\u30fb\u7aef\u6570\u51e6\u7406\u9078\u629e\uff09\u6a5f\u80fd\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "color-code-jp",
-      "name": "日本の伝統色コード集",
+      "name": "\u65e5\u672c\u306e\u4f1d\u7d71\u8272\u30b3\u30fc\u30c9\u96c6",
       "market": "JP",
       "category": "Color Tools",
-      "description": "日本の伝統色と慣用色名のカラーコードを検索",
-      "spec": "460色以上の日本の伝統色（JIS慣用色名）をカラーコードと共に収録。色名・よみ・HEX・RGB・Munsell値を表示。色相・明度・彩度でフィルタリング。色名でテキスト検索可能。",
-      "status": "pending"
+      "description": "\u65e5\u672c\u306e\u4f1d\u7d71\u8272\u3068\u6163\u7528\u8272\u540d\u306e\u30ab\u30e9\u30fc\u30b3\u30fc\u30c9\u3092\u691c\u7d22",
+      "spec": "460\u8272\u4ee5\u4e0a\u306e\u65e5\u672c\u306e\u4f1d\u7d71\u8272\uff08JIS\u6163\u7528\u8272\u540d\uff09\u3092\u30ab\u30e9\u30fc\u30b3\u30fc\u30c9\u3068\u5171\u306b\u53ce\u9332\u3002\u8272\u540d\u30fb\u3088\u307f\u30fbHEX\u30fbRGB\u30fbMunsell\u5024\u3092\u8868\u793a\u3002\u8272\u76f8\u30fb\u660e\u5ea6\u30fb\u5f69\u5ea6\u3067\u30d5\u30a3\u30eb\u30bf\u30ea\u30f3\u30b0\u3002\u8272\u540d\u3067\u30c6\u30ad\u30b9\u30c8\u691c\u7d22\u53ef\u80fd\u3002",
+      "status": "built"
     },
     {
       "slug": "jis-color-codes",
-      "name": "JIS安全色 ガイドライン",
+      "name": "JIS\u5b89\u5168\u8272 \u30ac\u30a4\u30c9\u30e9\u30a4\u30f3",
       "market": "JP",
       "category": "Color Tools",
-      "description": "JIS Z 9103で定められた安全色8色の仕様を表示",
-      "spec": "JIS Z 9103の安全色（赤・黄赤・黄・緑・青・赤紫・白・黒）のカラーコード・Munsell値・用途を一覧表示。安全標識の対比色の組み合わせ推奨リスト付き。",
-      "status": "pending"
+      "description": "JIS Z 9103\u3067\u5b9a\u3081\u3089\u308c\u305f\u5b89\u5168\u82728\u8272\u306e\u4ed5\u69d8\u3092\u8868\u793a",
+      "spec": "JIS Z 9103\u306e\u5b89\u5168\u8272\uff08\u8d64\u30fb\u9ec4\u8d64\u30fb\u9ec4\u30fb\u7dd1\u30fb\u9752\u30fb\u8d64\u7d2b\u30fb\u767d\u30fb\u9ed2\uff09\u306e\u30ab\u30e9\u30fc\u30b3\u30fc\u30c9\u30fbMunsell\u5024\u30fb\u7528\u9014\u3092\u4e00\u89a7\u8868\u793a\u3002\u5b89\u5168\u6a19\u8b58\u306e\u5bfe\u6bd4\u8272\u306e\u7d44\u307f\u5408\u308f\u305b\u63a8\u5968\u30ea\u30b9\u30c8\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "kanji-stroke-order",
-      "name": "漢字筆順検索ツール",
+      "name": "\u6f22\u5b57\u7b46\u9806\u691c\u7d22\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Education",
-      "description": "漢字を入力して筆順（書き順）をアニメーション表示",
-      "spec": "常用漢字2136字のSVGストローク順データを内蔵。漢字を入力してアニメーションまたはステップ表示で筆順を確認。読み・画数・部首・Unicode情報も表示。",
-      "status": "pending"
+      "description": "\u6f22\u5b57\u3092\u5165\u529b\u3057\u3066\u7b46\u9806\uff08\u66f8\u304d\u9806\uff09\u3092\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u8868\u793a",
+      "spec": "\u5e38\u7528\u6f22\u5b572136\u5b57\u306eSVG\u30b9\u30c8\u30ed\u30fc\u30af\u9806\u30c7\u30fc\u30bf\u3092\u5185\u8535\u3002\u6f22\u5b57\u3092\u5165\u529b\u3057\u3066\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3\u307e\u305f\u306f\u30b9\u30c6\u30c3\u30d7\u8868\u793a\u3067\u7b46\u9806\u3092\u78ba\u8a8d\u3002\u8aad\u307f\u30fb\u753b\u6570\u30fb\u90e8\u9996\u30fbUnicode\u60c5\u5831\u3082\u8868\u793a\u3002",
+      "status": "skip-heavy"
     },
     {
       "slug": "kana-quiz",
-      "name": "ひらがな・カタカナ クイズ",
+      "name": "\u3072\u3089\u304c\u306a\u30fb\u30ab\u30bf\u30ab\u30ca \u30af\u30a4\u30ba",
       "market": "JP",
       "category": "Education",
-      "description": "五十音のひらがな・カタカナを練習するフラッシュカード",
-      "spec": "ランダムに出題されるひらがな・カタカナのフラッシュカード。ローマ字で回答して正誤判定。苦手な文字を集中練習するモード・行（あ行・か行等）別練習モード付き。正答率をlocalStorageで記録。",
-      "status": "pending"
+      "description": "\u4e94\u5341\u97f3\u306e\u3072\u3089\u304c\u306a\u30fb\u30ab\u30bf\u30ab\u30ca\u3092\u7df4\u7fd2\u3059\u308b\u30d5\u30e9\u30c3\u30b7\u30e5\u30ab\u30fc\u30c9",
+      "spec": "\u30e9\u30f3\u30c0\u30e0\u306b\u51fa\u984c\u3055\u308c\u308b\u3072\u3089\u304c\u306a\u30fb\u30ab\u30bf\u30ab\u30ca\u306e\u30d5\u30e9\u30c3\u30b7\u30e5\u30ab\u30fc\u30c9\u3002\u30ed\u30fc\u30de\u5b57\u3067\u56de\u7b54\u3057\u3066\u6b63\u8aa4\u5224\u5b9a\u3002\u82e6\u624b\u306a\u6587\u5b57\u3092\u96c6\u4e2d\u7df4\u7fd2\u3059\u308b\u30e2\u30fc\u30c9\u30fb\u884c\uff08\u3042\u884c\u30fb\u304b\u884c\u7b49\uff09\u5225\u7df4\u7fd2\u30e2\u30fc\u30c9\u4ed8\u304d\u3002\u6b63\u7b54\u7387\u3092localStorage\u3067\u8a18\u9332\u3002",
+      "status": "built"
     },
     {
       "slug": "kanji-quiz",
-      "name": "漢字読み方クイズ",
+      "name": "\u6f22\u5b57\u8aad\u307f\u65b9\u30af\u30a4\u30ba",
       "market": "JP",
       "category": "Education",
-      "description": "JLPT N5〜N1レベルの漢字読み問題を出題",
-      "spec": "JLPTレベル（N5〜N1）を選択してランダム出題。漢字の読み方（ひらがな）を入力して正誤判定。出題語の意味・例文も表示。正答・誤答履歴をlocalStorageで管理しセッション内の正答率を表示。",
-      "status": "pending"
+      "description": "JLPT N5\u301cN1\u30ec\u30d9\u30eb\u306e\u6f22\u5b57\u8aad\u307f\u554f\u984c\u3092\u51fa\u984c",
+      "spec": "JLPT\u30ec\u30d9\u30eb\uff08N5\u301cN1\uff09\u3092\u9078\u629e\u3057\u3066\u30e9\u30f3\u30c0\u30e0\u51fa\u984c\u3002\u6f22\u5b57\u306e\u8aad\u307f\u65b9\uff08\u3072\u3089\u304c\u306a\uff09\u3092\u5165\u529b\u3057\u3066\u6b63\u8aa4\u5224\u5b9a\u3002\u51fa\u984c\u8a9e\u306e\u610f\u5473\u30fb\u4f8b\u6587\u3082\u8868\u793a\u3002\u6b63\u7b54\u30fb\u8aa4\u7b54\u5c65\u6b74\u3092localStorage\u3067\u7ba1\u7406\u3057\u30bb\u30c3\u30b7\u30e7\u30f3\u5185\u306e\u6b63\u7b54\u7387\u3092\u8868\u793a\u3002",
+      "status": "built"
     },
     {
       "slug": "multiplication-table",
-      "name": "九九 練習ツール",
+      "name": "\u4e5d\u4e5d \u7df4\u7fd2\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Education",
-      "description": "九九を練習・暗記するためのインタラクティブツール",
-      "spec": "閲覧モード（九九表）と練習モード（ランダム出題）を切り替え可能。練習モードでは九九の式を表示して答えを入力、タイム計測付き。苦手な段を強化練習できるフィルター付き。",
-      "status": "pending"
+      "description": "\u4e5d\u4e5d\u3092\u7df4\u7fd2\u30fb\u6697\u8a18\u3059\u308b\u305f\u3081\u306e\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u30c4\u30fc\u30eb",
+      "spec": "\u95b2\u89a7\u30e2\u30fc\u30c9\uff08\u4e5d\u4e5d\u8868\uff09\u3068\u7df4\u7fd2\u30e2\u30fc\u30c9\uff08\u30e9\u30f3\u30c0\u30e0\u51fa\u984c\uff09\u3092\u5207\u308a\u66ff\u3048\u53ef\u80fd\u3002\u7df4\u7fd2\u30e2\u30fc\u30c9\u3067\u306f\u4e5d\u4e5d\u306e\u5f0f\u3092\u8868\u793a\u3057\u3066\u7b54\u3048\u3092\u5165\u529b\u3001\u30bf\u30a4\u30e0\u8a08\u6e2c\u4ed8\u304d\u3002\u82e6\u624b\u306a\u6bb5\u3092\u5f37\u5316\u7df4\u7fd2\u3067\u304d\u308b\u30d5\u30a3\u30eb\u30bf\u30fc\u4ed8\u304d\u3002",
+      "status": "built"
     },
     {
       "slug": "periodic-table",
@@ -1501,7 +1501,7 @@
       "category": "Education",
       "description": "Interactive periodic table with element details on click",
       "spec": "Full periodic table displayed in standard layout with color coding by element category (alkali metals, halogens, noble gases, etc.). Click any element to view atomic number, mass, electron configuration, and common uses.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "fraction-calculator",
@@ -1510,7 +1510,7 @@
       "category": "Math & Science",
       "description": "Add, subtract, multiply, and divide fractions with step-by-step solutions",
       "spec": "Input two fractions and select an operation. Calculates the result in simplified form and shows all intermediate steps (finding LCD, converting, simplifying). Converts result to decimal and mixed number.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "trigonometry-calc",
@@ -1519,7 +1519,7 @@
       "category": "Math & Science",
       "description": "Calculate all trig functions and inverse trig in degrees or radians",
       "spec": "Input an angle in degrees or radians and see sin, cos, tan, sec, csc, cot values. Or input a ratio and get the inverse (arcsin, arccos, arctan). Unit circle visualization with the angle plotted.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "quadratic-solver",
@@ -1527,8 +1527,8 @@
       "market": "EN",
       "category": "Math & Science",
       "description": "Solve quadratic equations and visualize the parabola",
-      "spec": "Input coefficients a, b, c for ax² + bx + c = 0. Calculates roots using the quadratic formula (including complex roots). Shows discriminant, vertex, and axis of symmetry. Simple SVG parabola visualization.",
-      "status": "pending"
+      "spec": "Input coefficients a, b, c for ax\u00b2 + bx + c = 0. Calculates roots using the quadratic formula (including complex roots). Shows discriminant, vertex, and axis of symmetry. Simple SVG parabola visualization.",
+      "status": "built"
     },
     {
       "slug": "ip-subnet-calculator",
@@ -1537,7 +1537,7 @@
       "category": "Developer Tools",
       "description": "Calculate network address, broadcast, and host range from IP/CIDR",
       "spec": "Input an IP address with CIDR notation (e.g. 192.168.1.0/24) and calculate network address, broadcast address, first/last host, number of hosts, and subnet mask. Shows binary representation of all values.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "mac-address-lookup",
@@ -1546,7 +1546,7 @@
       "category": "Developer Tools",
       "description": "Look up the manufacturer/vendor of a MAC address from the OUI prefix",
       "spec": "Input a MAC address and identify the vendor from the first 3 octets (OUI). Bundled with the top 500 vendor prefixes for common network equipment brands. Validates MAC address format.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "lorem-json",
@@ -1555,7 +1555,7 @@
       "category": "Developer Tools",
       "description": "Generate structured fake JSON data from a template schema",
       "spec": "Define a JSON template with faker-style placeholders ({{name}}, {{email}}, {{uuid}}, {{int(1,100)}}, etc.). Generate N records based on the template. Download or copy as JSON array. Built-in random data generators for common field types.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "html-entities-reference",
@@ -1564,7 +1564,7 @@
       "category": "Developer Tools",
       "description": "Searchable reference of all HTML character entities",
       "spec": "Search by entity name, character, or Unicode codepoint across all standard HTML entities. Shows the entity name, numeric reference, character, and Unicode info. Click any entity to copy it.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "email-subject-line-tester",
@@ -1573,7 +1573,7 @@
       "category": "Productivity",
       "description": "Analyze email subject lines for length, emojis, and spam triggers",
       "spec": "Input an email subject line and get: character/word count, preview at 40/60/80 char truncation, spam word detection, emoji presence, ALL CAPS flag, punctuation overuse warning, and a mobile preview simulation.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "csv-sql-query",
@@ -1582,7 +1582,7 @@
       "category": "Data Format Tools",
       "description": "Run SQL SELECT queries on uploaded CSV files in the browser",
       "spec": "Upload a CSV file and query it with SQL (SELECT, WHERE, ORDER BY, GROUP BY, LIMIT) using a client-side SQL engine. Results shown in a paginated table. Download query results as a new CSV.",
-      "status": "pending"
+      "status": "skip-heavy"
     },
     {
       "slug": "yaml-validator",
@@ -1591,7 +1591,7 @@
       "category": "Data Format Tools",
       "description": "Validate YAML syntax and pretty-print with consistent indentation",
       "spec": "Paste YAML content and validate it for syntax errors with line-specific error messages. Pretty-print with configurable indent size (2 or 4 spaces). Convert to JSON output. Detects duplicate keys.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "dns-propagation-sim",
@@ -1600,7 +1600,7 @@
       "category": "Developer Tools",
       "description": "Validate the syntax of DNS zone file records",
       "spec": "Paste DNS zone file records and validate syntax for A, AAAA, CNAME, MX, TXT, SRV, NS, and SOA record types. Highlights format errors with specific messages. Checks for common misconfigurations like missing trailing dots.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "html-accessibility-checker",
@@ -1609,7 +1609,7 @@
       "category": "Developer Tools",
       "description": "Check pasted HTML for basic accessibility issues",
       "spec": "Paste HTML markup and scan for: missing alt attributes on images, form inputs without labels, empty button/link text, missing lang attribute, and heading level skips. Lists issues with the affected HTML element and fix suggestions.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "css-keyframe-generator",
@@ -1618,52 +1618,52 @@
       "category": "CSS Tools",
       "description": "Build multi-step CSS @keyframes animations visually",
       "spec": "Add keyframe stops at any percentage (0%, 50%, 100%, etc.) and configure CSS properties (opacity, transform, color) at each stop. Live preview of the animation on a sample element. Outputs the @keyframes rule and animation shorthand.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "character-counter-jp",
-      "name": "文字数カウンター（詳細版）",
+      "name": "\u6587\u5b57\u6570\u30ab\u30a6\u30f3\u30bf\u30fc\uff08\u8a73\u7d30\u7248\uff09",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "全角・半角・ひらがな・漢字など文字種別の文字数を詳細カウント",
-      "spec": "テキストを入力して全文字数・全角文字数・半角文字数・ひらがな数・カタカナ数・漢字数・英数字数・スペース数を分類カウント。SNS・出版・校正など文字種別の制限がある場面に最適。",
-      "status": "pending"
+      "description": "\u5168\u89d2\u30fb\u534a\u89d2\u30fb\u3072\u3089\u304c\u306a\u30fb\u6f22\u5b57\u306a\u3069\u6587\u5b57\u7a2e\u5225\u306e\u6587\u5b57\u6570\u3092\u8a73\u7d30\u30ab\u30a6\u30f3\u30c8",
+      "spec": "\u30c6\u30ad\u30b9\u30c8\u3092\u5165\u529b\u3057\u3066\u5168\u6587\u5b57\u6570\u30fb\u5168\u89d2\u6587\u5b57\u6570\u30fb\u534a\u89d2\u6587\u5b57\u6570\u30fb\u3072\u3089\u304c\u306a\u6570\u30fb\u30ab\u30bf\u30ab\u30ca\u6570\u30fb\u6f22\u5b57\u6570\u30fb\u82f1\u6570\u5b57\u6570\u30fb\u30b9\u30da\u30fc\u30b9\u6570\u3092\u5206\u985e\u30ab\u30a6\u30f3\u30c8\u3002SNS\u30fb\u51fa\u7248\u30fb\u6821\u6b63\u306a\u3069\u6587\u5b57\u7a2e\u5225\u306e\u5236\u9650\u304c\u3042\u308b\u5834\u9762\u306b\u6700\u9069\u3002",
+      "status": "built"
     },
     {
       "slug": "soudan-record",
-      "name": "議事録テンプレート生成ツール",
+      "name": "\u8b70\u4e8b\u9332\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u751f\u6210\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Productivity",
-      "description": "会議・打ち合わせの議事録テンプレートをワンクリック生成",
-      "spec": "日時・参加者・アジェンダを入力して整形された議事録テンプレートを生成。決定事項・ToDo・次回開催日のセクションを含むMarkdown形式で出力。コピー一発でそのまま使用可能。",
-      "status": "pending"
+      "description": "\u4f1a\u8b70\u30fb\u6253\u3061\u5408\u308f\u305b\u306e\u8b70\u4e8b\u9332\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u30ef\u30f3\u30af\u30ea\u30c3\u30af\u751f\u6210",
+      "spec": "\u65e5\u6642\u30fb\u53c2\u52a0\u8005\u30fb\u30a2\u30b8\u30a7\u30f3\u30c0\u3092\u5165\u529b\u3057\u3066\u6574\u5f62\u3055\u308c\u305f\u8b70\u4e8b\u9332\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u3092\u751f\u6210\u3002\u6c7a\u5b9a\u4e8b\u9805\u30fbToDo\u30fb\u6b21\u56de\u958b\u50ac\u65e5\u306e\u30bb\u30af\u30b7\u30e7\u30f3\u3092\u542b\u3080Markdown\u5f62\u5f0f\u3067\u51fa\u529b\u3002\u30b3\u30d4\u30fc\u4e00\u767a\u3067\u305d\u306e\u307e\u307e\u4f7f\u7528\u53ef\u80fd\u3002",
+      "status": "built"
     },
     {
       "slug": "contract-date-calc",
-      "name": "契約期間計算ツール",
+      "name": "\u5951\u7d04\u671f\u9593\u8a08\u7b97\u30c4\u30fc\u30eb",
       "market": "JP",
       "category": "Productivity",
-      "description": "契約開始日と期間から満了日・更新日を計算",
-      "spec": "契約開始日と契約期間（ヶ月・年単位）を入力して契約満了日・次回更新日・残り日数を計算。自動更新の場合の通知期限も逆算。複数契約を一覧管理（localStorage）。",
-      "status": "pending"
+      "description": "\u5951\u7d04\u958b\u59cb\u65e5\u3068\u671f\u9593\u304b\u3089\u6e80\u4e86\u65e5\u30fb\u66f4\u65b0\u65e5\u3092\u8a08\u7b97",
+      "spec": "\u5951\u7d04\u958b\u59cb\u65e5\u3068\u5951\u7d04\u671f\u9593\uff08\u30f6\u6708\u30fb\u5e74\u5358\u4f4d\uff09\u3092\u5165\u529b\u3057\u3066\u5951\u7d04\u6e80\u4e86\u65e5\u30fb\u6b21\u56de\u66f4\u65b0\u65e5\u30fb\u6b8b\u308a\u65e5\u6570\u3092\u8a08\u7b97\u3002\u81ea\u52d5\u66f4\u65b0\u306e\u5834\u5408\u306e\u901a\u77e5\u671f\u9650\u3082\u9006\u7b97\u3002\u8907\u6570\u5951\u7d04\u3092\u4e00\u89a7\u7ba1\u7406\uff08localStorage\uff09\u3002",
+      "status": "built"
     },
     {
       "slug": "color-gradient-palette",
-      "name": "グラデーションパレット生成",
+      "name": "\u30b0\u30e9\u30c7\u30fc\u30b7\u30e7\u30f3\u30d1\u30ec\u30c3\u30c8\u751f\u6210",
       "market": "JP",
       "category": "Color Tools",
-      "description": "2色間のグラデーションから均等分割したカラーパレットを生成",
-      "spec": "開始色と終了色を指定して、その間を均等に分割した指定ステップ数のカラーパレットを生成。RGB・HSL・LAB色空間でのグラデーション補間モードを選択可能。各色のHEXコードをコピーできる。",
-      "status": "pending"
+      "description": "2\u8272\u9593\u306e\u30b0\u30e9\u30c7\u30fc\u30b7\u30e7\u30f3\u304b\u3089\u5747\u7b49\u5206\u5272\u3057\u305f\u30ab\u30e9\u30fc\u30d1\u30ec\u30c3\u30c8\u3092\u751f\u6210",
+      "spec": "\u958b\u59cb\u8272\u3068\u7d42\u4e86\u8272\u3092\u6307\u5b9a\u3057\u3066\u3001\u305d\u306e\u9593\u3092\u5747\u7b49\u306b\u5206\u5272\u3057\u305f\u6307\u5b9a\u30b9\u30c6\u30c3\u30d7\u6570\u306e\u30ab\u30e9\u30fc\u30d1\u30ec\u30c3\u30c8\u3092\u751f\u6210\u3002RGB\u30fbHSL\u30fbLAB\u8272\u7a7a\u9593\u3067\u306e\u30b0\u30e9\u30c7\u30fc\u30b7\u30e7\u30f3\u88dc\u9593\u30e2\u30fc\u30c9\u3092\u9078\u629e\u53ef\u80fd\u3002\u5404\u8272\u306eHEX\u30b3\u30fc\u30c9\u3092\u30b3\u30d4\u30fc\u3067\u304d\u308b\u3002",
+      "status": "built"
     },
     {
       "slug": "number-to-words",
       "name": "Number to Words Converter",
       "market": "EN",
       "category": "Text & String Tools",
-      "description": "Convert numbers to English words (e.g. 1234 → 'one thousand two hundred thirty-four')",
+      "description": "Convert numbers to English words (e.g. 1234 \u2192 'one thousand two hundred thirty-four')",
       "spec": "Input any integer up to 999 trillion and convert to its English word form. Supports ordinal form (first, second, third...). Also converts to currency words (e.g. 'one thousand two hundred thirty-four dollars and fifty cents').",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "palindrome-checker",
@@ -1672,7 +1672,7 @@
       "category": "Text & String Tools",
       "description": "Check if a word or phrase is a palindrome, and find anagrams",
       "spec": "Check if input text is a palindrome (ignoring spaces, punctuation, case). Separately, input two words to check if they are anagrams of each other. Shows the character frequency comparison for anagram check.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "days-between-dates",
@@ -1681,7 +1681,7 @@
       "category": "Productivity",
       "description": "Calculate the exact number of days between two dates",
       "spec": "Input two dates and calculate the total days between them, weeks and days, months and days, and years and days. Shows working days (excluding weekends) and optionally holidays. Counts up to today from a past date or down to a future date.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "word-frequency",
@@ -1690,7 +1690,7 @@
       "category": "Text & String Tools",
       "description": "Count word frequency in any text and visualize with a bar chart",
       "spec": "Paste text and count the frequency of every word. Display as a sortable table or a horizontal bar chart. Filter out stop words. Export as CSV. Toggle case-sensitivity and punctuation stripping.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "css-triangle-generator",
@@ -1699,7 +1699,7 @@
       "category": "CSS Tools",
       "description": "Generate CSS-only triangles using the border trick",
       "spec": "Configure triangle direction (up, down, left, right, diagonal), size, and color. Live preview and outputs the complete CSS using the border trick (border-color transparent). Also provides the modern clip-path equivalent.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "caniuse-compat",
@@ -1708,7 +1708,7 @@
       "category": "Developer Tools",
       "description": "Check browser support for CSS properties and HTML features",
       "spec": "Input a CSS property or HTML feature name and look it up in a bundled compatibility dataset. Shows browser support percentages for Chrome, Firefox, Safari, and Edge. Recommends polyfills or fallbacks for low-support features.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "http-curl-builder",
@@ -1717,7 +1717,7 @@
       "category": "Developer Tools",
       "description": "Build cURL commands with a form-based visual interface",
       "spec": "Select HTTP method, input URL, add headers and query parameters via form fields, and compose a request body. Generates the corresponding cURL command. Toggle between curl, HTTPie, and Fetch API output formats.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "json-minifier",
@@ -1726,7 +1726,7 @@
       "category": "Data Format Tools",
       "description": "Remove all whitespace from JSON to minimize file size",
       "spec": "Paste formatted JSON and strip all unnecessary whitespace to produce minified output. Shows original vs. minified byte count and savings percentage. Also reverses (pretty-prints) minified JSON.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "base58-converter",
@@ -1735,7 +1735,7 @@
       "category": "Developer Tools",
       "description": "Encode and decode strings in Base58 and Base32 formats",
       "spec": "Input text or hex data and encode/decode in Base58 (Bitcoin alphabet) or Base32 (RFC 4648). Shows the encoded output and the byte representation. Useful for cryptocurrency addresses and TOTP secrets.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "ip-geolocation-sim",
@@ -1744,7 +1744,7 @@
       "category": "Developer Tools",
       "description": "Analyze an IPv4 address: class, type, reserved range check",
       "spec": "Input any IPv4 address and determine its class (A/B/C/D/E), whether it is private (RFC 1918), loopback, link-local, multicast, or public. Shows the default subnet mask for its class and its binary form.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "html-color-picker",
@@ -1753,7 +1753,7 @@
       "category": "Color Tools",
       "description": "Visual HSL/HSV color picker with all format outputs",
       "spec": "Full-featured HSL and HSV color picker with spectrum canvas and hue/saturation sliders. Input and output in Hex, RGB, HSL, HSV, and CSS named color. Supports alpha channel transparency. Copy buttons for each format.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "curl-to-fetch",
@@ -1762,7 +1762,7 @@
       "category": "Developer Tools",
       "description": "Convert a cURL command to a JavaScript Fetch API call",
       "spec": "Paste any cURL command and convert it to an equivalent JavaScript fetch() call with async/await syntax. Also converts to Axios syntax. Handles headers, request body, method, and authentication flags.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "aspect-ratio-calculator",
@@ -1771,7 +1771,7 @@
       "category": "Math & Science",
       "description": "Calculate and convert aspect ratios for video and image dimensions",
       "spec": "Input width and height and calculate the simplified aspect ratio (e.g. 16:9). Reverse: input an aspect ratio and one dimension to calculate the other. Common presets: 16:9, 4:3, 21:9, 1:1, 9:16 (vertical).",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "git-commit-message",
@@ -1780,7 +1780,7 @@
       "category": "Developer Tools",
       "description": "Validate and score git commit messages against Conventional Commits",
       "spec": "Paste a commit message and validate against the Conventional Commits specification: check type, optional scope, subject line length, body separation, and footer format. Scores the message and suggests improvements.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "webpack-bundle-analyzer",
@@ -1789,16 +1789,16 @@
       "category": "Developer Tools",
       "description": "Estimate how much a list of npm packages adds to a bundle",
       "spec": "Input a list of npm package names and lookup their minified+gzipped sizes from a bundled dataset of the top 500 packages. Shows each package's size, cumulative total, and load time estimate on 3G/LTE.",
-      "status": "pending"
+      "status": "built"
     },
     {
       "slug": "hakken-generator",
-      "name": "ビジネス文書フレーズ集",
+      "name": "\u30d3\u30b8\u30cd\u30b9\u6587\u66f8\u30d5\u30ec\u30fc\u30ba\u96c6",
       "market": "JP",
       "category": "Japanese Tools",
-      "description": "ビジネスメール・文書でよく使うフレーズを場面別に検索",
-      "spec": "依頼・お礼・お詫び・断り・催促・報告など場面を選択して使えるビジネスフレーズを一覧表示。フレーズをクリックしてクリップボードにコピー。キーワード検索で目的のフレーズを素早く見つけられる。",
-      "status": "pending"
+      "description": "\u30d3\u30b8\u30cd\u30b9\u30e1\u30fc\u30eb\u30fb\u6587\u66f8\u3067\u3088\u304f\u4f7f\u3046\u30d5\u30ec\u30fc\u30ba\u3092\u5834\u9762\u5225\u306b\u691c\u7d22",
+      "spec": "\u4f9d\u983c\u30fb\u304a\u793c\u30fb\u304a\u8a6b\u3073\u30fb\u65ad\u308a\u30fb\u50ac\u4fc3\u30fb\u5831\u544a\u306a\u3069\u5834\u9762\u3092\u9078\u629e\u3057\u3066\u4f7f\u3048\u308b\u30d3\u30b8\u30cd\u30b9\u30d5\u30ec\u30fc\u30ba\u3092\u4e00\u89a7\u8868\u793a\u3002\u30d5\u30ec\u30fc\u30ba\u3092\u30af\u30ea\u30c3\u30af\u3057\u3066\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u306b\u30b3\u30d4\u30fc\u3002\u30ad\u30fc\u30ef\u30fc\u30c9\u691c\u7d22\u3067\u76ee\u7684\u306e\u30d5\u30ec\u30fc\u30ba\u3092\u7d20\u65e9\u304f\u898b\u3064\u3051\u3089\u308c\u308b\u3002",
+      "status": "built"
     }
   ]
 }

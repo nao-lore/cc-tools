@@ -1,0 +1,1 @@
+{"slug": "curl-to-fetch", "name": "cURL to Fetch Converter", "description": "Convert a cURL command to a JavaScript Fetch API call", "market": "EN", "category": "Developer Tools", "title": "cURL to Fetch/Axios Converter", "metaDescription": "Convert cURL commands to JavaScript fetch() or Axios. Handles headers, body, auth. Async/await syntax. Free tool.", "tier": "D"}
