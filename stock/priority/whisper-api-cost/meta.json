@@ -1,0 +1,9 @@
+{
+  "slug": "whisper-api-cost",
+  "name": "Whisper API 料金計算",
+  "title": "Whisper API 料金計算 — 音声文字起こしのコストを時間から即計算",
+  "description": "OpenAI Whisper APIの料金を音声時間・ファイル数から計算",
+  "metaDescription": "Whisper API（音声→テキスト変換）の料金を即計算。音声時間から月額コスト試算。Google Speech-to-Text、Amazon Transcribeとの比較付き。",
+  "market": "JP",
+  "category": "AI Tools"
+}
