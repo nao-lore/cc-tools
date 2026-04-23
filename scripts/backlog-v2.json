@@ -997,7 +997,7 @@
       "category": "SEO Tools",
       "description": "Generate Open Graph meta tags for articles, websites, and products",
       "spec": "Form fields for og:title, og:description, og:image, og:url, og:type, og:site_name. Live preview of how the link will look when shared on social platforms. Outputs the complete og: meta tag block.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "hreflang-generator",
@@ -1006,7 +1006,7 @@
       "category": "SEO Tools",
       "description": "Generate hreflang link tags for multilingual SEO",
       "spec": "Add language/region variants with their URLs. Generates the complete set of <link rel='alternate' hreflang='x-default'> tags including x-default. Validates that every page has a self-referencing hreflang tag.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "favicon-checker",
@@ -1015,7 +1015,7 @@
       "category": "SEO Tools",
       "description": "Check what favicon sizes and formats a site needs",
       "spec": "Lists all recommended favicon sizes and formats (16x16, 32x32, apple-touch-icon, 180x180, manifest icons, MS tiles). User checks off which they have. Outputs the corresponding HTML link tags for each.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "slug-generator",
@@ -1024,7 +1024,7 @@
       "category": "SEO Tools",
       "description": "Convert article titles to SEO-friendly URL slugs",
       "spec": "Input any text (including Japanese, accented characters, special symbols) and generate a clean URL slug: lowercased, spaces to hyphens, diacritics normalized, non-ASCII removed or transliterated. Configurable separator.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "reading-time",
@@ -1033,7 +1033,7 @@
       "category": "Text & String Tools",
       "description": "Estimate reading time for any text content",
       "spec": "Paste any text and calculate estimated reading time at configurable WPM (default 200 WPM). Shows word count, character count, sentence count, and paragraph count alongside the time estimate. Supports multiple reading speed presets.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "text-stats",
@@ -1042,7 +1042,7 @@
       "category": "Text & String Tools",
       "description": "Comprehensive text analytics: word frequency, sentence length, complexity",
       "spec": "Paste any text and get a full statistics dashboard: word count, unique words, lexical diversity, average word length, average sentence length, longest word, most frequent words, and paragraph count.",
-      "status": "building"
+      "status": "built"
     },
     {
       "slug": "sprintf-formatter",
