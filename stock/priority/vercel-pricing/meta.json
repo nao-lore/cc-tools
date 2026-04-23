@@ -1,0 +1,9 @@
+{
+  "slug": "vercel-pricing",
+  "name": "Vercel 料金試算",
+  "title": "Vercel 料金計算 — Hobby / Pro / Enterprise コストシミュレーター",
+  "description": "Vercelの利用料金をプラン・帯域幅・ビルド時間・関数実行時間から試算",
+  "metaDescription": "Vercel（Hobby/Pro/Enterprise）の月額料金をシミュレーション。帯域幅・ビルド時間・サーバーレス関数・Edge関数の従量課金を日本語で計算。",
+  "market": "JP",
+  "category": "SaaS Pricing"
+}

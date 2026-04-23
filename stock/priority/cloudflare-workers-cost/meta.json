@@ -1,0 +1,9 @@
+{
+  "slug": "cloudflare-workers-cost",
+  "name": "Cloudflare Workers 料金計算",
+  "title": "Cloudflare Workers 料金計算 — リクエスト数・CPU時間 コストシミュレーター",
+  "description": "Cloudflare Workersの月額コストをリクエスト数・CPU時間・KV・R2・D1から試算",
+  "metaDescription": "Cloudflare Workers（Free/Paid）の月額料金をシミュレーション。リクエスト数・CPU時間・KV・R2・D1の従量課金を日本語で計算。",
+  "market": "JP",
+  "category": "SaaS Pricing"
+}

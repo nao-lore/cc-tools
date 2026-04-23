@@ -1,0 +1,9 @@
+{
+  "slug": "claude-api-cost",
+  "name": "Claude API コスト計算",
+  "title": "Claude API 料金計算 — Opus / Sonnet / Haiku コストシミュレーター",
+  "description": "Anthropic Claude APIの各モデル（Opus 4, Sonnet 4, Haiku 3.5）の利用料金をトークン数から即座に計算",
+  "metaDescription": "Claude API（Opus 4 / Sonnet 4 / Haiku 3.5）の料金をトークン数・リクエスト数から計算。月額コストシミュレーション、バッチAPI割引対応。無料・登録不要。",
+  "market": "JP",
+  "category": "AI Tools"
+}

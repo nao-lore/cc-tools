@@ -1,0 +1,9 @@
+{
+  "slug": "github-actions-cost",
+  "name": "GitHub Actions 料金計算",
+  "title": "GitHub Actions 料金計算 — 実行時間・ストレージ コストシミュレーター",
+  "description": "GitHub Actionsの月額コストをランナー種別・実行時間・ストレージから計算",
+  "metaDescription": "GitHub Actionsの月額料金をシミュレーション。Linux/Windows/macOSランナー別の実行時間・ストレージ・Larger Runner料金を日本語で計算。",
+  "market": "JP",
+  "category": "SaaS Pricing"
+}

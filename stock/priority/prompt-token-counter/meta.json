@@ -1,0 +1,9 @@
+{
+  "slug": "prompt-token-counter",
+  "name": "プロンプト トークンカウンター",
+  "title": "プロンプト トークン数カウンター — ChatGPT / Claude / Gemini 対応",
+  "description": "テキストを貼り付けてAI各モデルのトークン数・API料金を即座に推定",
+  "metaDescription": "プロンプトのトークン数をリアルタイム推定。ChatGPT（GPT-4o）、Claude（Sonnet）、Gemini（Pro）対応。文字数・単語数・行数・API料金も同時表示。",
+  "market": "JP",
+  "category": "AI Tools"
+}
