@@ -16,6 +16,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+PRIORITY_DIR = ROOT / "stock" / "priority"
 STOCK_DIR = ROOT / "stock" / "pending"
 TOOLS_DIR = ROOT / "tools"
 APP_DIR = ROOT / "app"
@@ -23,15 +24,18 @@ CONFIG_FILE = ROOT / "lib" / "tools-config.ts"
 
 
 def list_pending() -> list[dict]:
-    """List all pending tools with their metadata."""
+    """List all pending tools with their metadata. Priority tools come first."""
     tools = []
-    if not STOCK_DIR.exists():
-        return tools
-    for meta_file in sorted(STOCK_DIR.glob("*/meta.json")):
-        with open(meta_file) as f:
-            meta = json.load(f)
-        meta["_dir"] = meta_file.parent
-        tools.append(meta)
+    # Priority queue first, then regular pending
+    for stock_dir in [PRIORITY_DIR, STOCK_DIR]:
+        if not stock_dir.exists():
+            continue
+        for meta_file in sorted(stock_dir.glob("*/meta.json")):
+            with open(meta_file) as f:
+                meta = json.load(f)
+            meta["_dir"] = meta_file.parent
+            meta["_priority"] = (stock_dir == PRIORITY_DIR)
+            tools.append(meta)
     return tools
 
 

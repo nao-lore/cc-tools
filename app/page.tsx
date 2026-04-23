@@ -227,10 +227,13 @@ export default function Home() {
             {totalTools}+ Tools
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-            Free Online Developer Tools
+            Free Online Tools
           </h1>
-          <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto">
-            {totalTools}+ tools, no signup, no ads, just tools.
+          <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-1">
+            {totalTools}+ tools for developers and everyday tasks. No signup, no ads.
+          </p>
+          <p className="text-base text-gray-400 max-w-2xl mx-auto">
+            開発・計算・変換・AI料金試算まで、すべて無料。登録不要。
           </p>
 
           {/* Search */}
@@ -308,21 +311,22 @@ export default function Home() {
         {/* SEO Content */}
         <section className="mt-20 max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            About cc-tools
+            About This Collection
           </h2>
           <div className="text-gray-600 leading-relaxed space-y-3">
             <p>
-              cc-tools is a collection of {totalTools}+ free online developer tools built for everyday
-              coding tasks. From formatting JSON and generating CSS gradients to encoding Base64 and
-              testing regular expressions, every tool runs entirely in your browser with zero server
-              processing. No signup, no ads, no data collection.
+              A growing collection of {totalTools}+ free online tools for developers, creators, and
+              everyday tasks. Format JSON, generate CSS, encode Base64, estimate AI API costs, and
+              more — all running entirely in your browser. No signup, no ads, no data collection.
             </p>
             <p>
-              Each tool is designed to do one thing well. They load instantly, work offline after the
-              first visit, and are completely free to use. Whether you need to convert YAML to JSON,
-              generate a UUID, calculate chmod permissions, or create a color palette, there is a
-              dedicated tool ready to help. The collection also includes Japanese-language tools for
-              business day calculations, calendar conversion, and character width conversion.
+              開発者向けツール（JSON整形・CSS生成・正規表現テスト）から、日常の計算・変換ツール、
+              AI API料金シミュレーターまで、すべてブラウザ上で動作します。
+              データはサーバーに送信されません。
+            </p>
+            <p>
+              Each tool loads instantly, works offline after first visit, and does one thing well.
+              New tools are added daily.
             </p>
           </div>
         </section>

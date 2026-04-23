@@ -26,9 +26,11 @@ jobs:
       - name: Check pending stock
         id: check
         run: |
-          count=$(find stock/pending -name "meta.json" 2>/dev/null | wc -l)
+          priority=$(find stock/priority -name "meta.json" 2>/dev/null | wc -l)
+          pending=$(find stock/pending -name "meta.json" 2>/dev/null | wc -l)
+          count=$((priority + pending))
           echo "pending=$count" >> "$GITHUB_OUTPUT"
-          echo "$count tools pending in stock"
+          echo "$priority priority + $pending pending = $count total in stock"
 
       - name: Deploy tools from stock
         if: steps.check.outputs.pending != '0'
