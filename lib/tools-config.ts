@@ -73,6 +73,7 @@ export const tools: Tool[] = [
   { slug: "denki-keisan", name: "電気代計算", description: "家電の消費電力から電気料金を計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "calorie-keisan", name: "カロリー計算", description: "基礎代謝量と1日の消費カロリーを計算", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "menseki-keisan", name: "面積計算", description: "8図形の面積計算と坪・畳変換", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "ascii-flowchart", name: "ASCII Flowchart Generator", description: "Convert a simple node-edge list into an ASCII flowchart", market: "EN", category: "Developer Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
