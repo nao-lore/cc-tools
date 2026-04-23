@@ -144,3 +144,160 @@
 - マイナンバー系は完全クライアントサイド処理必須
 - 労務系は年次ロジック更新が必要（CLAUDE.mdにフラグ）
 - 日本語校正系はZenn/note層へのリーチで被リンク獲得
+
+---
+
+# Phase 2c バックログ — Claude AI提案 第3弾 50本 (2026-04-23)
+
+⚠ 第1-2弾のS/A層を完了してから着手。平均優先度は下がる（S/A=58%）。
+
+## Phase A（検索母数×バズ性）
+1. `gacha-probability` — ガチャ確率 計算 [S]
+2. `gacha-cost-ceiling` — ガチャ天井 コスト計算 [S]
+3. `recipe-scaling` — レシピ 分量スケーリング [S]
+4. `oven-temp-converter` — オーブン温度 変換 [S]
+5. `measuring-converter` — 計量変換（大さじ・カップ→g）[S]
+6. `hourly-to-annual` — 時給 ↔ 年収 ↔ 月収 逆算 [S]
+7. `kenpei-yoseki` — 建蔽率・容積率 計算 [S]
+
+## Phase B（イベント型+趣味クリエイター）
+8. `rokuyou-calendar` — 六曜カレンダー [A]
+9. `yakudoshi` — 厄年 判定 [A]
+10. `jidoshazei` — 自動車税 計算 [A]
+11. `fuel-economy` — 燃費・ガソリン代 計算 [A]
+12. `ev-charging-cost` — EV 充電コスト計算 [A]
+13. `jouu-menseki` — 畳数 ↔ 平米 ↔ 坪 変換 [A]
+14. `aircon-capacity` — エアコン適正容量 計算 [A]
+15. `focal-length-angle` — 焦点距離 ↔ 画角 計算 [A]
+16. `depth-of-field` — 被写界深度 計算 [A]
+17. `exposure-triangle` — 露出三角形 計算 [A]
+18. `video-duration-size` — 動画サイズ 予測計算 [A]
+19. `bpm-delay` — BPM ↔ ディレイタイム [A]
+20. `key-transposer` — 楽曲 移調ツール [A]
+21. `toeic-cefr-convert` — TOEIC / 英検 / CEFR 相互変換 [A]
+22. `thread-length-optimizer` — X / Threads 投稿最適化 [A]
+23. `linkedin-post-counter` — LinkedIn 投稿文字数チェック [A]
+24. `youtube-chapters-generator` — YouTube チャプターマーカー生成 [A]
+25. `raise-compound` — 昇給率 複利計算 [A]
+26. `household-budget-allocate` — 家計予算配分 [A]
+27. `savings-rate` — 貯蓄率 計算（FIRE向け）[A]
+28. `asset-allocation` — アセットアロケーション 可視化 [A]
+29. `dollar-cost-average-sim` — ドルコスト平均法 シミュレーション [A]
+
+## Phase C/D（ロングテール+実験）
+30-50: framerate-converter, print-size-pixels, music-interval, metronome-tool, sheet-music-duration, bread-hydration, salt-percentage, win-rate-rating, game-fps-input-lag, lumen-room, door-size-check, tire-size-converter, co2-travel, cho-jyu-iwai, eto-hantei, kyureki-converter, word-level-judge, ipa-phonetic, reading-speed-wpm, instagram-carousel-planner, tiktok-hashtag-counter
+
+## 全150本のS優先度ランキング（横断）
+1. invoice-qualified-checker ✅作成済
+2. withholding-tax-calculator ✅作成済
+3. teigaku-genzei — 定額減税（第2弾）
+4. ai-coding-tool-comparison — AIコーディング比較（第2弾）
+5. zangyou-dai — 残業代計算（第2弾）
+6. takuhaibin-hikaku ✅作成済
+7. mercari-tesuryou ✅作成済
+8. stripe-fee-calculator ✅作成済
+9. ai-video-pricing — AI動画料金（第1弾）
+10. gacha-probability — ガチャ確率（第3弾）
+11. recipe-scaling — レシピ分量（第3弾）
+12. hourly-to-annual — 時給年収（第3弾）
+13. iryouhi-koujo — 医療費控除（第2弾）
+
+## 方針メモ
+- 年内1000本の残り850本は、第1-3弾の150本から派生する「特定条件版」で埋める方がSEOクラスタ効果が出やすい
+- 第4弾は第1-3弾のS/A完了後に検討
+
+---
+
+# Phase 2d バックログ — Claude AI提案 第4弾 50本 (2026-04-23)
+
+⚠ S/A率46%。カテゴリ網羅・被リンク獲得・回遊導線が目的。第1-3弾のS/A完了後。
+
+## S優先度（1本のみ）
+1. `goshugi-souba` — ご祝儀相場 計算 [S] ※結婚シーズン爆発需要
+
+## A優先度（22本）
+社労士/労務: roudou-hoken-nendo, kaigo-hoken, koyou-hoken-tesuryou
+法務: jikou-calc, chien-songai-kin, sozoku-ritsu
+統計: t-test-calc, correlation-coef, sample-size-calc
+教育: hensachi-calc, gpa-converter
+釣り/アウトドア: tide-lunar, course-time, running-pace
+ドリンク: coffee-ratio
+ペット: dog-human-age, cat-human-age
+冠婚葬祭: koden-souba, okaeshi-ratio
+天気: taikan-ondo, nechuushou-shisuu
+写真: focal-length-angle, depth-of-field, exposure-triangle, video-duration-size
+音楽: bpm-delay, key-transposer
+
+## B/C優先度（27本）
+建築: saikou-keisan, kanki-keisan, kaidan-keikaku, structure-weight, danmenkei-sei
+社労士: santei-kiso-todoke, getsugaku-henkou
+法務: tourokumenkyozei
+統計: chi-square-test, confidence-interval, anova-calc
+教育: ebbinghaus-curve, study-schedule, speed-reading-test
+ガーデニング: planting-calendar, fertilizer-ratio, water-tank-volume, yamori-hiryou, co2-aquarium
+釣り: cycling-grade
+ドリンク: abv-calc, caffeine-intake, wine-aging
+ペット: dog-food-amount, rinyuushoku
+冠婚葬祭: hikidemono
+天気: kafun-flight, sleep-debt
+音楽: music-interval, metronome-tool, sheet-music-duration
+ゲーム: win-rate-rating, game-fps-input-lag
+写真: framerate-converter, print-size-pixels
+
+## 全200本のS優先度14本（最重要リスト）
+1. invoice-qualified-checker ✅
+2. withholding-tax-calculator ✅
+3. ai-video-pricing
+4. takuhaibin-hikaku ✅
+5. mercari-tesuryou ✅
+6. teigaku-genzei
+7. ai-coding-tool-comparison
+8. zangyou-dai
+9. iryouhi-koujo
+10. ab-test-significance
+11. gacha-probability
+12. recipe-scaling
+13. hourly-to-annual
+14. goshugi-souba
+
+## 方針
+- 1000本目標の残りは既存ツールの「特定条件版」派生で埋める（SEOクラスタ効果）
+- S14本には1本1日かけて磨き込む価値あり
+- 第5弾はS14本の磨き込み完了後に検討
+
+---
+
+# Phase 2e バックログ — Claude AI提案 第5弾 50本 (2026-04-23)
+
+⚠ S優先度ゼロ。A10本のみ。ロングテール層。第1-4弾のS/A完了後に着手。
+⚠ Claude AI評価:「第6弾を作る合理的理由は今のところない。S14本磨き込みのほうがPVに貢献。」
+
+## A優先度（10本、量産パイプラインに放り込む候補）
+1. `crypto-tax-jp` — 暗号資産 税金計算（日本）
+2. `probability-drop` — ドロップ率 試行回数計算
+3. `pos-comparison` — 飲食店POS比較
+4. `salon-booking-saas` — 美容室予約システム比較
+5. `mcp-server-finder` — MCP サーバー検索・料金比較
+6. `agent-token-budget` — エージェント トークン予算計算
+7. `1rm-calc` — 1RM（最大挙上重量）計算
+8. `knitting-gauge` — 編み物 ゲージ・目数計算
+9. `luggage-size-airline` — 機内持ち込み サイズ判定
+10. `gift-recommendation-budget` — 贈答金額 目安計算
+
+## B/C優先度（40本 — カテゴリ網羅用、個別磨き込み不要）
+クリプト: gas-fee-calculator, nft-mint-cost, staking-yield, defi-impermanent-loss
+ゲーム: exp-farm-calc, damage-calculator-generic, speedrun-timer, fighting-frame-data
+SaaS: clinic-kartel, cloud-accounting-cmp, gym-management-saas
+AI: vector-db-comparison, langfuse-cost, rerank-model-cmp
+スポーツ: heart-rate-target, swim-pace, golf-score-handicap, tennis-utr-calc
+手芸: fabric-yardage, beads-amount, wood-cutting-plan, screw-size-converter
+旅行: jetlag-calculator, visa-duration-check, jr-pass-break-even, fx-travel-budget
+数学: quadratic-solver, triangle-solver, circle-calculator, motion-formula, vector-calc
+時間管理: time-blocking-planner, deep-work-calculator, task-estimation, procrastination-cost, focus-streak-tracker
+その他: random-name-picker, word-frequency, color-blindness-sim-text, accessibility-check
+
+## 戦略結論
+- 累計250本で主要ジャンルは網羅完了
+- 残り750本は既存ツールの派生版・多言語版で埋める
+- S14本に週1日×丸8時間の磨き込み時間を投下するのが最もROI高い
+- 第6弾は目的明示なしでは不要
