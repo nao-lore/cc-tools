@@ -103,7 +103,7 @@ export default function Home() {
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
               <a
-                href="https://cc-tools.vercel.app/tools/text-counter"
+                href="//tools/text-counter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -111,7 +111,7 @@ export default function Home() {
                 Character Counter
               </a>
               <a
-                href="https://cc-tools.vercel.app/tools/unicode-converter"
+                href="//tools/unicode-converter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -119,7 +119,7 @@ export default function Home() {
                 Unicode Converter
               </a>
               <a
-                href="https://cc-tools.vercel.app/tools/base64"
+                href="//tools/base64"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -127,7 +127,7 @@ export default function Home() {
                 Base64 Encoder
               </a>
               <a
-                href="https://cc-tools.vercel.app/tools/url-encoder"
+                href="//tools/url-encoder"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -138,7 +138,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a
-              href="https://cc-tools.vercel.app"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"

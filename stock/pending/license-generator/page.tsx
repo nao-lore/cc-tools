@@ -175,7 +175,7 @@ export default function Home() {
                 Robots.txt Generator
               </a>
               <a
-                href="https://meta-tag-generator-indol.vercel.app"
+                href="/meta-tag-generator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -183,7 +183,7 @@ export default function Home() {
                 Meta Tag Generator
               </a>
               <a
-                href="https://json-formatter-topaz-pi.vercel.app"
+                href="/json-formatter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -191,7 +191,7 @@ export default function Home() {
                 JSON Formatter
               </a>
               <a
-                href="https://regex-tester-three.vercel.app"
+                href="/regex-tester"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -199,7 +199,7 @@ export default function Home() {
                 Regex Tester
               </a>
               <a
-                href="https://http-status-eight.vercel.app"
+                href="/http-status"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -210,7 +210,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a
-              href="https://cc-tools.vercel.app"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"

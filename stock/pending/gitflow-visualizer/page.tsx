@@ -144,7 +144,7 @@ git log --oneline --graph --all -n 50`}
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a
-              href="https://cc-tools.vercel.app"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"

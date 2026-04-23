@@ -106,7 +106,7 @@ export default function Home() {
                 JSON to CSV
               </a>
               <a
-                href="https://json-formatter-topaz-pi.vercel.app"
+                href="/json-formatter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -114,7 +114,7 @@ export default function Home() {
                 JSON Formatter
               </a>
               <a
-                href="https://yaml-to-json-theta.vercel.app"
+                href="/yaml-to-json"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -122,7 +122,7 @@ export default function Home() {
                 YAML to JSON
               </a>
               <a
-                href="https://xml-formatter-xi.vercel.app"
+                href="/xml-formatter"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -130,7 +130,7 @@ export default function Home() {
                 XML Formatter
               </a>
               <a
-                href="https://mdtable.vercel.app"
+                href="/mdtable"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -141,7 +141,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a
-              href="https://cc-tools.vercel.app"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"

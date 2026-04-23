@@ -92,7 +92,7 @@ export default function Home() {
                 JSON Schema Validator
               </a>
               <a
-                href="https://yaml-to-json-theta.vercel.app"
+                href="/yaml-to-json"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded"
@@ -103,7 +103,7 @@ export default function Home() {
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a
-              href="https://cc-tools.vercel.app"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"
