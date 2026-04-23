@@ -1,0 +1,1 @@
+{"slug":"game-fps-input-lag","name":"FPSインプットラグ計算","title":"FPSインプットラグ計算 - リフレッシュレートと応答時間から総遅延を算出","description":"モニターのリフレッシュレート・応答時間・GPU遅延から総インプットラグを計算","metaDescription":"FPSゲーマー向けインプットラグ計算ツール。リフレッシュレート・パネル応答時間・GPU遅延・USB入力遅延を入力して総遅延を算出。240Hzと144Hzの比較も可能。","market":"JP","category":"ゲーム","tier":"C"}

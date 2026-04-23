@@ -1,0 +1,1 @@
+{"slug":"defi-impermanent-loss","name":"インパーマネントロス計算","title":"インパーマネントロス計算 - LP提供時の価格変動損失シミュレーション","description":"DeFiのLPトークン提供時に発生するインパーマネントロスを価格変動率から計算","metaDescription":"DeFi流動性提供のインパーマネントロス計算ツール。価格変動率を入力してIL損失率・HODLとの比較・手数料収益との損益分岐点を算出。","market":"JP","category":"金融・投資","tier":"C"}

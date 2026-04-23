@@ -1,0 +1,1 @@
+{"slug":"rerank-model-cmp","name":"Rerankモデル料金・性能比較","title":"Rerankモデル比較 - Cohere/Voyage/Jina等のリランキングAPI料金・性能","description":"CohereやVoyage、JinaなどのReranking APIの料金・性能・特徴を横断比較","metaDescription":"Rerankモデル比較ツール。Cohere Rerank・Voyage Rerank・Jina Reranker等の料金（1000クエリあたり）・BEIR性能・レイテンシ・コンテキスト長を比較。RAGコスト試算対応。","market":"JP","category":"AI・開発ツール","tier":"C"}
