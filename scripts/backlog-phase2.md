@@ -301,3 +301,60 @@ AI: vector-db-comparison, langfuse-cost, rerank-model-cmp
 - 残り750本は既存ツールの派生版・多言語版で埋める
 - S14本に週1日×丸8時間の磨き込み時間を投下するのが最もROI高い
 - 第6弾は目的明示なしでは不要
+
+---
+
+# Phase 2f バックログ — Claude AI提案 第6弾 50本 (2026-04-23)
+
+⚠ 評価基準転換: 検索ボリュームではなく「独占価値×収益化経路×参入障壁」で評価。
+⚠ Claude AI最終結論:「第7弾不要。300本で十分。磨き込み+アフィリエイト運用に集中。」
+
+## Part A 本命20本（独占狙い、収益インパクト順）
+
+### 即着手5本（1本2-3日かけて作り込む価値あり）
+1. `sme-dx-subsidy` — DX補助金適合度診断 ⭐⭐⭐⭐⭐ 送客単価数万円
+2. `m-a-valuation` — M&A簡易価値算定 ⭐⭐⭐⭐⭐ 紹介料1件数十万円
+3. `inshokuten-pos-detail` — 飲食店POS業態別比較 ⭐⭐⭐⭐⭐ アフィ単価3000-10000円
+4. `souzoku-zei-simyu` — 相続税詳細シミュレーター ⭐⭐⭐⭐ 税理士紹介1-3万円
+5. `ai-replace-cost-benefit` — AI置き換えROI ⭐⭐⭐⭐⭐ B2B高単価広告
+
+### 士業深掘り8本
+6. `kensetsu-kyoka-requirements` — 建設業許可要件チェッカー ⭐⭐⭐⭐⭐
+7. `zairyu-shikaku-hantei` — 外国人雇用在留資格判定 ⭐⭐⭐⭐⭐
+8. `shachou-setsuritsu-hikaku` — 株式会社vs合同会社比較 ⭐⭐⭐⭐⭐
+9. `shisho-koutei-tesuryou` — 司法書士報酬見積もり ⭐⭐⭐⭐
+10. `rouki-sanroku-shindan` — 労基署立入調査自主チェック ⭐⭐⭐⭐
+11. `kojin-houjin-bunki` — 個人vs法人5年間詳細シミュ ⭐⭐⭐⭐⭐
+12. `shoutoku-hoken-shinryoku` — 傷害保険給付金計算 ⭐⭐⭐⭐
+
+### SaaS比較深掘り6本
+13. `biyou-yoyaku-detail` — 美容室予約システム比較 ⭐⭐⭐⭐⭐
+14. `clinic-karte-detail` — 電子カルテ診療科別比較 ⭐⭐⭐⭐
+15. `crm-sfa-size` — CRM/SFA規模別比較 ⭐⭐⭐⭐
+16. `rpa-low-code-cmp` — RPA/ローコード比較 ⭐⭐⭐⭐
+17. `ecommerce-build-detail` — EC構築規模別比較 ⭐⭐⭐⭐
+
+### AI深掘り3本
+18. `llm-onpremise-cost` — LLMオンプレミスコスト ⭐⭐⭐⭐
+19. `ai-agent-hr-impact` — AIエージェント人員影響 ⭐⭐⭐⭐⭐
+20. `incubate-vc-match` — VCマッチング診断 ⭐⭐⭐⭐
+
+## Part B 関連量産30本（クラスタ強化用、軽量）
+士業周辺10本、業種SaaS周辺8本、AI/DX周辺7本、補助金5本
+（詳細はClaude AIレポート参照）
+
+## クラスタ設計
+1. 行政書士クラスタ（A-1中心 + サテライト3本）
+2. 中小企業経営クラスタ（A-18/A-6/A-20中心 + サテライト5本）
+3. 飲食業SaaSクラスタ（A-9中心 + サテライト2本）
+4. AI導入クラスタ（A-15/A-17中心 + サテライト7本）
+
+## 最強15本リスト（全6弾横断、S14+A-18）
+S14本（全て作成済み✅）+ sme-dx-subsidy（未作成）
+→ この15本に月1本×丸3日の磨き込みが最もROI高い
+
+## 🔴 最終結論
+- 300本でバックログ完了。第7弾不要
+- 残り700本は既存ツールの派生版+多言語版で埋める
+- 今後の時間配分: 磨き込み70% / 量産30%
+- アフィリエイトASP登録+運用確立が次のマイルストーン
