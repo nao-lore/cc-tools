@@ -236,11 +236,11 @@ export default function UrlEncoder() {
       {/* Encoder/Decoder */}
       <section>
         {/* Controls */}
-        <div className="flex flex-wrap items-center gap-3 mb-4">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
           <div className="flex rounded-lg overflow-hidden border border-panel-border">
             <button
               onClick={() => setMode("encode")}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-sm font-medium transition-colors ${
                 mode === "encode"
                   ? "bg-accent text-white"
                   : "bg-panel-bg text-muted hover:text-foreground"
@@ -250,7 +250,7 @@ export default function UrlEncoder() {
             </button>
             <button
               onClick={() => setMode("decode")}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-2 text-sm font-medium transition-colors ${
                 mode === "decode"
                   ? "bg-accent text-white"
                   : "bg-panel-bg text-muted hover:text-foreground"
@@ -265,7 +265,7 @@ export default function UrlEncoder() {
             onChange={(e) =>
               setEncodingType(e.target.value as EncodingType)
             }
-            className="bg-panel-bg border border-panel-border text-foreground text-sm rounded-lg px-3 py-2 cursor-pointer"
+            className="bg-panel-bg border border-panel-border text-foreground text-xs sm:text-sm rounded-lg px-2 sm:px-3 py-2 cursor-pointer"
           >
             <option value="encodeURIComponent">encodeURIComponent</option>
             <option value="encodeURI">encodeURI</option>
@@ -339,22 +339,22 @@ export default function UrlEncoder() {
             spellCheck={false}
           />
           {parsedUrl && (
-            <div className="bg-panel-bg border border-panel-border rounded-lg p-4 space-y-2 font-mono text-sm">
-              <div className="flex gap-2">
-                <span className="text-muted min-w-[100px]">Protocol:</span>
-                <span className="text-accent">{parsedUrl.protocol}</span>
+            <div className="bg-panel-bg border border-panel-border rounded-lg p-3 sm:p-4 space-y-2 font-mono text-xs sm:text-sm overflow-x-auto">
+              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                <span className="text-muted sm:min-w-[100px] shrink-0">Protocol:</span>
+                <span className="text-accent break-all">{parsedUrl.protocol}</span>
               </div>
-              <div className="flex gap-2">
-                <span className="text-muted min-w-[100px]">Host:</span>
-                <span className="text-foreground">{parsedUrl.host}</span>
+              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                <span className="text-muted sm:min-w-[100px] shrink-0">Host:</span>
+                <span className="text-foreground break-all">{parsedUrl.host}</span>
               </div>
-              <div className="flex gap-2">
-                <span className="text-muted min-w-[100px]">Path:</span>
-                <span className="text-foreground">{parsedUrl.path}</span>
+              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                <span className="text-muted sm:min-w-[100px] shrink-0">Path:</span>
+                <span className="text-foreground break-all">{parsedUrl.path}</span>
               </div>
               {parsedUrl.queryParams.length > 0 && (
-                <div className="flex gap-2">
-                  <span className="text-muted min-w-[100px]">
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                  <span className="text-muted sm:min-w-[100px] shrink-0">
                     Query:
                   </span>
                   <div className="space-y-1">
@@ -373,8 +373,8 @@ export default function UrlEncoder() {
                 </div>
               )}
               {parsedUrl.fragment && (
-                <div className="flex gap-2">
-                  <span className="text-muted min-w-[100px]">
+                <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
+                  <span className="text-muted sm:min-w-[100px] shrink-0">
                     Fragment:
                   </span>
                   <span className="text-foreground">

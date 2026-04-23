@@ -159,7 +159,7 @@ export default function ColorConverter() {
       {/* Color Preview + Picker */}
       <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700">
         <div
-          className="h-48 sm:h-64 w-full relative transition-colors duration-200"
+          className="h-36 sm:h-48 md:h-64 w-full relative transition-colors duration-200"
           style={{ backgroundColor: hexStr }}
         >
           <div className="absolute inset-0 flex items-center justify-center">
@@ -170,8 +170,8 @@ export default function ColorConverter() {
                 onChange={handlePickerChange}
                 className="absolute opacity-0 w-0 h-0"
               />
-              <div className="bg-white/90 dark:bg-black/70 backdrop-blur-sm rounded-xl px-6 py-3 shadow-lg text-center">
-                <p className="text-2xl font-bold tracking-wide" style={{ color: hexStr }}>
+              <div className="bg-white/90 dark:bg-black/70 backdrop-blur-sm rounded-xl px-4 sm:px-6 py-2 sm:py-3 shadow-lg text-center">
+                <p className="text-xl sm:text-2xl font-bold tracking-wide" style={{ color: hexStr }}>
                   {hexStr.toUpperCase()}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -313,15 +313,15 @@ export default function ColorConverter() {
       {/* Contrast Checker */}
       <div className="p-4 rounded-xl bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700">
         <h3 className="font-semibold text-sm mb-3">Contrast Ratio Checker (WCAG)</h3>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
             <label className={labelClass}>Background Color</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
                 value={bgHex}
                 onChange={(e) => updateBgColor(e.target.value)}
-                className="w-10 h-10 rounded cursor-pointer border border-gray-300 dark:border-gray-600"
+                className="w-10 h-10 rounded cursor-pointer border border-gray-300 dark:border-gray-600 shrink-0"
               />
               <input
                 type="text"
@@ -332,16 +332,16 @@ export default function ColorConverter() {
               />
             </div>
           </div>
-          <div className="flex-1">
+          <div>
             <label className={labelClass}>Preview</label>
             <div
-              className="rounded-lg p-4 text-center font-medium border border-gray-200 dark:border-gray-600"
+              className="rounded-lg p-3 sm:p-4 text-center text-sm sm:text-base font-medium border border-gray-200 dark:border-gray-600"
               style={{ backgroundColor: bgHex, color: hexStr }}
             >
               Sample Text ({wcag.ratio}:1)
             </div>
           </div>
-          <div className="flex-1">
+          <div>
             <label className={labelClass}>Results</label>
             <div className="flex flex-wrap gap-2">
               <PassBadge pass={wcag.aa} label="AA" />
@@ -362,7 +362,7 @@ export default function ColorConverter() {
               <button
                 key={`${hex}-${i}`}
                 onClick={() => updateFromHex(hex)}
-                className="w-10 h-10 rounded-lg border-2 border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-400 transition-colors shadow-sm"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg border-2 border-gray-200 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-400 transition-colors shadow-sm"
                 style={{ backgroundColor: hex }}
                 title={hex}
                 type="button"

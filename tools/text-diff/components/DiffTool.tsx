@@ -137,7 +137,7 @@ export default function DiffTool() {
 
         <div className="h-6 w-px bg-[var(--border)] hidden sm:block" />
 
-        <div className="flex items-center gap-4 text-sm text-[var(--muted-fg)]">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-[var(--muted-fg)]">
           <label className="flex items-center gap-1.5 cursor-pointer">
             <input
               type="checkbox"
@@ -284,16 +284,16 @@ function SingleLineRow({ line }: { line: DiffLine }) {
 
   return (
     <tr className={bgClass}>
-      <td className="w-12 text-right pr-2 text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-2">
+      <td className="w-8 sm:w-12 text-right pr-1 sm:pr-2 text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-1 sm:px-2 text-xs sm:text-sm">
         {line.oldLineNum ?? ""}
       </td>
-      <td className="w-12 text-right pr-2 text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-2">
+      <td className="w-8 sm:w-12 text-right pr-1 sm:pr-2 text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-1 sm:px-2 text-xs sm:text-sm">
         {line.newLineNum ?? ""}
       </td>
-      <td className="w-6 text-center select-none">
+      <td className="w-5 sm:w-6 text-center select-none">
         <span className={textClass}>{prefix}</span>
       </td>
-      <td className={`px-3 py-0.5 whitespace-pre ${textClass}`}>
+      <td className={`px-2 sm:px-3 py-0.5 whitespace-pre overflow-x-auto ${textClass}`}>
         {line.content}
       </td>
     </tr>
@@ -404,10 +404,10 @@ function SideBySideView({ diffLines }: { diffLines: DiffLine[] }) {
             return (
               <tr key={idx}>
                 {/* Left side */}
-                <td className={`w-10 text-right text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-2 ${leftBg}`}>
+                <td className={`w-8 sm:w-10 text-right text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-1 sm:px-2 text-xs sm:text-sm ${leftBg}`}>
                   {pair.left?.oldLineNum ?? ""}
                 </td>
-                <td className={`w-1/2 px-3 py-0.5 whitespace-pre border-r border-[var(--border)] ${leftBg} ${leftText}`}>
+                <td className={`w-1/2 px-2 sm:px-3 py-0.5 whitespace-pre overflow-x-auto border-r border-[var(--border)] ${leftBg} ${leftText}`}>
                   {leftInline
                     ? leftInline.map((ch, i) =>
                         ch.type === "removed" ? (
@@ -419,10 +419,10 @@ function SideBySideView({ diffLines }: { diffLines: DiffLine[] }) {
                     : pair.left?.content ?? ""}
                 </td>
                 {/* Right side */}
-                <td className={`w-10 text-right text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-2 ${rightBg}`}>
+                <td className={`w-8 sm:w-10 text-right text-[var(--muted-fg)] opacity-50 select-none border-r border-[var(--border)] px-1 sm:px-2 text-xs sm:text-sm ${rightBg}`}>
                   {pair.right?.newLineNum ?? ""}
                 </td>
-                <td className={`w-1/2 px-3 py-0.5 whitespace-pre ${rightBg} ${rightText}`}>
+                <td className={`w-1/2 px-2 sm:px-3 py-0.5 whitespace-pre overflow-x-auto ${rightBg} ${rightText}`}>
                   {rightInline
                     ? rightInline.map((ch, i) =>
                         ch.type === "added" ? (

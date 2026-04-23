@@ -59,8 +59,8 @@ export default function FuriganaConverter() {
 
     return (
       <div
-        className="leading-loose text-lg"
-        style={{ lineHeight: "2.5" }}
+        className="leading-loose text-base sm:text-lg"
+        style={{ lineHeight: "2.2" }}
         dangerouslySetInnerHTML={{
           __html: result.segments
             .map((seg) => {
@@ -91,7 +91,7 @@ export default function FuriganaConverter() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="ここに日本語のテキストを入力してください..."
-          className="w-full h-40 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors resize-y text-base text-gray-900 placeholder-gray-400"
+          className="w-full h-32 sm:h-40 p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-colors resize-y text-sm sm:text-base text-gray-900 placeholder-gray-400"
         />
         <div className="flex gap-2 mt-2">
           <button

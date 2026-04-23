@@ -301,7 +301,7 @@ export default function AsciiFlowchart() {
   return (
     <div className="space-y-6">
       {/* Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         {/* Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -364,7 +364,7 @@ export default function AsciiFlowchart() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[var(--border)]">
-                <th className="text-left py-1 pr-6 font-medium text-[var(--muted-fg)] w-56">
+                <th className="text-left py-1 pr-4 sm:pr-6 font-medium text-[var(--muted-fg)] w-auto sm:w-56">
                   Syntax
                 </th>
                 <th className="text-left py-1 font-medium text-[var(--muted-fg)]">

@@ -155,7 +155,7 @@ export default function ImageCompressor() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all ${
+        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-12 text-center cursor-pointer transition-all ${
           isDragging
             ? "border-blue-500 bg-blue-50"
             : "border-gray-300 hover:border-blue-400 hover:bg-gray-50"
@@ -186,10 +186,10 @@ export default function ImageCompressor() {
               d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
             />
           </svg>
-          <p className="text-lg font-medium text-gray-700">
+          <p className="text-base sm:text-lg font-medium text-gray-700">
             Drop images here or click to browse
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-xs sm:text-sm text-gray-500">
             Supports JPEG, PNG, WebP — multiple files allowed
           </p>
         </div>
@@ -307,7 +307,7 @@ export default function ImageCompressor() {
       {images.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Thumbnail List */}
-          <div className="lg:col-span-1 space-y-2 max-h-[600px] overflow-y-auto">
+          <div className="lg:col-span-1 space-y-2 max-h-[300px] sm:max-h-[600px] overflow-y-auto">
             {images.map((img) => (
               <div
                 key={img.id}
