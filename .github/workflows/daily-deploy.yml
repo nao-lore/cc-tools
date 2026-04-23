@@ -2,7 +2,7 @@ name: Daily Tool Deploy
 
 on:
   schedule:
-    # 18:00 UTC = 03:00 JST (daily)
+    # 18:00 UTC = 03:00 JST daily
     - cron: '0 18 * * *'
   workflow_dispatch:
     inputs:
