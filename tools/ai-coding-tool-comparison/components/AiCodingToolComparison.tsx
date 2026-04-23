@@ -651,6 +651,105 @@ export default function AiCodingToolComparison() {
         ))}
         <span className="ml-auto">料金は税抜き・2026年4月時点。変更の可能性あり。</span>
       </section>
+
+      {/* ── 使い方ガイド ── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "用途別おすすめから選ぶ", desc: "個人向け・チーム向け・エージェント重視・OSS無料の4カテゴリから、自分のユースケースに合ったツールを確認できます。" },
+            { step: "2", title: "フィルタで絞り込む", desc: "「無料プランあり」「エージェント機能あり」「IDE統合」のフィルタを組み合わせて候補を絞り込めます。" },
+            { step: "3", title: "機能チェックリストで比較", desc: "タブを「機能チェックリスト」に切り替えると、全ツールの機能対応状況をマトリクス形式で確認できます。" },
+            { step: "4", title: "チームコスト試算で予算計算", desc: "「チームコスト試算」タブでチーム人数を入力すると、全プランの月額・年額合計を一括で試算できます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-white font-bold text-sm">{item.title}</span>
+                <p className="text-gray-400 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "CursorとWindsurfの違いは何ですか？",
+              a: "どちらもVSCode系のAIコーディングエディタです。CursorはComposerによるマルチファイル編集が強み、WindsurfはCascadeエージェントによる自律的なコード生成が特徴です。料金はWindsurfの方が若干安いです。",
+            },
+            {
+              q: "GitHub Copilotと他ツールの違いは？",
+              a: "GitHub Copilotは既存IDEのプラグインとして動作し、VS Code・JetBrains・Neovim等に対応しています。エディタを変えたくない人向けです。エージェント機能はCursorやClineと比べると限定的です。",
+            },
+            {
+              q: "無料で本格的に使えるツールはありますか？",
+              a: "Aider・Clineは完全OSSで本体無料です。ただし別途LLM APIキー（OpenAI・Anthropic等）が必要で、その費用はAPIの従量課金になります。",
+            },
+            {
+              q: "Claude Codeの料金プランはどれを選べばいいですか？",
+              a: "個人の軽量利用はPro（$20/月）から始め、重い自動化タスクや大規模エージェント用途はMax $100/$200、または直接API従量課金が適しています。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-white/5 pb-3 last:border-0 last:pb-0">
+              <p className="text-white font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-400 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── JSON-LD FAQPage ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "CursorとWindsurfの違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "どちらもVSCode系のAIコーディングエディタです。CursorはComposerによるマルチファイル編集が強み、WindsurfはCascadeエージェントによる自律的なコード生成が特徴です。料金はWindsurfの方が若干安いです。" },
+              },
+              {
+                "@type": "Question",
+                "name": "無料で本格的に使えるツールはありますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Aider・Clineは完全OSSで本体無料です。ただし別途LLM APIキー（OpenAI・Anthropic等）が必要で、その費用はAPIの従量課金になります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Claude Codeの料金プランはどれを選べばいいですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "個人の軽量利用はPro（$20/月）から始め、重い自動化タスクや大規模エージェント用途はMax $100/$200、または直接API従量課金が適しています。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ── 関連ツール ── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/github-actions-cost", label: "GitHub Actions料金計算", desc: "CI/CDの分単位コストを試算" },
+            { href: "/ai-cost-calculator", label: "AIコスト計算機", desc: "LLM APIの料金を用途別に計算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-white font-bold text-sm">{link.label}</p>
+              <p className="text-gray-400 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

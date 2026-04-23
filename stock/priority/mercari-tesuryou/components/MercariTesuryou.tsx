@@ -508,6 +508,114 @@ export default function MercariTesuryou() {
       <p className="text-xs text-gray-400 text-center pb-4">
         ※ 手数料・送料は変更される場合があります。最新情報はメルカリ公式サイトでご確認ください。
       </p>
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "モードを選択", desc: "「順算」は販売価格から実利益を計算。「逆算」は目標利益から必要な販売価格を計算します。" },
+            { step: "2", title: "価格・配送方法を入力", desc: "販売価格（または目標利益）を入力し、らくらくメルカリ便またはゆうゆうメルカリ便から配送方法を選択します。" },
+            { step: "3", title: "コストを追加入力（任意）", desc: "梱包費・仕入れ原価を入力すると、より正確な実利益が計算されます。" },
+            { step: "4", title: "結果を確認", desc: "実利益・利益率が表示されます。複数出品シミュレーションで月間目標達成に必要な出品数も計算できます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FF0211]/10 text-[#FF0211] font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "メルカリの手数料は何パーセントですか？",
+              a: "メルカリの販売手数料は販売価格の10%（税込）です。例えば3,000円で売れた場合、手数料は300円となり手元に残る売上は2,700円から配送料・原価を引いた金額になります。",
+            },
+            {
+              q: "利益率20%以上にするには販売価格をいくらにすればいいですか？",
+              a: "逆算モードで目標利益を入力すると、必要な販売価格が自動計算されます。利益率は「実利益 ÷ 販売価格 × 100」で計算され、結果画面に表示されます。",
+            },
+            {
+              q: "らくらくメルカリ便とゆうゆうメルカリ便はどちらが安いですか？",
+              a: "サイズによって異なります。小型（A4・3cm以内）はゆうゆうのゆうパケット（¥230）よりらくらくのネコポス（¥210）の方が安いです。60〜100サイズはゆうゆうの方が数十円安い傾向があります。",
+            },
+            {
+              q: "仕入れ原価はどこに入力しますか？",
+              a: "入力パネル下部の「仕入れ原価（任意）」欄に購入価格を入力してください。手数料・送料・梱包費と合わせて差し引いた実利益が計算されます。",
+            },
+            {
+              q: "赤字にならない最低販売価格を知りたいです。",
+              a: "逆算モードで目標利益を「0」に設定すると、損益分岐点となる最低販売価格が計算されます。配送方法と梱包費を入力した状態でお試しください。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+            <span>🚚</span> 宅配便 送料比較
+          </a>
+          <a href="/stripe-fee-calculator" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+            <span>💳</span> Stripe手数料計算
+          </a>
+          <a href="/shopify-fee-jp" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+            <span>🛒</span> eBay手数料計算
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "メルカリの手数料は何パーセントですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "メルカリの販売手数料は販売価格の10%（税込）です。3,000円で売れた場合、手数料は300円となります。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "らくらくメルカリ便とゆうゆうメルカリ便はどちらが安いですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "小型（A4・3cm以内）はネコポス（210円）の方が安く、60〜100サイズはゆうゆうメルカリ便の方が数十円安い傾向があります。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "赤字にならない最低販売価格を知りたいです。",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "逆算モードで目標利益を0に設定すると、損益分岐点となる最低販売価格が自動計算されます。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

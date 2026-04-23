@@ -712,6 +712,118 @@ export default function InvoiceQualifiedChecker() {
           国税庁 インボイス制度特設ページ
         </a>
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <h2 className="text-base font-semibold text-gray-800 mb-4">適格請求書チェッカーの使い方</h2>
+        <ol className="space-y-4">
+          {[
+            { step: "1", title: "発行事業者名と登録番号を入力", desc: "「T」から始まる14桁の登録番号を入力するとリアルタイムで形式チェックします。国税庁の公表サイトで実在確認も行いましょう。" },
+            { step: "2", title: "取引年月日・内容を入力", desc: "軽減税率（8%）対象品目が含まれる場合はチェックボックスをオンにしてください。「※」マーク等による明示が必要になります。" },
+            { step: "3", title: "税率ごとの対価の額を入力", desc: "税込・税抜を切り替えて金額を入力すると消費税額が自動計算されます。端数処理方法（切捨て推奨）も選択できます。" },
+            { step: "4", title: "6項目がすべて「OK」になれば適格請求書の要件を満たしています", desc: "不足項目がある場合は赤く表示されます。交付先名が不要な簡易インボイスとの違いも確認できます。" },
+          ].map(({ step, title, desc }) => (
+            <li key={step} className="flex gap-4">
+              <span className="w-7 h-7 rounded-full bg-indigo-600 text-white text-sm font-bold flex items-center justify-center shrink-0">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 mb-0.5">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
+        <h2 className="text-base font-semibold text-gray-800">よくある質問（FAQ）</h2>
+        {[
+          {
+            q: "適格請求書（インボイス）と従来の請求書の違いは何ですか？",
+            a: "最大の違いは「登録番号」の記載です。適格請求書発行事業者として国税庁に登録した事業者のみが発行でき、買い手は仕入税額控除を受けるためにインボイスの保存が必要になりました。",
+          },
+          {
+            q: "消費税の端数処理はどの方法が正しいですか？",
+            a: "インボイス制度では切捨て・切上げ・四捨五入のいずれも認められています。ただし「1請求書につき税率ごとに1回」のみ端数処理ができます。実務では切捨てが一般的です。",
+          },
+          {
+            q: "登録番号の「T」はどういう意味ですか？",
+            a: "「T」はTaxpayer（納税者）の頭文字で、その後に13桁の法人番号または個人事業主用の番号が続きます。国税庁の「適格請求書発行事業者公表サイト」で有効性を検索できます。",
+          },
+          {
+            q: "消費税の登録をしていない免税事業者はインボイスを発行できますか？",
+            a: "発行できません。インボイス（適格請求書）は適格請求書発行事業者として登録した課税事業者のみが発行できます。免税事業者が発行できるのは「区分記載請求書」までです。",
+          },
+          {
+            q: "宛名（交付先名）が省略できるケースはありますか？",
+            a: "小売業・飲食店・タクシー・駐車場・旅行業など不特定多数を対象とする事業では「適格簡易請求書」が利用でき、宛名の記載が不要です。",
+          },
+        ].map(({ q, a }) => (
+          <div key={q} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+            <p className="text-sm font-semibold text-indigo-700 mb-1">Q. {q}</p>
+            <p className="text-xs text-gray-600">A. {a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-indigo-50 rounded-2xl border border-indigo-100 p-5">
+        <h2 className="text-sm font-semibold text-indigo-800 mb-3">関連ツール</h2>
+        <div className="space-y-2">
+          {[
+            { href: "/tools/consumption-tax-choice", label: "簡易課税・本則課税 どっちが得？シミュレーター", desc: "インボイス登録後の課税方式を比較" },
+            { href: "/tools/withholding-tax-calculator", label: "源泉徴収税額 計算ツール", desc: "報酬から源泉徴収額と手取りを計算" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-indigo-100 hover:border-indigo-300 transition-colors group">
+              <svg className="w-4 h-4 text-indigo-400 group-hover:text-indigo-600 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-indigo-700 group-hover:text-indigo-900">{label}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "適格請求書（インボイス）と従来の請求書の違いは何ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "最大の違いは「登録番号」の記載です。適格請求書発行事業者として国税庁に登録した事業者のみが発行でき、買い手は仕入税額控除を受けるためにインボイスの保存が必要になりました。" },
+              },
+              {
+                "@type": "Question",
+                name: "消費税の端数処理はどの方法が正しいですか？",
+                acceptedAnswer: { "@type": "Answer", text: "インボイス制度では切捨て・切上げ・四捨五入のいずれも認められています。ただし「1請求書につき税率ごとに1回」のみ端数処理ができます。" },
+              },
+              {
+                "@type": "Question",
+                name: "登録番号の「T」はどういう意味ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "「T」はTaxpayerの頭文字で、その後に13桁の法人番号または個人事業主用の番号が続きます。国税庁の公表サイトで有効性を検索できます。" },
+              },
+              {
+                "@type": "Question",
+                name: "消費税の登録をしていない免税事業者はインボイスを発行できますか？",
+                acceptedAnswer: { "@type": "Answer", text: "発行できません。インボイスは適格請求書発行事業者として登録した課税事業者のみが発行できます。" },
+              },
+              {
+                "@type": "Question",
+                name: "宛名（交付先名）が省略できるケースはありますか？",
+                acceptedAnswer: { "@type": "Answer", text: "小売業・飲食店・タクシー等では「適格簡易請求書」が利用でき、宛名の記載が不要です。" },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

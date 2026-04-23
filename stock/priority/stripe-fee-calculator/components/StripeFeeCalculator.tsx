@@ -709,6 +709,115 @@ export default function StripeFeeCalculator() {
       <p className="text-xs text-gray-400 text-center pb-4">
         手数料は2026年時点の情報です。最新の料金はStripe公式サイトをご確認ください。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "タブを選択", desc: "「1回計算」で単発の手数料確認、「月間シミュ」で月間収益シミュレーション、「転嫁計算」で顧客への手数料転嫁価格を計算できます。" },
+            { step: "2", title: "決済金額を入力", desc: "売上金額を入力するかプリセットボタンを選択します。プリセットには ¥1,000〜¥100,000 の代表的な金額が用意されています。" },
+            { step: "3", title: "決済方法を選択", desc: "クレジットカード・コンビニ決済・銀行振込など、実際に使用する決済方法を選択します。コンビニ決済は ¥5,278 以上で ¥190 の上限固定になります。" },
+            { step: "4", title: "結果を確認", desc: "手数料・実収入・実効手数料率が表示されます。月間シミュでは年間換算も参考にしてください。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Stripe の手数料は日本でいくら？",
+              a: "国内発行カードは 3.6%、コンビニ決済は 3.6%（¥190 上限）、銀行振込は ¥190/件です。月額固定費は不要で使った分だけ支払います。",
+            },
+            {
+              q: "Stripe でコンビニ決済を使うメリットは？",
+              a: "¥5,278 以上の決済では手数料が ¥190 の上限に固定されるため、高額商品ではカード決済より実質手数料率が低くなります。例えば ¥50,000 の決済なら手数料はわずか ¥190（実効 0.38%）です。",
+            },
+            {
+              q: "Stripe の振込（ペイアウト）手数料は？",
+              a: "自動振込は無料です。即時振込（30 分以内着金）は 0.5% + ¥250/回の手数料がかかります。週次・月次の自動振込を使えばコストゼロで資金を口座に移動できます。",
+            },
+            {
+              q: "Stripe と PayPal、どちらが安い？",
+              a: "国内取引なら Stripe の 3.6% に対し PayPal は 3.6%+¥40/件のため、少額決済では PayPal の方が割高になります。海外顧客への販売が多い場合は PayPal の知名度も考慮してください。",
+            },
+            {
+              q: "Stripe の手数料を顧客に転嫁（サーチャージ）できる？",
+              a: "法律上は禁止されていませんが、Stripe の利用規約およびカードブランドルール（Visa・Mastercard 等）で制限される場合があります。転嫁する場合は事前にご確認ください。このツールの「転嫁計算」タブで必要な上乗せ金額を計算できます。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-gray-800 text-sm mb-1">{item.q}</div>
+              <div className="text-sm text-gray-600">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Stripe の手数料は日本でいくら？",
+                "acceptedAnswer": { "@type": "Answer", "text": "国内発行カードは 3.6%、コンビニ決済は 3.6%（¥190 上限）、銀行振込は ¥190/件です。月額固定費は不要です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Stripe でコンビニ決済を使うメリットは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "¥5,278 以上の決済では手数料が ¥190 の上限に固定されるため、高額商品ではカード決済より実質手数料率が低くなります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Stripe の振込手数料は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "自動振込は無料です。即時振込は 0.5% + ¥250/回かかります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Stripe の手数料を顧客に転嫁できる？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Stripe の利用規約およびカードブランドルールを事前に確認してください。転嫁計算タブで必要な上乗せ金額を計算できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/mercari-tesuryou", title: "メルカリ手数料計算", desc: "フリマアプリ販売時の手数料・利益を自動計算。" },
+            { href: "/shopify-fee-jp", title: "Shopify 手数料計算", desc: "Shopify プラン別の決済手数料と月額費用を試算。" },
+            { href: "/paypal-fee-jp", title: "PayPal 手数料計算", desc: "PayPal の国内・海外送金手数料を計算。Stripe との比較に。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all group"
+            >
+              <div className="font-medium text-gray-800 text-sm group-hover:text-indigo-700">{link.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

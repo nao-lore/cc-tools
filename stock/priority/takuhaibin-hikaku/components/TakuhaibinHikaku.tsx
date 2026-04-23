@@ -493,6 +493,119 @@ export default function TakuhaibinHikaku() {
           <div className="text-sm">荷物のサイズ・重量を入力すると<br />3社の送料を比較します</div>
         </div>
       )}
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "サイズを入力", desc: "荷物の縦・横・高さ（cm）を入力します。3辺合計が自動計算されます。" },
+            { step: "2", title: "重量を入力", desc: "荷物の重さ（kg）を入力してください。梱包材込みの重量を使用します。" },
+            { step: "3", title: "発着地を選択", desc: "発送元と届け先の都道府県を選択します。地域間距離に応じて料金が変わります。" },
+            { step: "4", title: "最安業者を確認", desc: "ヤマト運輸・佐川急便・ゆうパックの料金が自動比較されます。緑バッジが最安です。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "佐川急便とヤマト運輸、どちらが安いですか？",
+              a: "荷物のサイズと発着地によって異なります。60〜80サイズの近距離では佐川急便がわずかに安い場合が多く、遠距離・大型荷物ではゆうパックが競争力を持つことがあります。本ツールで実際の数値を確認してください。",
+            },
+            {
+              q: "宅配便の3辺合計とはどう計算しますか？",
+              a: "縦＋横＋高さの合計です。例えば30cm×20cm×10cmの荷物は3辺合計60cmで「60サイズ」に該当します。実際には緩衝材込みのサイズで計算してください。",
+            },
+            {
+              q: "持込割引は反映されていますか？",
+              a: "表示料金は持込割引前の基本料金です。ヤマト運輸は持込で−¥110、ゆうパックは−¥120の割引があります。結果カードの下部に割引情報を表示しています。",
+            },
+            {
+              q: "60サイズ以下の小型荷物はどうすればいいですか？",
+              a: "3辺合計60cm以下の場合、ネコポス（¥210〜）・クリックポスト（¥185）・ゆうパケット（¥250〜）の方が大幅に安くなります。ツール上部に小型荷物向けの案内を表示します。",
+            },
+            {
+              q: "離島への送料は計算できますか？",
+              a: "本ツールは都道府県ベースの地域区分で計算しています。離島・一部遠隔地は追加料金が発生する場合があるため、各社公式サイトで正確な料金をご確認ください。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/click-post-size" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
+            <span>📦</span> ネコポス・クリックポスト サイズ判定
+          </a>
+          <a href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
+            <span>💰</span> メルカリ手数料計算
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "佐川急便とヤマト運輸、どちらが安いですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "荷物のサイズと発着地によって異なります。60〜80サイズの近距離では佐川急便がわずかに安い場合が多く、遠距離・大型荷物ではゆうパックが競争力を持つことがあります。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "宅配便の3辺合計とはどう計算しますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "縦＋横＋高さの合計です。例えば30cm×20cm×10cmの荷物は3辺合計60cmで「60サイズ」に該当します。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "持込割引は反映されていますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "表示料金は持込割引前の基本料金です。ヤマト運輸は持込で−110円、ゆうパックは−120円の割引があります。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "60サイズ以下の小型荷物はどうすればいいですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "3辺合計60cm以下の場合、ネコポス・クリックポスト・ゆうパケットの方が大幅に安くなります。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

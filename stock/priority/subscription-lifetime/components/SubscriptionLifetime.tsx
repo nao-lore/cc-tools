@@ -524,6 +524,105 @@ export default function SubscriptionLifetime() {
       <p className="text-xs text-gray-400 text-center pb-4">
         料金は参考値です。最新の価格は各サービス公式サイトをご確認ください。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "プリセットをタップして追加", desc: "Netflix・Spotify・ChatGPT Plus等の主要サービスはプリセットから1タップで追加できます。USDサービスは為替レートで自動換算されます。" },
+            { step: "2", title: "独自サービスを手動追加", desc: "プリセットにないサービスはサービス名と月額を入力して追加できます。Enterキーでも登録できます。" },
+            { step: "3", title: "累積コストの推移を確認", desc: "登録後に「累積コストの推移」グラフが表示されます。1年・3年・5年・10年・20年の総支払い額を視覚的に確認できます。" },
+            { step: "4", title: "削減シミュレーションで断捨離", desc: "チェックを外すと「年間いくら浮くか」がリアルタイムで表示されます。解約候補をシミュレーションして断捨離の判断に役立ててください。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-gray-800 font-bold text-sm">{item.title}</span>
+                <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "サブスクの生涯コストはどう計算していますか？",
+              a: "現在の月額合計を解約なし・料金変動なしで単純に積算しています。料金改定や解約は考慮していないため、あくまで参考値としてご利用ください。",
+            },
+            {
+              q: "「もし投資に回したら？」の計算方法は？",
+              a: "月額合計をS&P500の平均年利7%で月次積立複利運用した場合の想定資産額を算出しています。税金・手数料は含まず、元本割れリスクもあります。",
+            },
+            {
+              q: "本当に節約が必要なサブスクを見つけるには？",
+              a: "削減シミュレーションセクションで高額サービスのチェックを外し、「年間+〇〇円節約」の表示を確認してください。月額500円でも10年で6万円になります。",
+            },
+            {
+              q: "ChatGPT PlusやCursorはどの価格で計算されますか？",
+              a: "プリセットに登録されているUSDサービスは、設定した為替レートで自動換算されます。デフォルトは$1=150円で計算しています。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "サブスクの生涯コストはどう計算していますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "現在の月額合計を解約なし・料金変動なしで単純に積算しています。料金改定や解約は考慮していないため、あくまで参考値としてご利用ください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "「もし投資に回したら？」の計算方法は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "月額合計をS&P500の平均年利7%で月次積立複利運用した場合の想定資産額を算出しています。税金・手数料は含まず、元本割れリスクもあります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "本当に節約が必要なサブスクを見つけるには？",
+                "acceptedAnswer": { "@type": "Answer", "text": "削減シミュレーションセクションで高額サービスのチェックを外し、「年間+〇〇円節約」の表示を確認してください。月額500円でも10年で6万円になります。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/ai-coding-tool-comparison", label: "AIコーディングツール比較", desc: "Cursor・Windsurf・GitHub Copilotの料金を比較" },
+            { href: "/meeting-cost", label: "会議コスト計算機", desc: "参加人数と時給から会議の機会費用を試算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

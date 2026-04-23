@@ -583,6 +583,118 @@ export default function HourlyToAnnual() {
           実際の金額は源泉徴収票や給与明細でご確認ください。
         </p>
       </div>
+
+      {/* ── SEO: 使い方ガイド ── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">時給・年収 計算ツールの使い方</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "雇用形態を選ぶ", body: "正社員・パート・フリーランスを選択すると、社会保険料の控除有無が自動で切り替わります。" },
+            { step: "2", title: "変換タブを選択", body: "「時給 → 年収」「年収 → 時給」「月収 → 時給」の3方向から目的に合ったタブを選んでください。" },
+            { step: "3", title: "勤務条件を入力", body: "1日の労働時間・週勤務日数・有給日数・月平均残業時間を入力すると、より正確な換算結果が得られます。" },
+            { step: "4", title: "手取りと全国平均を確認", body: "手取り概算と全国・東京都の平均時給との比較が自動で表示されます。転職・副業の収入検討にご活用ください。" },
+          ].map(({ step, title, body }) => (
+            <li key={step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-sky-100 text-sky-700 text-sm font-bold flex items-center justify-center">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ── SEO: FAQ ── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "時給1,500円だと年収はいくらになりますか？",
+              a: "週5日・1日8時間・有給10日の標準条件で計算すると、年収は約298万円（額面）になります。残業がある場合は割増25%が加算されます。",
+            },
+            {
+              q: "年収400万円は時給換算でいくらですか？",
+              a: "標準的な正社員条件（週5日・8時間・有給10日）では、約2,000円/時間が目安です。勤務条件を変えると結果も変わるので、実際の条件を入力して確認してください。",
+            },
+            {
+              q: "手取り額はどうやって計算していますか？",
+              a: "給与所得控除・基礎控除・所得税（累進課税）・住民税（約10%）を簡易計算しています。正社員は社会保険料（約14.5%）も控除します。扶養控除や各種保険料の個人差は含まないため、目安としてご利用ください。",
+            },
+            {
+              q: "フリーランスの場合、何が違いますか？",
+              a: "フリーランスは社会保険料（国民健康保険・国民年金）が別途かかります。このツールでは経費率を入力して実質収入を概算できます。青色申告特別控除等は未考慮のため、税理士への相談をおすすめします。",
+            },
+            {
+              q: "パートと正社員で手取りはどれくらい違いますか？",
+              a: "同じ年収でも、正社員は社会保険料（約14.5%）が控除される分、手取りが少なくなります。一方でパートは週20時間未満の場合、社会保険に加入しないケースが多く、手取り率が高くなります。",
+            },
+          ].map(({ q, a }, i) => (
+            <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-sky-50 list-none">
+                <span>Q. {q}</span>
+                <span className="text-sky-500 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-gray-100">{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: JSON-LD FAQPage ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "時給1,500円だと年収はいくらになりますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "週5日・1日8時間・有給10日の標準条件で計算すると、年収は約298万円（額面）になります。残業がある場合は割増25%が加算されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "年収400万円は時給換算でいくらですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "標準的な正社員条件（週5日・8時間・有給10日）では、約2,000円/時間が目安です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "手取り額はどうやって計算していますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "給与所得控除・基礎控除・所得税・住民税（約10%）を簡易計算しています。正社員は社会保険料（約14.5%）も控除します。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ── SEO: 関連ツール ── */}
+      <div className="bg-sky-50 rounded-2xl border border-sky-100 p-5">
+        <h2 className="text-sm font-bold text-sky-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {[
+            { href: "/tools/zangyou-dai", label: "残業代計算ツール", desc: "割増賃金を自動計算" },
+            { href: "/tools/gyomu-itaku-hikaku", label: "業務委託 vs 正社員比較", desc: "契約形態ごとの実質収入を比較" },
+            { href: "/tools/tedori-keisan", label: "手取り計算ツール", desc: "社会保険・税金を詳細計算" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-sky-100 hover:border-sky-300 transition-colors">
+              <span className="text-sm font-semibold text-sky-700">{label}</span>
+              <span className="text-xs text-gray-500">{desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: CTA ── */}
+      <div className="bg-gradient-to-r from-sky-600 to-blue-700 rounded-2xl p-5 text-white text-center space-y-3">
+        <p className="text-base font-bold">給与・収入に関する他のツールもチェック</p>
+        <p className="text-xs opacity-80">残業代・手取り・業務委託など、収入にまつわる計算を無料で。</p>
+        <a href="/tools" className="inline-block bg-white text-sky-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-sky-50 transition-colors">
+          全ツール一覧を見る
+        </a>
+      </div>
     </div>
   );
 }

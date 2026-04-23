@@ -674,6 +674,118 @@ export default function ConsumptionTaxChoice() {
           </a>
         </div>
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <h2 className="text-base font-semibold text-gray-800 mb-4">簡易課税・本則課税 比較ツールの使い方</h2>
+        <ol className="space-y-4">
+          {[
+            { step: "1", title: "課税売上高と課税仕入高を入力", desc: "年間の税抜売上高と、経費・仕入にかかった税抜金額を入力します。本則課税の計算に使用します。" },
+            { step: "2", title: "業種（みなし仕入率）を選択", desc: "簡易課税のみなし仕入率は業種ごとに異なります。自分の業種に最も近いものを選んでください。IT・コンサル系は第5種（50%）が一般的です。" },
+            { step: "3", title: "適用要件を確認", desc: "簡易課税は基準期間の売上が5,000万円以下の場合のみ選択できます。2割特例はインボイス登録で免税から課税になった事業者が対象です。" },
+            { step: "4", title: "最も有利な課税方式を確認", desc: "3方式の納税額を比較して最も有利なものが「最も有利」バッジで表示されます。手続きの注意点も必ず確認してください。" },
+          ].map(({ step, title, desc }) => (
+            <li key={step} className="flex gap-4">
+              <span className="w-7 h-7 rounded-full bg-amber-500 text-white text-sm font-bold flex items-center justify-center shrink-0">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 mb-0.5">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
+        <h2 className="text-base font-semibold text-gray-800">よくある質問（FAQ）</h2>
+        {[
+          {
+            q: "簡易課税と本則課税、フリーランスにはどちらが得ですか？",
+            a: "仕入・外注費が少ないサービス業（IT・コンサルなど）は簡易課税が有利になるケースが多いです。みなし仕入率50%（第5種）に対し、実際の仕入率が50%未満なら簡易課税の方が納税額が少なくなります。",
+          },
+          {
+            q: "簡易課税の届出をし忘れた場合はどうなりますか？",
+            a: "課税期間の初日の前日（通常は前事業年度末）までに届出書を提出していない場合、その年度は本則課税が適用されます。翌年以降に備えて早めに届出を行いましょう。",
+          },
+          {
+            q: "2割特例はいつまで使えますか？",
+            a: "2023年10月〜2026年9月末を含む課税期間まで使えます。2026年10月以降は通常の本則課税または簡易課税（届出が必要）に戻る必要があります。",
+          },
+          {
+            q: "簡易課税を選択したら途中でやめられますか？",
+            a: "原則として、簡易課税を選択した課税期間の初日から2年間は変更できません。仕入が大幅に増加した場合でも本則課税に切り替えられないため、長期的な見通しで判断する必要があります。",
+          },
+        ].map(({ q, a }) => (
+          <div key={q} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+            <p className="text-sm font-semibold text-amber-700 mb-1">Q. {q}</p>
+            <p className="text-xs text-gray-600">A. {a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ===== CTA ===== */}
+      <div className="bg-amber-50 rounded-2xl border border-amber-200 p-5">
+        <p className="text-sm font-semibold text-amber-900 mb-1">確定申告ソフトで消費税申告を簡単に</p>
+        <p className="text-xs text-amber-700 mb-3">freee・弥生・マネーフォワードクラウドなどの会計ソフトは、簡易課税・本則課税の切り替えや消費税申告書の自動作成に対応しています。</p>
+        <a href="/tools/aojiro-shinkoku-sim" className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 hover:text-amber-900 underline">
+          青色申告の節税効果もシミュレーションする
+        </a>
+      </div>
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-amber-50 rounded-2xl border border-amber-100 p-5">
+        <h2 className="text-sm font-semibold text-amber-800 mb-3">関連ツール</h2>
+        <div className="space-y-2">
+          {[
+            { href: "/tools/invoice-qualified-checker", label: "適格請求書（インボイス）チェッカー", desc: "請求書の記載要件を6項目でチェック" },
+            { href: "/tools/aojiro-shinkoku-sim", label: "青色申告控除 節税シミュレーター", desc: "青色65万円控除の節税効果を計算" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-amber-100 hover:border-amber-300 transition-colors group">
+              <svg className="w-4 h-4 text-amber-400 group-hover:text-amber-600 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-amber-700 group-hover:text-amber-900">{label}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "簡易課税と本則課税、フリーランスにはどちらが得ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "仕入・外注費が少ないサービス業（IT・コンサルなど）は簡易課税が有利になるケースが多いです。みなし仕入率50%（第5種）に対し、実際の仕入率が50%未満なら簡易課税の方が納税額が少なくなります。" },
+              },
+              {
+                "@type": "Question",
+                name: "簡易課税の届出をし忘れた場合はどうなりますか？",
+                acceptedAnswer: { "@type": "Answer", text: "課税期間の初日の前日までに届出書を提出していない場合、その年度は本則課税が適用されます。翌年以降に備えて早めに届出を行いましょう。" },
+              },
+              {
+                "@type": "Question",
+                name: "2割特例はいつまで使えますか？",
+                acceptedAnswer: { "@type": "Answer", text: "2023年10月〜2026年9月末を含む課税期間まで使えます。2026年10月以降は本則課税または簡易課税（届出が必要）に戻ります。" },
+              },
+              {
+                "@type": "Question",
+                name: "簡易課税を選択したら途中でやめられますか？",
+                acceptedAnswer: { "@type": "Answer", text: "原則として選択から2年間は変更できません。長期的な見通しで判断する必要があります。" },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

@@ -591,6 +591,105 @@ export default function EmbeddingCostCalculator() {
       <p className="text-xs text-gray-400 text-center pb-4">
         料金は変更される場合があります。バッチ割引はOpenAI Batch APIを参考値として使用（50%割引）。最新の料金は各社の公式サイトをご確認ください。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-teal-100 p-6">
+        <h2 className="text-lg font-semibold text-teal-900 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "ドキュメント数を入力", desc: "RAGに投入するファイル・記事・商品数など、ベクトル化するデータ件数をスライダーで設定します。" },
+            { step: "2", title: "文字数またはトークン数を指定", desc: "1件あたりの平均文字数を入力してください。日本語は1文字≒1.7トークンで自動換算されます。" },
+            { step: "3", title: "比較表で最安モデルを確認", desc: "全プロバイダーのコストが安い順に並びます。行をクリックすると詳細パネルに反映されます。" },
+            { step: "4", title: "月間コスト・ストレージも確認", desc: "月間追加件数を設定すると運用コストも試算できます。ストレージ見積もりも同時に表示されます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-teal-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-teal-900 font-bold text-sm">{item.title}</span>
+                <p className="text-teal-700 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-teal-100 p-6">
+        <h2 className="text-lg font-semibold text-teal-900 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Embeddingとは何ですか？",
+              a: "テキストを数値ベクトルに変換する処理です。RAGやセマンティック検索でテキストの「意味的な近さ」を計算するために使われます。",
+            },
+            {
+              q: "text-embedding-3-smallとlargeの違いは？",
+              a: "smallは1536次元・$0.02/1Mトークン、largeは3072次元・$0.13/1Mトークンです。精度が必要な本番用途にはlarge、コスト重視ならsmallが一般的です。",
+            },
+            {
+              q: "バッチ処理で50%割引とはどういう意味ですか？",
+              a: "OpenAI Batch APIを使うと、即時処理ではなく数時間以内の非同期処理と引き換えにコストが半額になります。初回インジェストなど急がない処理に最適です。",
+            },
+            {
+              q: "ストレージのサイズはどう計算されますか？",
+              a: "float32（4バイト）×次元数×ベクトル数で計算しています。メタデータやインデックスのオーバーヘッドは含まないため、実際のDBサイズはこの1.5〜3倍程度になります。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-teal-50 pb-3 last:border-0 last:pb-0">
+              <p className="text-teal-900 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Embeddingとは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "テキストを数値ベクトルに変換する処理です。RAGやセマンティック検索でテキストの「意味的な近さ」を計算するために使われます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "バッチ処理で50%割引とはどういう意味ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "OpenAI Batch APIを使うと、即時処理ではなく数時間以内の非同期処理と引き換えにコストが半額になります。初回インジェストなど急がない処理に最適です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ストレージのサイズはどう計算されますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "float32（4バイト）×次元数×ベクトル数で計算しています。メタデータやインデックスのオーバーヘッドは含まないため、実際のDBサイズはこの1.5〜3倍程度になります。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-teal-100 p-6">
+        <h2 className="text-lg font-semibold text-teal-900 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/rag-cost-estimator", label: "RAGコスト見積もり", desc: "Embedding+ベクトルDB+LLM推論の総コストを試算" },
+            { href: "/ai-cost-calculator", label: "AIコスト計算機", desc: "LLM APIの料金を用途別に計算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-teal-900 font-bold text-sm">{link.label}</p>
+              <p className="text-teal-600 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

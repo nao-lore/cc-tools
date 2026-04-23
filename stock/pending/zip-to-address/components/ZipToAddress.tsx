@@ -397,6 +397,113 @@ export default function ZipToAddress() {
       <div className="w-full h-20 bg-gray-50 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm">
         広告スペース
       </div>
+
+      {/* ── SEO: 使い方ガイド ── */}
+      <div className="bg-surface rounded-2xl border border-border p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">郵便番号 住所変換ツールの使い方</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "モードを選ぶ", body: "1件だけ調べたい場合は「1件検索」、複数の郵便番号をまとめて変換したい場合は「一括検索」を選んでください。" },
+            { step: "2", title: "郵便番号を入力する", body: "7桁の数字を入力してください。ハイフンあり（100-0001）・なし（1000001）どちらの形式にも対応しています。" },
+            { step: "3", title: "都道府県を確認する", body: "入力に合わせてリアルタイムで都道府県が表示されます。市区町村・町域の詳細は日本郵便公式サイトへのリンクで確認できます。" },
+            { step: "4", title: "結果をコピーする", body: "「コピー」ボタンで郵便番号と都道府県をまとめてクリップボードにコピーできます。一括検索はタブ区切りでスプレッドシートにも貼り付け可能です。" },
+          ].map(({ step, title, body }) => (
+            <li key={step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-sm font-bold flex items-center justify-center">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ── SEO: FAQ ── */}
+      <div className="bg-surface rounded-2xl border border-border p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">郵便番号・住所変換に関するよくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "郵便番号から市区町村まで調べられますか？",
+              a: "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便の公式サイト（post.japanpost.jp）へのリンクで確認できます。",
+            },
+            {
+              q: "複数の郵便番号を一度に変換できますか？",
+              a: "「一括検索」モードで改行・カンマ・スペース区切りで複数の郵便番号を貼り付けると、まとめて都道府県に変換できます。結果はタブ区切りでコピーできます。",
+            },
+            {
+              q: "郵便番号の都道府県判定は正確ですか？",
+              a: "上3桁による範囲判定のため概算です。一部の境界では複数の都道府県が重なる場合があります。正確な住所は日本郵便の公式データベースでご確認ください。",
+            },
+            {
+              q: "ハイフンなしの郵便番号でも使えますか？",
+              a: "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。入力時に自動でハイフン付きフォーマットに整形されます。",
+            },
+          ].map(({ q, a }, i) => (
+            <details key={i} className="group border border-border rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-blue-50 list-none">
+                <span>Q. {q}</span>
+                <span className="text-blue-500 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-border">{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: JSON-LD FAQPage ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "郵便番号から市区町村まで調べられますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便公式サイトへのリンクで確認できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "複数の郵便番号を一度に変換できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "「一括検索」モードで改行・カンマ・スペース区切りで複数貼り付けると、まとめて都道府県に変換できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ハイフンなしの郵便番号でも使えますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ── SEO: 関連ツール ── */}
+      <div className="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+        <h2 className="text-sm font-bold text-blue-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {[
+            { href: "/tools/bank-code-lookup", label: "銀行コード検索ツール", desc: "銀行・支店コードを素早く調べる" },
+            { href: "/tools/houjin-bangou-validator", label: "法人番号 検証ツール", desc: "13桁の法人番号を検証・フォーマット" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-blue-100 hover:border-blue-300 transition-colors">
+              <span className="text-sm font-semibold text-blue-700">{label}</span>
+              <span className="text-xs text-gray-500">{desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: CTA ── */}
+      <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-5 text-white text-center space-y-3">
+        <p className="text-base font-bold">住所・コード変換ツールをまとめて活用</p>
+        <p className="text-xs opacity-80">郵便番号・銀行コード・法人番号など、業務データの変換・検証ツールを無料で提供しています。</p>
+        <a href="/tools" className="inline-block bg-white text-blue-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-blue-50 transition-colors">
+          全ツール一覧を見る
+        </a>
+      </div>
     </div>
   );
 }

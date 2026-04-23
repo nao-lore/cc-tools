@@ -656,6 +656,118 @@ export default function ZangyouDai() {
           厚生労働省「時間外労働の上限規制」を確認する
         </a>
       </div>
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "給与タイプを選択", desc: "月給制の場合は基本給・手当・年間休日数を入力します。時給制の場合は時給を直接入力します。" },
+            { step: "2", title: "基礎時給を確認", desc: "月給制では入力内容から基礎時給が自動計算されます。残業代の計算ベースとなる金額を確認してください。" },
+            { step: "3", title: "残業時間を入力", desc: "法定時間外・深夜・法定休日など種別ごとに時間を入力します。36協定の上限チェックも自動で行います。" },
+            { step: "4", title: "残業代と年間シミュレーションを確認", desc: "今月の残業代と、同じペースで働き続けた場合の年間残業代が計算されます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "残業代の計算方法を教えてください。",
+              a: "残業代 = 基礎時給 × 割増率 × 残業時間 で計算されます。基礎時給は「月給 ÷ 月平均所定労働時間」です。月平均所定労働時間は「(365日 − 年間休日数) × 1日の労働時間 ÷ 12」で求めます。",
+            },
+            {
+              q: "深夜残業の割増率は何パーセントですか？",
+              a: "深夜（22:00〜5:00）の法定時間外残業は50%割増（通常25%＋深夜25%）です。深夜のみで法定時間外に該当しない場合は25%割増となります。",
+            },
+            {
+              q: "月60時間超の残業は何が変わりましたか？",
+              a: "2023年4月から中小企業にも月60時間超の割増率引き上げが適用されました。月60時間を超えた部分の時間外残業は50%以上の割増賃金が必要です（従来は25%）。",
+            },
+            {
+              q: "家族手当・通勤手当は残業代の計算に含めますか？",
+              a: "家族手当・通勤手当・住宅手当・臨時払いの賃金など7種類は基礎賃金から除外できます。「除外手当」欄に入力してください。役職手当など職務に関連する手当は含めて計算します。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/hourly-to-annual" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>💴</span> 時給換算・年収計算
+          </a>
+          <a href="/teigaku-genzei" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>📊</span> 定額減税 計算
+          </a>
+          <a href="/yukyu-nissuu" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>🏖️</span> 有給日数 計算
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "残業代の計算方法を教えてください。",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "残業代 = 基礎時給 × 割増率 × 残業時間 で計算されます。基礎時給は月給 ÷ 月平均所定労働時間です。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "深夜残業の割増率は何パーセントですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "深夜（22:00〜5:00）の法定時間外残業は50%割増（通常25%＋深夜25%）です。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "月60時間超の残業は何が変わりましたか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "2023年4月から中小企業にも月60時間超の割増率引き上げが適用され、50%以上の割増賃金が必要になりました。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "家族手当・通勤手当は残業代の計算に含めますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "家族手当・通勤手当・住宅手当など7種類は基礎賃金から除外できます。役職手当など職務関連手当は含めて計算します。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

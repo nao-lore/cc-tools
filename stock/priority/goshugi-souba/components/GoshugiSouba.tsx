@@ -470,6 +470,123 @@ export default function GoshugiSouba() {
       <p className="text-xs text-gray-400 text-center pb-4">
         ※ 相場はあくまで目安です。地域・家族の慣習・関係性により異なります。最終的には周囲の方に確認することをおすすめします。
       </p>
+
+      {/* ── SEO: 使い方ガイド ── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">ご祝儀相場 計算ツールの使い方</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "続柄・関係を選ぶ", body: "友人・同僚・上司・兄弟など、新郎新婦との続柄をボタンで選択してください。" },
+            { step: "2", title: "あなたの年代と関係性を選択", body: "年代が上がるほど相場も高くなる傾向があります。「親しい」「普通」「あまり親しくない」で金額が±1万円調整されます。" },
+            { step: "3", title: "地域を設定する", body: "北海道の会費制など、地域特有の慣習がある場合は自動で注意メッセージが表示されます。" },
+            { step: "4", title: "おすすめ金額とマナーを確認", body: "相場金額とNG金額の警告、ご祝儀袋の選び方まで一括で確認できます。" },
+          ].map(({ step, title, body }) => (
+            <li key={step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-rose-100 text-rose-600 text-sm font-bold flex items-center justify-center">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ── SEO: FAQ ── */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">ご祝儀に関するよくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "友人の結婚式のご祝儀の相場はいくらですか？",
+              a: "20〜30代の友人へのご祝儀は3万円が一般的な相場です。親しい関係なら4万円（偶数NG）を避けて5万円にするケースもあります。",
+            },
+            {
+              q: "ご祝儀に4万円はなぜNGなのですか？",
+              a: "4は「死」を連想させる縁起の悪い数字とされています。4万円を贈る場合は3万円か5万円に変更してください。偶数全般が「縁が切れる」として避けられますが、2万円・8万円・10万円は例外とされています。",
+            },
+            {
+              q: "夫婦で参加する場合のご祝儀はいくらが相場ですか？",
+              a: "夫婦2人で参加する場合は、1人分の相場×1.5〜2倍が目安です。友人の場合は5〜7万円、上司や親族なら7〜10万円が一般的です。",
+            },
+            {
+              q: "欠席する場合のご祝儀はどうすればいいですか？",
+              a: "式を欠席する場合は、通常の相場の3分の1〜半額を目安に現金書留で郵送するか、お祝いの品と合わせて贈るのが一般的です。式の1〜2週間前に届くよう手配しましょう。",
+            },
+            {
+              q: "北海道の結婚式の会費制とは何ですか？",
+              a: "北海道では披露宴に「会費制」を採用することが一般的です。当日受付で6,000〜10,000円を支払う形式で、別途ご祝儀袋は不要なケースがほとんどです。招待状に「会費制」と記載があるか確認してください。",
+            },
+          ].map(({ q, a }, i) => (
+            <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-rose-50 list-none">
+                <span>Q. {q}</span>
+                <span className="text-rose-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-gray-100">{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: JSON-LD FAQPage ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "友人の結婚式のご祝儀の相場はいくらですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "20〜30代の友人へのご祝儀は3万円が一般的な相場です。親しい関係なら5万円にするケースもあります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ご祝儀に4万円はなぜNGなのですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "4は「死」を連想させる縁起の悪い数字とされているためです。3万円か5万円に変更してください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "夫婦で参加する場合のご祝儀はいくらが相場ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "夫婦2人で参加する場合は、1人分の相場×1.5〜2倍が目安です。友人の場合は5〜7万円が一般的です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "北海道の結婚式の会費制とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "北海道では披露宴に会費制を採用することが一般的で、当日受付で6,000〜10,000円を支払います。別途ご祝儀袋は不要なケースがほとんどです。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ── SEO: 関連ツール ── */}
+      <div className="bg-rose-50 rounded-2xl border border-rose-100 p-5">
+        <h2 className="text-sm font-bold text-rose-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {[
+            { href: "/tools/hikidemono", label: "引き出物 相場ツール", desc: "引き出物の金額帯・選び方を確認" },
+            { href: "/tools/cho-jyu-iwai", label: "長寿祝い 相場ツール", desc: "還暦・古希などのお祝い金額目安" },
+            { href: "/tools/goshugi-souba", label: "出産祝い 相場ツール", desc: "出産内祝いの金額目安" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-rose-100 hover:border-rose-300 transition-colors">
+              <span className="text-sm font-semibold text-rose-700">{label}</span>
+              <span className="text-xs text-gray-500">{desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: CTA ── */}
+      <div className="bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl p-5 text-white text-center space-y-3">
+        <p className="text-base font-bold">冠婚葬祭のマナーを網羅したツール集</p>
+        <p className="text-xs opacity-80">ご祝儀・引き出物・お返しなど、おもてなしにまつわる計算を無料で。</p>
+        <a href="/tools" className="inline-block bg-white text-rose-600 text-sm font-bold px-5 py-2 rounded-xl hover:bg-rose-50 transition-colors">
+          全ツール一覧を見る
+        </a>
+      </div>
     </div>
   );
 }

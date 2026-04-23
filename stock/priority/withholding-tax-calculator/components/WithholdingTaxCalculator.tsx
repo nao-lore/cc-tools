@@ -518,6 +518,119 @@ export default function WithholdingTaxCalculator() {
           国税庁「源泉徴収のあらまし」を確認する
         </a>
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-semibold text-gray-800 mb-4">源泉徴収計算ツールの使い方</h2>
+        <ol className="space-y-4">
+          {[
+            { step: "1", title: "モードを選択", desc: "「順算」は報酬額から源泉徴収額と手取りを計算します。「逆算」は受け取りたい手取り額から必要な請求額を算出します。" },
+            { step: "2", title: "報酬額を入力", desc: "税抜の報酬額を入力してください。消費税を区分記載する場合は税抜金額が源泉計算の基準になります（推奨）。" },
+            { step: "3", title: "消費税の取り扱いを選択", desc: "請求書に消費税を別途明記する場合は「区分記載する」を選択。税込一括請求の場合は「税込みで請求する」を選択します。" },
+            { step: "4", title: "結果を確認・コピー", desc: "源泉徴収税額・請求額・手取り額がフロー形式で表示されます。年間シミュレーションで確定申告での還付額の目安も確認できます。" },
+          ].map(({ step, title, desc }) => (
+            <li key={step} className="flex gap-4">
+              <span className="w-7 h-7 rounded-full bg-emerald-600 text-white text-sm font-bold flex items-center justify-center shrink-0">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 mb-0.5">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+        <h2 className="text-base font-semibold text-gray-800">よくある質問（FAQ）</h2>
+        {[
+          {
+            q: "源泉徴収の対象になる報酬と対象外の報酬の違いは何ですか？",
+            a: "所得税法第204条に列挙されたもの（原稿料・デザイン料・翻訳料・弁護士・税理士・司法書士報酬など）が対象です。物品の売買代金やシステム開発費（請負）などは原則対象外です。",
+          },
+          {
+            q: "報酬が100万円を超えると税率が変わるのはなぜですか？",
+            a: "所得税法の規定により、1回の支払いが100万円を超える部分は税率が10.21%から20.42%に上がります。100万円以下の部分は10.21%のまま計算し、超過分に20.42%を適用して合算します。",
+          },
+          {
+            q: "消費税を区分記載すると源泉徴収額が減るのはなぜですか？",
+            a: "消費税を請求書に明記（区分記載）した場合、源泉徴収の計算基準は税抜の報酬額になります。税込で請求すると税込金額全体が基準になるため源泉徴収額が多くなります。",
+          },
+          {
+            q: "法人への支払いでも源泉徴収は必要ですか？",
+            a: "原則不要です。源泉徴収は個人事業主への報酬に適用されます。ただし弁護士法人など一部の法人への特定報酬は例外的に源泉徴収が必要な場合があります。",
+          },
+          {
+            q: "源泉徴収された税金は確定申告で戻ってきますか？",
+            a: "確定申告で源泉徴収額を申告すると、実際の所得税額との差額が還付または追加納税になります。経費控除・各種所得控除後の実際の税額が源泉徴収総額より少なければ差額が還付されます。",
+          },
+        ].map(({ q, a }) => (
+          <div key={q} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+            <p className="text-sm font-semibold text-emerald-700 mb-1">Q. {q}</p>
+            <p className="text-xs text-gray-600">A. {a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-emerald-50 rounded-2xl border border-emerald-100 p-5">
+        <h2 className="text-sm font-semibold text-emerald-800 mb-3">関連ツール</h2>
+        <div className="space-y-2">
+          {[
+            { href: "/tools/invoice-qualified-checker", label: "適格請求書（インボイス）チェッカー", desc: "請求書の6項目を即チェック" },
+            { href: "/tools/tedori-keisan", label: "手取り計算ツール", desc: "給与・フリーランス収入の手取りを計算" },
+            { href: "/tools/zangyou-dai", label: "残業代計算ツール", desc: "残業・深夜・休日割増賃金を自動計算" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-emerald-100 hover:border-emerald-300 transition-colors group">
+              <svg className="w-4 h-4 text-emerald-400 group-hover:text-emerald-600 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-emerald-700 group-hover:text-emerald-900">{label}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "源泉徴収の対象になる報酬と対象外の報酬の違いは何ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "所得税法第204条に列挙されたもの（原稿料・デザイン料・翻訳料・弁護士・税理士・司法書士報酬など）が対象です。物品の売買代金などは原則対象外です。" },
+              },
+              {
+                "@type": "Question",
+                name: "報酬が100万円を超えると税率が変わるのはなぜですか？",
+                acceptedAnswer: { "@type": "Answer", text: "所得税法の規定により、1回の支払いが100万円を超える部分は税率が10.21%から20.42%に上がります。" },
+              },
+              {
+                "@type": "Question",
+                name: "消費税を区分記載すると源泉徴収額が減るのはなぜですか？",
+                acceptedAnswer: { "@type": "Answer", text: "消費税を請求書に明記した場合、源泉徴収の計算基準は税抜の報酬額になります。税込で請求すると税込金額全体が基準になるため源泉徴収額が多くなります。" },
+              },
+              {
+                "@type": "Question",
+                name: "法人への支払いでも源泉徴収は必要ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "原則不要です。源泉徴収は個人事業主への報酬に適用されます。" },
+              },
+              {
+                "@type": "Question",
+                name: "源泉徴収された税金は確定申告で戻ってきますか？",
+                acceptedAnswer: { "@type": "Answer", text: "確定申告で源泉徴収額を申告すると、実際の所得税額との差額が還付または追加納税になります。" },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

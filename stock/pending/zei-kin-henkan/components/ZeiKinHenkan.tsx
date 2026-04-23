@@ -486,6 +486,114 @@ export default function ZeiKinHenkan() {
         <div className="w-full h-24 bg-gray-100 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm">
           広告
         </div>
+
+        {/* ── SEO: 使い方ガイド ── */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">税込・税抜 変換ツールの使い方</h2>
+          <ol className="space-y-3">
+            {[
+              { step: "1", title: "変換方向を選ぶ", body: "「税抜 → 税込」または「税込 → 税抜」を選択します。請求書作成時は税抜→税込、レシートから税抜を逆算したい場合は税込→税抜を選んでください。" },
+              { step: "2", title: "端数処理を設定する", body: "「切り捨て」「四捨五入」「切り上げ」から選べます。事業者によって異なるので、取引先の処理方法に合わせて設定してください。" },
+              { step: "3", title: "金額を入力する", body: "1件モードでは金額と税率（8%/10%）を選択。複数行モードでは1行に1件、税率を行末に追記できます（例: 1000 8）。" },
+              { step: "4", title: "結果をコピーする", body: "「結果をコピー」ボタンでクリップボードに保存できます。複数行はタブ区切り形式でスプレッドシートに貼り付けて使えます。" },
+            ].map(({ step, title, body }) => (
+              <li key={step} className="flex gap-3">
+                <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-sm font-bold flex items-center justify-center">{step}</span>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">{title}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* ── SEO: FAQ ── */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">税込・税抜・消費税計算のよくある質問</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "税抜1,000円の税込価格はいくらですか？（消費税10%）",
+                a: "税抜1,000円に消費税10%を加算すると、税込1,100円になります。消費税額は100円です。8%の場合は税込1,080円（消費税80円）です。",
+              },
+              {
+                q: "税込価格から税抜価格を逆算するにはどうすればいいですか？",
+                a: "税込金額 ÷ 1.1（10%の場合）= 税抜金額です。例えば税込1,100円 ÷ 1.1 = 1,000円。8%の場合は ÷ 1.08 で計算します。端数の扱いは切り捨て・四捨五入・切り上げで異なります。",
+              },
+              {
+                q: "軽減税率8%と標準税率10%の違いは何ですか？",
+                a: "食料品（酒類・外食を除く）や定期購読の新聞には軽減税率8%が適用されます。それ以外の商品・サービスには標準税率10%が適用されます。このツールでは行ごとに税率を指定できます。",
+              },
+              {
+                q: "複数商品の税込合計を一括計算できますか？",
+                a: "「複数行（一括）」モードで1行に1件ずつ金額を入力すると、税抜・消費税・税込の列と合計行が自動で計算されます。軽減税率商品は「金額 8」と行末に税率を追記してください。",
+              },
+            ].map(({ q, a }, i) => (
+              <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
+                <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-blue-50 list-none">
+                  <span>Q. {q}</span>
+                  <span className="text-blue-500 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-gray-200">{a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        {/* ── SEO: JSON-LD FAQPage ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "税抜1,000円の税込価格はいくらですか？（消費税10%）",
+                  "acceptedAnswer": { "@type": "Answer", "text": "税抜1,000円に消費税10%を加算すると、税込1,100円になります。消費税額は100円です。8%の場合は税込1,080円です。" },
+                },
+                {
+                  "@type": "Question",
+                  "name": "税込価格から税抜価格を逆算するにはどうすればいいですか？",
+                  "acceptedAnswer": { "@type": "Answer", "text": "税込金額 ÷ 1.1（10%の場合）= 税抜金額です。例えば税込1,100円 ÷ 1.1 = 1,000円。8%の場合は ÷ 1.08 で計算します。" },
+                },
+                {
+                  "@type": "Question",
+                  "name": "軽減税率8%と標準税率10%の違いは何ですか？",
+                  "acceptedAnswer": { "@type": "Answer", "text": "食料品（酒類・外食を除く）や定期購読の新聞には軽減税率8%が適用されます。それ以外は標準税率10%です。" },
+                },
+              ],
+            }),
+          }}
+        />
+
+        {/* ── SEO: 関連ツール ── */}
+        <div className="bg-gray-50 rounded-xl border border-gray-200 p-5">
+          <h2 className="text-sm font-bold text-gray-700 mb-3">関連ツール</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {[
+              { href: "/tools/consumption-tax-choice", label: "消費税 課税区分チェッカー", desc: "軽減税率の対象かどうか判定" },
+              { href: "/tools/waribiki-keisan", label: "割引計算ツール", desc: "値引き後の税込価格を計算" },
+              { href: "/tools/invoice-qualified-checker", label: "インボイス 登録番号チェッカー", desc: "適格請求書の登録番号を確認" },
+            ].map(({ href, label, desc }) => (
+              <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-gray-200 hover:border-blue-300 transition-colors">
+                <span className="text-sm font-semibold text-blue-700">{label}</span>
+                <span className="text-xs text-gray-500">{desc}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* ── SEO: CTA ── */}
+        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-5 text-white text-center space-y-3">
+          <p className="text-base font-bold">消費税・インボイス対応のツールをまとめて活用</p>
+          <p className="text-xs opacity-80">税込・税抜変換・課税区分チェック・インボイス対応など、経理・請求書作業を効率化するツールを無料で提供しています。</p>
+          <a href="/tools" className="inline-block bg-white text-blue-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-blue-50 transition-colors">
+            全ツール一覧を見る
+          </a>
+        </div>
       </div>
     </div>
   );

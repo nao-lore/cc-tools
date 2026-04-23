@@ -568,6 +568,111 @@ export default function RenderFlyRailway() {
       <p className="text-xs text-gray-400 text-center">
         ※ 料金は2026年概算。最新情報は各社公式サイトを確認してください。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "リソース設定を入力", desc: "CPU・メモリ・ストレージ・帯域幅をスライダーで設定します。実際のアプリ要件に合わせて調整してください。" },
+            { step: "2", title: "DB の有無を選択", desc: "データベースが必要な場合はチェックをオンにし、DB ストレージ容量を入力します。各プロバイダーの DB 料金が自動で加算されます。" },
+            { step: "3", title: "3社の料金を比較", desc: "Render・Fly.io・Railway の月額コストが並んで表示されます。最安プロバイダーには「最安」バッジが付きます。JPY 表示ボタンで日本円に切り替えできます。" },
+            { step: "4", title: "リージョン・用途も確認", desc: "「リージョン」タブで東京リージョンの有無を確認。「用途別おすすめ」タブでユースケースごとの推奨を参照してください。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Render の料金は？無料プランはある？",
+              a: "Render は静的サイトが無制限無料です。Web サービスは $7/月から（512MB RAM）。無料プランの Web サービスは 15 分間操作がないとスリープするため、本番用途は有料プランを推奨します。",
+            },
+            {
+              q: "Fly.io の料金は？日本（東京）リージョンは使える？",
+              a: "Fly.io は月 $5 のホビークレジットが付きます。東京（NRT）・大阪（ITM）リージョンが利用可能で、3 社の中で唯一日本リージョンがあります。低レイテンシが必要な日本向けアプリに最適です。",
+            },
+            {
+              q: "Railway と Render の違いは？どちらがおすすめ？",
+              a: "Railway は秒単位の従量課金で小規模・バースト的な利用に向いています。Render はプラン固定課金で予算が読みやすく、静的サイトの無料ホスティングが強みです。フルスタックアプリには Railway、静的サイト重視なら Render がおすすめです。",
+            },
+            {
+              q: "3社でデータベース込みの最安は？",
+              a: "小規模なら Railway が従量課金で安くなるケースが多いです。Render は DB Starter が $7/月固定、Fly.io は Fly Postgres として VM + Volume 課金です。DB ストレージを増やすと Render の超過料金（$1/GB）が高くなる場合があります。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-gray-800 text-sm mb-1">{item.q}</div>
+              <div className="text-sm text-gray-600">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Render の料金は？無料プランはある？",
+                "acceptedAnswer": { "@type": "Answer", "text": "静的サイトは無制限無料。Web サービスは $7/月から。無料プランは 15 分でスリープします。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Fly.io の東京リージョンは使える？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Fly.io は東京（NRT）・大阪（ITM）リージョンが利用可能で、3 社で唯一日本リージョンがあります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Railway と Render の違いは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Railway は秒単位従量課金で小規模に向き、Render はプラン固定課金で静的サイト無料ホスティングが強みです。" },
+              },
+              {
+                "@type": "Question",
+                "name": "3社でデータベース込みの最安は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "小規模なら Railway が従量課金で安いケースが多いです。Render DB Starter は $7/月固定です。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/vercel-pricing", title: "Vercel 料金計算", desc: "フロントエンドデプロイの定番。Hobby・Pro・Enterprise の料金を試算。" },
+            { href: "/netlify-pricing", title: "Netlify 料金計算", desc: "静的サイト・JAMstack 向けホスティングのコスト比較。" },
+            { href: "/aws-lambda-cost", title: "AWS Lambda コスト計算", desc: "サーバーレス関数の実行コストを試算。Fly.io・Railway との比較に。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all group"
+            >
+              <div className="font-medium text-gray-800 text-sm group-hover:text-indigo-700">{link.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

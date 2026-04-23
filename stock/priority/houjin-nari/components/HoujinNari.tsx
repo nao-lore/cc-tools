@@ -624,6 +624,110 @@ export default function HoujinNari() {
           </a>
         </div>
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-slate-800 rounded-2xl border border-slate-700 p-6">
+        <h2 className="text-base font-semibold text-white mb-4">法人成り 損益分岐シミュレーターの使い方</h2>
+        <ol className="space-y-4">
+          {[
+            { step: "1", title: "年間利益（売上 - 経費）を入力", desc: "個人事業主として得ている年間の利益（粗利ではなく経費控除後の金額）を入力します。法人に移したと仮定して計算します。" },
+            { step: "2", title: "業種と個人事業税率を選択", desc: "個人事業主には業種に応じた個人事業税がかかります。IT・コンサルなど多くのサービス業は第1種（5%）ですが、一部は対象外（0%）です。" },
+            { step: "3", title: "初年度設立費用の有無を選択", desc: "株式会社設立には定款認証・登録免許税等で約25万円かかります。初年度はこのコストが手取りを圧迫します。2年目以降はチェックを外してください。" },
+            { step: "4", title: "シミュレーション結果と損益分岐点を確認", desc: "個人と法人の手取りを比較し、どちらが有利かと損益分岐となる利益額が表示されます。年利益別比較表タブも参考にしてください。" },
+          ].map(({ step, title, desc }) => (
+            <li key={step} className="flex gap-4">
+              <span className="w-7 h-7 rounded-full bg-blue-500 text-white text-sm font-bold flex items-center justify-center shrink-0">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-white mb-0.5">{title}</p>
+                <p className="text-xs text-slate-400">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-slate-800 rounded-2xl border border-slate-700 p-6 space-y-5">
+        <h2 className="text-base font-semibold text-white">よくある質問（FAQ）</h2>
+        {[
+          {
+            q: "法人成りを検討すべき年収（利益）の目安はどのくらいですか？",
+            a: "一般的には年間利益が700〜1,000万円を超えるあたりから法人化のメリットが出始めます。ただし業種・役員報酬の設定・社会保険料負担によって異なります。このシミュレーターで損益分岐点を確認してください。",
+          },
+          {
+            q: "法人化すると社会保険料が高くなると聞きましたが本当ですか？",
+            a: "法人の役員になると厚生年金・健康保険（社会保険）への加入が強制となり、国民年金・国民健康保険より保険料が高くなるケースが多いです。ただし将来の年金受給額が増える・傷病手当金が出るなどのメリットもあります。",
+          },
+          {
+            q: "個人事業主のままでも給与所得控除は使えますか？",
+            a: "使えません。給与所得控除は給与所得者（役員含む）に適用される控除です。個人事業主の事業所得には給与所得控除がなく、代わりに青色申告特別控除（最大65万円）が使えます。",
+          },
+          {
+            q: "法人成りしても消費税は免除されますか？",
+            a: "個人事業主から法人に変更した場合、法人設立後2年間は原則として消費税の免税事業者になります（設立初年度の資本金が1,000万円未満の場合）。インボイス登録していない場合はこの免税期間を活用できます。",
+          },
+        ].map(({ q, a }) => (
+          <div key={q} className="border-b border-slate-700 last:border-0 pb-4 last:pb-0">
+            <p className="text-sm font-semibold text-blue-400 mb-1">Q. {q}</p>
+            <p className="text-xs text-slate-400">A. {a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-slate-800 rounded-2xl border border-slate-700 p-5">
+        <h2 className="text-sm font-semibold text-slate-300 mb-3">関連ツール</h2>
+        <div className="space-y-2">
+          {[
+            { href: "/tools/aojiro-shinkoku-sim", label: "青色申告控除 節税シミュレーター", desc: "個人事業主の青色申告による節税効果を計算" },
+            { href: "/tools/kojin-jigyo-zei", label: "個人事業税 計算ツール", desc: "業種別の個人事業税を自動計算" },
+            { href: "/tools/gyomu-itaku-hikaku", label: "業務委託 vs 正社員 比較ツール", desc: "フリーランスと会社員の手取りを比較" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-xl border border-slate-600 hover:border-blue-500 transition-colors group">
+              <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-400 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-slate-300 group-hover:text-white">{label}</p>
+                <p className="text-xs text-slate-500">{desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "法人成りを検討すべき年収（利益）の目安はどのくらいですか？",
+                acceptedAnswer: { "@type": "Answer", text: "一般的には年間利益が700〜1,000万円を超えるあたりから法人化のメリットが出始めます。業種・役員報酬の設定・社会保険料負担によって異なります。" },
+              },
+              {
+                "@type": "Question",
+                name: "法人化すると社会保険料が高くなると聞きましたが本当ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "法人の役員になると厚生年金・健康保険への加入が強制となり、国民年金・国民健康保険より保険料が高くなるケースが多いです。ただし将来の年金受給額増加などのメリットもあります。" },
+              },
+              {
+                "@type": "Question",
+                name: "個人事業主のままでも給与所得控除は使えますか？",
+                acceptedAnswer: { "@type": "Answer", text: "使えません。給与所得控除は給与所得者（役員含む）に適用される控除です。個人事業主には青色申告特別控除（最大65万円）が使えます。" },
+              },
+              {
+                "@type": "Question",
+                name: "法人成りしても消費税は免除されますか？",
+                acceptedAnswer: { "@type": "Answer", text: "法人設立後2年間は原則として消費税の免税事業者になります（設立初年度の資本金が1,000万円未満の場合）。" },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

@@ -811,6 +811,115 @@ export default function FirebasePricing() {
         </a>{" "}
         でご確認ください。Firestore は日次無料枠×30日で月換算。Functions の CPU/メモリ計算は概算です。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "プランを選択", desc: "開発中は Spark（無料）、本番運用は Blaze（従量課金）を選びましょう。Blaze でもほとんどの小規模アプリは無料枠内に収まります。" },
+            { step: "2", title: "使用するサービスをオン", desc: "Firestore・Cloud Storage など、実際に使うサービスのトグルをオンにします。使わないサービスはオフのままで構いません。" },
+            { step: "3", title: "使用量を入力", desc: "スライダーまたは数値入力で、1日あたりの読み書き回数やストレージ容量を入力します。実際のアクセスログやモニタリングデータを参考にしてください。" },
+            { step: "4", title: "月額コストを確認", desc: "為替レートを調整して円換算額を確認します。内訳バーでどのサービスがコストを押し上げているかを把握し、最適化に役立ててください。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-700 text-sm font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Firebase の無料プラン（Spark）でできることは？",
+              a: "Firestore の読取 50,000回/日・書込 20,000回/日、Cloud Storage 5GB、Firebase Hosting 10GB など豊富な無料枠があります。メール・Google 認証は実質無制限で利用できます。小規模アプリや個人開発には十分なケースが多いです。",
+            },
+            {
+              q: "Blaze プランに変更すると必ず料金が発生する？",
+              a: "いいえ。Blaze プランはクレジットカード登録が必要ですが、Spark と同じ無料枠が引き続き適用されます。無料枠を超えた分だけ課金されるため、使用量が少なければ $0 のままです。Cloud Functions を使いたい場合は Blaze が必須です。",
+            },
+            {
+              q: "Firestore のコストを抑えるには？",
+              a: "最も効果的なのは読取回数の削減です。クライアント側のキャッシュ活用・クエリの絞り込み・リアルタイムリスナーの適切な解除が有効です。また、1 ドキュメントに複数フィールドをまとめることで読取回数を減らせます。",
+            },
+            {
+              q: "Firebase と Supabase、どちらが安い？",
+              a: "小規模では Firebase の無料枠が広く有利です。Supabase は月額 $25 の Pro プランから始まりますが、PostgreSQL ベースで複雑なクエリが使いやすい利点があります。MAU 10 万以上になると Supabase の従量単価が低くなる傾向があります。",
+            },
+            {
+              q: "Firebase の料金はドル建て？日本円では？",
+              a: "Firebase の料金は USD 建てです。このツールの為替レート欄で任意のレートを設定し、日本円換算額をご確認ください。請求は Google Cloud の請求書（Google アカウント）を通じて行われます。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-gray-800 text-sm mb-1">{item.q}</div>
+              <div className="text-sm text-gray-600">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Firebase の無料プラン（Spark）でできることは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Firestore の読取 50,000回/日・書込 20,000回/日、Cloud Storage 5GB、Firebase Hosting 10GB など豊富な無料枠があります。メール・Google 認証は実質無制限で利用できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Blaze プランに変更すると必ず料金が発生する？",
+                "acceptedAnswer": { "@type": "Answer", "text": "いいえ。Blaze プランはクレジットカード登録が必要ですが、Spark と同じ無料枠が引き続き適用されます。無料枠を超えた分だけ課金されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Firestore のコストを抑えるには？",
+                "acceptedAnswer": { "@type": "Answer", "text": "クライアント側のキャッシュ活用・クエリの絞り込み・リアルタイムリスナーの適切な解除が有効です。1 ドキュメントに複数フィールドをまとめることで読取回数を減らせます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Firebase の料金はドル建て？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Firebase の料金は USD 建てです。Google Cloud の請求書を通じて請求されます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/supabase-pricing", title: "Supabase 料金計算", desc: "Firebase の代替として人気の BaaS。PostgreSQL ベースのコスト試算。" },
+            { href: "/gcp-pricing", title: "GCP 料金計算", desc: "Firebase の基盤となる Google Cloud Platform 全体のコスト試算。" },
+            { href: "/auth-service-comparison", title: "Auth サービス比較", desc: "Auth0・Clerk・Firebase Auth・Supabase Auth を MAU 別に比較。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all group"
+            >
+              <div className="font-medium text-gray-800 text-sm group-hover:text-orange-700">{link.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -653,6 +653,122 @@ export default function AbTestSignificance() {
       <p className="text-xs text-gray-400 text-center pb-4">
         二項比率の差のZ検定（両側）。正規分布CDF: Abramowitz &amp; Stegun近似を使用。
       </p>
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "A群・B群のデータを入力", desc: "「有意差検定」タブで、コントロール群（A）とテスト群（B）それぞれの訪問数とCV数を入力します。デフォルト値で動作確認できます。" },
+            { step: "2", title: "有意水準を設定", desc: "一般的なWebテストでは5%（標準）、重要な意思決定には1%（厳格）を選びます。信頼区間は90/95/99%から選択できます。" },
+            { step: "3", title: "結果を確認", desc: "p値・Z統計量・リフト率・信頼区間が表示されます。「統計的に有意です」と表示されれば差は偶然でない可能性が高いです。" },
+            { step: "4", title: "サンプルサイズを事前計算", desc: "テスト前に「サンプルサイズ」タブで必要訪問数を計算しましょう。テスト期間の目安が立てられます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "ABテストの有意差とはどういう意味ですか？",
+              a: "「A群とB群に差がない」という仮説（帰無仮説）を棄却できる統計的な根拠があることを意味します。p値が有意水準（通常5%）未満であれば、観測された差が偶然生じた確率が低いと判断します。",
+            },
+            {
+              q: "p値が0.05未満でも採用しない方がいいですか？",
+              a: "統計的有意 ≠ 実務的に重要です。リフト率が0.1%でも大規模なトラフィックがあればp値は小さくなります。信頼区間の幅と実際の効果量（pp差）を合わせて判断することが重要です。",
+            },
+            {
+              q: "必要なサンプルサイズはどう決めますか？",
+              a: "「サンプルサイズ」タブで現在のCVRと検出したい最小改善効果（例: 20%改善）を入力すると1群あたりの最低訪問数が計算されます。日次訪問数で割れば必要なテスト期間がわかります。",
+            },
+            {
+              q: "テスト中に毎日p値を確認してもいいですか？",
+              a: "推奨しません。「p < 0.05になったら止める」という方法はPeeking問題と呼ばれ、偽陽性（実際には差がないのに有意と判断）が大幅に増えます。事前に決めたサンプルサイズに達してから判断してください。",
+            },
+            {
+              q: "カイ二乗検定との違いは何ですか？",
+              a: "本ツールは二項比率の差のZ検定（両側）を使用しています。2×2の分割表に対するカイ二乗検定と数学的に等価であり、Z統計量の二乗がカイ二乗値に対応します。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/nps-score" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>📈</span> NPS スコア計算
+          </a>
+          <a href="/funnel-conversion" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>🔻</span> ファネル コンバージョン計算
+          </a>
+          <a href="/chi-square-test" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
+            <span>📊</span> カイ二乗検定
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "ABテストの有意差とはどういう意味ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A群とB群に差がないという仮説を棄却できる統計的な根拠があることです。p値が有意水準（通常5%）未満であれば統計的に有意と判断します。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "必要なサンプルサイズはどう決めますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "サンプルサイズタブで現在のCVRと検出したい最小改善効果を入力すると1群あたりの最低訪問数が計算されます。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "テスト中に毎日p値を確認してもいいですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "推奨しません。Peeking問題と呼ばれ偽陽性が増えます。事前に決めたサンプルサイズに達してから判断してください。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "カイ二乗検定との違いは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "本ツールは二項比率の差のZ検定（両側）を使用しています。2×2の分割表に対するカイ二乗検定と数学的に等価です。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

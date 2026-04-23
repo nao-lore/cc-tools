@@ -612,9 +612,125 @@ export default function AojiroShinkokuSim() {
           </a>
         </div>
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-base font-semibold text-gray-800 mb-4">青色申告控除 節税シミュレーターの使い方</h2>
+        <ol className="space-y-4">
+          {[
+            { step: "1", title: "年間の売上と経費を入力", desc: "青色申告特別控除を差し引く前の数字を入力します。売上から経費を引いた事業所得が自動計算されます。" },
+            { step: "2", title: "申告方式を選択", desc: "現在の申告方式または今後予定している方式を選びます。青色65万円控除が最も節税効果が高く、e-Taxでの電子申告が必要です。" },
+            { step: "3", title: "4方式の税負担を比較", desc: "白色申告を基準に、各青色申告方式でどれだけ節税できるかが一覧で表示されます。所得税・住民税・国民健康保険料の合計で比較します。" },
+            { step: "4", title: "適用条件を確認", desc: "青色申告を始めるには「青色申告承認申請書」の事前提出が必要です。提出期限を確認してチェックリストを活用してください。" },
+          ].map(({ step, title, desc }) => (
+            <li key={step} className="flex gap-4">
+              <span className="w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center shrink-0">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800 mb-0.5">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+        <h2 className="text-base font-semibold text-gray-800">よくある質問（FAQ）</h2>
+        {[
+          {
+            q: "青色申告65万円控除と55万円控除の違いは何ですか？",
+            a: "どちらも複式簿記で記帳する必要がありますが、65万円控除はe-Tax（電子申告）または電子帳簿保存が必要です。紙で申告すると55万円控除になります。10万円の差額に対し所得税・住民税・国保料が軽減されます。",
+          },
+          {
+            q: "青色申告を始めるにはいつまでに何をすればいいですか？",
+            a: "開業から2ヶ月以内、または青色申告を適用したい年の3月15日までに「青色申告承認申請書」を税務署に提出する必要があります。e-Taxからも申請できます。",
+          },
+          {
+            q: "青色申告の節税効果は年収いくらから大きくなりますか？",
+            a: "所得税の累進課税率が上がるほど節税効果が大きくなります。課税所得が195万円超（税率10%）から効果が出始め、330万円超（税率20%）以上では特に有効です。年収500万円の個人事業主なら10〜15万円程度の節税になることが多いです。",
+          },
+          {
+            q: "白色申告から青色申告に途中で変更できますか？",
+            a: "変更したい年の3月15日までに「青色申告承認申請書」を提出すれば、その年から青色申告が適用されます。ただし帳簿の記帳方法も複式簿記に変える必要があります。",
+          },
+        ].map(({ q, a }) => (
+          <div key={q} className="border-b border-gray-100 last:border-0 pb-4 last:pb-0">
+            <p className="text-sm font-semibold text-blue-700 mb-1">Q. {q}</p>
+            <p className="text-xs text-gray-600">A. {a}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* ===== CTA ===== */}
+      <div className="bg-blue-50 rounded-2xl border border-blue-200 p-5">
+        <p className="text-sm font-semibold text-blue-900 mb-1">確定申告ソフトを比較する</p>
+        <p className="text-xs text-blue-700 mb-3">青色申告65万円控除を受けるには複式簿記対応の会計ソフトが便利です。freee・弥生・マネーフォワードクラウドが3大定番です。</p>
+        <a href="/tools/consumption-tax-choice" className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 hover:text-blue-900 underline">
+          消費税の課税方式（簡易課税/本則課税）も比較する
+        </a>
+      </div>
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-blue-50 rounded-2xl border border-blue-100 p-5">
+        <h2 className="text-sm font-semibold text-blue-800 mb-3">関連ツール</h2>
+        <div className="space-y-2">
+          {[
+            { href: "/tools/consumption-tax-choice", label: "簡易課税・本則課税 比較シミュレーター", desc: "消費税の課税方式を3方式で比較" },
+            { href: "/tools/houjin-nari", label: "法人成り 損益分岐シミュレーター", desc: "個人事業主と法人の手取りを比較" },
+            { href: "/tools/iryouhi-koujo", label: "医療費控除 計算ツール", desc: "医療費控除と還付額を自動計算" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-blue-100 hover:border-blue-300 transition-colors group">
+              <svg className="w-4 h-4 text-blue-400 group-hover:text-blue-600 mt-0.5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+              <div>
+                <p className="text-sm font-medium text-blue-700 group-hover:text-blue-900">{label}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "青色申告65万円控除と55万円控除の違いは何ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "どちらも複式簿記で記帳する必要がありますが、65万円控除はe-Tax（電子申告）または電子帳簿保存が必要です。紙で申告すると55万円控除になります。" },
+              },
+              {
+                "@type": "Question",
+                name: "青色申告を始めるにはいつまでに何をすればいいですか？",
+                acceptedAnswer: { "@type": "Answer", text: "開業から2ヶ月以内、または青色申告を適用したい年の3月15日までに「青色申告承認申請書」を税務署に提出する必要があります。" },
+              },
+              {
+                "@type": "Question",
+                name: "青色申告の節税効果は年収いくらから大きくなりますか？",
+                acceptedAnswer: { "@type": "Answer", text: "課税所得が195万円超（税率10%）から効果が出始め、330万円超（税率20%）以上では特に有効です。年収500万円の個人事業主なら10〜15万円程度の節税になることが多いです。" },
+              },
+              {
+                "@type": "Question",
+                name: "白色申告から青色申告に途中で変更できますか？",
+                acceptedAnswer: { "@type": "Answer", text: "変更したい年の3月15日までに「青色申告承認申請書」を提出すれば、その年から青色申告が適用されます。" },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }
+
+// 定数を外部で宣言（コンポーネント外参照用）
+const Conditions = CONDITIONS;
 
 // 定数を外部で宣言（コンポーネント外参照用）
 const Conditions = CONDITIONS;

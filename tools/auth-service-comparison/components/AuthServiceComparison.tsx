@@ -641,6 +641,114 @@ export default function AuthServiceComparison() {
         ))}
         <span className="ml-auto text-right">料金は2026年概算。実際の料金は各サービスの公式サイトをご確認ください。</span>
       </section>
+
+      {/* ===== 使い方ガイド ===== */}
+      <section className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "MAU を入力", desc: "月間アクティブユーザー数（MAU）を入力するか、プリセットボタンで選択します。MAU とはログインしたユニークユーザーの月間数です。" },
+            { step: "2", title: "コスト比較を確認", desc: "「MAUシミュレーター」タブで各サービスの月額コストを安い順に表示します。為替レートを変更して円換算も確認できます。" },
+            { step: "3", title: "機能要件を確認", desc: "「機能比較」タブで SSO・MFA・RBAC などの機能対応状況を確認します。エンタープライズ要件には Auth0・Cognito が強いです。" },
+            { step: "4", title: "用途別おすすめを参考に", desc: "個人開発・スタートアップ・エンタープライズ・AWS 環境など、用途に合ったサービスを選びましょう。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-100 text-violet-700 text-sm font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ===== FAQ ===== */}
+      <section className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Auth0 の料金は？無料プランはある？",
+              a: "Auth0 の無料プランは MAU 25,000 まで使えます。Essentials プランは月 $35 から、Professional は月 $240 からです。SSO・RBAC などエンタープライズ機能は Professional 以上が必要です。",
+            },
+            {
+              q: "Clerk の料金は？Next.js との相性は？",
+              a: "Clerk の無料プランは MAU 10,000 まで。Pro プランは月 $25 で 10,000 MAU 含み、超過は $0.02/MAU です。Next.js・React との統合に特化した UI コンポーネントが同梱されており、開発体験が非常に優れています。",
+            },
+            {
+              q: "個人開発に最適な認証サービスはどれ？",
+              a: "Supabase Auth（無料で 50,000 MAU）または Firebase Auth（メール・Google 認証は実質無制限無料）が最もコストパフォーマンスに優れています。どちらも BaaS として DB・Storage と一体で使えます。",
+            },
+            {
+              q: "Auth0 と Clerk の違いは？",
+              a: "Auth0 は歴史が長くエンタープライズ実績が豊富で、複雑なルールエンジン・監査ログ・コンプライアンス対応が強みです。Clerk は Next.js・React 向けの DX に優れ、組み込み UI コンポーネントで実装が高速です。スタートアップには Clerk、大企業には Auth0 が向いています。",
+            },
+            {
+              q: "Cognito は MAU 課金？",
+              a: "AWS Cognito は最初の 50,000 MAU が無料（12 ヶ月間）、超過は $0.0055/MAU です。SAML/OIDC 連携は $0.015/MAU の追加費用が発生します。AWS の他サービスとの統合が最強です。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-gray-800 text-sm mb-1">{item.q}</div>
+              <div className="text-sm text-gray-600">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Auth0 の料金は？無料プランはある？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Auth0 の無料プランは MAU 25,000 まで。Essentials は月 $35、Professional は月 $240 から。SSO・RBAC は Professional 以上が必要です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Clerk の料金は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Clerk の無料プランは MAU 10,000 まで。Pro は月 $25 で超過 $0.02/MAU。Next.js・React との統合に特化しています。" },
+              },
+              {
+                "@type": "Question",
+                "name": "個人開発に最適な認証サービスはどれ？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Supabase Auth（無料 50,000 MAU）または Firebase Auth（メール・Google 認証は実質無制限無料）がコスパ最良です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Auth0 と Clerk の違いは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Auth0 はエンタープライズ実績が豊富。Clerk は Next.js 向け DX に優れ実装が高速。スタートアップには Clerk、大企業には Auth0 が向いています。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <section className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/firebase-pricing", title: "Firebase 料金計算", desc: "Firestore・Storage・Functions など Firebase サービスの月額コストを試算。" },
+            { href: "/supabase-pricing", title: "Supabase 料金計算", desc: "Supabase の Auth・DB・Storage を含む月額コストを計算。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition-all group"
+            >
+              <div className="font-medium text-gray-800 text-sm group-hover:text-violet-700">{link.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -507,6 +507,118 @@ export default function TeigakuGenzei() {
           国税庁「定額減税について」を確認する
         </a>
       </div>
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "所得の種類を選択", desc: "会社員・パートなどは「給与所得者」、フリーランス・個人事業主は「事業所得者」を選択します。" },
+            { step: "2", title: "年収を入力", desc: "給与収入（額面）または年間事業収入を入力します。2,000万円超の場合は定額減税の対象外となります。" },
+            { step: "3", title: "扶養家族を入力", desc: "控除対象配偶者と扶養親族の人数を入力します。1人増えるごとに減税額が4万円増えます。" },
+            { step: "4", title: "減税額と月別反映を確認", desc: "合計減税額と、6〜12月の給与明細への反映シミュレーションが表示されます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-red-100 text-red-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "定額減税の金額はいくらですか？",
+              a: "本人1人あたり所得税3万円＋住民税1万円の合計4万円です。扶養家族がいる場合は人数分追加されます。例えば夫婦と子1人の3人家族では合計12万円が減税されます。",
+            },
+            {
+              q: "年収2,000万円以上の人は対象外ですか？",
+              a: "はい。合計所得金額1,805万円超（給与収入換算で約2,000万円超）は定額減税の対象外です。本ツールでは給与収入2,000万円超と入力すると「対象外」と表示します。",
+            },
+            {
+              q: "調整給付金とは何ですか？",
+              a: "定額減税額が所得税・住民税の年税額を上回る場合（低所得者など）、控除しきれない差額が調整給付金として市区町村から給付されます。本ツールで自動判定して金額を表示します。",
+            },
+            {
+              q: "給与明細のどこで確認できますか？",
+              a: "2024年6月以降の給与明細の「源泉所得税」欄が通常より少なくなっているか、ゼロになっている場合に定額減税が適用されています。給与明細に「定額減税額」として記載されます。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/iryouhi-koujo" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-red-300 hover:text-red-700 transition-colors">
+            <span>🏥</span> 医療費控除 計算
+          </a>
+          <a href="/withholding-tax-calculator" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-red-300 hover:text-red-700 transition-colors">
+            <span>📋</span> 源泉徴収税 計算
+          </a>
+          <a href="/zangyou-dai" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-red-300 hover:text-red-700 transition-colors">
+            <span>⏰</span> 残業代 計算
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "定額減税の金額はいくらですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "本人1人あたり所得税3万円＋住民税1万円の合計4万円です。扶養家族がいる場合は人数分追加されます。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "年収2,000万円以上の人は対象外ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "はい。合計所得金額1,805万円超（給与収入換算で約2,000万円超）は定額減税の対象外です。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "調整給付金とは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "定額減税額が所得税・住民税の年税額を上回る場合に、控除しきれない差額が調整給付金として市区町村から給付されます。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "給与明細のどこで確認できますか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "2024年6月以降の給与明細の「源泉所得税」欄が少なくなっているか、ゼロになっている場合に定額減税が適用されています。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

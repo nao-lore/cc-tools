@@ -419,6 +419,113 @@ export default function AiOutputJsonValidator() {
         <div className="mt-8 border border-dashed border-gray-700 rounded-lg h-24 flex items-center justify-center">
           <span className="text-xs text-gray-600">Advertisement</span>
         </div>
+
+        {/* ── SEO: 使い方ガイド ── */}
+        <div className="bg-gray-900 rounded-2xl border border-gray-700 p-6">
+          <h2 className="text-lg font-bold text-white mb-4">AI出力 JSON検証ツールの使い方</h2>
+          <ol className="space-y-3">
+            {[
+              { step: "1", title: "AI出力JSONを貼り付ける", body: "LLMが返したテキストをそのまま左のテキストエリアに貼り付けてください。Markdownコードフェンス（```json）が付いていても自動除去します。" },
+              { step: "2", title: "期待スキーマを入力する（任意）", body: "右のエリアに「正しいJSON構造のサンプル」を貼ると、フィールドの過不足・型の不一致を自動で検出します。スキーマなしでも修復のみ実行できます。" },
+              { step: "3", title: "「修復・検証する」を押す", body: "自動修復ステップ（シングルクォート変換・末尾カンマ除去・コメント除去など）が実行され、修復済みJSONが表示されます。" },
+              { step: "4", title: "結果をコピーして活用する", body: "修復済みJSONをコピーボタンで取得できます。スキーマ差分は「不足フィールド」「余分フィールド」「型の不一致」の3カテゴリで表示されます。" },
+            ].map(({ step, title, body }) => (
+              <li key={step} className="flex gap-3">
+                <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-900 text-blue-300 text-sm font-bold flex items-center justify-center">{step}</span>
+                <div>
+                  <p className="text-sm font-semibold text-gray-200">{title}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* ── SEO: FAQ ── */}
+        <div className="bg-gray-900 rounded-2xl border border-gray-700 p-6">
+          <h2 className="text-lg font-bold text-white mb-4">LLM JSON検証に関するよくある質問</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "LLMのJSON出力が壊れている場合、自動修復できますか？",
+                a: "はい。Markdownフェンス除去・シングルクォート変換・末尾カンマ除去・未クォートキーの修復・JSコメント除去・undefinedのnull変換など、LLMに多いパターンを自動修復します。",
+              },
+              {
+                q: "スキーマ検証はJSON Schemaに対応していますか？",
+                a: "このツールはサンプルJSONをスキーマとして使うシンプルな差分チェックです。フィールドの過不足と型の不一致を検出しますが、JSON Schema（$type等）の完全な仕様検証には対応していません。",
+              },
+              {
+                q: "どんなJSONの壊れ方に対応していますか？",
+                a: "Markdownコードフェンス付き出力、シングルクォート使用、末尾カンマ、クォートなしキー、JavaScriptコメント、undefined値、前後の余分なテキストに対応しています。",
+              },
+              {
+                q: "大きなJSONでも使えますか？",
+                a: "ブラウザ上で動作するため、非常に大きなJSON（数MB以上）は動作が遅くなる場合があります。APIレスポンスの検証など、通常のLLM出力サイズであれば問題なく動作します。",
+              },
+            ].map(({ q, a }, i) => (
+              <details key={i} className="group border border-gray-700 rounded-xl overflow-hidden">
+                <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-200 hover:bg-gray-800 list-none">
+                  <span>Q. {q}</span>
+                  <span className="text-blue-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+                </summary>
+                <div className="px-4 pb-4 pt-1 text-sm text-gray-400 border-t border-gray-700">{a}</div>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        {/* ── SEO: JSON-LD FAQPage ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "LLMのJSON出力が壊れている場合、自動修復できますか？",
+                  "acceptedAnswer": { "@type": "Answer", "text": "はい。Markdownフェンス除去・シングルクォート変換・末尾カンマ除去・未クォートキー修復・JSコメント除去・undefinedのnull変換など、LLMに多いパターンを自動修復します。" },
+                },
+                {
+                  "@type": "Question",
+                  "name": "スキーマ検証はJSON Schemaに対応していますか？",
+                  "acceptedAnswer": { "@type": "Answer", "text": "サンプルJSONをスキーマとして使うシンプルな差分チェックです。フィールドの過不足と型の不一致を検出しますが、JSON Schema仕様の完全検証には対応していません。" },
+                },
+                {
+                  "@type": "Question",
+                  "name": "どんなJSONの壊れ方に対応していますか？",
+                  "acceptedAnswer": { "@type": "Answer", "text": "Markdownコードフェンス付き出力、シングルクォート使用、末尾カンマ、クォートなしキー、JavaScriptコメント、undefined値、前後の余分なテキストに対応しています。" },
+                },
+              ],
+            }),
+          }}
+        />
+
+        {/* ── SEO: 関連ツール ── */}
+        <div className="bg-gray-900 rounded-2xl border border-gray-700 p-5">
+          <h2 className="text-sm font-bold text-gray-300 mb-3">関連ツール</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {[
+              { href: "/tools/prompt-chain-builder", label: "プロンプトチェーンビルダー", desc: "複数ステップのLLM呼び出しを設計" },
+              { href: "/tools/ai-cost-calculator", label: "AI APIコスト計算ツール", desc: "トークン数からAPI費用を試算" },
+            ].map(({ href, label, desc }) => (
+              <a key={href} href={href} className="flex flex-col gap-0.5 bg-gray-800 rounded-xl p-3 border border-gray-700 hover:border-blue-600 transition-colors">
+                <span className="text-sm font-semibold text-blue-300">{label}</span>
+                <span className="text-xs text-gray-500">{desc}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* ── SEO: CTA ── */}
+        <div className="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-2xl p-5 text-white text-center space-y-3">
+          <p className="text-base font-bold">LLM開発を効率化するツール集</p>
+          <p className="text-xs opacity-80">JSON検証・プロンプト設計・コスト試算など、AI開発を支援するツールをまとめて提供しています。</p>
+          <a href="/tools" className="inline-block bg-white text-blue-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-blue-50 transition-colors">
+            全ツール一覧を見る
+          </a>
+        </div>
       </div>
     </div>
   );

@@ -454,6 +454,114 @@ export default function PromptChainBuilder() {
       <div className="bg-surface rounded-2xl border border-border p-4 flex items-center justify-center min-h-[90px] text-gray-300 text-sm select-none">
         広告
       </div>
+
+      {/* ── SEO: 使い方ガイド ── */}
+      <div className="bg-surface rounded-2xl border border-border p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">プロンプトチェーンビルダーの使い方</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "ステップを追加・編集する", body: "デフォルトの3ステップを参考に、各ステップにシステムプロンプトとユーザープロンプトを入力します。ステップ名は自由に変更できます。" },
+            { step: "2", title: "前のステップの出力を参照する", body: "ユーザープロンプトに {{previous_output}} を挿入すると、前ステップの出力を次ステップへ自動で引き渡せます。「+ {{previous_output}}」ボタンで簡単挿入できます。" },
+            { step: "3", title: "ステップを並べ替え・削除する", body: "▲▼ボタンでステップの順序を変更、ゴミ箱ボタンで削除できます。チェーンの全体構造を視覚的に確認しながら設計できます。" },
+            { step: "4", title: "JSONエクスポートする", body: "完成したチェーンは「JSONエクスポート」ボタンでクリップボードにコピーできます。Claude APIやOpenAI APIへの実装時にそのまま活用できます。" },
+          ].map(({ step, title, body }) => (
+            <li key={step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold flex items-center justify-center">{step}</span>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ── SEO: FAQ ── */}
+      <div className="bg-surface rounded-2xl border border-border p-6">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">プロンプトチェーンに関するよくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "プロンプトチェーンとは何ですか？",
+              a: "複数のLLM呼び出しを連結し、前のステップの出力を次のステップの入力として使う設計パターンです。単一プロンプトでは難しい複雑なタスク（リサーチ→整理→執筆など）を段階的に処理できます。",
+            },
+            {
+              q: "{{previous_output}} はどのように使いますか？",
+              a: "ユーザープロンプト内に {{previous_output}} と記述すると、実行時に前ステップの出力テキストがそこに挿入されます。チェーン全体でデータを連鎖させる際の標準的な記法です。",
+            },
+            {
+              q: "トークン数の目安はどう見ればいいですか？",
+              a: "各ステップのトークン推定値はテキスト文字数÷4で概算しています。GPT-4やClaudeのコンテキストウィンドウを超えないよう、チェーン合計トークンを目安に調整してください。",
+            },
+            {
+              q: "エクスポートしたJSONはどう使いますか？",
+              a: "JSON内の steps 配列には systemPrompt・userPrompt・expectedOutput が含まれます。Claude API・OpenAI APIのメッセージ配列にそのままマッピングして実装できます。",
+            },
+          ].map(({ q, a }, i) => (
+            <details key={i} className="group border border-border rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-indigo-50 list-none">
+                <span>Q. {q}</span>
+                <span className="text-indigo-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-border">{a}</div>
+            </details>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: JSON-LD FAQPage ── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "プロンプトチェーンとは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "複数のLLM呼び出しを連結し、前ステップの出力を次ステップの入力として使う設計パターンです。" },
+              },
+              {
+                "@type": "Question",
+                "name": "{{previous_output}} はどのように使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ユーザープロンプト内に記述すると、実行時に前ステップの出力テキストがそこに挿入されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "エクスポートしたJSONはどう使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "JSON内のsteps配列にsystemPrompt・userPrompt・expectedOutputが含まれます。Claude API・OpenAI APIのメッセージ配列にマッピングして実装できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ── SEO: 関連ツール ── */}
+      <div className="bg-indigo-50 rounded-2xl border border-indigo-100 p-5">
+        <h2 className="text-sm font-bold text-indigo-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {[
+            { href: "/tools/few-shot-builder", label: "Few-Shot プロンプトビルダー", desc: "例示でAIの出力を制御" },
+            { href: "/tools/temperature-top-p-tester", label: "Temperature / Top-P テスター", desc: "サンプリングパラメータを視覚化" },
+            { href: "/tools/system-prompt-optimizer", label: "システムプロンプト最適化", desc: "プロンプトの構造を改善" },
+          ].map(({ href, label, desc }) => (
+            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-indigo-100 hover:border-indigo-300 transition-colors">
+              <span className="text-sm font-semibold text-indigo-700">{label}</span>
+              <span className="text-xs text-gray-500">{desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SEO: CTA ── */}
+      <div className="bg-gradient-to-r from-indigo-600 to-violet-700 rounded-2xl p-5 text-white text-center space-y-3">
+        <p className="text-base font-bold">AIプロンプト設計ツールをもっと活用する</p>
+        <p className="text-xs opacity-80">Few-Shot設計・システムプロンプト最適化など、プロンプトエンジニアリングを支援するツール集。</p>
+        <a href="/tools" className="inline-block bg-white text-indigo-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-indigo-50 transition-colors">
+          全ツール一覧を見る
+        </a>
+      </div>
     </div>
   );
 }

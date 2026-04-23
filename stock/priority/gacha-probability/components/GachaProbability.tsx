@@ -585,6 +585,116 @@ export default function GachaProbability() {
         {tab === "ceiling" && <CeilingTab />}
         {tab === "multi" && <MultiTab />}
       </div>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="rounded-2xl p-6" style={{ background: "#13111f", border: "1px solid #2d2040" }}>
+        <h2 className="text-base font-semibold mb-4" style={{ color: NEON_PURPLE }}>使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "プリセットを選択", desc: "SSR 3%・ピックアップ 0.6% など代表的なガチャ設定を選ぶか、排出率を直接入力します。" },
+            { step: "2", title: "基本計算タブで確率を確認", desc: "試行回数と排出率を入力すると、その回数で1回以上当たる累積確率・期待値・沼判定が表示されます。" },
+            { step: "3", title: "逆算タブで必要回数を計算", desc: "「90% の確率で当てたい」など目標確率から必要な試行回数を逆算できます。" },
+            { step: "4", title: "天井コストタブで課金額を試算", desc: "天井回数・石の単価を入力すると天井到達コストが円換算で表示されます。課金前の確認に活用してください。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span
+                className="shrink-0 w-7 h-7 rounded-full text-sm font-bold flex items-center justify-center"
+                style={{ background: "#2d1a4e", color: NEON_PURPLE, border: `1px solid ${NEON_PURPLE}44` }}
+              >
+                {item.step}
+              </span>
+              <div>
+                <div className="text-sm font-medium text-white">{item.title}</div>
+                <div className="text-xs mt-0.5" style={{ color: "#94a3b8" }}>{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="rounded-2xl p-6" style={{ background: "#13111f", border: "1px solid #2d2040" }}>
+        <h2 className="text-base font-semibold mb-4" style={{ color: NEON_PURPLE }}>よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "ガチャの排出率 3% とは？何回で当たる？",
+              a: "排出率 3% は 1 回引くたびに 3% の確率で当たることを意味します。期待値（平均で当たるまでの回数）は約 34 回です。ただし 34 回引いても当たる確率は約 64% に過ぎず、90% に達するには約 76 回必要です。",
+            },
+            {
+              q: "天井とは？天井コストの計算方法は？",
+              a: "天井とは、指定回数（例：300 回）引くと必ず目的のキャラが手に入る保証システムです。天井コスト = 天井回数 × 1回あたりの石/ジェム数 × 石の単価（円）で計算できます。このツールの「天井コスト」タブで自動計算できます。",
+            },
+            {
+              q: "前回外れたから次は当たりやすい？",
+              a: "いいえ。通常のガチャは独立試行のため、前回の結果は次回に一切影響しません。「前回 50 回外れたから次は当たりやすい」は誤りです（ガンブラーの誤謬）。毎回同じ確率でリセットされます。",
+            },
+            {
+              q: "複数キャラを同時に狙う場合の確率は？",
+              a: "「複数キャラ」タブで計算できます。AとB両方引く確率は「Aが当たる確率 × Bが当たる確率」で求められます。例えば各 3% のキャラを 100 回ずつ引く場合、両方当たる確率は約 41% です。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b pb-4 last:border-0 last:pb-0" style={{ borderColor: "#2d2040" }}>
+              <div className="font-bold text-sm mb-1 text-white">{item.q}</div>
+              <div className="text-sm" style={{ color: "#94a3b8" }}>{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "ガチャの排出率 3% とは？何回で当たる？",
+                "acceptedAnswer": { "@type": "Answer", "text": "排出率 3% は 1 回引くたびに 3% の確率。期待値は約 34 回。90% に達するには約 76 回必要です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "天井とは？天井コストの計算方法は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "天井は指定回数引くと必ず当たる保証システム。天井コスト = 天井回数 × 1回あたりの石数 × 石の単価で計算できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "前回外れたから次は当たりやすい？",
+                "acceptedAnswer": { "@type": "Answer", "text": "いいえ。ガチャは独立試行のため前回の結果は次回に影響しません。毎回同じ確率でリセットされます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "複数キャラを同時に狙う場合の確率は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "AとB両方引く確率 = Aが当たる確率 × Bが当たる確率。「複数キャラ」タブで計算できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="rounded-2xl p-6" style={{ background: "#13111f", border: "1px solid #2d2040" }}>
+        <h2 className="text-base font-semibold mb-3" style={{ color: NEON_PURPLE }}>関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/gacha-cost-ceiling", title: "ガチャ天井コスト計算", desc: "天井到達までの総課金額を詳細にシミュレーション。" },
+            { href: "/goshugi-souba", title: "ご祝儀相場計算", desc: "結婚式のご祝儀・プレゼント相場を関係性別に計算。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl transition-all group"
+              style={{ background: "#1e1b2e", border: `1px solid #2d2040` }}
+            >
+              <div className="font-medium text-sm text-white group-hover:text-purple-300 transition-colors">{link.title}</div>
+              <div className="text-xs mt-1" style={{ color: "#94a3b8" }}>{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

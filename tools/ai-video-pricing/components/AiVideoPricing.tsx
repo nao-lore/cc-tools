@@ -574,6 +574,105 @@ export default function AiVideoPricing() {
         ))}
         <span className="ml-auto text-right">料金は2026年概算。実際の料金は各サービスの公式サイトをご確認ください。</span>
       </section>
+
+      {/* 使い方ガイド */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "為替レートを設定", desc: "ページ上部の為替レート入力欄で現在のUSD/JPYレートに合わせてください。円換算金額がリアルタイムで更新されます。" },
+            { step: "2", title: "料金比較表タブで概要を確認", desc: "全サービスのプラン・クレジット数・最大解像度を一覧で比較できます。" },
+            { step: "3", title: "利用シミュレーターで最適プランを判定", desc: "月間生成本数と平均尺（秒）を入力すると、最安プランが自動でランキング表示されます。" },
+            { step: "4", title: "無料枠タブで試用量を確認", desc: "各サービスの無料枠で生成できる合計秒数を確認し、まず無料で試せるサービスを選びましょう。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-gray-800 font-bold text-sm">{item.title}</span>
+                <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "SoraとRunwayはどちらが安いですか？",
+              a: "月間利用量によります。Soraは月50クレジット（$20 Plus）から、Runwayは月625クレジット（$12 Standard）から利用可能です。少量ならRunway Standardがコスパ優秀です。",
+            },
+            {
+              q: "AI動画生成の「クレジット」とは何ですか？",
+              a: "各サービス独自の消費単位です。解像度・尺・品質設定によって消費量が変わります。1クレジットあたり生成できる動画秒数はサービスごとに異なります。",
+            },
+            {
+              q: "無料で試せるサービスはありますか？",
+              a: "Runway・Pika・Kling・LumaはすべてFreeプランを提供しています。Soraのみ無料枠がなく、ChatGPT Plus（$20/月）が最低プランです。",
+            },
+            {
+              q: "商用利用は可能ですか？",
+              a: "有料プランでは基本的に商用利用が許可されていますが、生成物のライセンスは各サービスの利用規約を必ず確認してください。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "SoraとRunwayはどちらが安いですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "月間利用量によります。Soraは月50クレジット（$20 Plus）から、Runwayは月625クレジット（$12 Standard）から利用可能です。少量ならRunway Standardがコスパ優秀です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "AI動画生成の「クレジット」とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "各サービス独自の消費単位です。解像度・尺・品質設定によって消費量が変わります。1クレジットあたり生成できる動画秒数はサービスごとに異なります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "無料で試せるサービスはありますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Runway・Pika・Kling・LumaはすべてFreeプランを提供しています。Soraのみ無料枠がなく、ChatGPT Plus（$20/月）が最低プランです。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/ai-model-comparison", label: "AIモデル比較", desc: "GPT・Claude・Geminiの性能・料金を横断比較" },
+            { href: "/youtube-revenue", label: "YouTube収益計算機", desc: "再生数から広告収益を試算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

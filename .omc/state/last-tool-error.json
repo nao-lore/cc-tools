@@ -1,7 +1,7 @@
 {
-  "tool_name": "mcp__plugin_oh-my-claudecode_t__lsp_diagnostics",
-  "tool_input_preview": "{\"file\":\"/Users/nn/projects/cc-tools/tools/menseki-keisan/page.tsx\",\"severity\":\"error\"}",
-  "error": "Language server 'typescript-language-server' not found.\nInstall with: npm install -g typescript-language-server typescript",
-  "timestamp": "2026-04-22T17:06:33.565Z",
-  "retry_count": 6
+  "tool_name": "Read",
+  "tool_input_preview": "{\"file_path\":\"/Users/nn/projects/cc-tools/scripts/backlog-v2.json\"}",
+  "error": "File content (26918 tokens) exceeds maximum allowed tokens (25000). Use offset and limit parameters to read specific portions of the file, or search for specific content instead of reading the whole file.",
+  "timestamp": "2026-04-23T19:40:17.676Z",
+  "retry_count": 1
 }

@@ -605,6 +605,115 @@ export default function ClickPostSize() {
           </div>
         </div>
       )}
+
+      {/* 使い方ガイド */}
+      <div className="bg-white rounded-2xl shadow-sm border border-sky-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "プリセットまたは手入力", desc: "文庫本・Tシャツなどのプリセットを選ぶか、荷物の縦・横・厚さ（cm）と重量（g）を直接入力します。" },
+            { step: "2", title: "長辺・短辺が自動判定", desc: "縦と横のどちらが長くても問題ありません。ツールが自動的に長辺・短辺を判定します。" },
+            { step: "3", title: "使えるサービスを確認", desc: "ネコポス・クリックポスト・ゆうパケットなど7サービスについて、サイズ適合の可否と料金を一覧表示します。" },
+            { step: "4", title: "詳細をタップして確認", desc: "各サービス行をタップすると制限サイズ・追跡有無・フリマ対応などの詳細が展開されます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-sky-100 text-sky-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-white rounded-2xl shadow-sm border border-sky-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "ネコポスのサイズ上限はいくつですか？",
+              a: "ネコポスは縦31.2cm以下・横22.8cm以下・厚さ3cm以内・重量1kg以内です。また最小サイズの条件（縦23cm以上・横11.5cm以上）もあります。A4サイズ相当が目安です。",
+            },
+            {
+              q: "クリックポストとゆうパケットの違いは何ですか？",
+              a: "クリックポストはYahoo! JAPAN IDまたはAmazonアカウントで自宅印刷するサービスで¥185均一。ゆうパケットは郵便局・コンビニから発送でき、厚さ1〜3cmで料金が変わります（¥250〜¥360）。クリックポストはフリマ便対応外です。",
+            },
+            {
+              q: "ゆうパケットポストとは何ですか？",
+              a: "日本郵便の専用箱（¥65）または専用シールを使った発送サービスです。厚さ制限がなく2kg以内まで対応。箱に収まれば厚みのある商品も送れます。メルカリ便・ラクマパック対応です。",
+            },
+            {
+              q: "レターパックライトとプラスの違いは？",
+              a: "ライト（¥370）はポスト投函で届け、プラス（¥520）は対面手渡しです。どちらもA4・4kg以内。プラスは厚さ制限がなく封筒が閉まれば何でも入ります。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
+              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 関連ツール */}
+      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
+        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+        <div className="flex flex-wrap gap-2">
+          <a href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
+            <span>🚚</span> 宅配便 送料比較（佐川・ヤマト・ゆうパック）
+          </a>
+          <a href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
+            <span>💰</span> メルカリ手数料計算
+          </a>
+        </div>
+      </div>
+
+      {/* JSON-LD FAQPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "ネコポスのサイズ上限はいくつですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "ネコポスは縦31.2cm以下・横22.8cm以下・厚さ3cm以内・重量1kg以内です。最小サイズの条件（縦23cm以上・横11.5cm以上）もあります。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "クリックポストとゆうパケットの違いは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "クリックポストはYahoo! JAPAN IDまたはAmazonアカウントで自宅印刷・185円均一。ゆうパケットは郵便局・コンビニ発送で厚さ1〜3cmで250〜360円。クリックポストはフリマ便対応外です。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "ゆうパケットポストとは何ですか？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "専用箱（65円）または専用シールを使い、厚さ制限なし・2kg以内で215円で発送できるサービスです。メルカリ便・ラクマパック対応です。",
+                },
+              },
+              {
+                "@type": "Question",
+                "name": "レターパックライトとプラスの違いは？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "ライト（370円）はポスト投函で届け、プラス（520円）は対面手渡しです。プラスは厚さ制限がありません。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

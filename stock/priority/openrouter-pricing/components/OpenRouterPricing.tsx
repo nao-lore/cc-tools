@@ -635,6 +635,126 @@ export default function OpenRouterPricing() {
       <p className="text-gray-600 text-xs text-center pb-2">
         ※ 料金は2026年4月時点の概算です。OpenRouterのマージンはモデル・プランにより変動します。最新価格は openrouter.ai でご確認ください。
       </p>
+
+      {/* ─── 使い方ガイド ─── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "トークン数を入力", desc: "「コスト試算」セクションで入力・出力トークン数を設定します。1,000文字≒750トークンが目安です。" },
+            { step: "2", title: "フィルタで絞り込む", desc: "プロバイダー・価格帯・コンテキスト長でモデルを絞り込めます。OSSのみ・高性能のみなど用途に合わせて使ってください。" },
+            { step: "3", title: "最安モデルを確認", desc: "★マークが現在の試算条件での最安モデルです。「最安ハイライト」トグルで全体コストを把握できます。" },
+            { step: "4", title: "直接APIと比較", desc: "「直接API価格と比較表示」をオンにするとOpenRouterのマージン分を可視化できます。大量利用時の判断材料になります。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-white font-bold text-sm">{item.title}</span>
+                <p className="text-gray-400 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ─── FAQ ─── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "OpenRouterの料金は直接APIより高いですか？",
+              a: "多くのモデルで0〜10%程度のマージンが上乗せされます。GPT-4oやClaude等は約10%高くなりますが、Llama・DeepSeekなどのOSSモデルは直接APIと同価格です。",
+            },
+            {
+              q: "無料で使えるモデルはありますか？",
+              a: "OpenRouterでは一部のOSSモデル（Llama等）を無料枠で試すことができます。ただし制限があるため本番利用にはクレジットが必要です。",
+            },
+            {
+              q: "1Mトークンとはどのくらいの量ですか？",
+              a: "英語で約75万語、日本語で約60万文字程度です。中程度の小説1冊分、またはコードベース数万行に相当します。",
+            },
+            {
+              q: "Gemini 2.5 Proが安い理由は何ですか？",
+              a: "Googleは独自のインフラを持ち、AI普及を優先して競争力ある価格を設定しています。コンテキスト長も100万トークンと非常に長く、コスパが際立ちます。",
+            },
+            {
+              q: "日本円での支払いは可能ですか？",
+              a: "OpenRouterはUSD決済のみです。クレジットカード（海外決済対応）でプリペイドクレジットを購入する形式です。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-white/5 pb-3 last:border-0 last:pb-0">
+              <p className="text-white font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-400 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── JSON-LD FAQPage ─── */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "OpenRouterの料金は直接APIより高いですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "多くのモデルで0〜10%程度のマージンが上乗せされます。GPT-4oやClaude等は約10%高くなりますが、Llama・DeepSeekなどのOSSモデルは直接APIと同価格です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "1Mトークンとはどのくらいの量ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "英語で約75万語、日本語で約60万文字程度です。中程度の小説1冊分、またはコードベース数万行に相当します。" },
+              },
+              {
+                "@type": "Question",
+                "name": "日本円での支払いは可能ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "OpenRouterはUSD決済のみです。クレジットカード（海外決済対応）でプリペイドクレジットを購入する形式です。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ─── CTA ─── */}
+      <section className="bg-violet-900/30 border border-violet-500/30 rounded-2xl p-5 flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <p className="text-white font-bold text-sm">OpenRouterを始める</p>
+          <p className="text-gray-400 text-xs mt-0.5">APIキー1つで20社以上のLLMを即利用。無料枠あり。</p>
+        </div>
+        <a
+          href="https://openrouter.ai"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-bold rounded-lg transition-colors whitespace-nowrap"
+        >
+          OpenRouterを始める →
+        </a>
+      </section>
+
+      {/* ─── 関連ツール ─── */}
+      <section className="bg-[#1a1a22] rounded-2xl border border-white/10 p-5">
+        <h2 className="text-white font-bold text-base mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/ai-model-comparison", label: "AIモデル比較", desc: "GPT・Claude・Geminiの性能を横断比較" },
+            { href: "/claude-api-cost", label: "Claude API料金計算", desc: "Anthropic直接APIのコストを試算" },
+            { href: "/gemini-api-cost", label: "Gemini API料金計算", desc: "Google Gemini APIのトークン料金を計算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-white font-bold text-sm">{link.label}</p>
+              <p className="text-gray-400 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

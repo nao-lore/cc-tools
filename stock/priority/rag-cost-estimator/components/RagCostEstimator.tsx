@@ -771,6 +771,105 @@ export default function RagCostEstimator() {
       <p className="text-xs text-gray-400 text-center pb-4">
         料金は変更される場合があります。LLM入力トークンはシステムプロンプト200トークン+コンテキスト+クエリ100トークンで計算。最新の料金は各社公式サイトをご確認ください。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "ドキュメント設定を入力", desc: "RAGに投入するドキュメント総数・平均トークン数・月次増分を設定します。チャンク後の1チャンクを1ドキュメントとして換算してください。" },
+            { step: "2", title: "クエリ設定を調整", desc: "1日あたりのクエリ数・top-k・コンテキストトークン数を入力します。top-kはベクトル検索で取得するチャンク数です。" },
+            { step: "3", title: "プロバイダーを選択", desc: "Embedding・ベクトルDB・LLMをそれぞれ選択します。組み合わせに応じてリアルタイムで月額コストが更新されます。" },
+            { step: "4", title: "最安構成 Top 3 を確認", desc: "全組み合わせを自動試算した結果が下部に表示されます。無料枠（Weaviate・Qdrant）は条件内で$0として計算されます。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <span className="text-gray-800 font-bold text-sm">{item.title}</span>
+                <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "RAGのコストで最も高い部分はどこですか？",
+              a: "クエリ数が多い場合はLLM推論コストが支配的になります。ドキュメント数が多い場合はEmbedding初回インジェストとベクトルDBストレージが大きくなります。",
+            },
+            {
+              q: "Pineconeは高いですか？",
+              a: "Serverlessプランは$0.33/GB/月+$8/1Mクエリです。小規模なら安価ですが、大量クエリ時はQdrantやWeaviateの定額プランの方が安くなる場合があります。",
+            },
+            {
+              q: "top-kを増やすとコストが上がりますか？",
+              a: "はい。top-kを増やすとLLMに渡すコンテキストトークン数が増えるため、LLM推論コストが線形に増加します。精度と費用のトレードオフを確認してください。",
+            },
+            {
+              q: "無料枠だけでRAGを構築できますか？",
+              a: "Weaviate Cloud Freeは100万ベクトルまで、Qdrant Freeは1GBまで無料です。小規模なPOCや個人プロジェクトなら無料枠のみで運用可能です。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "RAGのコストで最も高い部分はどこですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "クエリ数が多い場合はLLM推論コストが支配的になります。ドキュメント数が多い場合はEmbedding初回インジェストとベクトルDBストレージが大きくなります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "top-kを増やすとコストが上がりますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "はい。top-kを増やすとLLMに渡すコンテキストトークン数が増えるため、LLM推論コストが線形に増加します。精度と費用のトレードオフを確認してください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "無料枠だけでRAGを構築できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Weaviate Cloud Freeは100万ベクトルまで、Qdrant Freeは1GBまで無料です。小規模なPOCや個人プロジェクトなら無料枠のみで運用可能です。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/embedding-cost-calculator", label: "Embedding料金計算機", desc: "OpenAI・Cohere・Voyage等のEmbeddingコストを詳細試算" },
+            { href: "/vector-db-comparison", label: "ベクトルDB比較", desc: "Pinecone・Weaviate・Qdrant等の料金・機能を比較" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

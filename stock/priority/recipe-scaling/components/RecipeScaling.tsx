@@ -491,6 +491,111 @@ export default function RecipeScaling() {
       <p className="text-xs text-gray-400 text-center pb-4">
         ※ 食材の密度は目安値です。実際の量は食材の状態によって異なります。
       </p>
+
+      {/* ===== 使い方ガイド ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
+        <ol className="space-y-3">
+          {[
+            { step: "1", title: "プリセットを選ぶかクリア", desc: "カレー・ハンバーグ・パンケーキ・唐揚げのプリセットを選ぶと材料が自動入力されます。自分のレシピを入力する場合は「クリア」から始めてください。" },
+            { step: "2", title: "元の人数を設定", desc: "レシピに記載されている元の人数をスライダーまたは数値入力で設定します。0.5 人前単位で設定できます。" },
+            { step: "3", title: "目標人数を設定", desc: "作りたい人数を設定します。倍率が自動計算され、材料の量がリアルタイムで更新されます。" },
+            { step: "4", title: "結果をコピー", desc: "スケール後の材料一覧右上のコピーボタンを押すと、クリップボードにテキスト形式でコピーされます。メモアプリや買い物リストにそのまま貼り付け可能です。" },
+          ].map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-orange-100 text-orange-700 text-sm font-bold flex items-center justify-center">{item.step}</span>
+              <div>
+                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
+                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* ===== FAQ ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "レシピの人数を変えると材料の量はどう変わる？",
+              a: "材料の量は人数の比率（倍率）に比例して変わります。例えば 2 人前を 6 人前にすると倍率は 3 倍になり、すべての材料が 3 倍の量に自動換算されます。大さじ・小さじは端数が自動で整理されます。",
+            },
+            {
+              q: "大さじ・小さじの換算はどうすればいい？",
+              a: "大さじ 1 = 小さじ 3 = 15ml です。カップ 1 = 200ml = 大さじ 13と1/3 です。このツールの計量換算早見表でも確認できます。スケール後の大さじに端数が出た場合は自動で「○と小さじ△」形式に変換されます。",
+            },
+            {
+              q: "適量の材料はスケールできる？",
+              a: "「適量」は分量が定まらないため、スケールしても「適量」のままとなります。塩こしょうなど加減が必要な調味料は味見しながら調整してください。",
+            },
+            {
+              q: "1人前に換算したい場合は？",
+              a: "元の人数を 2・目標を 1 に設定すると 1/2 倍の計算になります。0.5 人前単位での設定にも対応しています。",
+            },
+          ].map((item, i) => (
+            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-gray-800 text-sm mb-1">{item.q}</div>
+              <div className="text-sm text-gray-600">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ===== JSON-LD FAQPage ===== */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "レシピの人数を変えると材料の量はどう変わる？",
+                "acceptedAnswer": { "@type": "Answer", "text": "材料の量は人数の比率に比例して変わります。2 人前を 6 人前にすると倍率 3 倍で全材料が自動換算されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "大さじ・小さじの換算はどうすればいい？",
+                "acceptedAnswer": { "@type": "Answer", "text": "大さじ 1 = 小さじ 3 = 15ml。カップ 1 = 200ml。スケール後の端数は「○と小さじ△」形式に自動変換されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "適量の材料はスケールできる？",
+                "acceptedAnswer": { "@type": "Answer", "text": "「適量」はスケールしても「適量」のままです。塩こしょうなどは味見しながら調整してください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "1人前に換算したい場合は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "元の人数を 2・目標を 1 に設定すると 1/2 倍の計算になります。0.5 人前単位での設定にも対応しています。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ===== 関連ツール ===== */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {[
+            { href: "/measuring-converter", title: "計量単位換算", desc: "g・ml・大さじ・カップなど料理で使う計量単位を相互換算。" },
+            { href: "/oven-temp-converter", title: "オーブン温度換算", desc: "摂氏・華氏・ガス温度のオーブン設定を相互換算。" },
+            { href: "/calorie-keisan", title: "カロリー計算", desc: "食材ごとのカロリーを計算して一食あたりの摂取量を把握。" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-gray-200 hover:border-orange-300 hover:bg-orange-50 transition-all group"
+            >
+              <div className="font-medium text-gray-800 text-sm group-hover:text-orange-700">{link.title}</div>
+              <div className="text-xs text-gray-500 mt-1">{link.desc}</div>
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
