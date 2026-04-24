@@ -129,6 +129,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Color Palette Generator",
+  "description": "Generate beautiful color palettes instantly. Press spacebar or click\n            Generate to create new combinations. Lock colors you love and explore\n            harmony modes.",
+  "url": "https://tools.loresync.dev/color-palette",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

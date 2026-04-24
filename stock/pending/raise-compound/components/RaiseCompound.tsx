@@ -369,6 +369,27 @@ export default function RaiseCompound() {
       <p className="text-xs text-gray-400 text-center pb-4">
         計算は毎年一定の昇給率を前提とした複利計算です。実際の昇給は業績・景気・個人評価により変動します。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "昇給率 複利計算",
+  "description": "毎年%昇給を続けた時の生涯年収、業界平均比較",
+  "url": "https://tools.loresync.dev/raise-compound",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"for d in ad-budget-estimator ai-tool-roi aircon-capacity anova-calc api-mock-builder; do echo \\\"=== $d ===\\\"; head -3 /Users/nn/projects/cc-tools/stock/pending/$d/page.tsx 2>/dev/null; don...",
-  "error": "Exit code 1\n=== ad-budget-estimator ===\n=== ai-tool-roi ===\n=== aircon-capacity ===\n=== anova-calc ===\n\"use client\";\nimport AnovaCalc from \"./components/AnovaCalc\";\nexport default function AnovaCalcPage() {\n=== api-mock-builder ===",
-  "timestamp": "2026-04-24T05:49:02.533Z",
-  "retry_count": 2
+  "tool_input_preview": "{\"command\":\"ls /Users/nn/projects/cc-tools/tools/ab-test-significance/ && cat /Users/nn/projects/cc-tools/tools/ab-test-significance/meta.json\"}",
+  "error": "Exit code 1\ncomponents\npage.tsx\ncat: /Users/nn/projects/cc-tools/tools/ab-test-significance/meta.json: No such file or directory",
+  "timestamp": "2026-04-24T06:08:01.090Z",
+  "retry_count": 1
 }

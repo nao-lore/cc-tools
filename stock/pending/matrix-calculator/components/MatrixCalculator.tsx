@@ -616,6 +616,27 @@ export default function MatrixCalculator() {
         </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does this Matrix Calculator tool do?", "acceptedAnswer": {"@type": "Answer", "text": "Add, multiply, transpose, and find determinant of matrices. Just enter your values and get instant results."}}, {"@type": "Question", "name": "Is this tool free to use?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free. No sign-up or account required."}}, {"@type": "Question", "name": "How accurate are the results?", "acceptedAnswer": {"@type": "Answer", "text": "Results are estimates based on standard formulas. For critical decisions, please consult a qualified professional."}}]})}} />
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Matrix Calculator",
+  "description": "Add, multiply, transpose, and find determinant of matrices",
+  "url": "https://tools.loresync.dev/matrix-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
       </div>
   );
 }

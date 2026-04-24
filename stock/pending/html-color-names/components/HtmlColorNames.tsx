@@ -277,6 +277,27 @@ export default function HtmlColorNames() {
           })}
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HTML Color Names Explorer",
+  "description": "Browse all 148 CSS named colors with hex and RGB values",
+  "url": "https://tools.loresync.dev/html-color-names",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

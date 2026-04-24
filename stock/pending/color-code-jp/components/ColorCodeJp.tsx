@@ -314,6 +314,27 @@ export default function ColorCodeJp() {
       <div className="w-full h-24 bg-gray-100 rounded-xl border border-dashed border-gray-300 flex items-center justify-center text-gray-400 text-sm">
         広告
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "日本の伝統色コード集",
+  "description": "日本の伝統色と慣用色名のカラーコードを検索",
+  "url": "https://tools.loresync.dev/color-code-jp",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -378,6 +378,27 @@ export default function DecisionMatrix() {
           Export CSV
         </button>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Decision Matrix",
+  "description": "Weighted decision matrix for comparing options across criteria",
+  "url": "https://tools.loresync.dev/decision-matrix",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

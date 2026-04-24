@@ -154,6 +154,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Animation Generator",
+  "description": "Create custom CSS keyframe animations visually. Adjust timing,\n            transforms, and easing, then copy production-ready CSS.",
+  "url": "https://tools.loresync.dev/css-animation",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

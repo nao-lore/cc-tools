@@ -600,6 +600,27 @@ export default function FineTuningCost() {
         </a>
         をご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ファインチューニング 料金計算",
+  "description": "LLMファインチューニングの学習コスト+推論コストをトレーニングデータ量から試算",
+  "url": "https://tools.loresync.dev/fine-tuning-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

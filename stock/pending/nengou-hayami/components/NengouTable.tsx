@@ -300,6 +300,27 @@ export default function NengouTable() {
           </table>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "年号早見表",
+  "description": "西暦と年号(令和/平成/昭和/大正/明治)の一覧表",
+  "url": "https://tools.loresync.dev/nengou-hayami",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

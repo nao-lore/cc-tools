@@ -156,6 +156,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Grid Generator",
+  "description": "Visually build CSS Grid layouts. Configure columns, rows, gaps, and\n            template areas, then copy production-ready CSS.",
+  "url": "https://tools.loresync.dev/css-grid",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -132,6 +132,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Color Converter",
+  "description": "Convert colors between HEX, RGB, HSL, and CMYK formats instantly. Pick\n          a color, edit any value, and watch all formats update in real time.",
+  "url": "https://tools.loresync.dev/color-converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </>
   );
 }

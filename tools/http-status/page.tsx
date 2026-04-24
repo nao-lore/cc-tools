@@ -119,6 +119,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HTTP Status Codes",
+  "description": "Complete reference guide for every HTTP response status code.\n            Search by code number or keyword, click to expand details.",
+  "url": "https://tools.loresync.dev/http-status",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

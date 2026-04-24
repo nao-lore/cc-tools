@@ -286,6 +286,27 @@ export default function ContextWindowVisualizer() {
         <p>換算基準: 1 token ≈ 日本語1.5文字 / 英語0.75語。A4ページ ≈ 800日本語文字。書籍 ≈ 20万文字。</p>
         <p>コンテキスト長・最大出力は各社公式発表値。実際の制限は利用プランにより異なる場合があります。</p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "コンテキストウィンドウ 可視化",
+  "description": "主要LLMモデルのコンテキスト長をトークン・文字数・ページ数で視覚化",
+  "url": "https://tools.loresync.dev/context-window-visualizer",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

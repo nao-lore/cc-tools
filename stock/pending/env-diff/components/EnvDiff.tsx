@@ -501,6 +501,27 @@ export default function EnvDiff() {
           </div>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": ".env File Diff",
+  "description": "Compare two .env files to find missing or different variables",
+  "url": "https://tools.loresync.dev/env-diff",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

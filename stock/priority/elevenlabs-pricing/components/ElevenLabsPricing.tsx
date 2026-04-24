@@ -559,6 +559,27 @@ export default function ElevenLabsPricing() {
         <span className="underline">elevenlabs.io/pricing</span> でご確認ください。
         超過料金 $0.30/1,000文字は全有料プラン共通。Freeプランは超過不可（月10,000文字まで）。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ElevenLabs 料金試算",
+  "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
+  "url": "https://tools.loresync.dev/elevenlabs-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

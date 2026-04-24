@@ -743,6 +743,27 @@ function ConversionTable() {
           <p className="text-xs text-gray-400 mt-2 text-center">全{Object.keys(DENSITY_DB).length}食材のデータ収録</p>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "レシピ 分量スケーリング",
+  "description": "レシピの人数を変えた時の材料分量を自動計算。分数・小数・計量単位変換対応",
+  "url": "https://tools.loresync.dev/recipe-scaling",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

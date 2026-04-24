@@ -695,6 +695,27 @@ export default function GachaProbability() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ガチャ確率 計算",
+  "description": "ソシャゲのガチャ排出率と試行回数から、目当てのキャラ・装備を引ける確率を計算",
+  "url": "https://tools.loresync.dev/gacha-probability",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

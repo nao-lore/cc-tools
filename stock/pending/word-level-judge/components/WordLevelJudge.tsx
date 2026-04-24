@@ -258,6 +258,27 @@ export default function WordLevelJudge() {
           })}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "英単語レベル判定",
+  "description": "入力した英単語のCEFRレベル・頻出度を判定",
+  "url": "https://tools.loresync.dev/word-level-judge",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -225,6 +225,27 @@ export default function Hikidemono() {
         </div>
       </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この引き出物予算配分ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "ご祝儀額に対する引き出物の適切な予算を計算。一般的な相場（ご祝儀の3分の1）を基準に、料理・引き菓子・縁起物の内訳も提案。。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "引き出物予算配分",
+  "description": "ご祝儀額に対する引き出物の適切な予算を計算。一般的な相場（ご祝儀の3分の1）を基準に、料理・引き菓子・縁起物の内訳も提案。",
+  "url": "https://tools.loresync.dev/hikidemono",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
       </div>
   );
 }

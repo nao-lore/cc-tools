@@ -242,6 +242,27 @@ export default function MotionFormula() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "等加速度運動計算",
+  "description": "初速・加速度・時間から変位・終速・平均速度を計算",
+  "url": "https://tools.loresync.dev/motion-formula",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

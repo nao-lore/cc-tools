@@ -920,6 +920,27 @@ export default function FirebasePricing() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Firebase 料金試算",
+  "description": "Firebaseの月額料金をFirestore読み書き数・Storage・Functions実行回数から試算",
+  "url": "https://tools.loresync.dev/firebase-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

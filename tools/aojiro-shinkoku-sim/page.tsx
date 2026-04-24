@@ -9,6 +9,27 @@ export default function AojiroShinkokuSimPage() {
         <p className="text-gray-600 mb-8">65万/55万/10万円控除の節税効果を白色申告と比較して即計算</p>
         <AojiroShinkokuSim />
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "青色申告 節税シミュレーター",
+  "description": "65万/55万/10万円控除の節税効果を白色申告と比較して即計算",
+  "url": "https://tools.loresync.dev/aojiro-shinkoku-sim",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

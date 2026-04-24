@@ -337,6 +337,27 @@ export default function BodyFatCalculator() {
           ※ 男女別の一般的な目安。年齢・体型・測定方法により異なる場合があります。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "体脂肪率計算",
+  "description": "体脂肪率の推定計算と判定",
+  "url": "https://tools.loresync.dev/taijibooritsu",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

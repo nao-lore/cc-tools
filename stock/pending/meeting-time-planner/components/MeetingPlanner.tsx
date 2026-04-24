@@ -410,6 +410,27 @@ export default function MeetingPlanner() {
           </div>
         )}
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Meeting Time Planner",
+  "description": "Find overlapping working hours across multiple time zones",
+  "url": "https://tools.loresync.dev/meeting-time-planner",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

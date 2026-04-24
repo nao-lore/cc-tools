@@ -279,6 +279,27 @@ export default function KanjiGanyuuRitsu() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "漢字含有率計算",
+  "description": "テキスト中の漢字・ひらがな・カタカナ・英数字の比率を分析",
+  "url": "https://tools.loresync.dev/kanji-ganyuu-ritsu",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

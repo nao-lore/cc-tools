@@ -131,6 +131,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Compressor",
+  "description": "Compress JPEG, PNG, and WebP images right in your browser.\n            No uploads to any server — your files stay private.",
+  "url": "https://tools.loresync.dev/image-compressor",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

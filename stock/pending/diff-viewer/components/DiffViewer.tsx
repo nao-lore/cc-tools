@@ -644,6 +644,27 @@ function UnifiedView({ diffLines }: { diffLines: DiffLine[] }) {
           })}
         </tbody>
       </table>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Side-by-Side Diff",
+  "description": "Visual side-by-side text comparison with highlighting",
+  "url": "https://tools.loresync.dev/diff-viewer",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

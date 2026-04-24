@@ -613,6 +613,27 @@ export default function CdnPricingComparison() {
       <p className="text-xs text-gray-400 text-center">
         ※ 料金は2026年概算。最新情報は各社公式サイトを確認してください。Cloudflare 無料プランはSLAなし。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CDN 料金比較",
+  "description": "主要CDN4社の料金をトラフィック量・リージョンから比較",
+  "url": "https://tools.loresync.dev/cdn-pricing-comparison",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -419,6 +419,27 @@ export default function FocusStreakTracker() {
           </button>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "集中ストリークトラッカー",
+  "description": "連続集中日数記録、中断率分析",
+  "url": "https://tools.loresync.dev/focus-streak-tracker",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

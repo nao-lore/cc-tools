@@ -572,7 +572,28 @@ export default function JwtDecoderPage() {
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
           </div>
-        </div>
+        
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JWT Decoder",
+  "description": "JWTトークンをブラウザ上で即時デコード・検証。\n            データはサーバーに送信されません — 完全クライアントサイド処理。",
+  "url": "https://tools.loresync.dev/jwt-decoder",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
       </footer>
     </main>
   );

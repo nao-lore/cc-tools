@@ -115,6 +115,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JSON to CSV Converter",
+  "description": "Paste JSON, preview the data as a table, and download CSV instantly.\n            Supports nested objects, custom delimiters, and reverse CSV-to-JSON\n            conversion.",
+  "url": "https://tools.loresync.dev/json-to-csv",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

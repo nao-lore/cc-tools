@@ -296,6 +296,27 @@ export default function SheetMusicDuration() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "楽譜演奏時間計算",
+  "description": "BPM・小節数・拍子から演奏時間を算出",
+  "url": "https://tools.loresync.dev/sheet-music-duration",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

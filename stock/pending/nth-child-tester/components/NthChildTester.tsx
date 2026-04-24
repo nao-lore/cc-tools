@@ -313,6 +313,27 @@ export default function NthChildTester() {
           </pre>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS :nth-child Tester",
+  "description": "Visually test CSS :nth-child expressions",
+  "url": "https://tools.loresync.dev/nth-child-tester",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

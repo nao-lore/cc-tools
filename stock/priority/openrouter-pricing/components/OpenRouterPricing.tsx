@@ -755,6 +755,27 @@ export default function OpenRouterPricing() {
           ))}
         </div>
       </section>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "OpenRouter 料金比較",
+  "description": "OpenRouter経由で使える主要LLMモデルのAPI料金・速度・性能を一覧比較",
+  "url": "https://tools.loresync.dev/openrouter-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

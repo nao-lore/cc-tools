@@ -307,6 +307,27 @@ export default function WordFrequency() {
       <div className="bg-accent border border-border rounded-xl p-4 text-center text-muted text-xs">
         Advertisement
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Word Frequency Counter",
+  "description": "Count word frequency in any text and visualize with a bar chart",
+  "url": "https://tools.loresync.dev/word-frequency",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

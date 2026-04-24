@@ -527,6 +527,27 @@ export default function AiOutputJsonValidator() {
           </a>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI出力 JSON整形・スキーマ検証",
+  "description": "LLMが返した崩れたJSONを自動修復＋事前定義スキーマとの差分表示",
+  "url": "https://tools.loresync.dev/ai-output-json-validator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

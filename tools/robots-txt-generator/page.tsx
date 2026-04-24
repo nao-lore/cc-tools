@@ -174,6 +174,27 @@ Sitemap: https://example.com/sitemap.xml`}
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Robots.txt Generator",
+  "description": "Create, validate, and download robots.txt files for your website.\n            Configure user-agent rules, sitemaps, crawl-delay, and export\n            instantly.",
+  "url": "https://tools.loresync.dev/robots-txt-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

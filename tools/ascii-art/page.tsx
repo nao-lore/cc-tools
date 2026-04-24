@@ -127,6 +127,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ASCII Art Generator",
+  "description": "Convert text into large ASCII art banners, wrap text in boxes, and\n            browse pre-made decorations. Copy the output instantly.",
+  "url": "https://tools.loresync.dev/ascii-art",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -9,6 +9,27 @@ export default function AuthServiceComparisonPage() {
         <p className="text-gray-600 mb-8">Auth0 / Clerk / Supabase Auth / Firebase Auth / Amazon Cognito — MAU別料金・機能・SSO対応を横断比較</p>
         <AuthServiceComparison />
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "認証SaaS 料金比較",
+  "description": "Auth0 / Clerk / Supabase Auth / Firebase Auth / Amazon Cognito — MAU別料金・機能・SSO対応を横断比較",
+  "url": "https://tools.loresync.dev/auth-service-comparison",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

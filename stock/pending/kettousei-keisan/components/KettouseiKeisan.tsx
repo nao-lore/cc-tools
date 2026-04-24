@@ -262,6 +262,27 @@ export default function KettouseiKeisan() {
           <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-purple-100 inline-block"></span>中間申告</span>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "決算期 届出期限計算",
+  "description": "決算月を入力すると法人税・消費税・確定申告などの各届出期限を自動逆算",
+  "url": "https://tools.loresync.dev/kettousei-keisan",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

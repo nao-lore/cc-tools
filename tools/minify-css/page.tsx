@@ -135,6 +135,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Minifier",
+  "description": "Paste your CSS code, get minified output instantly. Remove comments,\n            whitespace, and optimize your stylesheets — all client-side.",
+  "url": "https://tools.loresync.dev/minify-css",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

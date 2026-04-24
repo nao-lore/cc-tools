@@ -286,6 +286,27 @@ export default function ProcrastinationCost() {
           </div>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "先延ばしコスト計算",
+  "description": "タスク先延ばしの累積コスト可視化",
+  "url": "https://tools.loresync.dev/procrastination-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

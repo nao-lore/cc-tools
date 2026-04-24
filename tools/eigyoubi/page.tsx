@@ -90,6 +90,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "営業日数計算ツール",
+  "description": "日本の祝日・振替休日に完全対応",
+  "url": "https://tools.loresync.dev/eigyoubi",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

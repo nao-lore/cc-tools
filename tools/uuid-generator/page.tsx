@@ -139,6 +139,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "UUID Generator",
+  "description": "Generate random UUID v4 values instantly. Choose a count, pick a\n            format, and copy to clipboard with one click.",
+  "url": "https://tools.loresync.dev/uuid-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

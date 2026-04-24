@@ -630,6 +630,27 @@ export default function NeonPlanetscaleComparison() {
       <p className="text-xs text-gray-400 text-center">
         ※ 料金は2026年概算。最新情報は各社公式サイトを確認してください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Neon / PlanetScale / Turso 比較",
+  "description": "モダンサーバーレスDB 3社の料金・機能・レイテンシを横断比較",
+  "url": "https://tools.loresync.dev/neon-planetscale-comparison",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

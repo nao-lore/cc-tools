@@ -259,6 +259,27 @@ export default function YamoriHiryou() {
         </div>
         <p className="text-xs text-gray-400 mt-2">※ 希釈倍率は各製品の説明書を優先してください。上記は一般的な目安です。</p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "液肥希釈倍率計算",
+  "description": "液肥を目標濃度に希釈するための水量・原液量を計算",
+  "url": "https://tools.loresync.dev/yamori-hiryou",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

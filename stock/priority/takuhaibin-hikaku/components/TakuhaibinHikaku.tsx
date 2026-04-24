@@ -606,6 +606,27 @@ export default function TakuhaibinHikaku() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "宅配便 送料比較",
+  "description": "ヤマト運輸・佐川急便・日本郵便の送料をサイズ・重量・発送元/先から比較して最安を表示",
+  "url": "https://tools.loresync.dev/takuhaibin-hikaku",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

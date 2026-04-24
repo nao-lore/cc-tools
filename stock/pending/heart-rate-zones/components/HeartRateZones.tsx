@@ -323,6 +323,27 @@ export default function HeartRateZones() {
           Enter your age above to calculate your heart rate training zones
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Heart Rate Zone Calculator",
+  "description": "Calculate target heart rate training zones",
+  "url": "https://tools.loresync.dev/heart-rate-zones",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

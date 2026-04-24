@@ -513,6 +513,27 @@ export default function MeetingCost() {
       <div className="text-xs text-slate-600 px-1 pb-4">
         ※ 年間労働時間2,080時間（52週×40時間）で時給換算。実際のコストは社会保険料・福利厚生等を含めると1.3〜1.5倍程度になります。
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "会議コスト計算機",
+  "description": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に",
+  "url": "https://tools.loresync.dev/meeting-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

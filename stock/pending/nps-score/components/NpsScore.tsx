@@ -216,6 +216,27 @@ export default function NpsScore() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "NPS スコア計算",
+  "description": "アンケート結果からNPSスコアと推奨者・中立者・批判者の分布を計算",
+  "url": "https://tools.loresync.dev/nps-score",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

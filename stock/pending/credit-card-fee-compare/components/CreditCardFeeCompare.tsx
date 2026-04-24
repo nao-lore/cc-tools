@@ -327,6 +327,27 @@ export default function CreditCardFeeCompare() {
       <p className="text-xs text-gray-400 text-center pb-4">
         手数料率は2024年時点の情報です。キャンペーン・業種・売上規模により異なる場合があります。最新情報は各サービスの公式サイトをご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "決済サービス加盟店手数料比較",
+  "description": "Stripe/Square/Airペイ/PayPay等の手数料比較（加盟店側）",
+  "url": "https://tools.loresync.dev/credit-card-fee-compare",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

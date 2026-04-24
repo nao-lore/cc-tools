@@ -134,6 +134,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Chmod Calculator",
+  "description": "Calculate Unix file permissions interactively. Toggle checkboxes,\n            enter numeric values, or pick a preset to generate chmod commands\n            instantly.",
+  "url": "https://tools.loresync.dev/chmod-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

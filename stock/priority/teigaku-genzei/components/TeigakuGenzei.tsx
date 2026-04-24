@@ -619,6 +619,27 @@ export default function TeigakuGenzei() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "定額減税 計算機",
+  "description": "2024-2025年の定額減税（所得税3万円/住民税1万円）の適用額をシミュレーション。扶養家族数に応じた減税総額を即計算",
+  "url": "https://tools.loresync.dev/teigaku-genzei",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

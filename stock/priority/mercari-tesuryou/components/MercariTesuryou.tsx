@@ -616,6 +616,27 @@ export default function MercariTesuryou() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "メルカリ 手数料・利益計算",
+  "description": "メルカリの販売手数料・送料・梱包費を引いた実利益を計算。逆算で目標利益から販売価格も算出",
+  "url": "https://tools.loresync.dev/mercari-tesuryou",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

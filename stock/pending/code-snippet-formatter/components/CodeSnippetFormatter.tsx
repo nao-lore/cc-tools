@@ -555,6 +555,27 @@ export default function CodeSnippetFormatter() {
           </div>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Code Snippet Formatter",
+  "description": "Format and syntax-highlight code snippets for sharing",
+  "url": "https://tools.loresync.dev/code-snippet-formatter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

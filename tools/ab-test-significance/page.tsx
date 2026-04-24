@@ -9,6 +9,27 @@ export default function AbTestSignificancePage() {
         <p className="text-gray-600 mb-8">訪問数とCV数を入力するだけでp値・信頼区間・必要サンプルサイズを即計算</p>
         <AbTestSignificance />
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "A/Bテスト 有意差計算",
+  "description": "訪問数とCV数を入力するだけでp値・信頼区間・必要サンプルサイズを即計算",
+  "url": "https://tools.loresync.dev/ab-test-significance",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

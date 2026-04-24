@@ -228,6 +228,27 @@ export default function Co2Travel() {
           <div className="text-center py-8 text-gray-400">距離を入力してください</div>
         )}
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "移動CO2排出量計算",
+  "description": "距離と交通手段から移動に伴うCO2排出量を算出",
+  "url": "https://tools.loresync.dev/co2-travel",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

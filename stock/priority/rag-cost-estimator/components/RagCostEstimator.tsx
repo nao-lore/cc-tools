@@ -870,6 +870,27 @@ export default function RagCostEstimator() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "RAG 運用コスト試算",
+  "description": "RAGシステムの月額コストをドキュメント数・クエリ数・モデル選択から試算",
+  "url": "https://tools.loresync.dev/rag-cost-estimator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

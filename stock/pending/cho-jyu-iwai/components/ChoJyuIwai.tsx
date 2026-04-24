@@ -286,6 +286,27 @@ export default function ChoJyuIwai() {
       <div className="text-xs text-gray-400 text-center">
         ※ 年齢は数え年ではなく満年齢で表示しています。地域・宗派により慣習が異なる場合があります。
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "長寿祝い一覧",
+  "description": "還暦・古希・喜寿・傘寿・米寿・卒寿・白寿・百寿まで、年齢・名称・テーマカラーを一覧表示。生年から該当する長寿祝いを自動判定。",
+  "url": "https://tools.loresync.dev/cho-jyu-iwai",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

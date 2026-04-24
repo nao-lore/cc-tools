@@ -496,6 +496,27 @@ export default function KyuyoMeisai() {
       <div className="bg-gray-50 border border-dashed border-gray-200 rounded-2xl p-6 text-center text-muted text-sm">
         広告
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "給与明細チェッカー",
+  "description": "給与明細の各控除額を確認・検証する",
+  "url": "https://tools.loresync.dev/kyuyo-meisai",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

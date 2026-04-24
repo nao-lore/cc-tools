@@ -714,6 +714,27 @@ export default function ClickPostSize() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "メール便・小型配送 判定",
+  "description": "荷物サイズ・重量から使える小型配送サービスを即判定。最安の送り方を比較",
+  "url": "https://tools.loresync.dev/click-post-size",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -256,6 +256,27 @@ export default function DoorSizeCheck() {
           </div>
         )}
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "搬入ドアサイズチェッカー",
+  "description": "家具サイズと搬入経路（ドア・廊下・階段）の通過可否を判定",
+  "url": "https://tools.loresync.dev/door-size-check",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

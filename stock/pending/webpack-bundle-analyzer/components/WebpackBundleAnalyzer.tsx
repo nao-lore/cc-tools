@@ -494,6 +494,27 @@ export default function WebpackBundleAnalyzer() {
       <div className="border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center h-24 text-gray-300 text-sm">
         Advertisement
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Module Size Estimator",
+  "description": "Estimate how much a list of npm packages adds to a bundle",
+  "url": "https://tools.loresync.dev/webpack-bundle-analyzer",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

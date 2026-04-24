@@ -518,6 +518,27 @@ export default function MarkdownLint() {
           Paste Markdown above to start linting.
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Markdown Linter",
+  "description": "Lint Markdown for common style and syntax issues",
+  "url": "https://tools.loresync.dev/markdown-lint",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

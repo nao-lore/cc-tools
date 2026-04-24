@@ -293,6 +293,27 @@ export default function SleepDebt() {
           <li>• 昼寝は20分以内、15時前に済ませる</li>
         </ul>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "睡眠負債計算",
+  "description": "理想睡眠時間との差分から累積睡眠負債を可視化",
+  "url": "https://tools.loresync.dev/sleep-debt",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

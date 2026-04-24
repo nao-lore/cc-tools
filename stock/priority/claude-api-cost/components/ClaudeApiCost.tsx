@@ -613,6 +613,27 @@ export default function ClaudeApiCost() {
         </a>
         をご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Claude API コスト計算",
+  "description": "Anthropic Claude APIの各モデル（Opus 4, Sonnet 4, Haiku 3.5）の利用料金をトークン数から即座に計算",
+  "url": "https://tools.loresync.dev/claude-api-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

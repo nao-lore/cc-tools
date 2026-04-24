@@ -504,6 +504,27 @@ export default function ZipToAddress() {
           全ツール一覧を見る
         </a>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "郵便番号 ↔ 住所変換",
+  "description": "7桁郵便番号から住所（都道府県・市区町村・町域）、逆引きにも対応",
+  "url": "https://tools.loresync.dev/zip-to-address",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

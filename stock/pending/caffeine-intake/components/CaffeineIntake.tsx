@@ -248,6 +248,27 @@ export default function CaffeineIntake() {
           <p>カフェインの過剰摂取は不眠・頭痛・動悸の原因になります。水を飲んでカフェインを控えてください。</p>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "カフェイン摂取量計算",
+  "description": "飲料別のカフェイン含有量と1日上限チェック",
+  "url": "https://tools.loresync.dev/caffeine-intake",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

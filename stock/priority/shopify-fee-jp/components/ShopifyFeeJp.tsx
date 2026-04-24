@@ -635,6 +635,27 @@ export default function ShopifyFeeJp() {
       <p className="text-xs text-gray-400 text-center pb-4">
         料金は2026年時点の情報です。最新の料金はShopify公式サイトをご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Shopify 日本円手数料計算",
+  "description": "Shopifyの日本向けプラン別月額・トランザクション手数料・決済手数料を統合計算",
+  "url": "https://tools.loresync.dev/shopify-fee-jp",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

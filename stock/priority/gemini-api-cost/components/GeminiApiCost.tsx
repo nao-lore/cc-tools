@@ -540,6 +540,27 @@ export default function GeminiApiCost() {
       <p className="text-xs text-gray-400 text-center pb-4">
         料金は変更される場合があります。最新の料金はGoogle AI公式サイトをご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Gemini API コスト計算",
+  "description": "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算",
+  "url": "https://tools.loresync.dev/gemini-api-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

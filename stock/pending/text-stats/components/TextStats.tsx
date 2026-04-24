@@ -359,6 +359,27 @@ export default function TextStats() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Text Statistics Dashboard",
+  "description": "Comprehensive text analytics: word frequency, sentence length, complexity",
+  "url": "https://tools.loresync.dev/text-stats",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

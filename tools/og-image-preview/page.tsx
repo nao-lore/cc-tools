@@ -137,6 +137,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "OG Image Preview",
+  "description": "Preview how your links will appear when shared on Facebook, Twitter,\n            LinkedIn, Discord, and Slack. Enter your meta tag values and see\n            live previews instantly.",
+  "url": "https://tools.loresync.dev/og-image-preview",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

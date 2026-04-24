@@ -598,6 +598,27 @@ export default function KajiAnbun() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "家事按分 計算",
+  "description": "家賃・光熱費・通信費を事業割合で按分。フリーランスの確定申告に必要な経費計算",
+  "url": "https://tools.loresync.dev/kaji-anbun",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

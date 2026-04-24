@@ -171,6 +171,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image to Base64 Converter",
+  "description": "Convert images to Base64 strings instantly. Drag and drop any image\n            to get its Base64 encoding in multiple formats — Data URI, CSS, or\n            HTML.",
+  "url": "https://tools.loresync.dev/image-to-base64",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

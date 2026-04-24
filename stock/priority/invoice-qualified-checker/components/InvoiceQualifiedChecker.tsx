@@ -824,6 +824,27 @@ export default function InvoiceQualifiedChecker() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "適格請求書 チェッカー",
+  "description": "適格請求書（インボイス）の必須記載事項を項目ごとにチェック。漏れがないか確認できます",
+  "url": "https://tools.loresync.dev/invoice-qualified-checker",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -426,6 +426,27 @@ export default function RunningPace() {
           ※ 目安のゾーン区分です。個人の体力・心拍数によって異なります。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ランニングペース計算",
+  "description": "目標タイム・距離からキロ何分ペース、スプリット表示",
+  "url": "https://tools.loresync.dev/running-pace",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

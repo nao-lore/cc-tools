@@ -631,6 +631,27 @@ export default function WithholdingTaxCalculator() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "源泉徴収税 計算",
+  "description": "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応",
+  "url": "https://tools.loresync.dev/withholding-tax-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

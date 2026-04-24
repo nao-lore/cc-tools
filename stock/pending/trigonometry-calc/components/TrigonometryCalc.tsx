@@ -445,6 +445,27 @@ export default function TrigonometryCalc() {
       <div className="rounded-2xl border border-border border-dashed flex items-center justify-center h-20 text-muted text-xs">
         Advertisement
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Trigonometry Calculator",
+  "description": "Calculate all trig functions and inverse trig in degrees or radians",
+  "url": "https://tools.loresync.dev/trigonometry-calc",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

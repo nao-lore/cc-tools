@@ -562,6 +562,27 @@ export default function NetlifyPricing() {
           Functions超過はsite pack単位での課金となります（リクエスト数・実行時間の多い方が適用）。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Netlify 料金試算",
+  "description": "Netlifyの月額料金をビルド時間・帯域・Functions実行数から試算",
+  "url": "https://tools.loresync.dev/netlify-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

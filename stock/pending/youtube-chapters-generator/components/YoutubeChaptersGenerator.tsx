@@ -400,6 +400,27 @@ export default function YoutubeChaptersGenerator() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "YouTube チャプターマーカー生成",
+  "description": "タイムスタンプ入力→概要欄形式で整形、規約準拠チェック",
+  "url": "https://tools.loresync.dev/youtube-chapters-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

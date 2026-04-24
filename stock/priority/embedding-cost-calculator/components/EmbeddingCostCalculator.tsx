@@ -690,6 +690,27 @@ export default function EmbeddingCostCalculator() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "埋め込みAPI 料金計算",
+  "description": "テキスト埋め込み（Embedding）APIの料金をドキュメント数・トークン数から計算",
+  "url": "https://tools.loresync.dev/embedding-cost-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

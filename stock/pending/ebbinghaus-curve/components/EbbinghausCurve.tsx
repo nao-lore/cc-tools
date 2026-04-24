@@ -273,6 +273,27 @@ export default function EbbinghausCurve() {
           </div>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "忘却曲線 復習計画",
+  "description": "エビングハウスの忘却曲線に基づく最適な復習スケジュールを自動生成",
+  "url": "https://tools.loresync.dev/ebbinghaus-curve",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

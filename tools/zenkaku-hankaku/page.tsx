@@ -90,6 +90,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "全角半角変換ツール",
+  "description": "全角半角変換ツール — Free online tool. No signup required.",
+  "url": "https://tools.loresync.dev/zenkaku-hankaku",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </>
   );
 }

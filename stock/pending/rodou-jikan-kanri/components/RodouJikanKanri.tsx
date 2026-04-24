@@ -419,6 +419,27 @@ export default function RodouJikanKanri() {
           本ツールの利用により生じた損害について、開発者は一切の責任を負いません。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "労働時間上限チェック（36協定）",
+  "description": "週・月・年の労働時間から上限規制の抵触判定",
+  "url": "https://tools.loresync.dev/rodou-jikan-kanri",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -673,6 +673,27 @@ export default function RenderFlyRailway() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Render / Fly / Railway 料金比較",
+  "description": "Render・Fly.io・Railwayの料金・リソース・リージョンを横断比較",
+  "url": "https://tools.loresync.dev/render-fly-railway-comparison",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

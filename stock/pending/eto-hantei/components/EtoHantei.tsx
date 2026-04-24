@@ -182,6 +182,27 @@ export default function EtoHantei() {
       <div className="text-xs text-gray-400 text-center">
         ※ 干支は旧暦の立春（2月3〜4日頃）で切り替わる場合があります。1月生まれの方は前年干支の場合も。
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "干支・十二支判定",
+  "description": "生年から干支（十二支）・十干十二支（六十干支）を判定。年齢・星座・血液型との相性も表示。",
+  "url": "https://tools.loresync.dev/eto-hantei",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

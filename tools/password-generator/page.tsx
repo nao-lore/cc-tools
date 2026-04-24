@@ -100,7 +100,28 @@ export default function Home() {
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
           </div>
-        </div>
+        
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "パスワード生成ツール",
+  "description": "Password Generator — Free online tool. No signup required.",
+  "url": "https://tools.loresync.dev/password-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
       </footer>
     </main>
   );

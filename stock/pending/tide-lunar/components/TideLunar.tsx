@@ -382,6 +382,27 @@ export default function TideLunar() {
           ※ 月齢・潮名・日出入り時刻は概算です。精密な潮汐情報は気象庁をご確認ください。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "潮見表・月齢表示",
+  "description": "日付を指定して月齢・潮名・日出入り時刻を表示",
+  "url": "https://tools.loresync.dev/tide-lunar",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

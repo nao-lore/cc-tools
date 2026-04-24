@@ -681,6 +681,27 @@ export default function SupabasePricing() {
         <span className="underline">supabase.com/pricing</span> でご確認ください。
         コンピュートは 720h/月で計算。ベクトル機能（pgvector）は全プランで無制限。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Supabase 料金試算",
+  "description": "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算",
+  "url": "https://tools.loresync.dev/supabase-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -140,6 +140,27 @@ export default function Home() {
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Aspect Ratio Calculator",
+  "description": "Calculate aspect ratios from any dimensions, lock ratios for\n            proportional resizing, and find the perfect resolution for your\n            screens, images, and videos.",
+  "url": "https://tools.loresync.dev/aspect-ratio",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

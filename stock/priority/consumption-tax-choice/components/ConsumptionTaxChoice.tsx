@@ -786,6 +786,27 @@ export default function ConsumptionTaxChoice() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "簡易課税 vs 本則課税 判定",
+  "description": "売上・仕入・業種から簡易課税と本則課税のどちらが有利か判定。2割特例の適用可否も確認",
+  "url": "https://tools.loresync.dev/consumption-tax-choice",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

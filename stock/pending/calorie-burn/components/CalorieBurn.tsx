@@ -395,6 +395,27 @@ export default function CalorieBurn() {
           Enter your body weight above to see results
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calorie Burn Estimator",
+  "description": "Estimate calories burned for common exercises using MET values",
+  "url": "https://tools.loresync.dev/calorie-burn",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

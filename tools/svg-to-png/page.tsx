@@ -164,6 +164,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "SVG to PNG Converter",
+  "description": "Convert SVG files and code to high-resolution PNG images instantly.\n            Free, fast, and 100% client-side &mdash; your files never leave your\n            browser.",
+  "url": "https://tools.loresync.dev/svg-to-png",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

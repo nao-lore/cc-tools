@@ -334,6 +334,27 @@ export default function ZoomStorageEstimate() {
       <div className="text-xs text-gray-400 text-center">
         ※ 推定値です。実際のファイルサイズは画面の動き・ネットワーク品質・プラットフォームの設定により変動します。
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "会議録画容量予測",
+  "description": "解像度・録画時間・参加者数・コーデックから録画ファイルのサイズを予測。Zoom・Meet・Teams別の目安も表示。",
+  "url": "https://tools.loresync.dev/zoom-storage-estimate",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

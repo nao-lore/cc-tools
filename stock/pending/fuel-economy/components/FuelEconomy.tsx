@@ -560,6 +560,27 @@ export default function FuelEconomy() {
       <div className="flex items-center justify-center h-[90px] bg-gray-100/60 border border-dashed border-gray-300 rounded-xl text-xs text-gray-400">
         Advertisement
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "燃費・ガソリン代 計算",
+  "description": "走行距離・燃費・単価から給油コスト、年間費用",
+  "url": "https://tools.loresync.dev/fuel-economy",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

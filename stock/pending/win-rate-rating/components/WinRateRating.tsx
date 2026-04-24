@@ -225,6 +225,27 @@ export default function WinRateRating() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "対戦ゲーム勝率 → レート予測",
+  "description": "勝率・対戦数・現在レートからEloレート変動を計算",
+  "url": "https://tools.loresync.dev/win-rate-rating",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

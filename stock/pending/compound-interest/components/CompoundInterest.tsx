@@ -410,6 +410,27 @@ export default function CompoundInterest() {
           Enter valid parameters above to see results
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Compound Interest Calculator",
+  "description": "Calculate compound interest with monthly contribution support",
+  "url": "https://tools.loresync.dev/compound-interest",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

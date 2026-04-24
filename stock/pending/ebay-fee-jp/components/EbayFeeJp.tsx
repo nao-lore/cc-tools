@@ -314,6 +314,27 @@ export default function EbayFeeJp() {
           <li>関税・輸入税の負担は買い手・売り手の設定によります</li>
         </ul>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "eBay日本出品 手数料計算",
+  "description": "eBay出品手数料・PayPal/Payoneer手数料・為替・送料を日本円で計算し利益を算出",
+  "url": "https://tools.loresync.dev/ebay-fee-jp",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

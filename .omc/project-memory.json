@@ -142,6 +142,18 @@
   },
   "hotPaths": [
     {
+      "path": "lib/blog-posts.ts",
+      "accessCount": 4,
+      "lastAccessed": 1777011070959,
+      "type": "file"
+    },
+    {
+      "path": "app/sitemap.ts",
+      "accessCount": 3,
+      "lastAccessed": 1777011071431,
+      "type": "file"
+    },
+    {
       "path": "tools/minify-css/components/CssMinifier.tsx",
       "accessCount": 2,
       "lastAccessed": 1777010311928,
@@ -157,6 +169,96 @@
       "path": "tools/moji-count/components/MojiCounter.tsx",
       "accessCount": 2,
       "lastAccessed": 1777010372153,
+      "type": "file"
+    },
+    {
+      "path": "app/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010891306,
+      "type": "file"
+    },
+    {
+      "path": "app/layout.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010895987,
+      "type": "file"
+    },
+    {
+      "path": "app/json-formatter/page.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010896236,
+      "type": "file"
+    },
+    {
+      "path": "app/robots.ts",
+      "accessCount": 2,
+      "lastAccessed": 1777010971317,
+      "type": "file"
+    },
+    {
+      "path": "app/json-formatter/opengraph-image.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777011032052,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1777010875216,
+      "type": "directory"
+    },
+    {
+      "path": "lib/tools-config.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777010878098,
+      "type": "file"
+    },
+    {
+      "path": "next.config.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777010920358,
+      "type": "file"
+    },
+    {
+      "path": "lib/og-image.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777010958000,
+      "type": "file"
+    },
+    {
+      "path": "scripts/add-webapp-schema.py",
+      "accessCount": 1,
+      "lastAccessed": 1777010958932,
+      "type": "file"
+    },
+    {
+      "path": "app/opengraph-image.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777010964782,
+      "type": "file"
+    },
+    {
+      "path": "app/zenkaku-hankaku/opengraph-image.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777010983442,
+      "type": "file"
+    },
+    {
+      "path": "app/not-found.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777010993778,
+      "type": "file"
+    },
+    {
+      "path": "app/blog/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777011029660,
+      "type": "file"
+    },
+    {
+      "path": "app/blog/[slug]/page.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1777011060575,
       "type": "file"
     }
   ],

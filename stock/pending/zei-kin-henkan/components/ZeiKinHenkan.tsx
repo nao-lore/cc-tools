@@ -595,6 +595,27 @@ export default function ZeiKinHenkan() {
           </a>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "税込 ↔ 税抜 変換（軽減税率対応）",
+  "description": "8%/10%切替、レシート複数行をまとめて計算、内税外税両対応",
+  "url": "https://tools.loresync.dev/zei-kin-henkan",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

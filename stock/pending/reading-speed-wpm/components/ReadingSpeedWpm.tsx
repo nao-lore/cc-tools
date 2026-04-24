@@ -328,6 +328,27 @@ export default function ReadingSpeedWpm() {
           </div>
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "読書速度WPM計測",
+  "description": "文章を読ませて速度計測、平均比較",
+  "url": "https://tools.loresync.dev/reading-speed-wpm",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

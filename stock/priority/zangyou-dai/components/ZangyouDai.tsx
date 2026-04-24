@@ -768,6 +768,27 @@ export default function ZangyouDai() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "残業代 計算機",
+  "description": "残業代を法定時間外・所定時間外・深夜・休日・月60時間超に区分して正確に計算",
+  "url": "https://tools.loresync.dev/zangyou-dai",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

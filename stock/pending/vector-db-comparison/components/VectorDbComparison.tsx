@@ -478,6 +478,27 @@ export default function VectorDbComparison() {
         <p>※ レイテンシはベクトル数・インフラ・インデックス設定により大きく変わります。</p>
         <p>※ 各サービスの最新料金・仕様は公式サイトでご確認ください。</p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ベクトルDB料金・機能比較",
+  "description": "Pinecone・Weaviate・Qdrant・Chromaを料金・性能で比較",
+  "url": "https://tools.loresync.dev/vector-db-comparison",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

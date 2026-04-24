@@ -823,6 +823,27 @@ export default function GraphqlBuilder() {
           </div>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GraphQL Query Builder",
+  "description": "Visual builder for GraphQL queries and mutations",
+  "url": "https://tools.loresync.dev/graphql-query-builder",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

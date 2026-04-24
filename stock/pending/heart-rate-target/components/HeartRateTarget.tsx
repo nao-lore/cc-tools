@@ -232,6 +232,27 @@ export default function HeartRateTarget() {
           <p>• <strong>最大能力向上</strong>: ゾーン5（90〜100%）のインターバルを週1〜2回</p>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "目標心拍数ゾーン計算",
+  "description": "年齢と安静時心拍数からトレーニングゾーンを計算",
+  "url": "https://tools.loresync.dev/heart-rate-target",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

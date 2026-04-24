@@ -765,6 +765,27 @@ function DetailRow({ label, value, sub, bold, highlight }: { label: string; valu
     <div className="flex justify-between">
       <span className={`${sub ? "text-slate-500 pl-3" : "text-slate-400"} ${bold ? "font-semibold text-slate-300" : ""}`}>{label}</span>
       <span className={`${bold ? "font-bold" : "font-medium"} ${highlight ? "text-emerald-400" : "text-slate-300"}`}>{value}</span>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "法人成り 損益分岐シミュレーター",
+  "description": "年収別に個人事業主と法人（1人社長）の手取り・税金・社会保険を比較",
+  "url": "https://tools.loresync.dev/houjin-nari",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

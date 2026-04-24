@@ -289,6 +289,27 @@ export default function JouuMenseki() {
       <div className="bg-surface rounded-2xl border border-border p-4 text-center text-muted text-sm h-24 flex items-center justify-center">
         広告
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "間取り面積 早見表",
+  "description": "1R〜4LDKの間取り別の標準面積と畳数を一覧表示",
+  "url": "https://tools.loresync.dev/jouu-menseki",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

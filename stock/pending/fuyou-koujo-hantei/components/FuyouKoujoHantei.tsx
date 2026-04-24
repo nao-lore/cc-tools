@@ -459,6 +459,27 @@ export default function FuyouKoujoHantei() {
       <div className="bg-surface rounded-2xl border border-border p-4 flex items-center justify-center h-20 text-xs text-muted">
         広告
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "扶養控除 判定（年齢・所得別）",
+  "description": "子供・親族の年齢・年収から特定扶養・老人扶養の適用判定",
+  "url": "https://tools.loresync.dev/fuyou-koujo-hantei",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

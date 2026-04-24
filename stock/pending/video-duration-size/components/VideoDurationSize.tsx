@@ -485,6 +485,27 @@ export default function VideoDurationSize() {
           ※ 実際のサイズはコンテンツの複雑さ・音声・メタデータにより変動します。目安としてご活用ください。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "動画サイズ 予測計算",
+  "description": "解像度・時間・コーデックからファイルサイズ予測",
+  "url": "https://tools.loresync.dev/video-duration-size",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

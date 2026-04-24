@@ -646,6 +646,27 @@ export default function WarekiConverterPage() {
           <a href="/" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">53以上の無料ツール一覧 →</a>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "和暦西暦変換ツール",
+  "description": "明治〜令和の各元号の期間・天皇・由来",
+  "url": "https://tools.loresync.dev/wareki-converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

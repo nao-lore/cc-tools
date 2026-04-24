@@ -707,6 +707,27 @@ export default function IryouhiKoujo() {
           }),
         }}
       />
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "医療費控除 シミュレーター",
+  "description": "年間医療費・保険金・家族分を入力して医療費控除の還付額を計算",
+  "url": "https://tools.loresync.dev/iryouhi-koujo",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

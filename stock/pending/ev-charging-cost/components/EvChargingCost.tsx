@@ -434,6 +434,27 @@ export default function EvChargingCost() {
           バッテリー容量と残量を設定すると結果が表示されます
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EV 充電コスト計算",
+  "description": "電池容量・電気単価・充電方式から充電1回コスト",
+  "url": "https://tools.loresync.dev/ev-charging-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -615,6 +615,27 @@ export default function WhisperApiCost() {
         </a>
         をご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Whisper API 料金計算",
+  "description": "OpenAI Whisper APIの料金を音声時間・ファイル数から計算",
+  "url": "https://tools.loresync.dev/whisper-api-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

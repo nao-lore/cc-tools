@@ -686,6 +686,27 @@ export default function ShoKigyoKyosai() {
           </a>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "小規模企業共済 節税計算",
+  "description": "小規模企業共済の掛金による節税効果と解約時の手取り額を計算",
+  "url": "https://tools.loresync.dev/sho-kigyo-kyosai",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

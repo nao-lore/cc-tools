@@ -251,6 +251,27 @@ export default function FunnelConversion() {
           </div>
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ファネル コンバージョン計算",
+  "description": "各ステップの人数から離脱率・CVR・改善ポイントを計算",
+  "url": "https://tools.loresync.dev/funnel-conversion",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

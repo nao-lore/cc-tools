@@ -329,6 +329,27 @@ export default function BmiCalculator() {
           Source: World Health Organization. Applies to adults 18+.
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "BMI & Healthy Weight Calculator",
+  "description": "Calculate BMI and ideal weight range in metric or imperial",
+  "url": "https://tools.loresync.dev/bmi-english",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

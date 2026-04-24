@@ -452,6 +452,27 @@ export default function PromptInjectionChecker() {
           <span className="text-xs text-gray-600">Advertisement</span>
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "プロンプトインジェクション検査",
+  "description": "入力テキストに既知のジェイルブレイクパターンを検出",
+  "url": "https://tools.loresync.dev/prompt-injection-checker",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

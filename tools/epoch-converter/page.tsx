@@ -181,7 +181,28 @@ export default function Home() {
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
           </div>
-        </div>
+        
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Unix Timestamp Converter",
+  "description": "Convert between Unix epoch timestamps and human-readable dates\n          instantly.",
+  "url": "https://tools.loresync.dev/epoch-converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
       </footer>
     </main>
   );

@@ -422,6 +422,27 @@ export default function EmailSubjectLineTester() {
       <div className="mt-4 flex items-center justify-center rounded-lg border border-dashed border-[var(--border)] bg-[var(--muted)] h-20 text-xs text-[var(--muted-fg)]">
         Advertisement
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Email Subject Line Tester",
+  "description": "Analyze email subject lines for length, emojis, and spam triggers",
+  "url": "https://tools.loresync.dev/email-subject-line-tester",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

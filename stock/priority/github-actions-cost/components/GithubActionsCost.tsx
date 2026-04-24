@@ -597,6 +597,27 @@ export default function GithubActionsCost() {
         </a>
         {" "}をご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "GitHub Actions 料金計算",
+  "description": "GitHub Actionsの月額コストをランナー種別・実行時間・ストレージから計算",
+  "url": "https://tools.loresync.dev/github-actions-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

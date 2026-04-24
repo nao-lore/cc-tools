@@ -9,6 +9,27 @@ export default function AiVideoPricingPage() {
         <p className="text-gray-600 mb-8">Sora / Runway / Pika / Kling / Luma — 料金・生成秒数・解像度・機能を横断比較</p>
         <AiVideoPricing />
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AI動画生成 料金比較",
+  "description": "Sora / Runway / Pika / Kling / Luma — 料金・生成秒数・解像度・機能を横断比較",
+  "url": "https://tools.loresync.dev/ai-video-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

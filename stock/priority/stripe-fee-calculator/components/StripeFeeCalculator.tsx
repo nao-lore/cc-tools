@@ -818,6 +818,27 @@ export default function StripeFeeCalculator() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Stripe 手数料計算",
+  "description": "Stripeの決済手数料を決済方法別に計算。売上から手数料を引いた実収入を即座に確認",
+  "url": "https://tools.loresync.dev/stripe-fee-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

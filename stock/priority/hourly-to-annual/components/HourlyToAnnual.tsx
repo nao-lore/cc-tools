@@ -748,6 +748,27 @@ function DeductionNote({ employmentType }: { employmentType: EmploymentType }) {
       {employmentType === "seishain" && "社会保険料（約14.5%）・所得税・住民税を概算控除。扶養・各種控除は含みません。"}
       {employmentType === "part" && "社会保険料なし（週20時間未満想定）。所得税・住民税のみ概算控除。"}
       {employmentType === "freelance" && "国民健康保険・国民年金は含みません。所得税・住民税のみ概算控除。青色申告特別控除等は未考慮。"}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "時給 ↔ 年収 ↔ 月収 逆算",
+  "description": "時給から年収、年収から時給を即変換。勤務時間・日数・有給・残業込みで正確に計算",
+  "url": "https://tools.loresync.dev/hourly-to-annual",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

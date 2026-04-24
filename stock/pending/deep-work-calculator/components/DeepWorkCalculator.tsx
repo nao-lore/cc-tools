@@ -269,6 +269,27 @@ export default function DeepWorkCalculator() {
           </li>
         </ul>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ディープワーク時間計画",
+  "description": "1週間の予定から確保可能な集中作業時間を計算して最適化",
+  "url": "https://tools.loresync.dev/deep-work-calculator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

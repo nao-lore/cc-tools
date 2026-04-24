@@ -304,6 +304,27 @@ export default function GymManagementComparison() {
           ))}
         </div>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ジム管理システム比較",
+  "description": "ジム・フィットネススタジオ向けSaaSの機能・料金を横断比較",
+  "url": "https://tools.loresync.dev/gym-management-saas",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -145,6 +145,27 @@ border-radius: 10px 20px 30px 40px / 5px 10px 15px 20px;`}
           {/* AdSense slot */}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Border Radius Generator",
+  "description": "Visually design rounded corners for any element. Adjust each corner\n            independently, use elliptical radii, and copy the CSS instantly.",
+  "url": "https://tools.loresync.dev/border-radius",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -535,7 +535,28 @@ export default function Home() {
           <div className="flex justify-center gap-3 text-xs text-gray-400">
             <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
           </div>
-        </div>
+        
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Favicon Generator",
+  "description": "Create favicons from text, emoji, or uploaded images. Download as ICO\n          or PNG in all standard sizes.",
+  "url": "https://tools.loresync.dev/favicon-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
       </footer>
     </main>
   );

@@ -432,6 +432,27 @@ export default function StudySchedule() {
           )}
         </>
       )}
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "試験日逆算 学習計画",
+  "description": "試験日から逆算して最適な学習計画を自動生成するツール",
+  "url": "https://tools.loresync.dev/study-schedule",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

@@ -562,6 +562,27 @@ export default function PromptChainBuilder() {
           全ツール一覧を見る
         </a>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "プロンプトチェーン設計ツール",
+  "description": "複数ステップのプロンプトを視覚的に連結、入出力依存関係を可視化",
+  "url": "https://tools.loresync.dev/prompt-chain-builder",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

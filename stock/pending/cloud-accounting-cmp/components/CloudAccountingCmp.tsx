@@ -245,6 +245,27 @@ export default function CloudAccountingCmp() {
       <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-xs text-yellow-800">
         料金は2024年時点の公開情報に基づく税込目安です。キャンペーン価格・年払い割引・オプション費用は含みません。最新の価格は各公式サイトでご確認ください。
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "クラウド会計ソフト比較",
+  "description": "freee会計・マネーフォワードクラウド・弥生会計の料金と機能を比較",
+  "url": "https://tools.loresync.dev/cloud-accounting-cmp",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

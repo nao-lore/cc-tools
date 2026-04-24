@@ -599,6 +599,27 @@ export default function VercelPricing() {
           Enterpriseプランは要問合せのため非対応です。為替レートは変動しますので参考値としてご利用ください。
         </p>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Vercel 料金試算",
+  "description": "Vercelの利用料金をプラン・帯域幅・ビルド時間・関数実行時間から試算",
+  "url": "https://tools.loresync.dev/vercel-pricing",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

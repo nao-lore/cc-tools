@@ -619,6 +619,27 @@ export default function AwsS3Cost() {
         </a>
         {" "}をご確認ください。
       </p>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AWS S3 料金計算",
+  "description": "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算",
+  "url": "https://tools.loresync.dev/aws-s3-cost",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

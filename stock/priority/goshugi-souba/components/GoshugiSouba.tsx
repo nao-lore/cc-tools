@@ -587,6 +587,27 @@ export default function GoshugiSouba() {
           全ツール一覧を見る
         </a>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ご祝儀相場 計算",
+  "description": "結婚式のご祝儀金額を続柄・年代・地域・関係性から判定。相場表と注意事項付き",
+  "url": "https://tools.loresync.dev/goshugi-souba",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }

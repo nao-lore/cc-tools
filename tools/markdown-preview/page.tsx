@@ -122,6 +122,27 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Markdown Preview",
+  "description": "Write Markdown on the left, see it rendered in real time on the\n            right. Supports headings, bold, italic, links, code blocks, tables,\n            and more.",
+  "url": "https://tools.loresync.dev/markdown-preview",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "en"
+}`
+        }}
+      />
+      </div>
   );
 }

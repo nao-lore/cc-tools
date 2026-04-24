@@ -623,6 +623,27 @@ export default function SubscriptionLifetime() {
           ))}
         </div>
       </div>
-    </div>
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: `{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "サブスク 生涯コスト可視化",
+  "description": "月額サブスクリプションの合計額を1年・5年・10年で可視化。登録中の全サービスの総額を計算",
+  "url": "https://tools.loresync.dev/subscription-lifetime",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "inLanguage": "ja"
+}`
+        }}
+      />
+      </div>
   );
 }
