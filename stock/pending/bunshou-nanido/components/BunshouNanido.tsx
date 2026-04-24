@@ -441,6 +441,26 @@ export default function BunshouNanido() {
           <span className="text-xs text-gray-400">広告</span>
         </div>
       </div>
-    </div>
+    
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">この文章難易度判定ツールは何ができますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">文字数・漢字含有率・平均文長・語彙難易度から可読性スコア算出。入力するだけで即座に結果を表示します。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
+      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この文章難易度判定ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "文字数・漢字含有率・平均文長・語彙難易度から可読性スコア算出。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      </div>
   );
 }

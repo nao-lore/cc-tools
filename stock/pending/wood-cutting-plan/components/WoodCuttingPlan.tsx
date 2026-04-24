@@ -309,6 +309,26 @@ function SummaryCard({ label, value, highlight }: { label: string; value: string
     <div className={`rounded-xl border p-4 ${highlight ? "bg-blue-50 border-blue-300" : "bg-white border-gray-200"}`}>
       <div className="text-xs text-gray-500 mb-1">{label}</div>
       <div className={`text-2xl font-bold ${highlight ? "text-blue-700" : "text-gray-900"}`}>{value}</div>
-    </div>
+    
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">この木材カット割付計算ツールは何ができますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">板材から効率的なカット配置を計算。入力するだけで即座に結果を表示します。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
+      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この木材カット割付計算ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "板材から効率的なカット配置を計算。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      </div>
   );
 }

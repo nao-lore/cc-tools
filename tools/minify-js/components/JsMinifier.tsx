@@ -372,6 +372,79 @@ export default function JsMinifier() {
           )}
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-2">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "JavaScript の圧縮（Minify）とは何ですか？",
+              a: "変数名の短縮・コメント削除・改行やスペースの除去によってファイルサイズを小さくする処理です。ブラウザは圧縮前後で同じコードとして実行するため、動作には影響しません。本番環境へのデプロイ時に行うのが一般的です。",
+            },
+            {
+              q: "圧縮しても JavaScript の動作は変わりませんか？",
+              a: "このツールはホワイトスペースとコメントの除去のみを行い、ロジックは一切変更しません。ただし eval() で変数名を文字列参照しているコードや、Function.name に依存する処理は、本格的なミニファイアー（Terser 等）での変数名短縮時に問題が生じる場合があります。",
+            },
+            {
+              q: "Beautify はいつ使うと便利ですか？",
+              a: "CDN や npm パッケージから取得した圧縮済みのコードを読みたい時に便利です。インデントと改行を復元して可読性を上げます。デバッグ時に圧縮コードの該当行を探す前処理としても活用できます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "JavaScript の圧縮（Minify）とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "変数名の短縮・コメント削除・改行やスペースの除去によってファイルサイズを小さくする処理です。ブラウザは圧縮前後で同じコードとして実行するため、動作には影響しません。本番環境へのデプロイ時に行うのが一般的です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "圧縮しても JavaScript の動作は変わりませんか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "このツールはホワイトスペースとコメントの除去のみを行い、ロジックは一切変更しません。ただし eval() で変数名を文字列参照しているコードや、Function.name に依存する処理は、本格的なミニファイアー（Terser 等）での変数名短縮時に問題が生じる場合があります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Beautify はいつ使うと便利ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "CDN や npm パッケージから取得した圧縮済みのコードを読みたい時に便利です。インデントと改行を復元して可読性を上げます。デバッグ時に圧縮コードの該当行を探す前処理としても活用できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/minify-css", label: "CSS 圧縮・整形", desc: "CSS を圧縮・Beautify するツール" },
+            { href: "/json-formatter", label: "JSON フォーマッター", desc: "JSON を整形・圧縮・バリデーション" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

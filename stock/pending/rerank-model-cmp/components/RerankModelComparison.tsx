@@ -269,6 +269,26 @@ export default function RerankModelComparison() {
         <p className="font-semibold mb-1">Rerankモデルとは</p>
         <p>RAGパイプラインで検索結果の順位を再評価するモデル。ベクター検索の精度を大幅に改善できます。BEIR NDCG@10は標準ベンチマーク（高いほど高精度）。料金はAPI利用の場合の参考値です。</p>
       </div>
-    </div>
+    
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">このRerankモデル料金・性能比較ツールは何ができますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">CohereやVoyage、JinaなどのReranking APIの料金・性能・特徴を横断比較。入力するだけで即座に結果を表示します。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
+      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "このRerankモデル料金・性能比較ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "CohereやVoyage、JinaなどのReranking APIの料金・性能・特徴を横断比較。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      </div>
   );
 }

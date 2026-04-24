@@ -374,6 +374,79 @@ export default function AreaCalculator() {
           </div>
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
+        <h2 className="font-bold text-base mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "坪と平方メートルはどう換算しますか？",
+              a: "1坪 = 約3.30579 m² です。住宅の床面積表示でよく使われます。このツールでは入力単位と出力単位を独立して選択できるため、m² で計算して坪に変換することが簡単にできます。",
+            },
+            {
+              q: "アール（a）とヘクタール（ha）の違いは？",
+              a: "1a（アール）= 100m²、1ha（ヘクタール）= 10,000m² です。農地や公園の面積表示に使われます。1ha = 100a の関係です。",
+            },
+            {
+              q: "三角形の面積を計算するには何が必要ですか？",
+              a: "底辺と高さの2つの値が必要です。公式は「底辺 × 高さ ÷ 2」です。3辺の長さしかわからない場合はヘロンの公式が必要ですが、このツールでは底辺と高さで計算します。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-border pb-3 last:border-0 last:pb-0">
+              <p className="text-foreground font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-muted text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "坪と平方メートルはどう換算しますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "1坪 = 約3.30579 m² です。住宅の床面積表示でよく使われます。このツールでは入力単位と出力単位を独立して選択できるため、m² で計算して坪に変換することが簡単にできます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "アール（a）とヘクタール（ha）の違いは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "1a（アール）= 100m²、1ha（ヘクタール）= 10,000m² です。農地や公園の面積表示に使われます。1ha = 100a の関係です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "三角形の面積を計算するには何が必要ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "底辺と高さの2つの値が必要です。公式は「底辺 × 高さ ÷ 2」です。このツールでは底辺と高さで計算します。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
+        <h2 className="font-bold text-base mb-4">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/kenpei-yoseki", label: "建蔽率・容積率計算", desc: "敷地面積から建蔽率・容積率を計算" },
+            { href: "/measuring-converter", label: "単位変換", desc: "長さ・重さ・体積など各種単位を変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-accent border border-border rounded-xl p-3 hover:border-primary transition-colors"
+            >
+              <p className="text-foreground font-bold text-sm">{link.label}</p>
+              <p className="text-muted text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

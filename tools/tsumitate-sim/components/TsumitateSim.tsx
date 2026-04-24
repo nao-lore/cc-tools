@@ -299,6 +299,42 @@ export default function TsumitateSim() {
           積立額・年利・期間を入力すると結果が表示されます
         </div>
       )}
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "つみたてNISAのシミュレーションに使えますか？", a: "はい。つみたてNISAの年間上限（40万円、月約3.3万円）を積立額に設定し、運用年数と期待利回りを入力することで試算できます。非課税枠での運用効果を確認するのに便利です。" },
+            { q: "年利は何%で設定すればいいですか？", a: "オルカン・S&P500などのインデックスファンドは過去の長期平均で年利5〜7%程度が参考になります。ただし将来の利回りを保証するものではないため、複数のシナリオで比較することをお勧めします。" },
+            { q: "初期投資額とは何ですか？", a: "積立開始時点ですでに投資している元本の金額です。例えばまとまった資金がある場合に「最初の100万円＋毎月積立」という計算ができます。0円の場合は純粋な積立シミュレーションになります。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "つみたてNISAのシミュレーションに使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。つみたてNISAの年間上限（40万円）を積立額に設定し、運用年数と期待利回りを入力することで試算できます。" } },
+              { "@type": "Question", "name": "年利は何%で設定すればいいですか？", "acceptedAnswer": { "@type": "Answer", "text": "インデックスファンドは過去の長期平均で年利5〜7%程度が参考になります。将来の利回りを保証するものではありません。" } },
+              { "@type": "Question", "name": "初期投資額とは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "積立開始時点ですでに投資している元本の金額です。0円の場合は純粋な積立シミュレーションになります。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/risoku-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">利息計算ツール</a>
+            <a href="/loan-simulator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ローンシミュレーター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

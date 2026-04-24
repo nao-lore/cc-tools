@@ -375,6 +375,26 @@ export default function MorseCode() {
       <div className="w-full h-24 rounded-xl border border-dashed border-border flex items-center justify-center text-muted text-sm">
         Advertisement
       </div>
-    </div>
+    
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">Frequently Asked Questions</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">What does this Morse Code Translator tool do?</summary>
+      <p className="mt-2 text-sm text-gray-600">Translate text to and from Morse code with audio playback. Just enter your values and get instant results.</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">Is this tool free to use?</summary>
+      <p className="mt-2 text-sm text-gray-600">Yes, completely free. No sign-up or account required.</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">How accurate are the results?</summary>
+      <p className="mt-2 text-sm text-gray-600">Results are estimates based on standard formulas. For critical decisions, please consult a qualified professional.</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does this Morse Code Translator tool do?", "acceptedAnswer": {"@type": "Answer", "text": "Translate text to and from Morse code with audio playback. Just enter your values and get instant results."}}, {"@type": "Question", "name": "Is this tool free to use?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, completely free. No sign-up or account required."}}, {"@type": "Question", "name": "How accurate are the results?", "acceptedAnswer": {"@type": "Answer", "text": "Results are estimates based on standard formulas. For critical decisions, please consult a qualified professional."}}]})}} />
+      </div>
   );
 }

@@ -356,6 +356,42 @@ export default function InterestCalculator() {
           )}
         </>
       )}
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "単利と複利の違いは？", a: "単利は元本にのみ利息がつく計算方法です。複利は利息も元本に加算されて次期の利息計算に使われるため、長期間では大きく差がつきます。資産運用では一般的に複利が有利です。" },
+            { q: "年利3%で100万円を10年運用するといくらになりますか？", a: "複利（年複利）の場合、約134万4,000円になります（1,000,000 × 1.03^10）。単利の場合は1,300,000円です。期間が長いほど複利の優位性が大きくなります。" },
+            { q: "複利の計算頻度はどう選べばいいですか？", a: "年複利・半年複利・四半期複利・月複利から選択できます。一般的な定期預金は年複利、投資信託は日次・月次複利が多いです。計算頻度が高いほど最終的な受取額がわずかに増えます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "単利と複利の違いは？", "acceptedAnswer": { "@type": "Answer", "text": "単利は元本にのみ利息がつきます。複利は利息も元本に加算されて次期の利息計算に使われるため、長期間では大きく差がつきます。" } },
+              { "@type": "Question", "name": "年利3%で100万円を10年運用するといくらになりますか？", "acceptedAnswer": { "@type": "Answer", "text": "複利の場合、約134万4,000円になります。単利の場合は130万円です。" } },
+              { "@type": "Question", "name": "複利の計算頻度はどう選べばいいですか？", "acceptedAnswer": { "@type": "Answer", "text": "一般的な定期預金は年複利、投資信託は日次・月次複利が多いです。計算頻度が高いほど最終的な受取額がわずかに増えます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/tsumitate-sim" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">積立シミュレーター</a>
+            <a href="/loan-simulator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ローンシミュレーター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -229,6 +229,26 @@ export default function WineAgingCalculator() {
         <p className="font-semibold mb-1">注意事項</p>
         <p>飲み頃はヴィンテージの品質・生産者・保管状態により大きく変わります。本ツールは一般的な目安です。特に高品質ワインの開栓判断はソムリエに相談することをお勧めします。</p>
       </div>
-    </div>
+    
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">このワイン飲み頃判定ツールは何ができますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">ワインの品種・産地・ヴィンテージ・保管条件から最適な飲み頃時期を予測。入力するだけで即座に結果を表示します。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
+      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "このワイン飲み頃判定ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "ワインの品種・産地・ヴィンテージ・保管条件から最適な飲み頃時期を予測。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      </div>
   );
 }

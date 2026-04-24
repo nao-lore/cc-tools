@@ -178,6 +178,79 @@ export default function HashGenerator() {
           </p>
         )}
       </section>
+
+      {/* FAQ */}
+      <section className="rounded-xl border border-card-border bg-card-bg p-6">
+        <h2 className="text-lg font-semibold text-accent mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "SHA-256 と MD5 はどちらを使うべきですか？",
+              a: "セキュリティ用途には SHA-256 以上を使用してください。MD5 と SHA-1 は衝突攻撃に対して脆弱であることが証明されており、パスワードハッシュや署名検証には適しません。ファイル整合性確認など非セキュリティ用途では MD5 でも実用上問題ありません。",
+            },
+            {
+              q: "ハッシュ値から元のデータを復元できますか？",
+              a: "できません。ハッシュ関数は一方向関数であり、出力から入力を逆算することは計算上不可能です。これがパスワード保存にハッシュが使われる理由です。ただし辞書攻撃やレインボーテーブルには注意が必要です。",
+            },
+            {
+              q: "ファイルのハッシュ値を確認するのはなぜですか？",
+              a: "ダウンロードしたファイルが改ざんされていないか、転送中にデータが壊れていないかを確認するためです。公式サイトが提供するハッシュ値と一致すれば、ファイルの完全性が保証されます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-card-border pb-3 last:border-0 last:pb-0">
+              <p className="text-foreground font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-muted text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "SHA-256 と MD5 はどちらを使うべきですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "セキュリティ用途には SHA-256 以上を使用してください。MD5 と SHA-1 は衝突攻撃に対して脆弱であることが証明されており、パスワードハッシュや署名検証には適しません。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ハッシュ値から元のデータを復元できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "できません。ハッシュ関数は一方向関数であり、出力から入力を逆算することは計算上不可能です。これがパスワード保存にハッシュが使われる理由です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ファイルのハッシュ値を確認するのはなぜですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ダウンロードしたファイルが改ざんされていないか、転送中にデータが壊れていないかを確認するためです。公式サイトが提供するハッシュ値と一致すれば、ファイルの完全性が保証されます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="rounded-xl border border-card-border bg-card-bg p-6">
+        <h2 className="text-lg font-semibold text-accent mb-4">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/base64-tools", label: "Base64 エンコード/デコード", desc: "テキストや画像を Base64 形式に変換" },
+            { href: "/password-generator", label: "パスワードジェネレーター", desc: "安全なランダムパスワードを生成" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-accent/30 hover:bg-accent/50 border border-card-border rounded-xl p-3 transition-colors"
+            >
+              <p className="text-foreground font-bold text-sm">{link.label}</p>
+              <p className="text-muted text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

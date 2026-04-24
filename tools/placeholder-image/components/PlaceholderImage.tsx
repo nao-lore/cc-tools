@@ -272,6 +272,42 @@ export default function PlaceholderImage() {
           {copied ? "Copied!" : "Copy Data URI"}
         </button>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "プレースホルダー画像とは何ですか？", a: "Web開発やデザインのモックアップ時に、実際の画像が用意できていない箇所に一時的に使う仮の画像です。サイズや色をカスタマイズでき、開発中のレイアウト確認に役立ちます。" },
+            { q: "生成した画像はどのように使いますか？", a: "「ダウンロード」ボタンでPNG・JPEG・WebP形式で保存できます。また画像URLをコピーしてimgタグのsrc属性に貼り付けることも可能です。" },
+            { q: "対応している画像フォーマットは何ですか？", a: "PNG・JPEG・WebPの3種類に対応しています。WebPは高圧縮・高品質な次世代フォーマットで、Webパフォーマンスの向上に適しています。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "プレースホルダー画像とは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "Web開発やデザインのモックアップ時に、実際の画像が用意できていない箇所に一時的に使う仮の画像です。" } },
+              { "@type": "Question", "name": "生成した画像はどのように使いますか？", "acceptedAnswer": { "@type": "Answer", "text": "ダウンロードボタンでPNG・JPEG・WebP形式で保存できます。また画像URLをコピーしてimgタグのsrc属性に貼り付けることも可能です。" } },
+              { "@type": "Question", "name": "対応している画像フォーマットは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "PNG・JPEG・WebPの3種類に対応しています。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGP画像プレビュー</a>
+            <a href="/svg-to-png" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">SVG → PNG 変換</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

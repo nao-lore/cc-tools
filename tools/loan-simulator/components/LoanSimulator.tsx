@@ -454,6 +454,79 @@ export default function LoanSimulator() {
           借入金額・金利・返済期間を正しく入力してください
         </p>
       )}
+
+      {/* FAQ */}
+      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
+        <h2 className="font-bold text-base mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "元利均等返済と元金均等返済はどちらが得ですか？",
+              a: "総返済額は元金均等返済の方が少なくなります。ただし元金均等は返済初期の月額が高く、審査上の返済比率も不利になる場合があります。資金に余裕がある方には元金均等、毎月の負担を一定にしたい方には元利均等が向いています。",
+            },
+            {
+              q: "返済比率の目安はどのくらいですか？",
+              a: "一般的に年収の 25% 以内が安全圏とされています。住宅ローン審査では多くの金融機関が 35% 以内を基準としています。このシミュレーターでは年収を入力すると返済比率を自動計算します。",
+            },
+            {
+              q: "ボーナス返済を設定するメリットは？",
+              a: "月々の返済負担を抑えながら、ボーナス時に多く返済できます。ただしボーナスが減額・不支給になるリスクもあります。安定した収入が見込める場合のみ設定することをお勧めします。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-border pb-3 last:border-0 last:pb-0">
+              <p className="text-foreground font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-muted text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "元利均等返済と元金均等返済はどちらが得ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "総返済額は元金均等返済の方が少なくなります。ただし元金均等は返済初期の月額が高く、審査上の返済比率も不利になる場合があります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "返済比率の目安はどのくらいですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "一般的に年収の 25% 以内が安全圏とされています。住宅ローン審査では多くの金融機関が 35% 以内を基準としています。" },
+              },
+              {
+                "@type": "Question",
+                "name": "ボーナス返済を設定するメリットは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "月々の返済負担を抑えながら、ボーナス時に多く返済できます。ただしボーナスが減額・不支給になるリスクもあります。安定した収入が見込める場合のみ設定することをお勧めします。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
+        <h2 className="font-bold text-base mb-4">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/risoku-keisan", label: "利息計算機", desc: "元本・金利・期間から利息を計算" },
+            { href: "/tsumitate-sim", label: "積立シミュレーター", desc: "毎月の積立で将来の資産をシミュレーション" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-accent border border-border rounded-xl p-3 hover:border-primary transition-colors"
+            >
+              <p className="text-foreground font-bold text-sm">{link.label}</p>
+              <p className="text-muted text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

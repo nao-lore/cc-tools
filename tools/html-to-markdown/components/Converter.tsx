@@ -215,6 +215,79 @@ export default function Converter() {
           )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-border rounded-xl shadow-sm p-6 mt-6">
+        <h2 className="text-base font-bold text-foreground mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "HTML を Markdown に変換するのはなぜ便利ですか？",
+              a: "ブログ記事や CMS からコンテンツをエクスポートしたり、GitHub の README やドキュメントとして再利用するときに便利です。Markdown はプレーンテキストなので、バージョン管理や編集がしやすくなります。",
+            },
+            {
+              q: "表や画像も変換できますか？",
+              a: "はい。&lt;table&gt; は Markdown テーブル記法に、&lt;img&gt; は ![alt](url) 形式に自動変換されます。ただし複雑なスタイルやネスト構造は一部省略されることがあります。",
+            },
+            {
+              q: "変換結果をそのままコピーして使えますか？",
+              a: "「Copy Markdown」ボタンでクリップボードにコピーできます。また「Preview」ボタンで Markdown のレンダリング結果を確認してから利用することをお勧めします。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-border pb-3 last:border-0 last:pb-0">
+              <p className="text-foreground font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-foreground/60 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "HTML を Markdown に変換するのはなぜ便利ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ブログ記事や CMS からコンテンツをエクスポートしたり、GitHub の README やドキュメントとして再利用するときに便利です。Markdown はプレーンテキストなので、バージョン管理や編集がしやすくなります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "表や画像も変換できますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "はい。table タグは Markdown テーブル記法に、img タグは ![alt](url) 形式に自動変換されます。ただし複雑なスタイルやネスト構造は一部省略されることがあります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "変換結果をそのままコピーして使えますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "「Copy Markdown」ボタンでクリップボードにコピーできます。また「Preview」ボタンで Markdown のレンダリング結果を確認してから利用することをお勧めします。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-border rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-foreground mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/markdown-preview", label: "Markdown プレビュー", desc: "Markdown をリアルタイムでプレビュー" },
+            { href: "/html-entity", label: "HTML エンティティ変換", desc: "HTML の特殊文字をエンティティに変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-slate-50 hover:bg-slate-100 border border-border rounded-xl p-3 transition-colors"
+            >
+              <p className="text-foreground font-bold text-sm">{link.label}</p>
+              <p className="text-foreground/60 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

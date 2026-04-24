@@ -1,0 +1,164 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777010274512,
+  "projectRoot": "/Users/nn/projects/cc-tools",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "next",
+        "version": "16.2.4",
+        "category": "fullstack"
+      },
+      {
+        "name": "react",
+        "version": "19.2.4",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "19.2.4",
+        "category": "frontend"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": null,
+    "lintCommand": "npm run lint",
+    "devCommand": "npm run dev",
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint"
+    }
+  },
+  "conventions": {
+    "namingStyle": "camelCase",
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "lib",
+      "public",
+      "scripts"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 6,
+      "lastAccessed": 1777010274493,
+      "keyFiles": [
+        "favicon.ico",
+        "globals.css",
+        "layout.tsx",
+        "page.tsx",
+        "robots.ts"
+      ]
+    },
+    "lib": {
+      "path": "lib",
+      "purpose": "Library code",
+      "fileCount": 3,
+      "lastAccessed": 1777010274496,
+      "keyFiles": [
+        "categories.ts",
+        "tool-categories.ts",
+        "tools-config.ts"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 6,
+      "lastAccessed": 1777010274497,
+      "keyFiles": [
+        "file.svg",
+        "globe.svg",
+        "google0a4b6853a79cd921.html",
+        "next.svg",
+        "vercel.svg"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 9,
+      "lastAccessed": 1777010274498,
+      "keyFiles": [
+        "add-seo-sections.py",
+        "apply-layout-variants.py",
+        "backlog-phase2.md",
+        "backlog-v2.json",
+        "backlog.json"
+      ]
+    },
+    "stock": {
+      "path": "stock",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1777010274502,
+      "keyFiles": []
+    },
+    "tools": {
+      "path": "tools",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1777010274503,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "tools/minify-css/components/CssMinifier.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010311928,
+      "type": "file"
+    },
+    {
+      "path": "tools/minify-js/components/JsMinifier.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010344882,
+      "type": "file"
+    },
+    {
+      "path": "tools/moji-count/components/MojiCounter.tsx",
+      "accessCount": 2,
+      "lastAccessed": 1777010372153,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

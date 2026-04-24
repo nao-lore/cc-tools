@@ -220,6 +220,42 @@ function ItemCard({
           </div>
         </div>
       )}
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "「3割引」と「30%OFF」は同じですか？", a: "はい、同じです。日本語の「割」は10%を1割として表します。3割引＝30%OFFです。本ツールでは「割引き」入力にも対応しています。" },
+            { q: "税込価格に割引を適用するには？", a: "税込価格を元の価格として入力して割引計算してください。割引後の税込価格が求められます。税抜価格で計算してから消費税を加算する場合は税計算ツールと組み合わせてご利用ください。" },
+            { q: "複数商品の合計割引額を計算できますか？", a: "はい。「商品を追加」ボタンで複数商品を登録でき、それぞれに異なる割引率・割引額を設定して合計の節約額と支払額を計算できます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "「3割引」と「30%OFF」は同じですか？", "acceptedAnswer": { "@type": "Answer", "text": "はい、同じです。日本語の「割」は10%を1割として表します。3割引＝30%OFFです。" } },
+              { "@type": "Question", "name": "税込価格に割引を適用するには？", "acceptedAnswer": { "@type": "Answer", "text": "税込価格を元の価格として入力して割引計算してください。" } },
+              { "@type": "Question", "name": "複数商品の合計割引額を計算できますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。商品を追加ボタンで複数商品を登録でき、合計の節約額と支払額を計算できます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</a>
+            <a href="/gacha-cost-ceiling" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ガチャ天井計算</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

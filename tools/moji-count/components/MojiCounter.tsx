@@ -211,6 +211,79 @@ export function MojiCounter() {
           <StatCard label="英数字数" value={stats.alphanumeric} />
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "文字数カウントは何に役立ちますか？",
+              a: "X（旧Twitter）の投稿は全角1文字＝2文字換算で140字、LINEスタンプの説明文・メルマガ件名・SEOメタディスクリプションなど、プラットフォームごとに文字数制限があります。このツールでスペースあり・なしの両方を即座に確認できます。",
+            },
+            {
+              q: "全角と半角の違いは何ですか？",
+              a: "全角文字（ひらがな・カタカナ・漢字・全角英数字）は1文字で2バイトを占め、視覚的に半角の2倍の幅を持ちます。半角文字（英数字・半角記号・半角カタカナ）は1文字1バイトです。SNS や一部フォームでは全角と半角を別々にカウントするため、両方の数値を把握しておくと安心です。",
+            },
+            {
+              q: "UTF-8 と Shift_JIS のバイト数はなぜ違うのですか？",
+              a: "UTF-8 では日本語1文字が3バイト、Shift_JIS では2バイトになります。そのため同じテキストでも Shift_JIS の方がバイト数が少なくなります。メールシステムや古い Web フォームでは Shift_JIS のバイト上限が設定されていることがあるため、両方のバイト数を確認できるようにしています。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "文字数カウントは何に役立ちますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "X（旧Twitter）の投稿は全角1文字＝2文字換算で140字、LINEスタンプの説明文・メルマガ件名・SEOメタディスクリプションなど、プラットフォームごとに文字数制限があります。このツールでスペースあり・なしの両方を即座に確認できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "全角と半角の違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "全角文字（ひらがな・カタカナ・漢字・全角英数字）は1文字で2バイトを占め、視覚的に半角の2倍の幅を持ちます。半角文字（英数字・半角記号・半角カタカナ）は1文字1バイトです。SNS や一部フォームでは全角と半角を別々にカウントするため、両方の数値を把握しておくと安心です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "UTF-8 と Shift_JIS のバイト数はなぜ違うのですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "UTF-8 では日本語1文字が3バイト、Shift_JIS では2バイトになります。そのため同じテキストでも Shift_JIS の方がバイト数が少なくなります。メールシステムや古い Web フォームでは Shift_JIS のバイト上限が設定されていることがあるため、両方のバイト数を確認できるようにしています。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/zenkaku-hankaku", label: "全角・半角変換", desc: "全角↔半角を一括変換するツール" },
+            { href: "/markdown-preview", label: "Markdown プレビュー", desc: "Markdown をリアルタイムでプレビュー" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

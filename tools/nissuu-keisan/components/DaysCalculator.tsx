@@ -453,6 +453,42 @@ function HolidayList({ holidays }: { holidays: Holiday[] }) {
           );
         })}
       </ul>
+
+      {/* FAQ */}
+      <div className="mt-8 border-t border-gray-100 pt-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "営業日数と暦日数の違いは何ですか？", a: "暦日数は土日祝日を含む全日数です。営業日数は土日および祝日を除いた実際の業務日数を指します。本ツールでは日本の祝日を考慮した営業日計算が可能です。" },
+            { q: "祝日はどの年まで対応していますか？", a: "2024年以降の日本の主要な祝日に対応しています。振替休日も含めて計算されます。" },
+            { q: "○日後の日付を求めるには？", a: "「○日後を計算」モードを選択し、起算日と日数を入力してください。土日祝日をスキップして営業日ベースでの計算も選択できます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "営業日数と暦日数の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "暦日数は土日祝日を含む全日数です。営業日数は土日および祝日を除いた実際の業務日数を指します。" } },
+              { "@type": "Question", "name": "祝日はどの年まで対応していますか？", "acceptedAnswer": { "@type": "Answer", "text": "2024年以降の日本の主要な祝日に対応しています。振替休日も含めて計算されます。" } },
+              { "@type": "Question", "name": "○日後の日付を求めるには？", "acceptedAnswer": { "@type": "Answer", "text": "「○日後を計算」モードを選択し、起算日と日数を入力してください。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</a>
+            <a href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

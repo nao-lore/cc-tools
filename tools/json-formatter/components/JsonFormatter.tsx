@@ -242,6 +242,79 @@ export default function JsonFormatter() {
           </div>
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "JSON のバリデーションとは何ですか？",
+              a: "JSON の構文が正しいかどうかを確認することです。シングルクォートの使用、末尾カンマ、コメントの混入などは標準 JSON では無効です。このツールはリアルタイムでバリデーションし、エラー箇所の行番号を表示します。",
+            },
+            {
+              q: "Minify（最小化）はなぜ使いますか？",
+              a: "API レスポンスやファイル転送時に不要な空白を取り除いてデータサイズを削減するためです。可読性は下がりますが、ネットワーク帯域の節約になります。開発時は Format を使い、本番送信前に Minify するのが一般的です。",
+            },
+            {
+              q: "JSON5 や JSONC はサポートしていますか？",
+              a: "このツールは標準 JSON（RFC 8259）のみに対応しています。コメントや末尾カンマを含む JSON5・JSONC は無効とみなされます。事前にコメントを削除してからフォーマットしてください。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "JSON のバリデーションとは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "JSON の構文が正しいかどうかを確認することです。シングルクォートの使用、末尾カンマ、コメントの混入などは標準 JSON では無効です。このツールはリアルタイムでバリデーションし、エラー箇所の行番号を表示します。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Minify（最小化）はなぜ使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "API レスポンスやファイル転送時に不要な空白を取り除いてデータサイズを削減するためです。開発時は Format を使い、本番送信前に Minify するのが一般的です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "JSON5 や JSONC はサポートしていますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "このツールは標準 JSON（RFC 8259）のみに対応しています。コメントや末尾カンマを含む JSON5・JSONC は無効とみなされます。事前にコメントを削除してからフォーマットしてください。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/json-to-csv", label: "JSON → CSV 変換", desc: "JSON データを CSV 形式に一括変換" },
+            { href: "/yaml-to-json", label: "YAML → JSON 変換", desc: "YAML ファイルを JSON 形式に変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

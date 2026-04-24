@@ -1,42 +1,26 @@
 import RobotsTxtParser from "./components/RobotsTxtParser";
 
-export default function Home() {
+export default function Page() {
   return (
-    <>
-      <header className="bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900">
-            robots.txt Parser & Tester
-          </h1>
-          <p className="mt-2 text-slate-500 text-lg">
-            Parse robots.txt files into structured tables. Test if a URL is allowed or disallowed for any user-agent.
-          </p>
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-8 px-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">robots.txt Parser</h1>
+          <p className="text-gray-400 mb-8">Parse and visualize a robots.txt file as a structured table</p>
+          <RobotsTxtParser />
         </div>
-      </header>
-
-      <main className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full">
-        <RobotsTxtParser />
-      </main>
-
-      <footer className="border-t border-slate-200 mt-12 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">
-            robots.txt Parser & Tester — Free online tool. No signup required.
-          </p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <a href="https://sitemap-generator-chi.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Sitemap Generator</a>
-              <a href="https://canonical-tag-checker.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Canonical Tag Checker</a>
-              <a href="https://structured-data-builder.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Structured Data Builder</a>
-              <a href="https://csp-builder.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSP Builder</a>
+        <aside className="hidden lg:block space-y-6">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">関連ツール</h3>
+            <div className="space-y-2 text-sm">
+              <a href="/" className="block text-blue-400 hover:text-blue-300">← ツール一覧に戻る</a>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+          <div className="bg-gray-900 rounded-xl border border-gray-800 border-dashed p-6 text-center">
+            <span className="text-gray-600 text-xs">Ad Space</span>
           </div>
-        </div>
-      </footer>
-    </>
+        </aside>
+      </div>
+    </div>
   );
 }

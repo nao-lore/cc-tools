@@ -1,12 +1,26 @@
 "use client";
 import ChoJyuIwai from "./components/ChoJyuIwai";
-export default function ChoJyuIwaiPage() {
+
+export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">長寿祝い 一覧・年齢早見表</h1>
-        <p className="text-gray-600 mb-8">還暦から百寿まで、年齢・名称・テーマカラーを一覧表示。生年から該当する長寿祝いを自動判定します。</p>
-        <ChoJyuIwai />
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-8 px-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">長寿祝い一覧</h1>
+          <p className="text-gray-400 mb-8">還暦・古希・喜寿・傘寿・米寿・卒寿・白寿・百寿まで、年齢・名称・テーマカラーを一覧表示。生年から該当する長寿祝いを自動判定。</p>
+          <ChoJyuIwai />
+        </div>
+        <aside className="hidden lg:block space-y-6">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">関連ツール</h3>
+            <div className="space-y-2 text-sm">
+              <a href="/" className="block text-blue-400 hover:text-blue-300">← ツール一覧に戻る</a>
+            </div>
+          </div>
+          <div className="bg-gray-900 rounded-xl border border-gray-800 border-dashed p-6 text-center">
+            <span className="text-gray-600 text-xs">Ad Space</span>
+          </div>
+        </aside>
       </div>
     </div>
   );

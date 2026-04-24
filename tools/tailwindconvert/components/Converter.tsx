@@ -242,6 +242,42 @@ export default function Converter() {
           </pre>
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "CSSからTailwindに変換できないスタイルはありますか？", a: "Tailwindのデフォルトスケールに存在しない値（例: padding: 7px）は、任意の値としてp-[7px]のような形式に変換されます。一部のCSS関数や複雑なセレクターは変換されない場合があります。" },
+            { q: "Tailwind CSS v3とv4の違いはありますか？", a: "v4ではCSS変数ベースの設計に移行し、tailwind.config.jsが不要になりました。クラス名の変更もあります。本ツールはv3の記法を基準にしています。" },
+            { q: "変換結果をそのまま本番コードに使えますか？", a: "目安として使用し、実際のコードではデザインシステムとの整合性を確認してください。特にカスタム値を含む場合はTailwindの設定ファイルへの追加が必要な場合があります。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "CSSからTailwindに変換できないスタイルはありますか？", "acceptedAnswer": { "@type": "Answer", "text": "Tailwindのスケールにない値は任意の値としてp-[7px]のような形式に変換されます。" } },
+              { "@type": "Question", "name": "Tailwind CSS v3とv4の違いはありますか？", "acceptedAnswer": { "@type": "Answer", "text": "v4ではCSS変数ベースの設計に移行し、tailwind.config.jsが不要になりました。本ツールはv3を基準にしています。" } },
+              { "@type": "Question", "name": "変換結果をそのまま本番コードに使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "目安として使用し、実際のコードではデザインシステムとの整合性を確認してください。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/px-to-rem" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">px → rem 変換</a>
+            <a href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

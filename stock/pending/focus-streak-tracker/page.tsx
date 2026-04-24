@@ -1,13 +1,20 @@
 "use client";
 import FocusStreakTracker from "./components/FocusStreakTracker";
 
-export default function FocusStreakTrackerPage() {
+export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">集中ストリーク トラッカー</h1>
-        <p className="text-gray-600 mb-8">連続集中日数を記録・可視化。中断率・平均集中時間の分析で習慣化をサポート。</p>
-        <FocusStreakTracker />
+    <div className="min-h-screen bg-slate-50 py-6 px-4">
+      <div className="max-w-5xl mx-auto">
+        <nav className="text-sm text-gray-500 mb-4">
+          <a href="/" className="hover:text-gray-700">ツール一覧</a>
+          <span className="mx-2">›</span>
+          <span className="text-gray-900">集中ストリークトラッカー</span>
+        </nav>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">集中ストリークトラッカー</h1>
+          <p className="text-gray-500 mb-8">連続集中日数記録、中断率分析</p>
+          <FocusStreakTracker />
+        </div>
       </div>
     </div>
   );

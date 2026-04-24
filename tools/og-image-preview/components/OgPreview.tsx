@@ -563,6 +563,42 @@ export default function OgPreview() {
 
       {/* Generated Meta Tags */}
       <MetaTagsOutput data={data} />
+
+      {/* FAQ */}
+      <div className="mt-8 border-t border-gray-100 pt-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "OGPタグとは何ですか？", a: "OGP（Open Graph Protocol）タグは、SNSでURLをシェアした際にタイトル・説明・画像を正しく表示させるためのHTMLメタタグです。Facebook・Twitter・LINEなどで使用されます。" },
+            { q: "OG画像の推奨サイズは？", a: "一般的に1200×630pxが推奨されています。Twitterカードでは最低600×314px以上が必要です。画像が設定されていない場合、SNS側のデフォルト表示になります。" },
+            { q: "タイトルや説明の文字数制限はありますか？", a: "タイトルは60〜70文字以内、descriptionは120〜160文字以内が推奨です。超過するとSNSやGoogle検索で切り捨てられる場合があります。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "OGPタグとは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "OGP（Open Graph Protocol）タグは、SNSでURLをシェアした際にタイトル・説明・画像を正しく表示させるためのHTMLメタタグです。" } },
+              { "@type": "Question", "name": "OG画像の推奨サイズは？", "acceptedAnswer": { "@type": "Answer", "text": "一般的に1200×630pxが推奨されています。Twitterカードでは最低600×314px以上が必要です。" } },
+              { "@type": "Question", "name": "タイトルや説明の文字数制限はありますか？", "acceptedAnswer": { "@type": "Answer", "text": "タイトルは60〜70文字以内、descriptionは120〜160文字以内が推奨です。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/meta-tag-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">メタタグジェネレーター</a>
+            <a href="/placeholder-image" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">プレースホルダー画像生成</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

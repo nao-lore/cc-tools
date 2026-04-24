@@ -560,6 +560,42 @@ export default function YamlJsonConverter() {
           />
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "YAMLとJSONの違いは何ですか？", a: "YAMLは人間が読みやすい形式で、コメントが書けてインデントでネストを表現します。JSONは波括弧・引用符を使いより厳密な構文を持ちます。DockerやKubernetesの設定はYAML、Web APIのレスポンスはJSONが一般的です。" },
+            { q: "YAMLのコメントはJSON変換後も残りますか？", a: "いいえ。JSONはコメントをサポートしていないため、YAML内のコメント（#で始まる行）はJSON変換時に削除されます。" },
+            { q: "JSONからYAMLへの逆変換もできますか？", a: "はい。変換方向を「JSON → YAML」に切り替えることでJSONをYAML形式に変換できます。設定ファイルの形式変換に便利です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "YAMLとJSONの違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "YAMLは人間が読みやすくコメントが書ける形式です。JSONはより厳密な構文を持ちWeb APIで広く使われています。" } },
+              { "@type": "Question", "name": "YAMLのコメントはJSON変換後も残りますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。JSONはコメントをサポートしていないため、YAML内のコメントはJSON変換時に削除されます。" } },
+              { "@type": "Question", "name": "JSONからYAMLへの逆変換もできますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。変換方向をJSON → YAMLに切り替えることでJSONをYAML形式に変換できます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</a>
+            <a href="/xml-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">XML フォーマッター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

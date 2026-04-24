@@ -784,6 +784,80 @@ export default function AsciiArtGenerator() {
           ))}
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="mt-10 space-y-4">
+        <h2 className="text-lg font-semibold text-gray-900">よくある質問</h2>
+        <div className="space-y-3">
+          {[
+            {
+              q: "ASCIIアートとは何ですか？",
+              a: "ASCIIアートは、ASCII文字（英数字や記号）だけで絵や文字を表現する表現技法です。メールやコードのコメント、READMEファイルなどで視覚的なアクセントとして使われます。",
+            },
+            {
+              q: "生成したASCIIアートはどこで使えますか？",
+              a: "GitHubのREADME、ターミナルのバナー、コードコメント、Slack・Discordのメッセージ、メールの署名などで活用できます。等幅フォント環境であればどこでも正しく表示されます。",
+            },
+            {
+              q: "日本語や漢字は対応していますか？",
+              a: "このツールは英数字と主要な記号に対応しています。日本語・漢字は現在サポート外です。英字で入力したテキストやボックスアートを組み合わせてご利用ください。",
+            },
+          ].map(({ q, a }) => (
+            <details key={q} className="border border-gray-200 rounded-lg p-4 group">
+              <summary className="font-medium text-gray-800 cursor-pointer list-none flex justify-between items-center">
+                {q}
+                <span className="text-gray-400 group-open:rotate-180 transition-transform">▾</span>
+              </summary>
+              <p className="mt-2 text-sm text-gray-600 leading-relaxed">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "ASCIIアートとは何ですか？",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "ASCIIアートは、ASCII文字（英数字や記号）だけで絵や文字を表現する表現技法です。メールやコードのコメント、READMEファイルなどで視覚的なアクセントとして使われます。",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "生成したASCIIアートはどこで使えますか？",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "GitHubのREADME、ターミナルのバナー、コードコメント、Slack・Discordのメッセージ、メールの署名などで活用できます。等幅フォント環境であればどこでも正しく表示されます。",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "日本語や漢字は対応していますか？",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "このツールは英数字と主要な記号に対応しています。日本語・漢字は現在サポート外です。英字で入力したテキストやボックスアートを組み合わせてご利用ください。",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+        <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
+        <div className="flex flex-wrap gap-2">
+          <a href="/tools/ascii-flowchart" className="text-sm text-blue-600 hover:underline">ASCIIフローチャート生成</a>
+          <a href="/tools/dummy-text" className="text-sm text-blue-600 hover:underline">ダミーテキスト生成</a>
+        </div>
+      </div>
     </div>
   );
 }

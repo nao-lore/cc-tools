@@ -502,6 +502,79 @@ export default function ImageCompressor() {
           </div>
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mt-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "WebP と JPEG はどちらが良いですか？",
+              a: "同じ画質なら WebP は JPEG より 25〜35% ファイルサイズが小さくなります。ほぼすべての現代ブラウザが WebP に対応しているため、ウェブ向けには WebP を推奨します。古いシステムとの互換性が必要な場合は JPEG を選んでください。",
+            },
+            {
+              q: "圧縮してもファイルサイズが大きくなる場合があるのはなぜですか？",
+              a: "すでに最適化された JPEG を PNG に変換したり、低品質の画像を高品質設定で変換するとサイズが増えることがあります。その場合は元のフォーマットのまま品質を下げるか、WebP 形式を試してみてください。",
+            },
+            {
+              q: "アップロードした画像はサーバーに送信されますか？",
+              a: "いいえ。すべての処理はブラウザ上で完結しており、画像データはサーバーに送信されません。プライバシーを保護したまま安心してご利用いただけます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "WebP と JPEG はどちらが良いですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "同じ画質なら WebP は JPEG より 25〜35% ファイルサイズが小さくなります。ほぼすべての現代ブラウザが WebP に対応しているため、ウェブ向けには WebP を推奨します。" },
+              },
+              {
+                "@type": "Question",
+                "name": "圧縮してもファイルサイズが大きくなる場合があるのはなぜですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "すでに最適化された JPEG を PNG に変換したり、低品質の画像を高品質設定で変換するとサイズが増えることがあります。その場合は元のフォーマットのまま品質を下げるか、WebP 形式を試してみてください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "アップロードした画像はサーバーに送信されますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "いいえ。すべての処理はブラウザ上で完結しており、画像データはサーバーに送信されません。プライバシーを保護したまま安心してご利用いただけます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/image-to-base64", label: "画像 → Base64 変換", desc: "画像を Base64 データ URI に変換" },
+            { href: "/svg-to-png", label: "SVG → PNG 変換", desc: "SVG ファイルを PNG 画像に変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

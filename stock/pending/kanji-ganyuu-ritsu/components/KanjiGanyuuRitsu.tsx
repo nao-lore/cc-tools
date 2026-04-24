@@ -221,7 +221,27 @@ export default function KanjiGanyuuRitsu() {
                     <div className={`h-4 rounded-full ${bg} transition-all duration-700`} style={{ width: `${score}%` }} />
                   </div>
                   <p className="text-xs text-gray-500 mt-2">漢字比率が高いほど難読度が上がります（漢字含有率 {pct(result.stats.kanji, result.stats.total)}%）</p>
-                </div>
+                
+      {/* FAQ */}
+      <section className="mt-12 space-y-4">
+        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
+        <div className="space-y-3">
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">この漢字含有率計算ツールは何ができますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">テキスト中の漢字・ひらがな・カタカナ・英数字の比率を分析。入力するだけで即座に結果を表示します。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
+      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
+    </details>
+    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
+      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
+      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
+    </details>
+        </div>
+      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この漢字含有率計算ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "テキスト中の漢字・ひらがな・カタカナ・英数字の比率を分析。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
+      </div>
               );
             })()}
           </div>

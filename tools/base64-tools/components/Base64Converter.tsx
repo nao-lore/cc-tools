@@ -298,6 +298,69 @@ export default function Base64Converter() {
           />
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="mt-8 space-y-3">
+        <h2 className="text-base font-semibold text-foreground">よくある質問</h2>
+        {[
+          {
+            q: "Base64エンコードとは何ですか？",
+            a: "Base64は、バイナリデータを64種類のASCII文字で表現するエンコード方式です。画像やファイルをテキストとして扱えるため、メールの添付やJSON・HTMLへの埋め込みに広く使われます。",
+          },
+          {
+            q: "Base64エンコードするとデータサイズはどう変わりますか？",
+            a: "Base64エンコードするとデータサイズは元の約1.33倍（約33%増）になります。3バイトのデータが4文字のBase64文字列に変換される仕組みのためです。",
+          },
+          {
+            q: "ファイルをドラッグ＆ドロップでエンコードできますか？",
+            a: "はい。エンコードモードでは入力エリアにファイルをドラッグ＆ドロップするとファイルの内容をBase64に変換できます。画像の場合はプレビューも表示されます。",
+          },
+        ].map(({ q, a }) => (
+          <details key={q} className="border border-panel-border rounded-lg p-4 group">
+            <summary className="font-medium text-foreground cursor-pointer list-none flex justify-between items-center">
+              {q}
+              <span className="text-muted group-open:rotate-180 transition-transform">▾</span>
+            </summary>
+            <p className="mt-2 text-sm text-muted leading-relaxed">{a}</p>
+          </details>
+        ))}
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "Base64エンコードとは何ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "Base64は、バイナリデータを64種類のASCII文字で表現するエンコード方式です。画像やファイルをテキストとして扱えるため、メールの添付やJSON・HTMLへの埋め込みに広く使われます。" },
+              },
+              {
+                "@type": "Question",
+                name: "Base64エンコードするとデータサイズはどう変わりますか？",
+                acceptedAnswer: { "@type": "Answer", text: "Base64エンコードするとデータサイズは元の約1.33倍（約33%増）になります。3バイトのデータが4文字のBase64文字列に変換される仕組みのためです。" },
+              },
+              {
+                "@type": "Question",
+                name: "ファイルをドラッグ＆ドロップでエンコードできますか？",
+                acceptedAnswer: { "@type": "Answer", text: "はい。エンコードモードでは入力エリアにファイルをドラッグ＆ドロップするとファイルの内容をBase64に変換できます。画像の場合はプレビューも表示されます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <div className="mt-4 p-4 rounded-lg border border-panel-border bg-panel-bg">
+        <p className="text-sm font-medium text-foreground mb-2">関連ツール</p>
+        <div className="flex flex-wrap gap-3">
+          <a href="/tools/image-to-base64" className="text-sm text-accent hover:underline">画像→Base64変換</a>
+          <a href="/tools/url-encoder" className="text-sm text-accent hover:underline">URLエンコーダー</a>
+        </div>
+      </div>
     </div>
   );
 }

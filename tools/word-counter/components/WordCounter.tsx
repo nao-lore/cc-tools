@@ -256,6 +256,42 @@ export default function WordCounter() {
           )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "日本語の文字数カウントはどのように行われますか？", a: "日本語は単語の区切りが明確でないため、本ツールでは文字数（スペースあり・なし）、行数、段落数を主な指標としています。英語テキストは単語数もカウントします。" },
+            { q: "スペースは文字数に含まれますか？", a: "「文字数」にはスペースを含みます。「スペースなし文字数」はスペース・改行を除いた純粋な文字数です。SNS投稿の文字数制限確認には「文字数」の値を使うことをお勧めします。" },
+            { q: "読了時間の計算方法は？", a: "日本語の平均読書速度（約600文字/分）と英語の平均読書速度（約200ワード/分）を基に算出しています。実際の読了時間は内容の難易度や個人差によって異なります。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "日本語の文字数カウントはどのように行われますか？", "acceptedAnswer": { "@type": "Answer", "text": "日本語は文字数（スペースあり・なし）、行数、段落数を主な指標としています。英語テキストは単語数もカウントします。" } },
+              { "@type": "Question", "name": "スペースは文字数に含まれますか？", "acceptedAnswer": { "@type": "Answer", "text": "「文字数」にはスペースを含みます。「スペースなし文字数」はスペース・改行を除いた純粋な文字数です。" } },
+              { "@type": "Question", "name": "読了時間の計算方法は？", "acceptedAnswer": { "@type": "Answer", "text": "日本語の平均読書速度（約600文字/分）と英語の平均読書速度（約200ワード/分）を基に算出しています。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</a>
+            <a href="/zenkaku-hankaku" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">全角・半角変換</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

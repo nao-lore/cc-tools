@@ -496,6 +496,79 @@ export default function TableEditor() {
           <pre className="markdown-output text-gray-800 select-all">{markdown}</pre>
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Markdown のテーブル記法とは何ですか？",
+              a: "| で列を区切り、2行目に --- を並べることで表を作る記法です。GitHub や Notion、多くの Markdown エディタでサポートされています。手書きは面倒なので、このツールで GUI から生成してコピーするのが便利です。",
+            },
+            {
+              q: "CSV データをインポートできますか？",
+              a: "はい。「Import CSV」ボタンをクリックし、カンマまたはタブ区切りのデータを貼り付けると自動的にテーブルに変換されます。Excel からコピーしたデータもそのままインポートできます。",
+            },
+            {
+              q: "列のアライメントはどう設定しますか？",
+              a: "各列のヘッダー下にあるアライメントボタンをクリックすると、左・中央・右の順に切り替わります。Markdown の区切り行（:---|:---:|---:）として出力に反映されます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Markdown のテーブル記法とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "| で列を区切り、2行目に --- を並べることで表を作る記法です。GitHub や Notion など多くの Markdown エディタでサポートされています。" },
+              },
+              {
+                "@type": "Question",
+                "name": "CSV データをインポートできますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "はい。「Import CSV」ボタンをクリックし、カンマまたはタブ区切りのデータを貼り付けると自動的にテーブルに変換されます。Excel からコピーしたデータもそのままインポートできます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "列のアライメントはどう設定しますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "各列のヘッダー下にあるアライメントボタンをクリックすると、左・中央・右の順に切り替わります。Markdown の区切り行として出力に反映されます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/markdown-preview", label: "Markdown プレビュー", desc: "Markdown をリアルタイムでプレビュー" },
+            { href: "/json-to-csv", label: "JSON → CSV 変換", desc: "JSON データを CSV 形式に一括変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

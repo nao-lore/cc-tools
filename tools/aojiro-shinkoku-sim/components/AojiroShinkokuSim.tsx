@@ -731,6 +731,3 @@ export default function AojiroShinkokuSim() {
 
 // 定数を外部で宣言（コンポーネント外参照用）
 const Conditions = CONDITIONS;
-
-// 定数を外部で宣言（コンポーネント外参照用）
-const Conditions = CONDITIONS;

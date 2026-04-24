@@ -638,6 +638,79 @@ export default function HttpStatusCodes() {
           ))}
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-8">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "401 と 403 の違いは何ですか？",
+              a: "401 Unauthorized は「認証が必要」を意味し、ログインしていない状態です。403 Forbidden は「認証済みだがアクセス権がない」状態です。ログインしても権限がなければ 403 が返ります。",
+            },
+            {
+              q: "302 と 307 はどう使い分けますか？",
+              a: "302 は一時的なリダイレクトですが、ブラウザが POST を GET に変えることがあります。307 はメソッドを変えずにリダイレクトすることを保証します。API や POST フォームのリダイレクトには 307 が適切です。",
+            },
+            {
+              q: "500 と 502 の違いは何ですか？",
+              a: "500 Internal Server Error はアプリケーションサーバー自体のエラーです。502 Bad Gateway はリバースプロキシ（Nginx など）がバックエンドサーバーから無効なレスポンスを受け取ったときに返ります。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "401 と 403 の違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "401 Unauthorized は「認証が必要」を意味し、ログインしていない状態です。403 Forbidden は「認証済みだがアクセス権がない」状態です。ログインしても権限がなければ 403 が返ります。" },
+              },
+              {
+                "@type": "Question",
+                "name": "302 と 307 はどう使い分けますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "302 は一時的なリダイレクトですが、ブラウザが POST を GET に変えることがあります。307 はメソッドを変えずにリダイレクトすることを保証します。API や POST フォームのリダイレクトには 307 が適切です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "500 と 502 の違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "500 Internal Server Error はアプリケーションサーバー自体のエラーです。502 Bad Gateway はリバースプロキシがバックエンドサーバーから無効なレスポンスを受け取ったときに返ります。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/url-encoder", label: "URL エンコード/デコード", desc: "URL に使えない文字を %xx 形式に変換" },
+            { href: "/jwt-decoder", label: "JWT デコーダー", desc: "JWT トークンをデコードしてクレームを確認" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

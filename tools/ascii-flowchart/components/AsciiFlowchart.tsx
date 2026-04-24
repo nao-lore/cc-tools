@@ -390,6 +390,69 @@ export default function AsciiFlowchart() {
           {`# Node types are auto-detected:\n# "Start" / "End"   → terminal (rounded ╭╮╰╯)\n# "Decision" / "?"  → diamond  (/──\\ shape)\n# Everything else   → process  (┌──┐ box)`}
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="mt-8 space-y-3">
+        <h2 className="text-base font-semibold text-[var(--foreground)]">よくある質問</h2>
+        {[
+          {
+            q: "ASCIIフローチャートをコードに埋め込めますか？",
+            a: "はい。生成されたフローチャートはボックス描画文字で構成されており、コメント欄やREADMEに貼り付けるだけで使用できます。等幅フォント環境であればどのエディタでも正しく表示されます。",
+          },
+          {
+            q: "ノードの種類はどうやって決まりますか？",
+            a: "ノード名から自動判定されます。「Start」「End」はターミナルノード（丸角）、「Decision」または「?」で終わるノードはダイヤモンド形、それ以外はすべてプロセスボックス（四角）になります。",
+          },
+          {
+            q: "エッジにラベルを付けるにはどうすればいいですか？",
+            a: "1行に3要素を記述します。例：「Decision -> Yes -> 処理A」と書くと、DecisionからYesというラベル付きの矢印が処理Aに向かいます。",
+          },
+        ].map(({ q, a }) => (
+          <details key={q} className="border border-[var(--border)] rounded-lg p-4 group">
+            <summary className="font-medium text-[var(--foreground)] cursor-pointer list-none flex justify-between items-center">
+              {q}
+              <span className="text-[var(--muted-fg)] group-open:rotate-180 transition-transform">▾</span>
+            </summary>
+            <p className="mt-2 text-sm text-[var(--muted-fg)] leading-relaxed">{a}</p>
+          </details>
+        ))}
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "ASCIIフローチャートをコードに埋め込めますか？",
+                acceptedAnswer: { "@type": "Answer", text: "はい。生成されたフローチャートはボックス描画文字で構成されており、コメント欄やREADMEに貼り付けるだけで使用できます。等幅フォント環境であればどのエディタでも正しく表示されます。" },
+              },
+              {
+                "@type": "Question",
+                name: "ノードの種類はどうやって決まりますか？",
+                acceptedAnswer: { "@type": "Answer", text: "ノード名から自動判定されます。「Start」「End」はターミナルノード（丸角）、「Decision」または「?」で終わるノードはダイヤモンド形、それ以外はすべてプロセスボックス（四角）になります。" },
+              },
+              {
+                "@type": "Question",
+                name: "エッジにラベルを付けるにはどうすればいいですか？",
+                acceptedAnswer: { "@type": "Answer", text: "1行に3要素を記述します。例：「Decision -> Yes -> 処理A」と書くと、DecisionからYesというラベル付きの矢印が処理Aに向かいます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <div className="mt-4 p-4 border border-[var(--border)] rounded-lg bg-[var(--muted)]">
+        <p className="text-sm font-medium text-[var(--foreground)] mb-2">関連ツール</p>
+        <div className="flex flex-wrap gap-3">
+          <a href="/tools/ascii-art" className="text-sm text-[var(--accent)] hover:underline">ASCIIアート生成</a>
+          <a href="/tools/markdown-preview" className="text-sm text-[var(--accent)] hover:underline">Markdownプレビュー</a>
+        </div>
+      </div>
     </div>
   );
 }

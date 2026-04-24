@@ -262,6 +262,42 @@ function InlineView({ diffLines }: { diffLines: DiffLine[] }) {
           })}
         </tbody>
       </table>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "テキスト差分ツールはどんな場面で使いますか？", a: "コードの変更前後の確認、文章の改訂履歴の確認、設定ファイルの比較などに使えます。GitのDiff出力と同様の表示で、追加・削除・変更箇所を色分けして可視化します。" },
+            { q: "インライン表示とサイドバイサイド表示の違いは？", a: "インライン表示は1列で変更前後を交互に表示します。サイドバイサイド表示は左右2列に並べて表示するため、変更箇所の対比が直感的に分かりやすくなります。" },
+            { q: "差分結果をコピーできますか？", a: "現在のバージョンでは差分結果の直接コピー機能はありません。ブラウザの選択コピーでテキストをコピーしてご利用ください。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "テキスト差分ツールはどんな場面で使いますか？", "acceptedAnswer": { "@type": "Answer", "text": "コードの変更前後の確認、文章の改訂履歴の確認、設定ファイルの比較などに使えます。" } },
+              { "@type": "Question", "name": "インライン表示とサイドバイサイド表示の違いは？", "acceptedAnswer": { "@type": "Answer", "text": "インライン表示は1列で変更前後を交互に表示します。サイドバイサイド表示は左右2列に並べて比較できます。" } },
+              { "@type": "Question", "name": "差分結果をコピーできますか？", "acceptedAnswer": { "@type": "Answer", "text": "ブラウザの選択コピーでテキストをコピーしてご利用ください。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/regex-tester" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">正規表現テスター</a>
+            <a href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

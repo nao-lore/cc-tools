@@ -1,12 +1,26 @@
 "use client";
 import InstagramCarouselPlanner from "./components/InstagramCarouselPlanner";
-export default function InstagramCarouselPlannerPage() {
+
+export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Instagram カルーセル 順序設計</h1>
-        <p className="text-gray-600 mb-8">カルーセル投稿の枚数・各スライドの内容フローを設計。ジャンル別テンプレート・フック文・CTA提案付き。</p>
-        <InstagramCarouselPlanner />
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-8 px-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Instagramカルーセル順序設計</h1>
+          <p className="text-gray-400 mb-8">カルーセル投稿の枚数・各スライドの内容フローを設計。ジャンル別テンプレート・フック文・CTAの提案付き。</p>
+          <InstagramCarouselPlanner />
+        </div>
+        <aside className="hidden lg:block space-y-6">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">関連ツール</h3>
+            <div className="space-y-2 text-sm">
+              <a href="/" className="block text-blue-400 hover:text-blue-300">← ツール一覧に戻る</a>
+            </div>
+          </div>
+          <div className="bg-gray-900 rounded-xl border border-gray-800 border-dashed p-6 text-center">
+            <span className="text-gray-600 text-xs">Ad Space</span>
+          </div>
+        </aside>
       </div>
     </div>
   );

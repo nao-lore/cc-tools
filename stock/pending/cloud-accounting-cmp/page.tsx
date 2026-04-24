@@ -1,12 +1,20 @@
 "use client";
 import CloudAccountingCmp from "./components/CloudAccountingCmp";
-export default function CloudAccountingCmpPage() {
+
+export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">クラウド会計ソフト 料金・機能比較</h1>
-        <p className="text-gray-600 mb-8">freee・マネーフォワードクラウド・弥生の料金と機能を徹底比較します</p>
-        <CloudAccountingCmp />
+    <div className="min-h-screen bg-slate-50 py-6 px-4">
+      <div className="max-w-5xl mx-auto">
+        <nav className="text-sm text-gray-500 mb-4">
+          <a href="/" className="hover:text-gray-700">ツール一覧</a>
+          <span className="mx-2">›</span>
+          <span className="text-gray-900">クラウド会計ソフト比較</span>
+        </nav>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">クラウド会計ソフト比較</h1>
+          <p className="text-gray-500 mb-8">freee会計・マネーフォワードクラウド・弥生会計の料金と機能を比較</p>
+          <CloudAccountingCmp />
+        </div>
       </div>
     </div>
   );

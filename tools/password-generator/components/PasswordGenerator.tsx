@@ -357,6 +357,42 @@ export default function PasswordGenerator() {
           </div>
         ))}
       </div>
+
+      {/* FAQ */}
+      <div className="mt-8 rounded-xl p-6 border" style={{ backgroundColor: "var(--card)", borderColor: "var(--border)" }}>
+        <h2 className="text-lg font-semibold mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "安全なパスワードの長さはどのくらいですか？", a: "最低12文字以上、できれば16文字以上が推奨されます。大文字・小文字・数字・記号を組み合わせることでエントロピーが高まり、ブルートフォース攻撃への耐性が増します。" },
+            { q: "生成されたパスワードはサーバーに保存されますか？", a: "いいえ。このツールはすべてブラウザ上で動作しており、生成されたパスワードがサーバーに送信・保存されることは一切ありません。" },
+            { q: "「紛らわしい文字を除外」とはどういう意味ですか？", a: "0（ゼロ）とO（大文字O）、1（数字）とl（小文字L）とI（大文字i）など、見た目が似ている文字を除外します。手入力する際の入力ミスを防ぐことができます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="rounded-lg p-4" style={{ backgroundColor: "var(--background)" }}>
+              <p className="font-medium mb-1">Q. {q}</p>
+              <p className="text-sm opacity-70">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "安全なパスワードの長さはどのくらいですか？", "acceptedAnswer": { "@type": "Answer", "text": "最低12文字以上、できれば16文字以上が推奨されます。大文字・小文字・数字・記号を組み合わせることでエントロピーが高まります。" } },
+              { "@type": "Question", "name": "生成されたパスワードはサーバーに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。このツールはすべてブラウザ上で動作しており、生成されたパスワードがサーバーに送信・保存されることは一切ありません。" } },
+              { "@type": "Question", "name": "「紛らわしい文字を除外」とはどういう意味ですか？", "acceptedAnswer": { "@type": "Answer", "text": "0とO、1とlとIなど見た目が似ている文字を除外します。手入力時の入力ミスを防ぐことができます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t" style={{ borderColor: "var(--border)" }}>
+          <p className="text-sm font-medium opacity-50 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/hash-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</a>
+            <a href="/uuid-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">UUID ジェネレーター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

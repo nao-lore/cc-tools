@@ -396,6 +396,79 @@ export default function HtmlEntity() {
           </table>
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "HTML エンティティとは何ですか？",
+              a: "&amp;、&lt;、&gt; のように、HTML で特別な意味を持つ文字や、直接入力できない文字を安全に表示するための表記法です。& で始まり ; で終わります。XSS 攻撃を防ぐためにも重要です。",
+            },
+            {
+              q: "「特殊文字のみ」と「全文字」の違いは？",
+              a: "「特殊文字のみ」は HTML 構文に影響する & < > \" ' の5文字だけをエンコードします。「全文字」は非 ASCII 文字も含めてすべてエンティティに変換します。通常は「特殊文字のみ」で十分です。",
+            },
+            {
+              q: "名前付きエンティティと数値エンティティの違いは？",
+              a: "名前付き（&amp;copy; など）は可読性が高く、数値（&#169; など）はすべてのブラウザで確実にサポートされます。どちらも同じ文字を表示しますが、HTML5 では名前付きを推奨しています。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "HTML エンティティとは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "&amp;、&lt;、&gt; のように、HTML で特別な意味を持つ文字や、直接入力できない文字を安全に表示するための表記法です。& で始まり ; で終わります。XSS 攻撃を防ぐためにも重要です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "「特殊文字のみ」と「全文字」の違いは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "「特殊文字のみ」は HTML 構文に影響する & < > \" ' の5文字だけをエンコードします。「全文字」は非 ASCII 文字も含めてすべてエンティティに変換します。" },
+              },
+              {
+                "@type": "Question",
+                "name": "名前付きエンティティと数値エンティティの違いは？",
+                "acceptedAnswer": { "@type": "Answer", "text": "名前付き（&copy; など）は可読性が高く、数値（&#169; など）はすべてのブラウザで確実にサポートされます。HTML5 では名前付きを推奨しています。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/url-encoder", label: "URL エンコード/デコード", desc: "URL に使えない文字を %xx 形式に変換" },
+            { href: "/html-to-markdown", label: "HTML → Markdown 変換", desc: "HTML をMarkdown に一括変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

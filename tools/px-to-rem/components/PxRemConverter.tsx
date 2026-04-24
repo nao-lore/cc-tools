@@ -229,6 +229,42 @@ export default function PxRemConverter() {
           </div>
         )}
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "remとpxの違いは何ですか？", a: "pxはピクセル単位の絶対値です。remはルート要素（html）のフォントサイズを基準にした相対単位です。ブラウザのデフォルトは16pxなので、1rem = 16pxになります。" },
+            { q: "なぜCSSでremを使うべきですか？", a: "remを使うとユーザーがブラウザのフォントサイズ設定を変更した際にレイアウトが適切にスケールします。アクセシビリティ向上や、レスポンシブデザインの実装に有効です。" },
+            { q: "ベースフォントサイズはどこで変更しますか？", a: "本ツール上部の「ベースフォントサイズ」入力欄で変更できます。プロジェクトのhtml要素に指定したfont-sizeに合わせて設定してください。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "remとpxの違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "pxはピクセル単位の絶対値です。remはルート要素のフォントサイズを基準にした相対単位で、デフォルトは1rem=16pxです。" } },
+              { "@type": "Question", "name": "なぜCSSでremを使うべきですか？", "acceptedAnswer": { "@type": "Answer", "text": "remを使うとユーザーのフォントサイズ設定に応じてレイアウトが適切にスケールし、アクセシビリティが向上します。" } },
+              { "@type": "Question", "name": "ベースフォントサイズはどこで変更しますか？", "acceptedAnswer": { "@type": "Answer", "text": "本ツール上部のベースフォントサイズ入力欄で変更できます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/tailwindconvert" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">Tailwind CSS 変換</a>
+            <a href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

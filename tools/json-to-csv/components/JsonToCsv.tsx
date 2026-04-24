@@ -415,6 +415,79 @@ export default function JsonToCsv() {
           </p>
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "ネストした JSON オブジェクトはどう変換されますか？",
+              a: "ネストしたオブジェクトはドット記法でフラット化されます。例えば {\"user\": {\"name\": \"Alice\"}} は user.name という列名で CSV に変換されます。配列は JSON 文字列としてそのまま1つのセルに格納されます。",
+            },
+            {
+              q: "セミコロン区切りはいつ使いますか？",
+              a: "ヨーロッパ地域では小数点にカンマを使うため、CSV の区切り文字にセミコロンを使う慣習があります。Excel をヨーロッパロケールで使う場合はセミコロンを選択してください。",
+            },
+            {
+              q: "CSV から JSON への逆変換も対応していますか？",
+              a: "はい。画面上部の「CSV → JSON」ボタンで逆方向の変換もできます。最初の行がヘッダーとして使用され、各行がオブジェクトに変換されます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "ネストした JSON オブジェクトはどう変換されますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ネストしたオブジェクトはドット記法でフラット化されます。例えば user.name という列名で CSV に変換されます。配列は JSON 文字列としてそのまま1つのセルに格納されます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "セミコロン区切りはいつ使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ヨーロッパ地域では小数点にカンマを使うため、CSV の区切り文字にセミコロンを使う慣習があります。Excel をヨーロッパロケールで使う場合はセミコロンを選択してください。" },
+              },
+              {
+                "@type": "Question",
+                "name": "CSV から JSON への逆変換も対応していますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "はい。「CSV → JSON」ボタンで逆方向の変換もできます。最初の行がヘッダーとして使用され、各行がオブジェクトに変換されます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/json-formatter", label: "JSON フォーマッター", desc: "JSON を整形・バリデーション・最小化" },
+            { href: "/yaml-to-json", label: "YAML → JSON 変換", desc: "YAML ファイルを JSON 形式に変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

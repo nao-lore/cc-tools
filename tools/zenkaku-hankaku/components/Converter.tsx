@@ -219,6 +219,42 @@ export default function Converter() {
           className="w-full rounded-lg border border-border bg-accent/50 p-4 text-base resize-y focus:outline-none placeholder:text-muted/50"
         />
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "全角と半角の違いは何ですか？", a: "半角文字は1バイト（英数字・記号など）、全角文字は2バイト（漢字・ひらがな・全角英数など）の幅を持ちます。フォントによっては見た目の幅が2倍になります。フォームへの入力制限やデータ処理で変換が必要になることがあります。" },
+            { q: "全角カタカナと半角カタカナはどう使い分けますか？", a: "現代のWebやシステムでは通常全角カタカナが使われます。半角カタカナは古いシステム（JIS規格）との互換性のために使われることがありますが、文字化けの原因になる場合もあるため、新しいシステムでは全角を推奨します。" },
+            { q: "スペースも変換されますか？", a: "はい。「スペース」のオプションを有効にすると、全角スペース（　）と半角スペース（ ）も変換されます。変換したくない要素はオプションで個別にオフにできます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "全角と半角の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "半角文字は1バイト（英数字・記号など）、全角文字は2バイト（漢字・ひらがな・全角英数など）の幅を持ちます。" } },
+              { "@type": "Question", "name": "全角カタカナと半角カタカナはどう使い分けますか？", "acceptedAnswer": { "@type": "Answer", "text": "現代のWebでは通常全角カタカナが使われます。半角カタカナは古いシステムとの互換性のためですが、文字化けの原因になる場合もあります。" } },
+              { "@type": "Question", "name": "スペースも変換されますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。スペースのオプションを有効にすると全角スペースと半角スペースも変換されます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</a>
+            <a href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

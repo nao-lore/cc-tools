@@ -588,6 +588,79 @@ export default function MetaTagGenerator() {
           )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "meta description の最適な文字数は？",
+              a: "Google の検索結果では約 120〜160 文字が表示されます。それ以上は省略されます。重要なキーワードを前半に入れ、ページ内容を正確に表す説明文を書きましょう。このツールでは文字数をリアルタイムで表示しています。",
+            },
+            {
+              q: "OG タグと Twitter Card は必須ですか？",
+              a: "SNS でシェアされたときのリッチプレビュー表示に必要です。OG タグがなければ URL テキストのみが表示されます。og:image には 1200×630px の画像を推奨します。Twitter Card は OG タグの内容を自動的に参照するため、個別設定は省略できます。",
+            },
+            {
+              q: "canonical URL はなぜ重要ですか？",
+              a: "同じ内容が複数の URL でアクセスできる場合（www あり/なし、http/https など）に、正規 URL を検索エンジンに伝えるタグです。重複コンテンツ扱いを防ぎ、SEO 評価を正規 URL に集約できます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "meta description の最適な文字数は？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Google の検索結果では約 120〜160 文字が表示されます。それ以上は省略されます。重要なキーワードを前半に入れ、ページ内容を正確に表す説明文を書きましょう。" },
+              },
+              {
+                "@type": "Question",
+                "name": "OG タグと Twitter Card は必須ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "SNS でシェアされたときのリッチプレビュー表示に必要です。og:image には 1200×630px の画像を推奨します。Twitter Card は OG タグの内容を自動的に参照するため、個別設定は省略できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "canonical URL はなぜ重要ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "同じ内容が複数の URL でアクセスできる場合に、正規 URL を検索エンジンに伝えるタグです。重複コンテンツ扱いを防ぎ、SEO 評価を正規 URL に集約できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/og-image-preview", label: "OG 画像プレビュー", desc: "SNS シェア時の OG 画像表示を確認" },
+            { href: "/robots-txt-generator", label: "robots.txt 生成", desc: "クローラー制御用 robots.txt を生成" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

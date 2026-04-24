@@ -162,6 +162,42 @@ export default function UuidGenerator() {
           ))}
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "UUIDとは何ですか？", a: "UUID（Universally Unique Identifier）は128ビットの一意な識別子です。データベースのプライマリキー、APIのリソース識別子、セッションIDなどに広く使用されます。衝突確率は天文学的に低く、実用上は完全にユニークと見なせます。" },
+            { q: "UUID v4とv7の違いは何ですか？", a: "v4はランダムに生成されるため順序性がありません。v7はUnixタイムスタンプを先頭に含むため、時系列で並べることができます。データベースのインデックス効率を考えると、v7が有利な場面が増えています。" },
+            { q: "生成されたUUIDはサーバーに送信されますか？", a: "いいえ。UUIDはすべてブラウザ内でWeb Crypto APIを使って生成されます。サーバーへの通信は一切ありません。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "UUIDとは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "UUID（Universally Unique Identifier）は128ビットの一意な識別子です。データベースのプライマリキー、APIのリソース識別子などに広く使用されます。" } },
+              { "@type": "Question", "name": "UUID v4とv7の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "v4はランダム生成で順序性がありません。v7はタイムスタンプを含むため時系列で並べることができ、データベースのインデックス効率が向上します。" } },
+              { "@type": "Question", "name": "生成されたUUIDはサーバーに送信されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。UUIDはすべてブラウザ内でWeb Crypto APIを使って生成され、サーバーへの通信は一切ありません。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/hash-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</a>
+            <a href="/password-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">パスワード生成ツール</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

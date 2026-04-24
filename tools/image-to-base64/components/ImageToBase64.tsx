@@ -387,6 +387,79 @@ export default function ImageToBase64() {
           )}
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Base64 に変換するとファイルサイズはどうなりますか？",
+              a: "Base64 エンコードにより元のファイルより約 33% サイズが増加します。これは 3 バイトを 4 文字で表現するためです。HTML や CSS に直接埋め込む際は HTTP リクエストを削減できますが、サイズ増加とのトレードオフを考慮してください。",
+            },
+            {
+              q: "どんな用途に使いますか？",
+              a: "CSS の background-image に画像を直接埋め込む、HTML メールに画像を添付する、API で画像データを JSON として送受信する、などの用途に使われます。",
+            },
+            {
+              q: "対応している画像形式は何ですか？",
+              a: "PNG、JPEG、GIF、SVG、WebP、ICO に対応しています。これらはブラウザが標準でサポートしている主要な画像フォーマットです。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Base64 に変換するとファイルサイズはどうなりますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Base64 エンコードにより元のファイルより約 33% サイズが増加します。これは 3 バイトを 4 文字で表現するためです。" },
+              },
+              {
+                "@type": "Question",
+                "name": "どんな用途に使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "CSS の background-image に画像を直接埋め込む、HTML メールに画像を添付する、API で画像データを JSON として送受信するなどの用途に使われます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "対応している画像形式は何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "PNG、JPEG、GIF、SVG、WebP、ICO に対応しています。これらはブラウザが標準でサポートしている主要な画像フォーマットです。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/image-compressor", label: "画像圧縮", desc: "JPEG・PNG・WebP を圧縮してファイルサイズを削減" },
+            { href: "/svg-to-png", label: "SVG → PNG 変換", desc: "SVG ファイルを PNG 画像に変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

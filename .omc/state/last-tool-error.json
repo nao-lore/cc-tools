@@ -1,7 +1,7 @@
 {
-  "tool_name": "Read",
-  "tool_input_preview": "{\"file_path\":\"/Users/nn/projects/cc-tools/scripts/backlog-v2.json\"}",
-  "error": "File content (26918 tokens) exceeds maximum allowed tokens (25000). Use offset and limit parameters to read specific portions of the file, or search for specific content instead of reading the whole file.",
-  "timestamp": "2026-04-23T19:40:17.676Z",
-  "retry_count": 1
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"for d in ad-budget-estimator ai-tool-roi aircon-capacity anova-calc api-mock-builder; do echo \\\"=== $d ===\\\"; head -3 /Users/nn/projects/cc-tools/stock/pending/$d/page.tsx 2>/dev/null; don...",
+  "error": "Exit code 1\n=== ad-budget-estimator ===\n=== ai-tool-roi ===\n=== aircon-capacity ===\n=== anova-calc ===\n\"use client\";\nimport AnovaCalc from \"./components/AnovaCalc\";\nexport default function AnovaCalcPage() {\n=== api-mock-builder ===",
+  "timestamp": "2026-04-24T05:49:02.533Z",
+  "retry_count": 2
 }

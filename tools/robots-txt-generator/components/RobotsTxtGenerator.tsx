@@ -600,6 +600,42 @@ export default function RobotsTxtGenerator() {
           </div>
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "robots.txtはSEOに影響しますか？", a: "直接的なランキング要因ではありませんが、クローラーのアクセスを制御することでインデックスされてほしくないページを除外できます。重複コンテンツ問題の解消にも役立ちます。" },
+            { q: "robots.txtで全クローラーをブロックするには？", a: "User-agent: * に Disallow: / を設定することで全クローラーのアクセスをブロックできます。ただし既にインデックスされたページは削除されません。" },
+            { q: "robots.txtはどこに配置すればいいですか？", a: "Webサイトのルートディレクトリに配置し、https://yourdomain.com/robots.txt でアクセスできる状態にする必要があります。サブディレクトリへの配置は無効です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "robots.txtはSEOに影響しますか？", "acceptedAnswer": { "@type": "Answer", "text": "直接的なランキング要因ではありませんが、クローラーのアクセスを制御してインデックスされてほしくないページを除外できます。" } },
+              { "@type": "Question", "name": "robots.txtで全クローラーをブロックするには？", "acceptedAnswer": { "@type": "Answer", "text": "User-agent: * に Disallow: / を設定することで全クローラーのアクセスをブロックできます。" } },
+              { "@type": "Question", "name": "robots.txtはどこに配置すればいいですか？", "acceptedAnswer": { "@type": "Answer", "text": "Webサイトのルートディレクトリに配置し、https://yourdomain.com/robots.txt でアクセスできる状態にする必要があります。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/meta-tag-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">メタタグジェネレーター</a>
+            <a href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGPプレビュー</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -204,6 +204,79 @@ export default function FuriganaConverter() {
           </p>
         </div>
       )}
+
+      {/* FAQ */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mt-8">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "ふりがな変換はどんな場面で使いますか？",
+              a: "子ども向けコンテンツ、日本語学習教材、ルビ付き HTML の作成、読みにくい漢字へのフリガナ追加などに活用できます。HTML の ruby タグ形式でそのままウェブページに埋め込めます。",
+            },
+            {
+              q: "変換精度はどの程度ですか？",
+              a: "内蔵辞書に登録された語彙は高精度で変換されます。辞書外の固有名詞や専門用語はそのまま表示されます。精度向上のため定期的に辞書を更新しています。",
+            },
+            {
+              q: "括弧表示とルビ表示の違いは何ですか？",
+              a: "ルビ表示は &lt;ruby&gt; タグを使ったHTML形式で、ウェブページで漢字の真上にふりがなが表示されます。括弧表示は「漢字(かんじ)」の形式で、プレーンテキストとして使いやすいです。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "ふりがな変換はどんな場面で使いますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "子ども向けコンテンツ、日本語学習教材、ルビ付き HTML の作成、読みにくい漢字へのフリガナ追加などに活用できます。HTML の ruby タグ形式でそのままウェブページに埋め込めます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "変換精度はどの程度ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "内蔵辞書に登録された語彙は高精度で変換されます。辞書外の固有名詞や専門用語はそのまま表示されます。精度向上のため定期的に辞書を更新しています。" },
+              },
+              {
+                "@type": "Question",
+                "name": "括弧表示とルビ表示の違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "ルビ表示は ruby タグを使ったHTML形式で、ウェブページで漢字の真上にふりがなが表示されます。括弧表示は「漢字(かんじ)」の形式で、プレーンテキストとして使いやすいです。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/hebon-romaji", label: "ヘボン式ローマ字変換", desc: "日本語をヘボン式ローマ字に変換" },
+            { href: "/zenkaku-hankaku", label: "全角・半角変換", desc: "全角文字と半角文字を相互変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

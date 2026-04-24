@@ -315,6 +315,42 @@ export default function RegexTester() {
           </div>
         )}
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "正規表現のフラグ「g」「i」「m」の違いは？", a: "gはグローバル（全マッチを検索）、iは大文字小文字を無視、mはマルチライン（^/$が各行の先頭・末尾にマッチ）を意味します。複数フラグは組み合わせて使用できます。" },
+            { q: "メールアドレスのバリデーションに使える正規表現は？", a: "シンプルなパターンとして /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/ が使われます。ツール上部のプリセットからも選択可能です。" },
+            { q: "キャプチャグループとは何ですか？", a: "正規表現内で()で囲んだ部分をキャプチャグループといいます。マッチした部分文字列を個別に取得・参照するために使われます。(?:)は非キャプチャグループです。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "正規表現のフラグ「g」「i」「m」の違いは？", "acceptedAnswer": { "@type": "Answer", "text": "gはグローバル（全マッチを検索）、iは大文字小文字を無視、mはマルチライン対応を意味します。" } },
+              { "@type": "Question", "name": "メールアドレスのバリデーションに使える正規表現は？", "acceptedAnswer": { "@type": "Answer", "text": "/^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/ が一般的です。" } },
+              { "@type": "Question", "name": "キャプチャグループとは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "正規表現内で()で囲んだ部分をキャプチャグループといい、マッチした部分文字列を個別に取得・参照するために使われます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</a>
+            <a href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

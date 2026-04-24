@@ -228,6 +228,42 @@ export default function AgeCalculator() {
           </div>
         </div>
       )}
+
+      {/* FAQ */}
+      <div className="border-t border-gray-100 px-6 md:px-8 py-8">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "満年齢と数え年の違いは何ですか？", a: "満年齢は誕生日を迎えるごとに1歳増える現在の公式な年齢です。数え年は生まれた年を1歳として元旦に1歳加算される伝統的な数え方で、満年齢より1〜2歳上になります。" },
+            { q: "うるう年（2月29日）生まれの誕生日はどう計算されますか？", a: "うるう年以外の年は2月28日が誕生日として扱われます。本ツールでは、うるう年でない年の2月29日は自動的に2月28日として計算します。" },
+            { q: "干支の計算はどのように行われていますか？", a: "干支は12年周期で巡ります。1900年を子（ねずみ）年として基準とし、生まれた年から算出しています。例えば2024年は辰（たつ）年です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "満年齢と数え年の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "満年齢は誕生日を迎えるごとに1歳増える現在の公式な年齢です。数え年は生まれた年を1歳として元旦に1歳加算される伝統的な数え方で、満年齢より1〜2歳上になります。" } },
+              { "@type": "Question", "name": "うるう年（2月29日）生まれの誕生日はどう計算されますか？", "acceptedAnswer": { "@type": "Answer", "text": "うるう年以外の年は2月28日が誕生日として扱われます。" } },
+              { "@type": "Question", "name": "干支の計算はどのように行われていますか？", "acceptedAnswer": { "@type": "Answer", "text": "干支は12年周期で巡ります。1900年を子年として基準とし、生まれた年から算出しています。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</a>
+            <a href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

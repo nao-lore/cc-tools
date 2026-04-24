@@ -1,12 +1,26 @@
 "use client";
 import CarNumberDecoder from "./components/CarNumberDecoder";
-export default function CarNumberDecoderPage() {
+
+export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">自動車ナンバープレート 地域・分類 判定</h1>
-        <p className="text-gray-600 mb-8">ナンバープレートの地名から管轄運輸支局・都道府県・用途分類を判定します。</p>
-        <CarNumberDecoder />
+    <div className="min-h-screen bg-gray-950 text-gray-100 py-8 px-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-8">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">自動車ナンバー判定</h1>
+          <p className="text-gray-400 mb-8">ナンバープレートの地名・分類番号・用途を判定。全国の運輸支局・自動車検査登録事務所の対応地域を網羅。</p>
+          <CarNumberDecoder />
+        </div>
+        <aside className="hidden lg:block space-y-6">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">関連ツール</h3>
+            <div className="space-y-2 text-sm">
+              <a href="/" className="block text-blue-400 hover:text-blue-300">← ツール一覧に戻る</a>
+            </div>
+          </div>
+          <div className="bg-gray-900 rounded-xl border border-gray-800 border-dashed p-6 text-center">
+            <span className="text-gray-600 text-xs">Ad Space</span>
+          </div>
+        </aside>
       </div>
     </div>
   );

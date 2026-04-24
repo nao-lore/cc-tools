@@ -338,6 +338,42 @@ export default function TedoriCalculator() {
           額面年収と年齢を入力すると結果が表示されます
         </div>
       )}
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "手取りとは何ですか？", a: "額面給与（総支給額）から所得税・住民税・社会保険料（健康保険・厚生年金・雇用保険）を差し引いた実際に受け取る金額です。一般的に額面の75〜85%程度になります。" },
+            { q: "社会保険料はどうやって計算されますか？", a: "健康保険料は標準報酬月額に都道府県ごとの料率を掛けて計算されます。厚生年金保険料率は18.3%（労使折半）です。本ツールでは全国平均の料率で概算計算しています。" },
+            { q: "住民税はなぜ翌年からの徴収になりますか？", a: "住民税は前年の所得に基づいて計算されるため、新社会人1年目は住民税が徴収されません。2年目以降から前年の収入に基づいた住民税が毎月差し引かれます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "手取りとは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "額面給与から所得税・住民税・社会保険料を差し引いた実際に受け取る金額です。一般的に額面の75〜85%程度になります。" } },
+              { "@type": "Question", "name": "社会保険料はどうやって計算されますか？", "acceptedAnswer": { "@type": "Answer", "text": "健康保険料は標準報酬月額に料率を掛けて計算されます。厚生年金保険料率は18.3%（労使折半）です。" } },
+              { "@type": "Question", "name": "住民税はなぜ翌年からの徴収になりますか？", "acceptedAnswer": { "@type": "Answer", "text": "住民税は前年の所得に基づいて計算されるため、新社会人1年目は住民税が徴収されません。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</a>
+            <a href="/tsumitate-sim" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">積立シミュレーター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

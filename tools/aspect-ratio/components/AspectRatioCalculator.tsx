@@ -528,6 +528,69 @@ function ResizeCalculator() {
           )}
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="mt-8 space-y-3">
+        <h2 className="text-lg font-semibold text-gray-900">よくある質問</h2>
+        {[
+          {
+            q: "16:9とはどういう意味ですか？",
+            a: "16:9は横幅と高さの比率を表します。幅が16の単位のとき高さが9の単位になることを意味します。現代のHD・4K動画や一般的なPCモニターで標準的に使われるアスペクト比です。",
+          },
+          {
+            q: "動画サムネイルのサイズを計算するのに使えますか？",
+            a: "はい。例えばYouTubeサムネイル（16:9）で幅1280pxの場合、このツールに16:9と1280を入力すれば高さ720pxが即座に計算されます。",
+          },
+          {
+            q: "カスタムのアスペクト比も入力できますか？",
+            a: "はい。Ratioフィールドに任意の比率（例：4:3、21:9、2.35:1）を直接入力できます。コロン区切りで入力してください。",
+          },
+        ].map(({ q, a }) => (
+          <details key={q} className="border border-gray-200 rounded-lg p-4 group">
+            <summary className="font-medium text-gray-800 cursor-pointer list-none flex justify-between items-center">
+              {q}
+              <span className="text-gray-400 group-open:rotate-180 transition-transform">▾</span>
+            </summary>
+            <p className="mt-2 text-sm text-gray-600 leading-relaxed">{a}</p>
+          </details>
+        ))}
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "16:9とはどういう意味ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "16:9は横幅と高さの比率を表します。幅が16の単位のとき高さが9の単位になることを意味します。現代のHD・4K動画や一般的なPCモニターで標準的に使われるアスペクト比です。" },
+              },
+              {
+                "@type": "Question",
+                name: "動画サムネイルのサイズを計算するのに使えますか？",
+                acceptedAnswer: { "@type": "Answer", text: "はい。例えばYouTubeサムネイル（16:9）で幅1280pxの場合、このツールに16:9と1280を入力すれば高さ720pxが即座に計算されます。" },
+              },
+              {
+                "@type": "Question",
+                name: "カスタムのアスペクト比も入力できますか？",
+                acceptedAnswer: { "@type": "Answer", text: "はい。Ratioフィールドに任意の比率（例：4:3、21:9、2.35:1）を直接入力できます。コロン区切りで入力してください。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+        <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
+        <div className="flex flex-wrap gap-3">
+          <a href="/tools/px-to-rem" className="text-sm text-blue-600 hover:underline">px ↔ rem 変換</a>
+          <a href="/tools/image-compressor" className="text-sm text-blue-600 hover:underline">画像圧縮ツール</a>
+        </div>
+      </div>
     </div>
   );
 }

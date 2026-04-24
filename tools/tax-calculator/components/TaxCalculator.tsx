@@ -261,6 +261,42 @@ export default function TaxCalculator() {
           {copied ? "✓ コピーしました" : "請求書用テキストをコピー"}
         </button>
       )}
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "税込価格と税抜価格の計算方法は？", a: "税抜価格に消費税率を掛けて税額を計算します。税込価格から税抜価格を求める場合は「税込価格 ÷ (1 + 税率)」で計算します。日本の消費税率は標準10%、軽減税率は8%です。" },
+            { q: "軽減税率8%が適用される商品は？", a: "飲食料品（酒類・外食を除く）と定期購読の新聞が対象です。テイクアウトは8%、イートインは10%となります。" },
+            { q: "インボイス制度に対応した計算はできますか？", a: "本ツールでは消費税の基本的な計算に対応しています。インボイス制度では適格請求書に税率ごとの消費税額を記載する必要があります。税額は1円未満を切り捨て・切り上げ・四捨五入で処理します。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "税込価格と税抜価格の計算方法は？", "acceptedAnswer": { "@type": "Answer", "text": "税抜価格に消費税率を掛けて税額を計算します。日本の消費税率は標準10%、軽減税率は8%です。" } },
+              { "@type": "Question", "name": "軽減税率8%が適用される商品は？", "acceptedAnswer": { "@type": "Answer", "text": "飲食料品（酒類・外食を除く）と定期購読の新聞が対象です。テイクアウトは8%、イートインは10%となります。" } },
+              { "@type": "Question", "name": "インボイス制度に対応した計算はできますか？", "acceptedAnswer": { "@type": "Answer", "text": "本ツールでは消費税の基本的な計算に対応しています。インボイス制度では適格請求書に税率ごとの消費税額を記載する必要があります。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/waribiki-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">割引計算ツール</a>
+            <a href="/tedori-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">手取り計算ツール</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

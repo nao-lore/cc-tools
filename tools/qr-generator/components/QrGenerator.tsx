@@ -775,6 +775,42 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "QRコードに入れられる文字数の上限は？", a: "テキストやURLなど内容によって異なりますが、英数字なら最大4,296文字、バイナリデータなら2,953バイトまで格納できます。内容が多いほどQRコードが複雑になり読み取りにくくなります。" },
+            { q: "生成したQRコードはどこで使えますか？", a: "PNG形式でダウンロードして印刷物・名刺・ポスターなどに利用できます。SNSプロフィールURLやWi-Fi接続情報、イベント告知など幅広い用途に対応しています。" },
+            { q: "QRコードは無料で商用利用できますか？", a: "QRコードの規格自体はオープンスタンダードのため、商用利用を含め自由に使用できます。本ツールで生成したQRコードも商用利用可能です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "QRコードに入れられる文字数の上限は？", "acceptedAnswer": { "@type": "Answer", "text": "英数字なら最大4,296文字まで格納できます。内容が多いほどQRコードが複雑になり読み取りにくくなります。" } },
+              { "@type": "Question", "name": "生成したQRコードはどこで使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "PNG形式でダウンロードして印刷物・名刺・ポスターなどに利用できます。" } },
+              { "@type": "Question", "name": "QRコードは無料で商用利用できますか？", "acceptedAnswer": { "@type": "Answer", "text": "QRコードの規格はオープンスタンダードのため、商用利用を含め自由に使用できます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/barcode-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">バーコード生成</a>
+            <a href="/placeholder-image" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">プレースホルダー画像生成</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

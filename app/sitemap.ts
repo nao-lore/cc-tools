@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { tools } from "@/lib/tools-config";
+import { categories } from "@/lib/categories";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://tools.loresync.dev";
@@ -11,6 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const categoryPages = categories.map((cat) => ({
+    url: `${baseUrl}/category/${cat.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.9,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -18,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 1.0,
     },
+    ...categoryPages,
     ...toolPages,
   ];
 }

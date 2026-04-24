@@ -409,6 +409,79 @@ export default function EpochConverter() {
       <div className="w-full h-24 bg-gray-50 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm mb-12">
         Ad Space
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Unix タイムスタンプとは何ですか？",
+              a: "1970年1月1日 00:00:00 UTC（エポック）からの経過秒数です。プログラミングや API で日時を表す標準的な方法で、タイムゾーンに依存しないため世界中で同じ値を共有できます。",
+            },
+            {
+              q: "秒とミリ秒の違いは何ですか？",
+              a: "Unix タイムスタンプは通常「秒」単位ですが、JavaScript の Date.now() など多くの言語では「ミリ秒」単位を返します。10 桁なら秒、13 桁ならミリ秒が目安です。このツールは自動検出します。",
+            },
+            {
+              q: "2038年問題とは何ですか？",
+              a: "32 ビット整数でタイムスタンプを扱うシステムでは 2038年1月19日にオーバーフローが起きます。現代の 64 ビットシステムでは問題ありませんが、古いシステムでは注意が必要です。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Unix タイムスタンプとは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "1970年1月1日 00:00:00 UTC（エポック）からの経過秒数です。プログラミングや API で日時を表す標準的な方法で、タイムゾーンに依存しないため世界中で同じ値を共有できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "秒とミリ秒の違いは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Unix タイムスタンプは通常「秒」単位ですが、JavaScript の Date.now() など多くの言語では「ミリ秒」単位を返します。10 桁なら秒、13 桁ならミリ秒が目安です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "2038年問題とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "32 ビット整数でタイムスタンプを扱うシステムでは 2038年1月19日にオーバーフローが起きます。現代の 64 ビットシステムでは問題ありませんが、古いシステムでは注意が必要です。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/timezone-converter", label: "タイムゾーン変換", desc: "世界各地の時刻をリアルタイム変換" },
+            { href: "/nissuu-keisan", label: "日数計算", desc: "2つの日付間の日数・週数を計算" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -240,6 +240,7 @@ export default function CssMinifier() {
         <div className="flex flex-col">
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-semibold text-gray-700">Input CSS</label>
+
             <div className="flex gap-2">
               <button
                 onClick={handleBeautify}
@@ -291,6 +292,79 @@ export default function CssMinifier() {
           />
         </div>
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "CSS を圧縮するとどんなメリットがありますか？",
+              a: "コメント・改行・余分なスペースを削除することでファイルサイズが小さくなり、ページの読み込み速度が向上します。数十KB〜数百KBの CSS を扱う場合、20〜40% 程度の削減が期待できます。CDN キャッシュとの組み合わせで特に効果的です。",
+            },
+            {
+              q: "Beautify ボタンは何をしますか？",
+              a: "Beautify は圧縮済みの CSS を読みやすく整形し直します。インデントや改行を追加してプロパティを一行ずつ並べるため、コードの確認・編集が容易になります。圧縮と整形を繰り返し使うことで、配布用と編集用を素早く切り替えられます。",
+            },
+            {
+              q: "圧縮すると CSS が壊れることはありますか？",
+              a: "このツールはセレクターやプロパティ値の意味を変えずにホワイトスペースとコメントのみを削除します。ただし、文字列内に改行を含む CSS（非常に稀なケース）や、ハック的な記述は意図しない挙動になる場合があります。変換後は必ずブラウザで動作確認してください。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "CSS を圧縮するとどんなメリットがありますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "コメント・改行・余分なスペースを削除することでファイルサイズが小さくなり、ページの読み込み速度が向上します。数十KB〜数百KBの CSS を扱う場合、20〜40% 程度の削減が期待できます。CDN キャッシュとの組み合わせで特に効果的です。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Beautify ボタンは何をしますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Beautify は圧縮済みの CSS を読みやすく整形し直します。インデントや改行を追加してプロパティを一行ずつ並べるため、コードの確認・編集が容易になります。圧縮と整形を繰り返し使うことで、配布用と編集用を素早く切り替えられます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "圧縮すると CSS が壊れることはありますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "このツールはセレクターやプロパティ値の意味を変えずにホワイトスペースとコメントのみを削除します。ただし、文字列内に改行を含む CSS（非常に稀なケース）や、ハック的な記述は意図しない挙動になる場合があります。変換後は必ずブラウザで動作確認してください。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/minify-js", label: "JS 圧縮・整形", desc: "JavaScript を圧縮・Beautify するツール" },
+            { href: "/html-entity", label: "HTML エンティティ変換", desc: "特殊文字を HTML エンティティに変換" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

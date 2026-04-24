@@ -367,6 +367,79 @@ export default function MarkdownPreview() {
           </div>
         )}
       </div>
+
+      {/* FAQ */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-6">
+        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            {
+              q: "Markdown とは何ですか？",
+              a: "John Gruber が 2004 年に考案したプレーンテキストの軽量マークアップ言語です。# で見出し、** で太字、- でリストを表現でき、HTML に変換して表示されます。GitHub、Notion、Qiita など多くのプラットフォームで採用されています。",
+            },
+            {
+              q: "表（テーブル）はどのように書きますか？",
+              a: "| ヘッダー1 | ヘッダー2 | と書き、次の行に | --- | --- | と区切り線を入れ、続けてデータ行を書きます。:--- で左寄せ、:---: で中央、---: で右寄せにアライメントを指定できます。",
+            },
+            {
+              q: "Copy HTML ボタンで何ができますか？",
+              a: "Markdown から変換された HTML コードをクリップボードにコピーします。CMS や静的サイトジェネレーターに貼り付けたり、メールの本文として使うことができます。",
+            },
+          ].map((faq, i) => (
+            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Markdown とは何ですか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "John Gruber が 2004 年に考案したプレーンテキストの軽量マークアップ言語です。# で見出し、** で太字、- でリストを表現でき、HTML に変換して表示されます。GitHub、Notion、Qiita など多くのプラットフォームで採用されています。" },
+              },
+              {
+                "@type": "Question",
+                "name": "表（テーブル）はどのように書きますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "| ヘッダー1 | ヘッダー2 | と書き、次の行に | --- | --- | と区切り線を入れ、続けてデータ行を書きます。:--- で左寄せ、:---: で中央、---: で右寄せにアライメントを指定できます。" },
+              },
+              {
+                "@type": "Question",
+                "name": "Copy HTML ボタンで何ができますか？",
+                "acceptedAnswer": { "@type": "Answer", "text": "Markdown から変換された HTML コードをクリップボードにコピーします。CMS や静的サイトジェネレーターに貼り付けたり、メールの本文として使うことができます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
+        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            { href: "/html-to-markdown", label: "HTML → Markdown 変換", desc: "HTML を Markdown に一括変換" },
+            { href: "/mdtable", label: "Markdown テーブル生成", desc: "GUI でMarkdown テーブルを簡単作成" },
+          ].map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
+            >
+              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
+              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -523,6 +523,42 @@ export default function SqlFormatter() {
           </pre>
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "SQLを整形するメリットは？", a: "インデントと改行を統一することで可読性が上がり、レビューやデバッグが効率化されます。チーム開発でのスタイル統一にも役立ちます。" },
+            { q: "対応しているSQLの種類は？", a: "SELECT・INSERT・UPDATE・DELETE・CREATE TABLEなど標準的なDML・DDL文に対応しています。MySQL・PostgreSQL・SQLiteなど主要なデータベースのSQL構文をサポートします。" },
+            { q: "SQLの圧縮（ミニファイ）もできますか？", a: "はい。フォーマットモードを「圧縮」に切り替えると、改行・空白を除去したコンパクトなSQL文に変換できます。URLパラメータや組み込みSQLに便利です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "SQLを整形するメリットは？", "acceptedAnswer": { "@type": "Answer", "text": "インデントと改行を統一することで可読性が上がり、レビューやデバッグが効率化されます。" } },
+              { "@type": "Question", "name": "対応しているSQLの種類は？", "acceptedAnswer": { "@type": "Answer", "text": "SELECT・INSERT・UPDATE・DELETE・CREATE TABLEなど標準的なDML・DDL文に対応しています。" } },
+              { "@type": "Question", "name": "SQLの圧縮（ミニファイ）もできますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。フォーマットモードを圧縮に切り替えると、改行・空白を除去したコンパクトなSQL文に変換できます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</a>
+            <a href="/xml-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">XML フォーマッター</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

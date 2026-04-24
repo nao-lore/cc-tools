@@ -264,6 +264,69 @@ export default function BinaryConverter() {
         </div>
       )}
 
+      {/* FAQ */}
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold text-gray-900">よくある質問</h2>
+        {[
+          {
+            q: "2進数・16進数・8進数の違いは何ですか？",
+            a: "2進数（binary）は0と1のみ使う基数2の表現で、コンピュータの基本。8進数（octal）は0〜7を使う基数8。16進数（hexadecimal）は0〜9とA〜Fを使う基数16で、メモリアドレスやカラーコードによく使われます。",
+          },
+          {
+            q: "負の数はどうやって表現しますか？",
+            a: "このツールは符号なし整数の変換に対応しています。負の数の2進数表現には2の補数（two's complement）が一般的に使われますが、ビット幅によって結果が変わるため注意が必要です。",
+          },
+          {
+            q: "CSSのカラーコードを10進数に変換できますか？",
+            a: "はい。CSSカラーコード（例：#FF5733）はRGB各チャンネルが16進数2桁で表現されています。FF→255、57→87、33→51のように各2桁を16進数として変換できます。",
+          },
+        ].map(({ q, a }) => (
+          <details key={q} className="border border-gray-200 rounded-xl p-4 group">
+            <summary className="font-medium text-gray-800 cursor-pointer list-none flex justify-between items-center">
+              {q}
+              <span className="text-gray-400 group-open:rotate-180 transition-transform">▾</span>
+            </summary>
+            <p className="mt-2 text-sm text-gray-600 leading-relaxed">{a}</p>
+          </details>
+        ))}
+      </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "2進数・16進数・8進数の違いは何ですか？",
+                acceptedAnswer: { "@type": "Answer", text: "2進数（binary）は0と1のみ使う基数2の表現で、コンピュータの基本。8進数（octal）は0〜7を使う基数8。16進数（hexadecimal）は0〜9とA〜Fを使う基数16で、メモリアドレスやカラーコードによく使われます。" },
+              },
+              {
+                "@type": "Question",
+                name: "負の数はどうやって表現しますか？",
+                acceptedAnswer: { "@type": "Answer", text: "このツールは符号なし整数の変換に対応しています。負の数の2進数表現には2の補数（two's complement）が一般的に使われますが、ビット幅によって結果が変わるため注意が必要です。" },
+              },
+              {
+                "@type": "Question",
+                name: "CSSのカラーコードを10進数に変換できますか？",
+                acceptedAnswer: { "@type": "Answer", text: "はい。CSSカラーコード（例：#FF5733）はRGB各チャンネルが16進数2桁で表現されています。FF→255、57→87、33→51のように各2桁を16進数として変換できます。" },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 関連ツール */}
+      <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl">
+        <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
+        <div className="flex flex-wrap gap-3">
+          <a href="/tools/color-converter" className="text-sm text-blue-600 hover:underline">カラーコード変換</a>
+          <a href="/tools/hash-generator" className="text-sm text-blue-600 hover:underline">ハッシュ生成</a>
+        </div>
+      </div>
+
       {/* ASCII Quick Reference */}
       <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">

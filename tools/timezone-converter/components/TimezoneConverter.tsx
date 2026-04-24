@@ -388,6 +388,42 @@ export default function TimezoneConverter() {
           ))}
         </div>
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "UTCとJSTの時差は何時間ですか？", a: "JST（日本標準時）はUTCより9時間進んでいます。つまりUTC 0:00はJST 9:00になります。日本はサマータイムを採用していないため、年間を通じてUTC+9で固定です。" },
+            { q: "夏時間（サマータイム）は自動で反映されますか？", a: "はい。アメリカ・ヨーロッパなどサマータイムを採用している地域のタイムゾーンは、指定した日時に応じて自動的にサマータイムが適用されます。" },
+            { q: "世界の主要都市の時差を一覧で確認できますか？", a: "本ツールでは複数のタイムゾーンを追加して一覧表示できます。東京・ニューヨーク・ロンドン・パリ・上海など主要都市のタイムゾーンをプリセットから選択可能です。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "UTCとJSTの時差は何時間ですか？", "acceptedAnswer": { "@type": "Answer", "text": "JST（日本標準時）はUTCより9時間進んでいます。日本はサマータイムを採用していないため、年間を通じてUTC+9で固定です。" } },
+              { "@type": "Question", "name": "夏時間（サマータイム）は自動で反映されますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。アメリカ・ヨーロッパなどサマータイムを採用している地域のタイムゾーンは、指定した日時に応じて自動的にサマータイムが適用されます。" } },
+              { "@type": "Question", "name": "世界の主要都市の時差を一覧で確認できますか？", "acceptedAnswer": { "@type": "Answer", "text": "本ツールでは複数のタイムゾーンを追加して一覧表示できます。主要都市のタイムゾーンをプリセットから選択可能です。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/epoch-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">エポック時刻変換</a>
+            <a href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

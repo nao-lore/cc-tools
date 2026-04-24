@@ -586,6 +586,42 @@ export default function SvgConverter() {
       <div className="border border-dashed border-gray-300 rounded-xl p-4 text-center text-gray-400 text-sm mb-8">
         Advertisement
       </div>
+
+      {/* FAQ */}
+      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+        <div className="space-y-4">
+          {[
+            { q: "SVGをPNGに変換するメリットは？", a: "PNGはSVGに対応していないアプリケーションや印刷物で広く使えます。SNSへのアップロード、メール添付、古いブラウザ対応など、互換性が必要な場面でPNGが適しています。" },
+            { q: "変換時の画質はどう決まりますか？", a: "スケール倍率（1x〜4x）で出力解像度を指定できます。高解像度ディスプレイ（Retina等）向けには2x以上を推奨します。SVGはベクター形式のため、拡大しても劣化しません。" },
+            { q: "透過（アルファ）は保持されますか？", a: "PNG形式は透過に対応しているため、SVGの透過部分はそのままPNGに変換されます。JPEGに変換する場合は透過が失われ、背景色が設定されます。" },
+          ].map(({ q, a }) => (
+            <div key={q} className="bg-gray-50 rounded-xl p-4">
+              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
+              <p className="text-sm text-gray-600">A. {a}</p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "SVGをPNGに変換するメリットは？", "acceptedAnswer": { "@type": "Answer", "text": "PNGはSVGに対応していないアプリケーションや印刷物で広く使えます。互換性が必要な場面でPNGが適しています。" } },
+              { "@type": "Question", "name": "変換時の画質はどう決まりますか？", "acceptedAnswer": { "@type": "Answer", "text": "スケール倍率（1x〜4x）で出力解像度を指定できます。高解像度ディスプレイ向けには2x以上を推奨します。" } },
+              { "@type": "Question", "name": "透過（アルファ）は保持されますか？", "acceptedAnswer": { "@type": "Answer", "text": "PNG形式は透過に対応しているため、SVGの透過部分はそのままPNGに変換されます。" } },
+            ]
+          }) }}
+        />
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
+          <div className="flex flex-wrap gap-2">
+            <a href="/placeholder-image" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">プレースホルダー画像生成</a>
+            <a href="/image-compressor" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">画像圧縮ツール</a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
