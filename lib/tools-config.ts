@@ -79,6 +79,11 @@ export const tools: Tool[] = [
   { slug: "ai-video-pricing", name: "AI動画生成 料金比較", description: "主要AI動画生成サービスの料金・生成時間・解像度・機能を横断比較", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "aojiro-shinkoku-sim", name: "青色申告 節税シミュレーター", description: "青色申告特別控除の3段階（65万/55万/10万）の適用条件と節税効果を可視化", market: "JP", category: "Tax Tools", oldUrl: "" },
   { slug: "auth-service-comparison", name: "認証SaaS 料金比較", description: "主要認証サービスの料金をMAU別に比較。無料枠・機能・SSO対応を一覧", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "click-post-size", name: "メール便・小型配送 判定", description: "荷物サイズ・重量から使える小型配送サービスを即判定。最安の送り方を比較", market: "JP", category: "EC Tools", oldUrl: "" },
+  { slug: "consumption-tax-choice", name: "簡易課税 vs 本則課税 判定", description: "売上・仕入・業種から簡易課税と本則課税のどちらが有利か判定。2割特例の適用可否も確認", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "embedding-cost-calculator", name: "埋め込みAPI 料金計算", description: "テキスト埋め込み（Embedding）APIの料金をドキュメント数・トークン数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "firebase-pricing", name: "Firebase 料金試算", description: "Firebaseの月額料金をFirestore読み書き数・Storage・Functions実行回数から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "gacha-probability", name: "ガチャ確率 計算", description: "ソシャゲのガチャ排出率と試行回数から、目当てのキャラ・装備を引ける確率を計算", market: "JP", category: "Game Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
