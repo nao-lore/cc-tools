@@ -84,6 +84,11 @@ export const tools: Tool[] = [
   { slug: "embedding-cost-calculator", name: "埋め込みAPI 料金計算", description: "テキスト埋め込み（Embedding）APIの料金をドキュメント数・トークン数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "firebase-pricing", name: "Firebase 料金試算", description: "Firebaseの月額料金をFirestore読み書き数・Storage・Functions実行回数から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
   { slug: "gacha-probability", name: "ガチャ確率 計算", description: "ソシャゲのガチャ排出率と試行回数から、目当てのキャラ・装備を引ける確率を計算", market: "JP", category: "Game Tools", oldUrl: "" },
+  { slug: "goshugi-souba", name: "ご祝儀相場 計算", description: "結婚式のご祝儀金額を続柄・年代・地域・関係性から判定。相場表と注意事項付き", market: "JP", category: "Life Tools", oldUrl: "" },
+  { slug: "houjin-nari", name: "法人成り 損益分岐シミュレーター", description: "年収別に個人事業主と法人（1人社長）の手取り・税金・社会保険を比較", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "hourly-to-annual", name: "時給 ↔ 年収 ↔ 月収 逆算", description: "時給から年収、年収から時給を即変換。勤務時間・日数・有給・残業込みで正確に計算", market: "JP", category: "Labor Tools", oldUrl: "" },
+  { slug: "invoice-qualified-checker", name: "適格請求書 チェッカー", description: "適格請求書（インボイス）の必須記載事項を項目ごとにチェック。漏れがないか確認できます", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "iryouhi-koujo", name: "医療費控除 シミュレーター", description: "年間医療費・保険金・家族分を入力して医療費控除の還付額を計算", market: "JP", category: "Tax Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
