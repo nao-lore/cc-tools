@@ -1,1 +1,0 @@
-{"slug": "recipe-scaling", "name": "レシピ 分量スケーリング", "title": "レシピ分量計算 — 人数変更で材料を自動調整", "description": "レシピの人数を変えた時の材料分量を自動計算。分数・小数・計量単位変換対応", "metaDescription": "レシピの分量を人数に合わせて自動計算。2人前→5人前の材料調整、大さじ・カップのグラム換算、よく使う食材の密度データベース付き。", "market": "JP", "category": "Cooking Tools", "tier": "S"}

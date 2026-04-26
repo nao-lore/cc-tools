@@ -89,6 +89,11 @@ export const tools: Tool[] = [
   { slug: "hourly-to-annual", name: "時給 ↔ 年収 ↔ 月収 逆算", description: "時給から年収、年収から時給を即変換。勤務時間・日数・有給・残業込みで正確に計算", market: "JP", category: "Labor Tools", oldUrl: "" },
   { slug: "invoice-qualified-checker", name: "適格請求書 チェッカー", description: "適格請求書（インボイス）の必須記載事項を項目ごとにチェック。漏れがないか確認できます", market: "JP", category: "Business Tools", oldUrl: "" },
   { slug: "iryouhi-koujo", name: "医療費控除 シミュレーター", description: "年間医療費・保険金・家族分を入力して医療費控除の還付額を計算", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "mercari-tesuryou", name: "メルカリ 手数料・利益計算", description: "メルカリの販売手数料・送料・梱包費を引いた実利益を計算。逆算で目標利益から販売価格も算出", market: "JP", category: "EC Tools", oldUrl: "" },
+  { slug: "openrouter-pricing", name: "OpenRouter 料金比較", description: "OpenRouter経由で使える主要LLMモデルのAPI料金・速度・性能を一覧比較", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "rag-cost-estimator", name: "RAG 運用コスト試算", description: "RAGシステムの月額コストをドキュメント数・クエリ数・モデル選択から試算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "recipe-scaling", name: "レシピ 分量スケーリング", description: "レシピの人数を変えた時の材料分量を自動計算。分数・小数・計量単位変換対応", market: "JP", category: "Cooking Tools", oldUrl: "" },
+  { slug: "render-fly-railway-comparison", name: "Render / Fly / Railway 料金比較", description: "Render・Fly.io・Railwayの料金・リソース・リージョンを横断比較", market: "JP", category: "SaaS Pricing", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
