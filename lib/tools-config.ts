@@ -94,6 +94,11 @@ export const tools: Tool[] = [
   { slug: "rag-cost-estimator", name: "RAG 運用コスト試算", description: "RAGシステムの月額コストをドキュメント数・クエリ数・モデル選択から試算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "recipe-scaling", name: "レシピ 分量スケーリング", description: "レシピの人数を変えた時の材料分量を自動計算。分数・小数・計量単位変換対応", market: "JP", category: "Cooking Tools", oldUrl: "" },
   { slug: "render-fly-railway-comparison", name: "Render / Fly / Railway 料金比較", description: "Render・Fly.io・Railwayの料金・リソース・リージョンを横断比較", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "stripe-fee-calculator", name: "Stripe 手数料計算", description: "Stripeの決済手数料を決済方法別に計算。売上から手数料を引いた実収入を即座に確認", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "subscription-lifetime", name: "サブスク 生涯コスト可視化", description: "月額サブスクリプションの合計額を1年・5年・10年で可視化。登録中の全サービスの総額を計算", market: "JP", category: "Life Tools", oldUrl: "" },
+  { slug: "takuhaibin-hikaku", name: "宅配便 送料比較", description: "ヤマト運輸・佐川急便・日本郵便の送料をサイズ・重量・発送元/先から比較して最安を表示", market: "JP", category: "EC Tools", oldUrl: "" },
+  { slug: "teigaku-genzei", name: "定額減税 計算機", description: "2024-2025年の定額減税（所得税3万円/住民税1万円）の適用額をシミュレーション。扶養家族数に応じた減税総額を即計算", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "withholding-tax-calculator", name: "源泉徴収税 計算", description: "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応", market: "JP", category: "Business Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
