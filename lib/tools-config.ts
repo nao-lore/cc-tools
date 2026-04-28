@@ -99,6 +99,11 @@ export const tools: Tool[] = [
   { slug: "takuhaibin-hikaku", name: "宅配便 送料比較", description: "ヤマト運輸・佐川急便・日本郵便の送料をサイズ・重量・発送元/先から比較して最安を表示", market: "JP", category: "EC Tools", oldUrl: "" },
   { slug: "teigaku-genzei", name: "定額減税 計算機", description: "2024-2025年の定額減税（所得税3万円/住民税1万円）の適用額をシミュレーション。扶養家族数に応じた減税総額を即計算", market: "JP", category: "Tax Tools", oldUrl: "" },
   { slug: "withholding-tax-calculator", name: "源泉徴収税 計算", description: "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "zangyou-dai", name: "残業代 計算機", description: "残業代を法定時間外・所定時間外・深夜・休日・月60時間超に区分して正確に計算", market: "JP", category: "Labor Tools", oldUrl: "" },
+  { slug: "amazon-fba-fee", name: "Amazon FBA 手数料計算", description: "Amazon FBAの販売手数料・配送代行手数料・保管手数料を販売価格・サイズから計算", market: "JP", category: "EC Tools", oldUrl: "" },
+  { slug: "aws-s3-cost", name: "AWS S3 料金計算", description: "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "azure-openai-cost", name: "Azure OpenAI 料金計算", description: "Azure OpenAI Serviceの料金をリージョン・モデル・トークン数から試算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "cdn-pricing-comparison", name: "CDN 料金比較", description: "主要CDN4社の料金をトラフィック量・リージョンから比較", market: "JP", category: "SaaS Pricing", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
