@@ -88,7 +88,7 @@ export default function TeigakuGenzei() {
 
     // 対象外チェック
     if (salary > SALARY_LIMIT) {
-      return { outOfScope: true, salary };
+      return { outOfScope: true as const, salary };
     }
 
     // 減税額
@@ -138,7 +138,7 @@ export default function TeigakuGenzei() {
     }
 
     return {
-      outOfScope: false,
+      outOfScope: false as const,
       salary,
       totalPersons,
       incomeTaxReduction,

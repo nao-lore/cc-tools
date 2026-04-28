@@ -78,8 +78,8 @@ function NeonInput({
       style={{
         background: "#1e1b2e",
         border: "1px solid #4c1d95",
-        focusRingColor: NEON_PURPLE,
-      }}
+        "--tw-ring-color": NEON_PURPLE,
+      } as React.CSSProperties}
     />
   );
 }
