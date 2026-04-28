@@ -119,7 +119,7 @@ export default function TireSizeConverter() {
             <div className="grid grid-cols-3 gap-2">
               <SelectField label="幅 (mm)" value={origWidth} options={WIDTHS} onChange={setOrigWidth} suffix="" />
               <SelectField label="扁平率 (%)" value={origAspect} options={ASPECTS} onChange={setOrigAspect} suffix="" />
-              <SelectField label="リム径 (inch)" value={origRim} options={RIMS} onChange={setOrigRim} suffix="\"" />
+              <SelectField label="リム径 (inch)" value={origRim} options={RIMS} onChange={setOrigRim} suffix={'"'} />
             </div>
             <div className="mt-3 text-center">
               <span className="text-xl font-bold text-blue-700">
@@ -137,7 +137,7 @@ export default function TireSizeConverter() {
             <div className="grid grid-cols-3 gap-2">
               <SelectField label="幅 (mm)" value={newWidth} options={WIDTHS} onChange={setNewWidth} suffix="" />
               <SelectField label="扁平率 (%)" value={newAspect} options={ASPECTS} onChange={setNewAspect} suffix="" />
-              <SelectField label="リム径 (inch)" value={newRim} options={RIMS} onChange={setNewRim} suffix="\"" />
+              <SelectField label="リム径 (inch)" value={newRim} options={RIMS} onChange={setNewRim} suffix={'"'} />
             </div>
             <div className="mt-3 text-center">
               <span className="text-xl font-bold text-orange-600">
