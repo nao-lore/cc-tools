@@ -38,6 +38,19 @@ jobs:
           DEPLOY_COUNT: ${{ github.event.inputs.count || '5' }}
         run: python3 scripts/stock-to-deploy.py "$DEPLOY_COUNT"
 
+      - uses: actions/setup-node@v4
+        if: steps.check.outputs.pending != '0'
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Type check before deploy
+        if: steps.check.outputs.pending != '0'
+        run: |
+          npm ci
+          npx tsc --noEmit
+          echo "Type check passed"
+
       - name: Commit and push
         if: steps.check.outputs.pending != '0'
         run: |
