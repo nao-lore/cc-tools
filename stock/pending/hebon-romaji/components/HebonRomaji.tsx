@@ -90,20 +90,12 @@ function kataToHira(str: string): string {
 
 type MacronMode = "none" | "macron";
 
-// Passport special rules applied after basic conversion:
-// おう / おお → O (long O, not OU/OO)
-// うう → U (long U, not UU)
-// Hepburn passport spec: long vowels are NOT written with macrons or double letters.
-// However: OU in names like 大野 → ONO is standard. We apply these as post-processing
-// on the phoneme sequence.
-
 function convertToRomaji(
   input: string,
   table: Record<string, string>,
   passportMode: boolean,
   macronMode: MacronMode
 ): string {
-  // Normalize katakana → hiragana for uniform processing
   const hira = kataToHira(hiraToKata(input));
   let result = "";
   let i = 0;
@@ -112,7 +104,6 @@ function convertToRomaji(
     const ch = hira[i];
     const ch2 = hira[i] + hira[i + 1];
 
-    // っ / ッ doubling
     if (ch === "っ") {
       const next2 = hira[i + 1] + hira[i + 2];
       const next1 = hira[i + 1];
@@ -126,7 +117,6 @@ function convertToRomaji(
       continue;
     }
 
-    // ん before b/m/p → M (Hepburn rule)
     if (ch === "ん") {
       const next1 = hira[i + 1];
       const nextRomaji = next1 ? (table[next1] ?? "") : "";
@@ -144,29 +134,23 @@ function convertToRomaji(
       continue;
     }
 
-    // 2-char lookup first
     if (hira[i + 1] && table[ch2]) {
       result += table[ch2];
       i += 2;
       continue;
     }
 
-    // 1-char lookup
     if (table[ch]) {
       result += table[ch];
       i++;
       continue;
     }
 
-    // Pass through (spaces, punctuation, etc.)
-    // Convert Japanese punctuation
     if (ch === "　") {
       result += " ";
     } else if (ch === "・") {
       result += " ";
     } else if (ch === "ー") {
-      // Long vowel mark: handled per vowel rules below
-      // We append a marker and handle in post-processing
       result += "—CHOON—";
     } else {
       result += ch;
@@ -174,12 +158,8 @@ function convertToRomaji(
     i++;
   }
 
-  // Post-process long vowel mark
   result = result.replace(/([AEIOU])—CHOON—/g, (_, v) => {
-    if (passportMode) {
-      // Passport: suppress doubling
-      return v;
-    }
+    if (passportMode) return v;
     if (macronMode === "macron") {
       const macrons: Record<string, string> = {
         A: "Ā", I: "Ī", U: "Ū", E: "Ē", O: "Ō",
@@ -188,19 +168,14 @@ function convertToRomaji(
     }
     return v + v;
   });
-  result = result.replace(/—CHOON—/g, ""); // orphaned
+  result = result.replace(/—CHOON—/g, "");
 
   if (passportMode) {
-    // おう → O: in phoneme stream "OU" → "O" when second O comes from う
-    // We apply simple bigram rules on the romaji output
-    // Rule: OU → O, OO → O, UU → U, II stays II per passport
-    // These are the Ministry of Foreign Affairs rules
     result = result
       .replace(/OU/g, "O")
       .replace(/OO/g, "O")
       .replace(/UU/g, "U");
   } else if (macronMode === "macron") {
-    // Non-passport macron mode: replace doubled vowels with macron
     result = result
       .replace(/AA/g, "Ā")
       .replace(/II/g, "Ī")
@@ -213,7 +188,6 @@ function convertToRomaji(
   return result;
 }
 
-// ---- Special cases reference table ----
 const SPECIAL_CASES = [
   { jp: "おう（例：太郎 たろう）", standard: "TARO", not: "TAROU", note: "語尾・語中のOU→O" },
   { jp: "おお（例：大野 おおの）", standard: "ONO", not: "OONO", note: "OO→O" },
@@ -228,8 +202,87 @@ const SPECIAL_CASES = [
 ];
 
 type Mode = "hepburn" | "kunrei";
+type Lang = "ja" | "en";
+
+const T = {
+  ja: {
+    conversionMode: "変換方式",
+    hepburnLabel: "ヘボン式",
+    hepburnBadge: "パスポート標準",
+    kunreiLabel: "訓令式",
+    kunreiBadge: "JIS X 4012",
+    passportMode: "パスポートモード",
+    passportDesc: "（おう→O、うう→U等）",
+    longVowel: "長音表記:",
+    noneLabel: "なし（OU/UU）",
+    macronLabel: "マクロン（Ō/Ū）",
+    lastNameLabel: "姓（苗字）",
+    firstNameLabel: "名（名前）",
+    lastPlaceholder: "例：田中",
+    firstPlaceholder: "例：たろう",
+    sampleBtn: "サンプルを使う",
+    clearBtn: "クリア",
+    convertBtn: "ローマ字に変換",
+    passportNotice: "PASSPORT / パスポート表記",
+    romajiNotice: "ローマ字表記",
+    lastLabel: "姓",
+    firstLabel: "名",
+    fullNameLabel: "フルネーム（姓→名順）",
+    copyBtn: "フルネームをコピー",
+    copiedBtn: "コピーしました",
+    passportTitle: "パスポート申請上の注意",
+    passportNotes: [
+      "本ツールの出力はあくまで参考です。最終確認は戸籍・住民票の氏名で行ってください。",
+      "「おう」「おお」は原則 O（例：TARO、ONO）。ただし戸籍表記が優先される場合があります。",
+      "外務省指定のヘボン式に準拠しない表記を希望する場合は申請時に申し出が必要です。",
+    ],
+    specialCasesTitle: "特殊表記・注意ケース一覧",
+    caseHeader: "ケース",
+    correctHeader: "正しい表記",
+    wrongHeader: "誤りやすい表記",
+    ruleHeader: "ルール",
+  },
+  en: {
+    conversionMode: "Conversion Mode",
+    hepburnLabel: "Hepburn",
+    hepburnBadge: "Passport standard",
+    kunreiLabel: "Kunrei-shiki",
+    kunreiBadge: "JIS X 4012",
+    passportMode: "Passport Mode",
+    passportDesc: "(ou→O, uu→U, etc.)",
+    longVowel: "Long vowels:",
+    noneLabel: "None (OU/UU)",
+    macronLabel: "Macron (Ō/Ū)",
+    lastNameLabel: "Last Name",
+    firstNameLabel: "First Name",
+    lastPlaceholder: "e.g. たなか",
+    firstPlaceholder: "e.g. たろう",
+    sampleBtn: "Use sample",
+    clearBtn: "Clear",
+    convertBtn: "Convert to Romaji",
+    passportNotice: "PASSPORT notation",
+    romajiNotice: "Romaji notation",
+    lastLabel: "Last",
+    firstLabel: "First",
+    fullNameLabel: "Full name (Last → First)",
+    copyBtn: "Copy full name",
+    copiedBtn: "Copied!",
+    passportTitle: "Passport application note",
+    passportNotes: [
+      "This tool's output is for reference only. Confirm against your official family register.",
+      "OU/OO → O in principle (e.g. TARO, ONO), but official register spelling takes priority.",
+      "If you wish to use a non-standard spelling, declare it at the application counter.",
+    ],
+    specialCasesTitle: "Special cases reference",
+    caseHeader: "Case",
+    correctHeader: "Correct",
+    wrongHeader: "Incorrect",
+    ruleHeader: "Rule",
+  },
+} as const;
 
 export default function HebonRomaji() {
+  const [lang, setLang] = useState<Lang>("ja");
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [mode, setMode] = useState<Mode>("hepburn");
@@ -239,6 +292,7 @@ export default function HebonRomaji() {
   const [copied, setCopied] = useState(false);
   const [showTable, setShowTable] = useState(false);
 
+  const t = T[lang];
   const table = mode === "hepburn" ? HEPBURN : KUNREI;
 
   const handleConvert = useCallback(() => {
@@ -277,16 +331,102 @@ export default function HebonRomaji() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.1); }
+          50% { box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 0 60px rgba(139,92,246,0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .float-in {
+          animation: float-in 0.25s ease-out;
+        }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .method-btn-active {
+          box-shadow: 0 0 20px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+          background: rgba(139,92,246,0.2);
+          border-color: rgba(167,139,250,0.6) !important;
+        }
+        .table-row-stripe:hover {
+          background: rgba(139,92,246,0.08);
+          transition: background 0.2s ease;
+        }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
+      </div>
+
       {/* Mode selector */}
-      <div>
-        <p className="text-sm font-semibold text-gray-700 mb-3">変換方式</p>
+      <div className="glass-card rounded-2xl p-6">
+        <p className="text-xs font-semibold text-violet-100 uppercase tracking-widest mb-4">{t.conversionMode}</p>
         <div className="grid grid-cols-2 gap-3">
           {(
             [
-              { value: "hepburn", label: "ヘボン式", badge: "パスポート標準", color: "indigo" },
-              { value: "kunrei", label: "訓令式", badge: "JIS X 4012", color: "teal" },
-            ] as const
+              { value: "hepburn" as Mode, label: t.hepburnLabel, badge: t.hepburnBadge },
+              { value: "kunrei" as Mode, label: t.kunreiLabel, badge: t.kunreiBadge },
+            ]
           ).map((opt) => (
             <button
               key={opt.value}
@@ -294,22 +434,14 @@ export default function HebonRomaji() {
                 setMode(opt.value);
                 setResult(null);
               }}
-              className={`p-3 rounded-xl border-2 text-left transition-all ${
+              className={`p-3.5 rounded-xl border-2 text-left transition-all ${
                 mode === opt.value
-                  ? opt.color === "indigo"
-                    ? "border-indigo-500 bg-indigo-50 shadow-sm"
-                    : "border-teal-500 bg-teal-50 shadow-sm"
-                  : "border-gray-200 hover:border-gray-300 bg-white"
+                  ? "method-btn-active border-violet-500/60"
+                  : "border-white/8 hover:border-violet-500/30"
               }`}
             >
-              <span className="block text-sm font-semibold text-gray-800">{opt.label}</span>
-              <span
-                className={`inline-block text-xs mt-1 px-2 py-0.5 rounded-full font-medium ${
-                  opt.color === "indigo"
-                    ? "bg-indigo-100 text-indigo-700"
-                    : "bg-teal-100 text-teal-700"
-                }`}
-              >
+              <span className="block text-sm font-semibold text-white">{opt.label}</span>
+              <span className="inline-block text-xs mt-1 px-2 py-0.5 rounded-full font-medium bg-violet-500/20 text-violet-200">
                 {opt.badge}
               </span>
             </button>
@@ -318,8 +450,8 @@ export default function HebonRomaji() {
       </div>
 
       {/* Passport options */}
-      <div className="flex flex-wrap gap-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-        <label className="flex items-center gap-2 cursor-pointer select-none">
+      <div className="glass-card rounded-2xl p-5 border border-violet-500/20">
+        <label className="flex items-center gap-2 cursor-pointer select-none mb-3">
           <input
             type="checkbox"
             checked={passportMode}
@@ -327,20 +459,20 @@ export default function HebonRomaji() {
               setPassportMode(e.target.checked);
               setResult(null);
             }}
-            className="w-4 h-4 text-indigo-600 rounded"
+            className="w-4 h-4 accent-violet-500 rounded"
           />
-          <span className="text-sm font-medium text-blue-900">パスポートモード</span>
-          <span className="text-xs text-blue-600">（おう→O、うう→U等）</span>
+          <span className="text-sm font-medium text-white">{t.passportMode}</span>
+          <span className="text-xs text-violet-200">{t.passportDesc}</span>
         </label>
 
         {!passportMode && (
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-gray-700">長音表記:</span>
+          <div className="flex items-center gap-3 mt-2 float-in">
+            <span className="text-xs font-medium text-violet-100">{t.longVowel}</span>
             {(
               [
-                { value: "none", label: "なし（OU/UU）" },
-                { value: "macron", label: "マクロン（Ō/Ū）" },
-              ] as const
+                { value: "none" as MacronMode, label: t.noneLabel },
+                { value: "macron" as MacronMode, label: t.macronLabel },
+              ]
             ).map((opt) => (
               <label key={opt.value} className="flex items-center gap-1.5 cursor-pointer">
                 <input
@@ -352,9 +484,9 @@ export default function HebonRomaji() {
                     setMacronMode(opt.value);
                     setResult(null);
                   }}
-                  className="w-3.5 h-3.5 text-indigo-600"
+                  className="w-3.5 h-3.5 accent-violet-500"
                 />
-                <span className="text-sm text-gray-700">{opt.label}</span>
+                <span className="text-sm text-violet-100">{opt.label}</span>
               </label>
             ))}
           </div>
@@ -362,112 +494,113 @@ export default function HebonRomaji() {
       </div>
 
       {/* Name inputs */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            姓（苗字）
-          </label>
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => {
-              setLastName(e.target.value);
-              setResult(null);
-            }}
-            placeholder="例：田中"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors text-base text-gray-900 placeholder-gray-400"
-          />
+      <div className="glass-card rounded-2xl p-6">
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">
+              {t.lastNameLabel}
+            </label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => {
+                setLastName(e.target.value);
+                setResult(null);
+              }}
+              placeholder={t.lastPlaceholder}
+              className="number-input w-full px-4 py-3 rounded-xl text-base neon-focus transition-all"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">
+              {t.firstNameLabel}
+            </label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+                setResult(null);
+              }}
+              placeholder={t.firstPlaceholder}
+              className="number-input w-full px-4 py-3 rounded-xl text-base neon-focus transition-all"
+            />
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            名（名前）
-          </label>
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => {
-              setFirstName(e.target.value);
-              setResult(null);
-            }}
-            placeholder="例：たろう"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-colors text-base text-gray-900 placeholder-gray-400"
-          />
-        </div>
-      </div>
 
-      <div className="flex gap-3">
-        <button
-          onClick={() => {
-            setLastName("たなか");
-            setFirstName("たろう");
-            setResult(null);
-          }}
-          className="text-sm text-indigo-600 hover:text-indigo-800 underline underline-offset-2"
-        >
-          サンプルを使う
-        </button>
-        {(lastName || firstName) && (
+        <div className="flex gap-3">
           <button
-            onClick={handleClear}
-            className="text-sm text-gray-500 hover:text-gray-700 underline underline-offset-2"
+            onClick={() => {
+              setLastName("たなか");
+              setFirstName("たろう");
+              setResult(null);
+            }}
+            className="text-sm text-violet-300 hover:text-violet-100 underline underline-offset-2 transition-colors"
           >
-            クリア
+            {t.sampleBtn}
           </button>
-        )}
+          {(lastName || firstName) && (
+            <button
+              onClick={handleClear}
+              className="text-sm text-violet-200/60 hover:text-violet-100 underline underline-offset-2 transition-colors"
+            >
+              {t.clearBtn}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Convert button */}
       <button
         onClick={handleConvert}
         disabled={!lastName.trim() && !firstName.trim()}
-        className="w-full py-3 px-6 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 active:bg-indigo-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors text-lg shadow-md hover:shadow-lg"
+        className="w-full py-3 px-6 bg-violet-600 hover:bg-violet-500 active:bg-violet-700 disabled:bg-white/10 disabled:text-white/30 disabled:cursor-not-allowed text-white font-bold rounded-xl transition-colors text-lg"
+        style={{ boxShadow: "0 0 20px rgba(139,92,246,0.3)" }}
       >
-        ローマ字に変換
+        {t.convertBtn}
       </button>
 
       {/* Result */}
       {result && (
-        <div className="space-y-4">
-          {/* Passport-style output */}
-          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 shadow-lg">
-            <p className="text-xs text-gray-400 uppercase tracking-widest mb-3 font-mono">
-              {passportMode ? "PASSPORT / パスポート表記" : "ローマ字表記"}
+        <div className="space-y-4 float-in">
+          <div className="gradient-border-box glass-card-bright rounded-2xl p-6 result-card-glow">
+            <p className="text-xs text-violet-200 uppercase tracking-widest mb-4 font-mono">
+              {passportMode ? t.passportNotice : t.romajiNotice}
             </p>
             <div className="space-y-3">
               {result.last && (
                 <div className="flex items-baseline gap-3">
-                  <span className="text-xs text-gray-500 w-6 shrink-0">姓</span>
-                  <span className="text-3xl font-bold tracking-widest text-white font-mono">
+                  <span className="text-xs text-violet-200 w-8 shrink-0">{t.lastLabel}</span>
+                  <span className="text-3xl font-bold tracking-widest text-white font-mono glow-text">
                     {result.last}
                   </span>
                 </div>
               )}
               {result.first && (
                 <div className="flex items-baseline gap-3">
-                  <span className="text-xs text-gray-500 w-6 shrink-0">名</span>
-                  <span className="text-3xl font-bold tracking-widest text-white font-mono">
+                  <span className="text-xs text-violet-200 w-8 shrink-0">{t.firstLabel}</span>
+                  <span className="text-3xl font-bold tracking-widest text-white font-mono glow-text">
                     {result.first}
                   </span>
                 </div>
               )}
             </div>
             {result.last && result.first && (
-              <div className="mt-4 pt-4 border-t border-gray-700">
-                <span className="text-xs text-gray-500 block mb-1">フルネーム（姓→名順）</span>
-                <span className="text-xl font-bold tracking-widest text-amber-400 font-mono">
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <span className="text-xs text-violet-200 block mb-1">{t.fullNameLabel}</span>
+                <span className="text-xl font-bold tracking-widest text-cyan-300 font-mono">
                   {result.last} {result.first}
                 </span>
               </div>
             )}
           </div>
 
-          {/* Copy button */}
           <button
             onClick={handleCopy}
-            className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-sm transition-colors ${
+            className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-semibold text-sm transition-all ${
               copied
-                ? "bg-green-100 text-green-700 border-2 border-green-300"
-                : "bg-white border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-700"
+                ? "glass-card-bright text-cyan-300 border border-cyan-500/30"
+                : "glass-card text-violet-100 hover:text-white border border-white/8 hover:border-violet-500/40"
             }`}
           >
             {copied ? (
@@ -475,46 +608,40 @@ export default function HebonRomaji() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                コピーしました
+                {t.copiedBtn}
               </>
             ) : (
               <>
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                 </svg>
-                フルネームをコピー
+                {t.copyBtn}
               </>
             )}
           </button>
 
-          {/* Passport notice */}
           {passportMode && (
-            <div className="flex gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl">
-              <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-              <div className="text-sm text-amber-800">
-                <p className="font-semibold mb-1">パスポート申請上の注意</p>
-                <ul className="space-y-1 text-xs text-amber-700 list-disc list-inside">
-                  <li>本ツールの出力はあくまで参考です。最終確認は戸籍・住民票の氏名で行ってください。</li>
-                  <li>「おう」「おお」は原則 O（例：TARO、ONO）。ただし戸籍表記が優先される場合があります。</li>
-                  <li>外務省指定のヘボン式に準拠しない表記を希望する場合は申請時に申し出が必要です。</li>
-                </ul>
-              </div>
+            <div className="glass-card rounded-2xl p-5 border border-amber-500/20">
+              <p className="font-semibold text-white text-sm mb-2">{t.passportTitle}</p>
+              <ul className="space-y-1.5 text-xs text-violet-100 list-disc list-inside">
+                {t.passportNotes.map((note, i) => (
+                  <li key={i}>{note}</li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
       )}
 
       {/* Special cases reference table */}
-      <div className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="glass-card rounded-2xl overflow-hidden">
         <button
           onClick={() => setShowTable((v) => !v)}
-          className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
+          className="w-full flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors text-left"
         >
-          <span className="text-sm font-semibold text-gray-700">特殊表記・注意ケース一覧</span>
+          <span className="text-sm font-semibold text-white">{t.specialCasesTitle}</span>
           <svg
-            className={`w-4 h-4 text-gray-500 transition-transform ${showTable ? "rotate-180" : ""}`}
+            className={`w-4 h-4 text-violet-200 transition-transform ${showTable ? "rotate-180" : ""}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -523,23 +650,23 @@ export default function HebonRomaji() {
           </svg>
         </button>
         {showTable && (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto border-t border-white/8">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-100 text-gray-600 text-xs uppercase tracking-wide">
-                  <th className="px-4 py-2 text-left font-semibold">ケース</th>
-                  <th className="px-4 py-2 text-left font-semibold text-green-700">正しい表記</th>
-                  <th className="px-4 py-2 text-left font-semibold text-red-600">誤りやすい表記</th>
-                  <th className="px-4 py-2 text-left font-semibold">ルール</th>
+                <tr className="border-b border-white/8">
+                  <th className="px-4 py-2.5 text-left text-xs text-violet-200 font-medium uppercase tracking-wider">{t.caseHeader}</th>
+                  <th className="px-4 py-2.5 text-left text-xs text-cyan-300 font-medium uppercase tracking-wider">{t.correctHeader}</th>
+                  <th className="px-4 py-2.5 text-left text-xs text-red-400 font-medium uppercase tracking-wider">{t.wrongHeader}</th>
+                  <th className="px-4 py-2.5 text-left text-xs text-violet-200 font-medium uppercase tracking-wider">{t.ruleHeader}</th>
                 </tr>
               </thead>
               <tbody>
                 {SPECIAL_CASES.map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
-                    <td className="px-4 py-2.5 text-gray-800">{row.jp}</td>
-                    <td className="px-4 py-2.5 font-mono font-bold text-green-700">{row.standard}</td>
-                    <td className="px-4 py-2.5 font-mono text-red-500 line-through">{row.not}</td>
-                    <td className="px-4 py-2.5 text-gray-500 text-xs">{row.note}</td>
+                  <tr key={i} className="border-b border-white/5 table-row-stripe">
+                    <td className="px-4 py-2.5 text-white/90 text-xs">{row.jp}</td>
+                    <td className="px-4 py-2.5 font-mono font-bold text-cyan-300">{row.standard}</td>
+                    <td className="px-4 py-2.5 font-mono text-red-400 line-through">{row.not}</td>
+                    <td className="px-4 py-2.5 text-violet-200 text-xs">{row.note}</td>
                   </tr>
                 ))}
               </tbody>
@@ -548,31 +675,8 @@ export default function HebonRomaji() {
         )}
       </div>
 
-      {/* Ad placeholder */}
-      <div className="w-full h-24 bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center">
-        <span className="text-xs text-gray-400">Advertisement</span>
-      </div>
-    
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">このヘボン式ローマ字変換（パスポート対応）ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">ひらがな/カタカナ→ヘボン式/訓令式、パスポート特殊表記対応。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
-        </div>
-      </section>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "このヘボン式ローマ字変換（パスポート対応）ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "ひらがな/カタカナ→ヘボン式/訓令式、パスポート特殊表記対応。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -593,6 +697,6 @@ export default function HebonRomaji() {
 }`
         }}
       />
-      </div>
+    </div>
   );
 }

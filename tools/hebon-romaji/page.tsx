@@ -2,14 +2,14 @@ import HebonRomaji from "./components/HebonRomaji";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f0a1a] via-[#1a1030] to-[#0d0d2b]">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-white/8" style={{ background: "rgba(255,255,255,0.03)" }}>
         <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
             ヘボン式ローマ字変換
           </h1>
-          <p className="text-sm text-muted mt-1">
+          <p className="text-sm text-violet-100 mt-1">
             パスポート申請対応 — ひらがな・カタカナをヘボン式ローマ字に変換
           </p>
         </div>

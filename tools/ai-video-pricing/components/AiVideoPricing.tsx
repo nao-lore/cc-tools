@@ -127,47 +127,177 @@ const SERVICES: Service[] = [
 // Use case recommendations
 // ---------------------------------------------------------------------------
 
-const USE_CASES = [
-  {
-    label: "SNS用ショート",
-    icon: "📱",
-    color: "bg-pink-50 border-pink-200",
-    services: ["Pika", "Kling"],
-    desc: "3〜5秒・音響効果・リップシンク対応",
-  },
-  {
-    label: "プロモーション",
-    icon: "🎬",
-    color: "bg-blue-50 border-blue-200",
-    services: ["Runway", "Sora"],
-    desc: "カメラコントロール・高解像度・長尺",
-  },
-  {
-    label: "プロトタイプ",
-    icon: "⚡",
-    color: "bg-yellow-50 border-yellow-200",
-    services: ["Luma", "Kling"],
-    desc: "高速生成・無料枠が充実",
-  },
-  {
-    label: "高品質CM",
-    icon: "🏆",
-    color: "bg-purple-50 border-purple-200",
-    services: ["Sora", "Runway"],
-    desc: "1080p・最大20秒・プロ品質",
-  },
+const USE_CASES_JA = [
+  { label: "SNS用ショート", icon: "📱", services: ["Pika", "Kling"] as ServiceName[], desc: "3〜5秒・音響効果・リップシンク対応" },
+  { label: "プロモーション", icon: "🎬", services: ["Runway", "Sora"] as ServiceName[], desc: "カメラコントロール・高解像度・長尺" },
+  { label: "プロトタイプ", icon: "⚡", services: ["Luma", "Kling"] as ServiceName[], desc: "高速生成・無料枠が充実" },
+  { label: "高品質CM", icon: "🏆", services: ["Sora", "Runway"] as ServiceName[], desc: "1080p・最大20秒・プロ品質" },
 ];
+
+const USE_CASES_EN = [
+  { label: "Social Shorts", icon: "📱", services: ["Pika", "Kling"] as ServiceName[], desc: "3–5 sec · audio effects · lip sync" },
+  { label: "Promotion", icon: "🎬", services: ["Runway", "Sora"] as ServiceName[], desc: "Camera control · high-res · long clips" },
+  { label: "Prototyping", icon: "⚡", services: ["Luma", "Kling"] as ServiceName[], desc: "Fast generation · generous free tiers" },
+  { label: "High-end CM", icon: "🏆", services: ["Sora", "Runway"] as ServiceName[], desc: "1080p · up to 20 sec · pro quality" },
+];
+
+// ---------------------------------------------------------------------------
+// Translations
+// ---------------------------------------------------------------------------
+
+type Lang = "ja" | "en";
+
+const T = {
+  ja: {
+    langToggle: "EN",
+    // Tabs
+    comparison: "料金比較表",
+    efficiency: "コスト効率",
+    simulator: "シミュレーター",
+    free: "無料枠比較",
+    // Section headings
+    useCaseTitle: "用途別おすすめ",
+    fxRateLabel: "為替レート (円/ドル)",
+    fxRateNote: (rate: number) => `$1 = ¥${rate}`,
+    comparisonNote: "※ 料金は2026年概算。為替レートは設定値を使用。",
+    efficiencyDesc: "有料プランの「1秒あたり生成コスト」で横並び比較します。数値が小さいほどコスパ優秀です。",
+    simulatorHeading: "月間利用量を入力",
+    monthlyVideosLabel: "月間生成本数",
+    monthlyVideosPlaceholder: "例: 30",
+    avgDurationLabel: "平均尺 (秒)",
+    avgDurationPlaceholder: "例: 5",
+    simulatorEmpty: "月間生成本数を入力すると最安プランを判定します",
+    freeDesc: "登録直後に無料で生成できる量を比較します。",
+    soraNoFree: "無料枠なし",
+    soraNoFreeDesc: "ChatGPT Plus ($20/月) から利用可能",
+    legendNote: "料金は2026年概算。実際の料金は各サービスの公式サイトをご確認ください。",
+    guideTitle: "使い方ガイド",
+    faqTitle: "よくある質問",
+    relatedTitle: "関連ツール",
+    // Table headers
+    thService: "サービス",
+    thPlan: "プラン",
+    thMonthlyUSD: "月額 (USD)",
+    thMonthlyJPY: "月額 (JPY)",
+    thCredits: "クレジット/月",
+    thMaxRes: "最大解像度",
+    thMaxDur: "最大尺",
+    thFeatures: "特徴",
+    // Sim table headers
+    thRank: "順位",
+    thRecommended: "おすすめプラン",
+    thMonthlyUSDSim: "月額 (USD)",
+    thMonthlyJPYSim: "月額 (JPY)",
+    thPerVideo: "1本あたり",
+    overLimit: "※上限超",
+    // Free tier
+    freeTierSecs: (n: number) => `約 ${Math.floor(n)}秒 分の動画を生成可能`,
+    freeTierMaxRes: (s: string) => `最大解像度: ${s}`,
+    freeTierMaxDur: (n: number) => `最大尺: ${n}秒/本`,
+    unlimited: "無制限",
+    freeLabel: "無料",
+    perSec: "/秒",
+    // Guide
+    guide: [
+      { step: "1", title: "為替レートを設定", desc: "ページ上部の為替レート入力欄で現在のUSD/JPYレートに合わせてください。円換算金額がリアルタイムで更新されます。" },
+      { step: "2", title: "料金比較表タブで概要を確認", desc: "全サービスのプラン・クレジット数・最大解像度を一覧で比較できます。" },
+      { step: "3", title: "利用シミュレーターで最適プランを判定", desc: "月間生成本数と平均尺（秒）を入力すると、最安プランが自動でランキング表示されます。" },
+      { step: "4", title: "無料枠タブで試用量を確認", desc: "各サービスの無料枠で生成できる合計秒数を確認し、まず無料で試せるサービスを選びましょう。" },
+    ],
+    // FAQ
+    faq: [
+      { q: "SoraとRunwayはどちらが安いですか？", a: "月間利用量によります。Soraは月50クレジット（$20 Plus）から、Runwayは月625クレジット（$12 Standard）から利用可能です。少量ならRunway Standardがコスパ優秀です。" },
+      { q: "AI動画生成の「クレジット」とは何ですか？", a: "各サービス独自の消費単位です。解像度・尺・品質設定によって消費量が変わります。1クレジットあたり生成できる動画秒数はサービスごとに異なります。" },
+      { q: "無料で試せるサービスはありますか？", a: "Runway・Pika・Kling・LumaはすべてFreeプランを提供しています。Soraのみ無料枠がなく、ChatGPT Plus（$20/月）が最低プランです。" },
+      { q: "商用利用は可能ですか？", a: "有料プランでは基本的に商用利用が許可されていますが、生成物のライセンスは各サービスの利用規約を必ず確認してください。" },
+    ],
+    // Related tools
+    relatedLinks: [
+      { href: "/ai-model-comparison", label: "AIモデル比較", desc: "GPT・Claude・Geminiの性能・料金を横断比較" },
+      { href: "/youtube-revenue", label: "YouTube収益計算機", desc: "再生数から広告収益を試算" },
+    ],
+  },
+  en: {
+    langToggle: "JP",
+    // Tabs
+    comparison: "Price Table",
+    efficiency: "Cost Efficiency",
+    simulator: "Simulator",
+    free: "Free Tiers",
+    // Section headings
+    useCaseTitle: "Use Case Picks",
+    fxRateLabel: "FX Rate (JPY/USD)",
+    fxRateNote: (rate: number) => `$1 = ¥${rate}`,
+    comparisonNote: "* Prices are 2026 estimates. JPY uses the rate you set above.",
+    efficiencyDesc: "Comparing cost per second of generated video across paid plans. Lower = better value.",
+    simulatorHeading: "Enter Monthly Usage",
+    monthlyVideosLabel: "Videos per Month",
+    monthlyVideosPlaceholder: "e.g. 30",
+    avgDurationLabel: "Avg Duration (sec)",
+    avgDurationPlaceholder: "e.g. 5",
+    simulatorEmpty: "Enter monthly video count to find the cheapest plan",
+    freeDesc: "Compare how much you can generate on the free tier right after sign-up.",
+    soraNoFree: "No free tier",
+    soraNoFreeDesc: "Requires ChatGPT Plus ($20/mo) at minimum",
+    legendNote: "Prices are 2026 estimates. Please check each service's official site for current rates.",
+    guideTitle: "How to Use",
+    faqTitle: "FAQ",
+    relatedTitle: "Related Tools",
+    // Table headers
+    thService: "Service",
+    thPlan: "Plan",
+    thMonthlyUSD: "Monthly (USD)",
+    thMonthlyJPY: "Monthly (JPY)",
+    thCredits: "Credits/mo",
+    thMaxRes: "Max Res",
+    thMaxDur: "Max Len",
+    thFeatures: "Features",
+    // Sim table headers
+    thRank: "Rank",
+    thRecommended: "Best Plan",
+    thMonthlyUSDSim: "Monthly (USD)",
+    thMonthlyJPYSim: "Monthly (JPY)",
+    thPerVideo: "Per Video",
+    overLimit: "* over cap",
+    // Free tier
+    freeTierSecs: (n: number) => `≈ ${Math.floor(n)} sec of video`,
+    freeTierMaxRes: (s: string) => `Max resolution: ${s}`,
+    freeTierMaxDur: (n: number) => `Max length: ${n}s/clip`,
+    unlimited: "Unlimited",
+    freeLabel: "Free",
+    perSec: "/sec",
+    // Guide
+    guide: [
+      { step: "1", title: "Set FX Rate", desc: "Update the USD/JPY rate at the top to reflect the current exchange rate. JPY amounts update in real time." },
+      { step: "2", title: "Check the Price Table", desc: "Compare plans, credit counts, and max resolution across all services at a glance." },
+      { step: "3", title: "Use the Simulator", desc: "Enter your monthly video count and average duration to get an automatic cheapest-plan ranking." },
+      { step: "4", title: "Review Free Tiers", desc: "See how many seconds you can generate for free on each service before committing to a paid plan." },
+    ],
+    // FAQ
+    faq: [
+      { q: "Which is cheaper — Sora or Runway?", a: "It depends on your usage. Sora starts at 50 credits/mo ($20 Plus); Runway starts at 625 credits/mo ($12 Standard). For low volume, Runway Standard offers better value." },
+      { q: "What is a 'credit' in AI video generation?", a: "Credits are each service's own consumption unit. Consumption varies by resolution, duration, and quality settings. The seconds of video you get per credit differ by service." },
+      { q: "Which services have a free tier?", a: "Runway, Pika, Kling, and Luma all offer free plans. Sora has no free tier — the minimum is ChatGPT Plus ($20/mo)." },
+      { q: "Can I use generated videos commercially?", a: "Paid plans generally allow commercial use, but always review each service's Terms of Service regarding the license for generated content." },
+    ],
+    // Related tools
+    relatedLinks: [
+      { href: "/ai-model-comparison", label: "AI Model Comparison", desc: "Compare performance & pricing for GPT, Claude, and Gemini" },
+      { href: "/youtube-revenue", label: "YouTube Revenue Calculator", desc: "Estimate ad revenue from view counts" },
+    ],
+  },
+} as const;
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-function fmtUSD(n: number) {
-  return n === 0 ? "無料" : `$${n.toFixed(2)}`;
+function fmtUSD(n: number, t: typeof T["ja"] | typeof T["en"]) {
+  return n === 0 ? t.freeLabel : `$${n.toFixed(2)}`;
 }
 
-function fmtJPY(usd: number, rate: number) {
-  if (usd === 0) return "無料";
+function fmtJPY(usd: number, rate: number, t: typeof T["ja"] | typeof T["en"]) {
+  if (usd === 0) return t.freeLabel;
   const jpy = Math.round(usd * rate);
   return `¥${jpy.toLocaleString()}`;
 }
@@ -199,10 +329,14 @@ function ServiceBadge({ service }: { service: Service }) {
 // ---------------------------------------------------------------------------
 
 export default function AiVideoPricing() {
+  const [lang, setLang] = useState<Lang>("ja");
   const [fxRate, setFxRate] = useState(150);
   const [monthlyVideos, setMonthlyVideos] = useState("");
   const [avgDurationSec, setAvgDurationSec] = useState("5");
   const [activeTab, setActiveTab] = useState<"comparison" | "efficiency" | "simulator" | "free">("comparison");
+
+  const t = T[lang];
+  const USE_CASES = lang === "ja" ? USE_CASES_JA : USE_CASES_EN;
 
   // -------------------------------------------------------------------------
   // Cost efficiency: cheapest paid plan cost-per-second per service
@@ -229,25 +363,17 @@ export default function AiVideoPricing() {
     const totalSecs = videos * duration;
 
     return SERVICES.map((svc) => {
-      // Find cheapest plan that covers the needed seconds
       const creditsNeeded = totalSecs / svc.secPerCredit;
-
-      // Check unlimited plans first
       const unlimitedPlan = svc.plans.find((p) => p.isUnlimited);
-
-      // Find cheapest paid plan that has enough credits
       const sufficientPaidPlans = svc.plans
         .filter((p) => p.credits !== null && !p.isUnlimited && p.credits >= creditsNeeded)
         .sort((a, b) => a.priceUSD - b.priceUSD);
 
       let recommended: Plan | null = sufficientPaidPlans[0] ?? null;
 
-      // If unlimited is cheaper than sufficient paid plan, prefer unlimited
       if (unlimitedPlan && recommended && unlimitedPlan.priceUSD < recommended.priceUSD) {
         recommended = unlimitedPlan;
       }
-
-      // If no sufficient plan, use unlimited or most expensive plan
       if (!recommended) {
         recommended = unlimitedPlan ?? svc.plans[svc.plans.length - 1];
       }
@@ -278,29 +404,129 @@ export default function AiVideoPricing() {
     }).filter(Boolean) as { service: Service; plan: Plan; totalSecs: number }[];
   }, []);
 
-  const tabClass = (tab: typeof activeTab) =>
-    `px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-      activeTab === tab
-        ? "bg-white text-purple-700 shadow-sm"
-        : "text-gray-500 hover:text-gray-700"
-    }`;
-
-  const thClass = "px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap";
-  const tdClass = "px-3 py-3 text-sm text-gray-800 whitespace-nowrap";
+  const TABS: { id: typeof activeTab; label: string; icon: string }[] = [
+    { id: "comparison", label: t.comparison, icon: "⊞" },
+    { id: "efficiency", label: t.efficiency, icon: "◎" },
+    { id: "simulator", label: t.simulator, icon: "∿" },
+    { id: "free", label: t.free, icon: "★" },
+  ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1); }
+          50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .tab-active-glow {
+          box-shadow: 0 0 16px rgba(139,92,246,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .tab-panel {
+          animation: float-in 0.25s ease-out;
+        }
+        .method-btn:hover {
+          box-shadow: 0 0 16px rgba(167,139,250,0.2);
+        }
+        .method-btn-active {
+          box-shadow: 0 0 20px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+          background: rgba(139,92,246,0.2);
+          border-color: rgba(167,139,250,0.6) !important;
+        }
+        .preset-active {
+          background: rgba(139,92,246,0.25);
+          border-color: rgba(167,139,250,0.6);
+          color: #c4b5fd;
+          box-shadow: 0 0 10px rgba(139,92,246,0.3);
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button { opacity: 0.3; }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .table-row-stripe:hover {
+          background: rgba(139,92,246,0.08);
+          transition: background 0.2s ease;
+        }
+        .use-case-card:hover {
+          box-shadow: 0 0 16px rgba(167,139,250,0.15);
+        }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {t.langToggle}
+        </button>
+      </div>
+
       {/* 用途別おすすめ */}
-      <section>
-        <h2 className="text-lg font-bold text-gray-800 mb-3">用途別おすすめ</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.useCaseTitle}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {USE_CASES.map((uc) => (
-            <div key={uc.label} className={`rounded-xl border p-4 ${uc.color}`}>
-              <div className="flex items-center gap-2 mb-1">
+            <div key={uc.label} className="use-case-card glass-card rounded-xl p-4 transition-all duration-200 hover:border-violet-500/30">
+              <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-xl">{uc.icon}</span>
-                <span className="font-semibold text-gray-800 text-sm">{uc.label}</span>
+                <span className="font-semibold text-white/90 text-sm">{uc.label}</span>
               </div>
-              <p className="text-xs text-gray-500 mb-2">{uc.desc}</p>
+              <p className="text-xs text-violet-200 mb-2.5">{uc.desc}</p>
               <div className="flex flex-wrap gap-1">
                 {uc.services.map((s) => {
                   const svc = SERVICES.find((sv) => sv.name === s)!;
@@ -310,77 +536,87 @@ export default function AiVideoPricing() {
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
       {/* 為替レート */}
-      <section className="flex items-center gap-3">
-        <label className="text-sm font-medium text-gray-600 whitespace-nowrap">為替レート (円/ドル)</label>
+      <div className="glass-card rounded-2xl px-6 py-4 flex items-center gap-4">
+        <label className="text-xs font-medium text-violet-100 uppercase tracking-wider whitespace-nowrap">{t.fxRateLabel}</label>
         <input
           type="number"
           value={fxRate}
           onChange={(e) => setFxRate(Number(e.target.value))}
-          className="w-28 border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          className="number-input w-28 px-4 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
         />
-        <span className="text-xs text-gray-400">$1 = ¥{fxRate}</span>
-      </section>
+        <span className="text-xs text-violet-200 font-mono">{t.fxRateNote(fxRate)}</span>
+      </div>
 
       {/* タブ */}
-      <section>
-        <div className="inline-flex bg-gray-100 rounded-xl p-1 gap-1 mb-6">
-          <button className={tabClass("comparison")} onClick={() => setActiveTab("comparison")}>料金比較表</button>
-          <button className={tabClass("efficiency")} onClick={() => setActiveTab("efficiency")}>コスト効率</button>
-          <button className={tabClass("simulator")} onClick={() => setActiveTab("simulator")}>利用シミュレーター</button>
-          <button className={tabClass("free")} onClick={() => setActiveTab("free")}>無料枠比較</button>
-        </div>
+      <div className="glass-card rounded-2xl p-1.5 flex gap-1 flex-wrap">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+              activeTab === tab.id
+                ? "bg-violet-600 text-white tab-active-glow"
+                : "text-violet-200 hover:text-violet-100 hover:bg-white/5"
+            }`}
+          >
+            <span className="text-xs opacity-70">{tab.icon}</span>
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-        {/* ---- 料金比較表 ---- */}
-        {activeTab === "comparison" && (
-          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-            <table className="min-w-full divide-y divide-gray-100">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className={thClass}>サービス</th>
-                  <th className={thClass}>プラン</th>
-                  <th className={thClass}>月額 (USD)</th>
-                  <th className={thClass}>月額 (JPY)</th>
-                  <th className={thClass}>クレジット/月</th>
-                  <th className={thClass}>最大解像度</th>
-                  <th className={thClass}>最大尺</th>
-                  <th className={thClass}>特徴</th>
+      {/* ---- 料金比較表 ---- */}
+      {activeTab === "comparison" && (
+        <div className="tab-panel glass-card rounded-2xl overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/8">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thService}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thPlan}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thMonthlyUSD}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thMonthlyJPY}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thCredits}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thMaxRes}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider whitespace-nowrap">{t.thMaxDur}</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thFeatures}</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-50">
+              <tbody>
                 {SERVICES.flatMap((svc) =>
                   svc.plans.map((plan, pi) => (
-                    <tr key={`${svc.name}-${plan.name}`} className={`transition-colors ${svc.rowHover}`}>
-                      <td className={`${tdClass} font-semibold text-gray-900`}>
+                    <tr key={`${svc.name}-${plan.name}`} className={`border-b border-white/5 table-row-stripe ${pi === 0 ? "" : ""}`}>
+                      <td className="px-4 py-3 whitespace-nowrap">
                         {pi === 0 ? <ServiceBadge service={svc} /> : ""}
                       </td>
-                      <td className={tdClass}>{plan.name}</td>
-                      <td className={tdClass}>
-                        <span className="font-mono font-semibold">{fmtUSD(plan.priceUSD)}</span>
+                      <td className="px-4 py-3 text-white/90 whitespace-nowrap">{plan.name}</td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="font-mono font-semibold text-white/90">{fmtUSD(plan.priceUSD, t)}</span>
                       </td>
-                      <td className={tdClass}>
-                        <span className="font-mono text-gray-500">{fmtJPY(plan.priceUSD, fxRate)}</span>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="font-mono text-violet-200">{fmtJPY(plan.priceUSD, fxRate, t)}</span>
                       </td>
-                      <td className={tdClass}>
+                      <td className="px-4 py-3 whitespace-nowrap">
                         {plan.isUnlimited ? (
-                          <span className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                            無制限
+                          <span className="inline-block bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                            {t.unlimited}
                           </span>
                         ) : (
-                          <span className="font-mono">
+                          <span className="font-mono text-cyan-300">
                             {plan.credits?.toLocaleString()} {plan.creditUnit}
                           </span>
                         )}
                       </td>
-                      <td className={tdClass}>{pi === 0 ? svc.maxResolution : ""}</td>
-                      <td className={tdClass}>{pi === 0 ? `${svc.maxDurationSec}秒` : ""}</td>
-                      <td className={tdClass}>
+                      <td className="px-4 py-3 text-white/90 whitespace-nowrap">{pi === 0 ? svc.maxResolution : ""}</td>
+                      <td className="px-4 py-3 text-white/90 whitespace-nowrap">{pi === 0 ? `${svc.maxDurationSec}${lang === "ja" ? "秒" : "s"}` : ""}</td>
+                      <td className="px-4 py-3">
                         {pi === 0 && (
                           <div className="flex flex-wrap gap-1">
                             {svc.features.map((f) => (
-                              <span key={f} className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded">
+                              <span key={f} className="inline-block glass-card text-violet-200 text-xs px-2 py-0.5 rounded">
                                 {f}
                               </span>
                             ))}
@@ -392,241 +628,221 @@ export default function AiVideoPricing() {
                 )}
               </tbody>
             </table>
-            <p className="text-xs text-gray-400 px-4 py-2">※ 料金は2026年概算。為替レートは設定値を使用。</p>
           </div>
-        )}
+          <p className="text-xs text-violet-200 px-4 py-3">{t.comparisonNote}</p>
+        </div>
+      )}
 
-        {/* ---- コスト効率 ---- */}
-        {activeTab === "efficiency" && (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-600">有料プランの「1秒あたり生成コスト」で横並び比較します。数値が小さいほどコスパ優秀です。</p>
-            {efficiencyData.map(({ service, entries }) => (
-              <div key={service.name} className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <ServiceBadge service={service} />
-                  <span className="text-sm text-gray-500">{service.company}</span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                  {entries.map(({ plan, cps }) => (
-                    <div
-                      key={plan.name}
-                      className={`rounded-lg border p-3 ${plan.isUnlimited ? "border-purple-200 bg-purple-50" : "border-gray-100 bg-gray-50"}`}
-                    >
-                      <div className={`text-xs font-medium mb-1 ${plan.isUnlimited ? "text-purple-600" : "text-gray-500"}`}>
-                        {plan.name}
-                      </div>
-                      <div className="text-lg font-bold text-gray-900 font-mono">
-                        {plan.isUnlimited ? (
-                          <span className="text-purple-600">無制限</span>
-                        ) : cps === null ? (
-                          <span className="text-gray-400 text-sm">-</span>
-                        ) : (
-                          <>
-                            <span className={`bg-gradient-to-r ${service.brandColor} bg-clip-text text-transparent`}>
-                              ${cps.toFixed(4)}
-                            </span>
-                            <span className="text-xs font-normal text-gray-400 ml-1">/秒</span>
-                          </>
-                        )}
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        {plan.isUnlimited
-                          ? `$${plan.priceUSD}/月`
-                          : `$${plan.priceUSD}/月 · ${plan.credits?.toLocaleString()} ${plan.creditUnit}`}
-                      </div>
-                      {cps !== null && !plan.isUnlimited && (
-                        <div className="text-xs text-gray-400">
-                          ≒ ¥{Math.round(cps * fxRate * 100) / 100}/秒
-                        </div>
+      {/* ---- コスト効率 ---- */}
+      {activeTab === "efficiency" && (
+        <div className="space-y-4 tab-panel">
+          <p className="text-sm text-violet-100">{t.efficiencyDesc}</p>
+          {efficiencyData.map(({ service, entries }) => (
+            <div key={service.name} className="glass-card rounded-2xl p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <ServiceBadge service={service} />
+                <span className="text-sm text-violet-200">{service.company}</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {entries.map(({ plan, cps }) => (
+                  <div
+                    key={plan.name}
+                    className={`rounded-xl p-3 ${plan.isUnlimited ? "glass-card-bright border-violet-500/30" : "glass-card"}`}
+                  >
+                    <div className={`text-xs font-medium mb-1 ${plan.isUnlimited ? "text-violet-300" : "text-violet-200"}`}>
+                      {plan.name}
+                    </div>
+                    <div className="text-lg font-bold font-mono">
+                      {plan.isUnlimited ? (
+                        <span className="text-violet-300">{t.unlimited}</span>
+                      ) : cps === null ? (
+                        <span className="text-white/30 text-sm">-</span>
+                      ) : (
+                        <>
+                          <span className={`bg-gradient-to-r ${service.brandColor} bg-clip-text text-transparent`}>
+                            ${cps.toFixed(4)}
+                          </span>
+                          <span className="text-xs font-normal text-violet-200 ml-1">{t.perSec}</span>
+                        </>
                       )}
                     </div>
-                  ))}
+                    <div className="text-xs text-violet-200 mt-1">
+                      {plan.isUnlimited
+                        ? `$${plan.priceUSD}/${lang === "ja" ? "月" : "mo"}`
+                        : `$${plan.priceUSD}/${lang === "ja" ? "月" : "mo"} · ${plan.credits?.toLocaleString()} ${plan.creditUnit}`}
+                    </div>
+                    {cps !== null && !plan.isUnlimited && (
+                      <div className="text-xs text-violet-200">
+                        ≒ ¥{Math.round(cps * fxRate * 100) / 100}{t.perSec}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ---- シミュレーター ---- */}
+      {activeTab === "simulator" && (
+        <div className="space-y-4 tab-panel">
+          <div className="glass-card rounded-2xl p-6">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.simulatorHeading}</h3>
+            <div className="flex flex-wrap gap-4 mb-4">
+              <div className="flex-1 min-w-[160px]">
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.monthlyVideosLabel}</label>
+                <input
+                  type="number"
+                  value={monthlyVideos}
+                  onChange={(e) => setMonthlyVideos(e.target.value)}
+                  placeholder={t.monthlyVideosPlaceholder}
+                  className="number-input w-full px-4 py-2.5 rounded-xl text-sm font-mono neon-focus transition-all"
+                />
+              </div>
+              <div className="flex-1 min-w-[160px]">
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.avgDurationLabel}</label>
+                <input
+                  type="number"
+                  value={avgDurationSec}
+                  onChange={(e) => setAvgDurationSec(e.target.value)}
+                  placeholder={t.avgDurationPlaceholder}
+                  className="number-input w-full px-4 py-2.5 rounded-xl text-sm font-mono neon-focus transition-all"
+                />
+              </div>
+            </div>
+
+            {simResults.length > 0 && (
+              <div className="overflow-x-auto rounded-xl glass-card">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/8">
+                      <th className="px-3 py-2.5 text-left text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thRank}</th>
+                      <th className="px-3 py-2.5 text-left text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thService}</th>
+                      <th className="px-3 py-2.5 text-left text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thRecommended}</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thMonthlyUSDSim}</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thMonthlyJPYSim}</th>
+                      <th className="px-3 py-2.5 text-right text-xs font-medium text-violet-200 uppercase tracking-wider">{t.thPerVideo}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {simResults.map((r, i) => (
+                      <tr key={r.service.name} className={`border-b border-white/5 table-row-stripe ${i === 0 ? "bg-violet-500/10" : ""}`}>
+                        <td className="px-3 py-2.5 text-sm text-violet-200 font-mono">
+                          {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i + 1}`}
+                        </td>
+                        <td className="px-3 py-2.5 text-sm">
+                          <ServiceBadge service={r.service} />
+                          {!r.canCover && (
+                            <span className="ml-1 text-xs text-amber-400">{t.overLimit}</span>
+                          )}
+                        </td>
+                        <td className="px-3 py-2.5 text-sm text-white/90">{r.plan.name}</td>
+                        <td className="px-3 py-2.5 text-sm text-right font-mono font-semibold text-white/90">
+                          {fmtUSD(r.monthlyCostUSD, t)}
+                        </td>
+                        <td className="px-3 py-2.5 text-sm text-right font-mono text-violet-200">
+                          {fmtJPY(r.monthlyCostUSD, fxRate, t)}
+                        </td>
+                        <td className="px-3 py-2.5 text-sm text-right font-mono text-cyan-300">
+                          {r.monthlyCostUSD === 0
+                            ? t.freeLabel
+                            : `$${r.costPerVideoUSD.toFixed(3)}`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {monthlyVideos === "" && (
+              <div className="text-center py-8 text-sm text-violet-200">
+                {t.simulatorEmpty}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ---- 無料枠比較 ---- */}
+      {activeTab === "free" && (
+        <div className="space-y-4 tab-panel">
+          <p className="text-sm text-violet-100">{t.freeDesc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {freeTiers.map(({ service, plan, totalSecs }) => (
+              <div key={service.name} className="gradient-border-box glass-card-bright rounded-2xl p-5 relative overflow-hidden">
+                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${service.brandColor}`} />
+                <ServiceBadge service={service} />
+                <div className="mt-3 mb-1">
+                  <span className="text-3xl font-bold text-white font-mono glow-text">
+                    {plan.credits?.toLocaleString()}
+                  </span>
+                  <span className="text-sm text-violet-200 ml-1">{plan.creditUnit}</span>
+                </div>
+                <div className="text-sm text-violet-100 mb-3">
+                  {t.freeTierSecs(totalSecs)}
+                </div>
+                <div className="text-xs text-violet-200 space-y-0.5">
+                  <div>{t.freeTierMaxRes(service.maxResolution)}</div>
+                  <div>{t.freeTierMaxDur(service.maxDurationSec)}</div>
                 </div>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* ---- シミュレーター ---- */}
-        {activeTab === "simulator" && (
-          <div className="space-y-5">
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-              <h3 className="font-semibold text-gray-800 mb-4">月間利用量を入力</h3>
-              <div className="flex flex-wrap gap-4 mb-4">
-                <div className="flex-1 min-w-[160px]">
-                  <label className="block text-xs font-medium text-gray-600 mb-1">月間生成本数</label>
-                  <input
-                    type="number"
-                    value={monthlyVideos}
-                    onChange={(e) => setMonthlyVideos(e.target.value)}
-                    placeholder="例: 30"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-                  />
-                </div>
-                <div className="flex-1 min-w-[160px]">
-                  <label className="block text-xs font-medium text-gray-600 mb-1">平均尺 (秒)</label>
-                  <input
-                    type="number"
-                    value={avgDurationSec}
-                    onChange={(e) => setAvgDurationSec(e.target.value)}
-                    placeholder="例: 5"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-                  />
-                </div>
+            {/* Soraの無料枠なし */}
+            <div className="glass-card rounded-2xl p-5 relative overflow-hidden opacity-50">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-emerald-500" />
+              <ServiceBadge service={SERVICES[0]} />
+              <div className="mt-3 mb-1">
+                <span className="text-xl font-bold text-violet-200">{t.soraNoFree}</span>
               </div>
-              {simResults.length > 0 && (
-                <div className="overflow-x-auto rounded-lg border border-gray-100">
-                  <table className="min-w-full divide-y divide-gray-100">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-500 uppercase">順位</th>
-                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-500 uppercase">サービス</th>
-                        <th className="px-3 py-2 text-left text-xs font-semibold text-gray-500 uppercase">おすすめプラン</th>
-                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-500 uppercase">月額 (USD)</th>
-                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-500 uppercase">月額 (JPY)</th>
-                        <th className="px-3 py-2 text-right text-xs font-semibold text-gray-500 uppercase">1本あたり</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-50">
-                      {simResults.map((r, i) => (
-                        <tr key={r.service.name} className={`transition-colors ${r.service.rowHover} ${i === 0 ? "bg-yellow-50" : ""}`}>
-                          <td className="px-3 py-2 text-sm text-gray-500 font-mono">
-                            {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i + 1}位`}
-                          </td>
-                          <td className="px-3 py-2 text-sm">
-                            <ServiceBadge service={r.service} />
-                            {!r.canCover && (
-                              <span className="ml-1 text-xs text-orange-500">※上限超</span>
-                            )}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-700">{r.plan.name}</td>
-                          <td className="px-3 py-2 text-sm text-right font-mono font-semibold">
-                            {fmtUSD(r.monthlyCostUSD)}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-right font-mono text-gray-500">
-                            {fmtJPY(r.monthlyCostUSD, fxRate)}
-                          </td>
-                          <td className="px-3 py-2 text-sm text-right font-mono text-gray-500">
-                            {r.monthlyCostUSD === 0
-                              ? "無料"
-                              : `$${r.costPerVideoUSD.toFixed(3)}`}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-              {monthlyVideos === "" && (
-                <div className="text-center py-8 text-sm text-gray-400">
-                  月間生成本数を入力すると最安プランを判定します
-                </div>
-              )}
+              <div className="text-sm text-violet-200">{t.soraNoFreeDesc}</div>
             </div>
           </div>
-        )}
-
-        {/* ---- 無料枠比較 ---- */}
-        {activeTab === "free" && (
-          <div className="space-y-4">
-            <p className="text-sm text-gray-600">登録直後に無料で生成できる量を比較します。</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {freeTiers.map(({ service, plan, totalSecs }) => (
-                <div key={service.name} className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 relative overflow-hidden">
-                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${service.brandColor}`} />
-                  <ServiceBadge service={service} />
-                  <div className="mt-3 mb-1">
-                    <span className="text-3xl font-bold text-gray-900 font-mono">
-                      {plan.credits?.toLocaleString()}
-                    </span>
-                    <span className="text-sm text-gray-500 ml-1">{plan.creditUnit}</span>
-                  </div>
-                  <div className="text-sm text-gray-600 mb-3">
-                    約 <span className="font-semibold text-gray-800">{Math.floor(totalSecs)}秒</span> 分の動画を生成可能
-                  </div>
-                  <div className="text-xs text-gray-400 space-y-0.5">
-                    <div>最大解像度: {service.maxResolution}</div>
-                    <div>最大尺: {service.maxDurationSec}秒/本</div>
-                  </div>
-                </div>
-              ))}
-              {/* Soraの無料枠なし */}
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 relative overflow-hidden opacity-60">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-emerald-500" />
-                <ServiceBadge service={SERVICES[0]} />
-                <div className="mt-3 mb-1">
-                  <span className="text-xl font-bold text-gray-500">無料枠なし</span>
-                </div>
-                <div className="text-sm text-gray-500">ChatGPT Plus ($20/月) から利用可能</div>
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
+        </div>
+      )}
 
       {/* 凡例・注記 */}
-      <section className="flex flex-wrap gap-4 text-xs text-gray-500">
+      <div className="flex flex-wrap gap-4 text-xs text-violet-200">
         {SERVICES.map((svc) => (
           <div key={svc.name} className="flex items-center gap-1.5">
             <span className={`inline-block w-3 h-3 rounded-full ${svc.badgeBg}`}></span>
-            {svc.name}
+            <span className="text-violet-100">{svc.name}</span>
           </div>
         ))}
-        <span className="ml-auto text-right">料金は2026年概算。実際の料金は各サービスの公式サイトをご確認ください。</span>
-      </section>
+        <span className="ml-auto text-right text-violet-200">{t.legendNote}</span>
+      </div>
 
       {/* 使い方ガイド */}
-      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">使い方ガイド</h2>
-        <ol className="space-y-3">
-          {[
-            { step: "1", title: "為替レートを設定", desc: "ページ上部の為替レート入力欄で現在のUSD/JPYレートに合わせてください。円換算金額がリアルタイムで更新されます。" },
-            { step: "2", title: "料金比較表タブで概要を確認", desc: "全サービスのプラン・クレジット数・最大解像度を一覧で比較できます。" },
-            { step: "3", title: "利用シミュレーターで最適プランを判定", desc: "月間生成本数と平均尺（秒）を入力すると、最安プランが自動でランキング表示されます。" },
-            { step: "4", title: "無料枠タブで試用量を確認", desc: "各サービスの無料枠で生成できる合計秒数を確認し、まず無料で試せるサービスを選びましょう。" },
-          ].map((item) => (
-            <li key={item.step} className="flex gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.guideTitle}</h2>
+        <ol className="space-y-3.5">
+          {t.guide.map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-sm font-bold flex items-center justify-center border border-violet-500/30">{item.step}</span>
               <div>
-                <span className="text-gray-800 font-bold text-sm">{item.title}</span>
-                <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+                <div className="font-medium text-white/90 text-sm">{item.title}</div>
+                <div className="text-xs text-violet-200 mt-0.5">{item.desc}</div>
               </div>
             </li>
           ))}
         </ol>
-      </section>
+      </div>
 
       {/* FAQ */}
-      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.faqTitle}</h2>
         <div className="space-y-4">
-          {[
-            {
-              q: "SoraとRunwayはどちらが安いですか？",
-              a: "月間利用量によります。Soraは月50クレジット（$20 Plus）から、Runwayは月625クレジット（$12 Standard）から利用可能です。少量ならRunway Standardがコスパ優秀です。",
-            },
-            {
-              q: "AI動画生成の「クレジット」とは何ですか？",
-              a: "各サービス独自の消費単位です。解像度・尺・品質設定によって消費量が変わります。1クレジットあたり生成できる動画秒数はサービスごとに異なります。",
-            },
-            {
-              q: "無料で試せるサービスはありますか？",
-              a: "Runway・Pika・Kling・LumaはすべてFreeプランを提供しています。Soraのみ無料枠がなく、ChatGPT Plus（$20/月）が最低プランです。",
-            },
-            {
-              q: "商用利用は可能ですか？",
-              a: "有料プランでは基本的に商用利用が許可されていますが、生成物のライセンスは各サービスの利用規約を必ず確認してください。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+          {t.faq.map((item, i) => (
+            <div key={i} className="border-b border-white/6 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-white/90 text-sm mb-1.5">{item.q}</div>
+              <div className="text-sm text-violet-100 leading-relaxed">{item.a}</div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* JSON-LD FAQPage */}
+      {/* JSON-LD FAQPage (Japanese, SEO) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -655,24 +871,24 @@ export default function AiVideoPricing() {
       />
 
       {/* 関連ツール */}
-      <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.relatedTitle}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/ai-model-comparison", label: "AIモデル比較", desc: "GPT・Claude・Geminiの性能・料金を横断比較" },
-            { href: "/youtube-revenue", label: "YouTube収益計算機", desc: "再生数から広告収益を試算" },
-          ].map((link) => (
+          {t.relatedLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="block bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl p-3 transition-colors"
+              className="block p-4 rounded-xl border border-white/8 hover:border-violet-500/40 transition-all duration-200 group"
+              style={{ background: "rgba(139,92,246,0)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.08)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0)"; }}
             >
-              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
-              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+              <div className="font-medium text-white/90 text-sm group-hover:text-violet-100 transition-colors">{link.label}</div>
+              <div className="text-xs text-violet-100 mt-1">{link.desc}</div>
             </a>
           ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }

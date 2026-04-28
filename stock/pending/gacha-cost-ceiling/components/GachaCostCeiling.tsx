@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from "react";
 
+type Lang = "ja" | "en";
+
 type Pack = {
   stones: string;
   price: string;
@@ -23,6 +25,63 @@ const DEFAULT_PACKS: Pack[] = [
   { stones: "6480", price: "14800" },
 ];
 
+const T = {
+  ja: {
+    basicSettings: "基本設定",
+    ceiling: "天井回数",
+    stonesPerPull: "1回あたり石数",
+    ceilingUnit: "回",
+    stonesUnit: "石",
+    useHeld: "手持ち石を引く",
+    heldPlaceholder: "手持ち石数",
+    discount: "キャンペーン割引（任意）",
+    discountUnit: "% オフ",
+    packSettings: "石パック設定",
+    stonesCol: "石数",
+    priceCol: "値段（円）",
+    addPack: "パックを追加",
+    calculate: "計算する",
+    results: "計算結果",
+    neededStones: "天井必要石数",
+    afterHeld: "手持ち差し引き後",
+    purchaseNeeded: "購入必要石数",
+    cheapestCombo: "最安パック組み合わせ",
+    canReach: "手持ち石で天井到達できます！",
+    packSuffix: "石パック",
+    regularTotal: "定価合計",
+    campaignTotal: "キャンペーン後合計",
+    grandTotal: "合計金額",
+    yen: "円",
+  },
+  en: {
+    basicSettings: "Basic Settings",
+    ceiling: "Ceiling pulls",
+    stonesPerPull: "Stones per pull",
+    ceilingUnit: "pulls",
+    stonesUnit: "stones",
+    useHeld: "Subtract held stones",
+    heldPlaceholder: "Held stones",
+    discount: "Campaign discount (optional)",
+    discountUnit: "% off",
+    packSettings: "Stone Pack Settings",
+    stonesCol: "Stones",
+    priceCol: "Price (¥)",
+    addPack: "Add pack",
+    calculate: "Calculate",
+    results: "Results",
+    neededStones: "Total stones needed",
+    afterHeld: "After subtracting held",
+    purchaseNeeded: "Stones to purchase",
+    cheapestCombo: "Cheapest pack combination",
+    canReach: "You can reach the ceiling with held stones!",
+    packSuffix: "-stone pack",
+    regularTotal: "Regular total",
+    campaignTotal: "Campaign total",
+    grandTotal: "Grand total",
+    yen: "¥",
+  },
+} as const;
+
 function findCheapestCombination(
   target: number,
   packs: { stones: number; price: number }[]
@@ -33,12 +92,10 @@ function findCheapestCombination(
   const validPacks = sorted.filter((p) => p.stones > 0 && p.price > 0);
   if (validPacks.length === 0) return null;
 
-  // Greedy: use largest pack as much as possible, then fill remainder
   let remaining = target;
   const result: CombinationItem[] = [];
   let total = 0;
 
-  // Sort by value (stones per yen descending = cheapest per stone)
   const byValue = [...validPacks].sort(
     (a, b) => b.stones / b.price - a.stones / a.price
   );
@@ -54,7 +111,6 @@ function findCheapestCombination(
     }
   }
 
-  // If still remaining, buy one more of the smallest pack that covers it
   if (remaining > 0) {
     const smallest = [...validPacks].sort((a, b) => a.stones - b.stones);
     const cover = smallest.find((p) => p.stones >= remaining);
@@ -77,6 +133,7 @@ function findCheapestCombination(
 }
 
 export default function GachaCostCeiling() {
+  const [lang, setLang] = useState<Lang>("ja");
   const [ceiling, setCeiling] = useState<string>("200");
   const [stonesPerPull, setStonesPerPull] = useState<string>("3");
   const [packs, setPacks] = useState<Pack[]>(DEFAULT_PACKS);
@@ -90,6 +147,8 @@ export default function GachaCostCeiling() {
     total: number;
     discountedTotal: number;
   } | null>(null);
+
+  const t = T[lang];
 
   const addPackRow = useCallback(() => {
     setPacks((prev) => [...prev, { stones: "", price: "" }]);
@@ -150,276 +209,314 @@ export default function GachaCostCeiling() {
   const discountRate = parseFloat(discount) || 0;
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 p-4">
-      <div className="max-w-2xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center pt-4 pb-2">
-          <h1 className="text-2xl font-bold text-purple-400">ガチャ天井コスト計算機</h1>
-          <p className="text-gray-400 text-sm mt-1">
-            天井まで何円必要か・最安パック組み合わせを計算
-          </p>
+    <div className="space-y-5">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.1); }
+          50% { box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 0 60px rgba(139,92,246,0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .float-in {
+          animation: float-in 0.25s ease-out;
+        }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button { opacity: 0.3; }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
+      </div>
+
+      {/* Basic Settings */}
+      <div className="glass-card rounded-2xl p-6 space-y-5">
+        <h2 className="text-xs font-semibold text-violet-100 uppercase tracking-widest">
+          {t.basicSettings}
+        </h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.ceiling}</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min="1"
+                value={ceiling}
+                onChange={(e) => setCeiling(e.target.value)}
+                className="number-input w-full rounded-xl px-3 py-2.5 font-mono neon-focus transition-all"
+                placeholder="200"
+              />
+              <span className="text-violet-200 text-sm whitespace-nowrap">{t.ceilingUnit}</span>
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.stonesPerPull}</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                min="1"
+                value={stonesPerPull}
+                onChange={(e) => setStonesPerPull(e.target.value)}
+                className="number-input w-full rounded-xl px-3 py-2.5 font-mono neon-focus transition-all"
+                placeholder="3"
+              />
+              <span className="text-violet-200 text-sm whitespace-nowrap">{t.stonesUnit}</span>
+            </div>
+          </div>
         </div>
 
-        {/* Basic Settings */}
-        <div className="bg-gray-900 rounded-xl p-5 space-y-4 border border-gray-800">
-          <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-            基本設定
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">天井回数</label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  min="1"
-                  value={ceiling}
-                  onChange={(e) => setCeiling(e.target.value)}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                  placeholder="200"
-                />
-                <span className="text-gray-400 text-sm whitespace-nowrap">回</span>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm text-gray-400 mb-1">1回あたり石数</label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  min="1"
-                  value={stonesPerPull}
-                  onChange={(e) => setStonesPerPull(e.target.value)}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                  placeholder="3"
-                />
-                <span className="text-gray-400 text-sm whitespace-nowrap">石</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Held Stones */}
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <input
-                type="checkbox"
-                id="useHeld"
-                checked={useHeld}
-                onChange={(e) => setUseHeld(e.target.checked)}
-                className="w-4 h-4 accent-purple-500"
-              />
-              <label htmlFor="useHeld" className="text-sm text-gray-300 cursor-pointer">
-                手持ち石を引く
-              </label>
-            </div>
-            {useHeld && (
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  min="0"
-                  value={heldStones}
-                  onChange={(e) => setHeldStones(e.target.value)}
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                  placeholder="手持ち石数"
-                />
-                <span className="text-gray-400 text-sm whitespace-nowrap">石</span>
-              </div>
-            )}
-          </div>
-
-          {/* Campaign Discount */}
-          <div>
-            <label className="block text-sm text-gray-400 mb-1">
-              キャンペーン割引（任意）
-            </label>
+        <div>
+          <label className="flex items-center gap-2 mb-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              id="useHeld"
+              checked={useHeld}
+              onChange={(e) => setUseHeld(e.target.checked)}
+              className="w-4 h-4 accent-violet-500"
+            />
+            <span className="text-sm text-violet-100">{t.useHeld}</span>
+          </label>
+          {useHeld && (
             <div className="flex items-center gap-2">
               <input
                 type="number"
                 min="0"
-                max="99"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
-                className="w-32 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                placeholder="0"
+                value={heldStones}
+                onChange={(e) => setHeldStones(e.target.value)}
+                className="number-input w-full rounded-xl px-3 py-2.5 font-mono neon-focus transition-all"
+                placeholder={t.heldPlaceholder}
               />
-              <span className="text-gray-400 text-sm">% オフ</span>
+              <span className="text-violet-200 text-sm whitespace-nowrap">{t.stonesUnit}</span>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Pack Settings */}
-        <div className="bg-gray-900 rounded-xl p-5 space-y-3 border border-gray-800">
-          <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-            石パック設定
-          </h2>
-          <div className="grid grid-cols-[1fr_1fr_auto] gap-2 text-xs text-gray-500 px-1">
-            <span>石数</span>
-            <span>値段（円）</span>
-            <span />
+        <div>
+          <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">
+            {t.discount}
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min="0"
+              max="99"
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              className="number-input w-32 rounded-xl px-3 py-2.5 font-mono neon-focus transition-all"
+              placeholder="0"
+            />
+            <span className="text-violet-200 text-sm">{t.discountUnit}</span>
           </div>
-          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
-            {packs.map((pack, i) => (
-              <div key={i} className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
-                <div className="flex items-center gap-1">
-                  <input
-                    type="number"
-                    min="1"
-                    value={pack.stones}
-                    onChange={(e) => updatePack(i, "stones", e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                    placeholder="石数"
-                  />
-                  <span className="text-gray-500 text-xs">石</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <input
-                    type="number"
-                    min="1"
-                    value={pack.price}
-                    onChange={(e) => updatePack(i, "price", e.target.value)}
-                    className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                    placeholder="円"
-                  />
-                  <span className="text-gray-500 text-xs">円</span>
-                </div>
-                <button
-                  onClick={() => removePackRow(i)}
-                  className="text-gray-600 hover:text-red-400 transition-colors text-lg leading-none px-1"
-                  aria-label="削除"
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-          <button
-            onClick={addPackRow}
-            className="text-sm text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1 mt-1"
-          >
-            <span className="text-lg leading-none">+</span> パックを追加
-          </button>
-        </div>
-
-        {/* Calculate Button */}
-        <button
-          onClick={calculate}
-          className="w-full bg-purple-600 hover:bg-purple-500 active:bg-purple-700 text-white font-bold py-3 rounded-xl transition-colors text-lg shadow-lg shadow-purple-900/40"
-        >
-          計算する
-        </button>
-
-        {/* Results */}
-        {result && (
-          <div className="bg-gray-900 rounded-xl p-5 space-y-4 border border-purple-800/50">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-              計算結果
-            </h2>
-
-            {/* Stone Summary */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <div className="text-xs text-gray-400 mb-1">天井必要石数</div>
-                <div className="text-xl font-bold text-white">
-                  {result.needed.toLocaleString()}
-                  <span className="text-sm font-normal text-gray-400 ml-1">石</span>
-                </div>
-              </div>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <div className="text-xs text-gray-400 mb-1">
-                  {useHeld ? "手持ち差し引き後" : "購入必要石数"}
-                </div>
-                <div className="text-xl font-bold text-purple-300">
-                  {result.afterHeld.toLocaleString()}
-                  <span className="text-sm font-normal text-gray-400 ml-1">石</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Pack Combination */}
-            {result.combination.length > 0 ? (
-              <div>
-                <div className="text-xs text-gray-400 mb-2">最安パック組み合わせ</div>
-                <div className="space-y-2">
-                  {result.combination.map((item, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center justify-between bg-gray-800 rounded-lg px-4 py-2"
-                    >
-                      <span className="text-sm text-gray-200">
-                        {item.stones.toLocaleString()}石パック
-                      </span>
-                      <span className="text-sm text-gray-400">×{item.count}</span>
-                      <span className="text-sm font-medium text-white">
-                        {(item.price * item.count).toLocaleString()}円
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center text-gray-400 text-sm py-2">
-                手持ち石で天井到達できます！
-              </div>
-            )}
-
-            {/* Total */}
-            <div className="border-t border-gray-700 pt-4 space-y-2">
-              {discountRate > 0 ? (
-                <>
-                  <div className="flex justify-between items-center text-sm text-gray-400">
-                    <span>定価合計</span>
-                    <span className="line-through">{result.total.toLocaleString()}円</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-200 font-medium">
-                      キャンペーン後合計
-                      <span className="ml-2 text-xs text-green-400 bg-green-900/40 px-2 py-0.5 rounded-full">
-                        {discountRate}% オフ
-                      </span>
-                    </span>
-                    <span className="text-2xl font-bold text-green-400">
-                      {result.discountedTotal.toLocaleString()}
-                      <span className="text-base font-normal text-gray-400 ml-1">円</span>
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-200 font-medium">合計金額</span>
-                  <span className="text-2xl font-bold text-yellow-400">
-                    {result.total.toLocaleString()}
-                    <span className="text-base font-normal text-gray-400 ml-1">円</span>
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Ad Placeholder */}
-        <div className="w-full h-24 bg-gray-900 border border-dashed border-gray-700 rounded-xl flex items-center justify-center text-gray-600 text-sm">
-          広告スペース
         </div>
       </div>
-    
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">このガチャ天井 コスト計算ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">天井まで何円必要か、石割換算、キャンペーン考慮。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
+
+      {/* Pack Settings */}
+      <div className="glass-card rounded-2xl p-6 space-y-4">
+        <h2 className="text-xs font-semibold text-violet-100 uppercase tracking-widest">
+          {t.packSettings}
+        </h2>
+        <div className="grid grid-cols-[1fr_1fr_auto] gap-2 text-xs text-violet-200 px-1">
+          <span>{t.stonesCol}</span>
+          <span>{t.priceCol}</span>
+          <span />
         </div>
-      </section>
+        <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+          {packs.map((pack, i) => (
+            <div key={i} className="grid grid-cols-[1fr_1fr_auto] gap-2 items-center">
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  min="1"
+                  value={pack.stones}
+                  onChange={(e) => updatePack(i, "stones", e.target.value)}
+                  className="number-input w-full rounded-lg px-3 py-2 text-sm font-mono neon-focus transition-all"
+                  placeholder={t.stonesUnit}
+                />
+                <span className="text-violet-200 text-xs">{t.stonesUnit}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <input
+                  type="number"
+                  min="1"
+                  value={pack.price}
+                  onChange={(e) => updatePack(i, "price", e.target.value)}
+                  className="number-input w-full rounded-lg px-3 py-2 text-sm font-mono neon-focus transition-all"
+                  placeholder="¥"
+                />
+                <span className="text-violet-200 text-xs">¥</span>
+              </div>
+              <button
+                onClick={() => removePackRow(i)}
+                className="text-violet-200/40 hover:text-red-400 transition-colors text-lg leading-none px-1"
+                aria-label="削除"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={addPackRow}
+          className="text-sm text-violet-300 hover:text-violet-100 transition-colors flex items-center gap-1"
+        >
+          <span className="text-lg leading-none">+</span> {t.addPack}
+        </button>
+      </div>
+
+      {/* Calculate Button */}
+      <button
+        onClick={calculate}
+        className="w-full bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white font-bold py-3 rounded-xl transition-all text-lg"
+        style={{ boxShadow: "0 0 24px rgba(139,92,246,0.4)" }}
+      >
+        {t.calculate}
+      </button>
+
+      {/* Results */}
+      {result && (
+        <div className="gradient-border-box glass-card-bright rounded-2xl p-6 space-y-5 result-card-glow float-in">
+          <h2 className="text-xs font-semibold text-violet-100 uppercase tracking-widest">
+            {t.results}
+          </h2>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="glass-card rounded-xl p-3.5 text-center">
+              <div className="text-xs text-violet-200 mb-1.5">{t.neededStones}</div>
+              <div className="text-xl font-bold text-white font-mono">
+                {result.needed.toLocaleString()}
+                <span className="text-sm font-normal text-violet-200 ml-1">{t.stonesUnit}</span>
+              </div>
+            </div>
+            <div className="glass-card rounded-xl p-3.5 text-center">
+              <div className="text-xs text-violet-200 mb-1.5">
+                {useHeld ? t.afterHeld : t.purchaseNeeded}
+              </div>
+              <div className="text-xl font-bold text-cyan-300 font-mono">
+                {result.afterHeld.toLocaleString()}
+                <span className="text-sm font-normal text-violet-200 ml-1">{t.stonesUnit}</span>
+              </div>
+            </div>
+          </div>
+
+          {result.combination.length > 0 ? (
+            <div>
+              <div className="text-xs text-violet-200 mb-2">{t.cheapestCombo}</div>
+              <div className="space-y-2">
+                {result.combination.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between glass-card rounded-xl px-4 py-2.5"
+                  >
+                    <span className="text-sm text-white/90">
+                      {item.stones.toLocaleString()}{t.packSuffix}
+                    </span>
+                    <span className="text-sm text-violet-200">×{item.count}</span>
+                    <span className="text-sm font-medium text-white font-mono">
+                      {lang === "ja" ? "" : "¥"}{(item.price * item.count).toLocaleString()}{lang === "ja" ? "円" : ""}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center text-cyan-300 text-sm py-2">
+              {t.canReach}
+            </div>
+          )}
+
+          <div className="border-t border-white/10 pt-4 space-y-2">
+            {discountRate > 0 ? (
+              <>
+                <div className="flex justify-between items-center text-sm text-violet-200">
+                  <span>{t.regularTotal}</span>
+                  <span className="line-through font-mono">{lang === "ja" ? "" : "¥"}{result.total.toLocaleString()}{lang === "ja" ? "円" : ""}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-white font-medium">
+                    {t.campaignTotal}
+                    <span className="ml-2 text-xs text-cyan-300 bg-cyan-500/15 px-2 py-0.5 rounded-full">
+                      {discountRate}% {lang === "ja" ? "オフ" : "off"}
+                    </span>
+                  </span>
+                  <span className="text-2xl font-bold text-cyan-300 font-mono">
+                    {lang === "ja" ? "" : "¥"}{result.discountedTotal.toLocaleString()}{lang === "ja" ? "円" : ""}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-between items-center">
+                <span className="text-white font-medium">{t.grandTotal}</span>
+                <span className="text-2xl font-bold text-white glow-text font-mono">
+                  {lang === "ja" ? "" : "¥"}{result.total.toLocaleString()}{lang === "ja" ? "円" : ""}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "このガチャ天井 コスト計算ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "天井まで何円必要か、石割換算、キャンペーン考慮。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -440,6 +537,6 @@ export default function GachaCostCeiling() {
 }`
         }}
       />
-      </div>
+    </div>
   );
 }

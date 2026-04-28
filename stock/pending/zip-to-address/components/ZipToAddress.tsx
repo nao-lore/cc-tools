@@ -2,8 +2,122 @@
 
 import { useState } from "react";
 
-// 3桁プレフィックス → 都道府県マッピング（範囲ベース）
-// 北海道: 001-006, 060-099 は lookupPrefecture で個別処理
+type Lang = "ja" | "en";
+
+const T = {
+  ja: {
+    title: "郵便番号→住所変換ツール",
+    subtitle: "7桁の郵便番号から都道府県を判定します。市区町村・町域の詳細は日本郵便サイトでご確認ください。",
+    singleMode: "1件検索",
+    batchMode: "一括検索",
+    zipLabel: "郵便番号（7桁）",
+    zipPlaceholder: "例: 100-0001",
+    zipError: "7桁で入力してください",
+    zipNotFound: "該当する都道府県が見つかりませんでした",
+    zipNum: "郵便番号",
+    prefecture: "都道府県",
+    details: "詳細",
+    detailsLink: "日本郵便で確認",
+    detailsNote: "市区町村・町域の詳細は",
+    detailsNote2: "日本郵便の公式サイト",
+    detailsNote3: "でご確認ください。",
+    batchLabel: "郵便番号を複数入力（改行・カンマ・スペース区切り）",
+    batchResults: "結果",
+    batchCount: "件",
+    formatError: "フォーマット不正",
+    unknown: "不明",
+    copy: "コピー",
+    copied: "コピー済",
+    tableToggleOpen: "都道府県別 郵便番号帯一覧",
+    tableToggleClose: "▲ 閉じる",
+    tableToggleShow: "▼ 開く",
+    tablePref: "都道府県",
+    tableRange: "郵便番号帯（上3桁）",
+    tableNote: "※ 上3桁による都道府県判定は概算です。同一番号帯に複数県が含まれる場合があります。正確な住所は",
+    tableNoteLink: "日本郵便公式",
+    tableNoteEnd: "でご確認ください。",
+    adPlaceholder: "広告スペース",
+    guideTitle: "郵便番号 住所変換ツールの使い方",
+    guide: [
+      { step: "1", title: "モードを選ぶ", body: "1件だけ調べたい場合は「1件検索」、複数の郵便番号をまとめて変換したい場合は「一括検索」を選んでください。" },
+      { step: "2", title: "郵便番号を入力する", body: "7桁の数字を入力してください。ハイフンあり（100-0001）・なし（1000001）どちらの形式にも対応しています。" },
+      { step: "3", title: "都道府県を確認する", body: "入力に合わせてリアルタイムで都道府県が表示されます。" },
+      { step: "4", title: "結果をコピーする", body: "「コピー」ボタンで郵便番号と都道府県をまとめてクリップボードにコピーできます。" },
+    ],
+    faqTitle: "郵便番号・住所変換に関するよくある質問",
+    faq: [
+      { q: "郵便番号から市区町村まで調べられますか？", a: "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便の公式サイトへのリンクで確認できます。" },
+      { q: "複数の郵便番号を一度に変換できますか？", a: "「一括検索」モードで改行・カンマ・スペース区切りで複数の郵便番号を貼り付けると、まとめて都道府県に変換できます。" },
+      { q: "郵便番号の都道府県判定は正確ですか？", a: "上3桁による範囲判定のため概算です。正確な住所は日本郵便の公式データベースでご確認ください。" },
+      { q: "ハイフンなしの郵便番号でも使えますか？", a: "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。" },
+    ],
+    relatedTools: "関連ツール",
+    related: [
+      { href: "/tools/bank-code-lookup", label: "銀行コード検索ツール", desc: "銀行・支店コードを素早く調べる" },
+      { href: "/tools/houjin-bangou-validator", label: "法人番号 検証ツール", desc: "13桁の法人番号を検証・フォーマット" },
+    ],
+    ctaTitle: "住所・コード変換ツールをまとめて活用",
+    ctaDesc: "郵便番号・銀行コード・法人番号など、業務データの変換・検証ツールを無料で提供しています。",
+    ctaBtn: "全ツール一覧を見る",
+  },
+  en: {
+    title: "ZIP Code → Address Converter",
+    subtitle: "Determine the prefecture from a 7-digit Japanese postal code. For city/town details, check Japan Post.",
+    singleMode: "Single",
+    batchMode: "Batch",
+    zipLabel: "Postal Code (7 digits)",
+    zipPlaceholder: "e.g. 100-0001",
+    zipError: "Please enter 7 digits",
+    zipNotFound: "No matching prefecture found",
+    zipNum: "Postal Code",
+    prefecture: "Prefecture",
+    details: "Details",
+    detailsLink: "Check on Japan Post",
+    detailsNote: "For city/town details, see ",
+    detailsNote2: "Japan Post official site",
+    detailsNote3: ".",
+    batchLabel: "Enter multiple postal codes (newline, comma, or space separated)",
+    batchResults: "Results",
+    batchCount: "",
+    formatError: "Invalid format",
+    unknown: "Unknown",
+    copy: "Copy",
+    copied: "Copied",
+    tableToggleOpen: "Prefecture ZIP Code Range Table",
+    tableToggleClose: "▲ Close",
+    tableToggleShow: "▼ Open",
+    tablePref: "Prefecture",
+    tableRange: "ZIP Range (first 3 digits)",
+    tableNote: "Note: Prefecture lookup by first 3 digits is approximate. For exact addresses, see ",
+    tableNoteLink: "Japan Post",
+    tableNoteEnd: ".",
+    adPlaceholder: "Advertisement",
+    guideTitle: "How to Use the ZIP to Address Tool",
+    guide: [
+      { step: "1", title: "Select a mode", body: "Use 'Single' for one lookup or 'Batch' to convert multiple postal codes at once." },
+      { step: "2", title: "Enter a postal code", body: "Type 7 digits. Both hyphenated (100-0001) and non-hyphenated (1000001) formats are accepted." },
+      { step: "3", title: "Check the prefecture", body: "The prefecture is shown in real time as you type." },
+      { step: "4", title: "Copy the result", body: "Use the Copy button to copy the postal code and prefecture to your clipboard." },
+    ],
+    faqTitle: "FAQ about ZIP Code Lookup",
+    faq: [
+      { q: "Can I look up the city/town from a postal code?", a: "This tool determines the prefecture from the first 3 digits. For city/town details, follow the Japan Post link." },
+      { q: "Can I convert multiple postal codes at once?", a: "Yes. Use Batch mode and paste multiple codes separated by newlines, commas, or spaces." },
+      { q: "Is the prefecture lookup accurate?", a: "It is approximate based on the first 3 digits. For exact addresses, use Japan Post's official database." },
+      { q: "Does it work without hyphens?", a: "Yes. Both 1000001 (no hyphen) and 100-0001 (with hyphen) are accepted and auto-formatted." },
+    ],
+    relatedTools: "Related Tools",
+    related: [
+      { href: "/tools/bank-code-lookup", label: "Bank Code Lookup", desc: "Quickly find bank and branch codes" },
+      { href: "/tools/houjin-bangou-validator", label: "Corporate Number Validator", desc: "Validate and format 13-digit corporate numbers" },
+    ],
+    ctaTitle: "Address & Code Conversion Tools",
+    ctaDesc: "Free tools for converting and validating postal codes, bank codes, corporate numbers, and more.",
+    ctaBtn: "View All Tools",
+  },
+} as const;
+
+// Prefecture lookup data (unchanged)
 const PREFECTURE_RANGES: Array<{ start: number; end: number; pref: string }> = [
   { start: 10, end: 19, pref: "秋田県" },
   { start: 20, end: 29, pref: "岩手県" },
@@ -53,26 +167,6 @@ const PREFECTURE_RANGES: Array<{ start: number; end: number; pref: string }> = [
   { start: 990, end: 999, pref: "山形県" },
 ];
 
-// 北海道 (001-006, 060-099) は別途処理
-function lookupPrefecture(zip: string): string | null {
-  const digits = zip.replace(/-/g, "");
-  if (digits.length !== 7) return null;
-  const prefix3 = parseInt(digits.slice(0, 3), 10);
-
-  // 北海道: 001-006, 060-099
-  if ((prefix3 >= 1 && prefix3 <= 6) || (prefix3 >= 60 && prefix3 <= 99)) {
-    return "北海道";
-  }
-
-  for (const range of PREFECTURE_RANGES) {
-    if (prefix3 >= range.start && prefix3 <= range.end) {
-      return range.pref;
-    }
-  }
-  return null;
-}
-
-// 都道府県一覧（郵便番号帯付き）
 const PREFECTURE_TABLE = [
   { pref: "北海道", range: "001-006, 060-099" },
   { pref: "青森県", range: "030-039" },
@@ -123,14 +217,21 @@ const PREFECTURE_TABLE = [
   { pref: "沖縄県", range: "900-909" },
 ];
 
+function lookupPrefecture(zip: string): string | null {
+  const digits = zip.replace(/-/g, "");
+  if (digits.length !== 7) return null;
+  const prefix3 = parseInt(digits.slice(0, 3), 10);
+  if ((prefix3 >= 1 && prefix3 <= 6) || (prefix3 >= 60 && prefix3 <= 99)) return "北海道";
+  for (const range of PREFECTURE_RANGES) {
+    if (prefix3 >= range.start && prefix3 <= range.end) return range.pref;
+  }
+  return null;
+}
+
 function formatZip(raw: string): string {
   const digits = raw.replace(/\D/g, "").slice(0, 7);
   if (digits.length <= 3) return digits;
   return digits.slice(0, 3) + "-" + digits.slice(3);
-}
-
-function isValidZip(zip: string): boolean {
-  return /^\d{3}-\d{4}$/.test(zip) || /^\d{7}$/.test(zip);
 }
 
 interface LookupResult {
@@ -139,7 +240,7 @@ interface LookupResult {
   error?: string;
 }
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, t }: { text: string; t: typeof T["ja"] }) {
   const [copied, setCopied] = useState(false);
   return (
     <button
@@ -149,9 +250,9 @@ function CopyButton({ text }: { text: string }) {
           setTimeout(() => setCopied(false), 1500);
         });
       }}
-      className="px-3 py-1.5 text-sm bg-accent text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+      className="px-3 py-1.5 text-sm bg-violet-600 hover:bg-violet-500 text-white rounded-lg transition-colors font-medium"
     >
-      {copied ? "コピー済" : "コピー"}
+      {copied ? t.copied : t.copy}
     </button>
   );
 }
@@ -161,118 +262,158 @@ export default function ZipToAddress() {
   const [batchInput, setBatchInput] = useState("");
   const [mode, setMode] = useState<"single" | "batch">("single");
   const [showTable, setShowTable] = useState(false);
+  const [lang, setLang] = useState<Lang>("ja");
 
-  // Single lookup result
+  const t = T[lang];
+
   const singleResult: LookupResult | null = (() => {
     const zip = singleZip.replace(/\D/g, "");
     if (zip.length === 0) return null;
-    if (zip.length !== 7) return { zip: singleZip, prefecture: null, error: "7桁で入力してください" };
+    if (zip.length !== 7) return { zip: singleZip, prefecture: null, error: t.zipError };
     const formatted = zip.slice(0, 3) + "-" + zip.slice(3);
     const pref = lookupPrefecture(zip);
-    return { zip: formatted, prefecture: pref, error: pref ? undefined : "該当する都道府県が見つかりませんでした" };
+    return { zip: formatted, prefecture: pref, error: pref ? undefined : t.zipNotFound };
   })();
 
-  // Batch lookup results
   const batchResults: LookupResult[] = batchInput
     .split(/[\n,、，\s]+/)
     .map((s) => s.trim())
     .filter((s) => s.length > 0)
     .map((raw) => {
       const zip = raw.replace(/\D/g, "");
-      if (zip.length !== 7) return { zip: raw, prefecture: null, error: "フォーマット不正" };
+      if (zip.length !== 7) return { zip: raw, prefecture: null, error: t.formatError };
       const formatted = zip.slice(0, 3) + "-" + zip.slice(3);
       const pref = lookupPrefecture(zip);
-      return { zip: formatted, prefecture: pref, error: pref ? undefined : "不明" };
+      return { zip: formatted, prefecture: pref, error: pref ? undefined : t.unknown };
     });
 
-  const batchCopyText = batchResults
-    .map((r) => `${r.zip}\t${r.prefecture ?? r.error ?? "不明"}`)
-    .join("\n");
+  const batchCopyText = batchResults.map((r) => `${r.zip}\t${r.prefecture ?? r.error ?? t.unknown}`).join("\n");
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="bg-surface rounded-2xl border border-border p-4">
-        <h1 className="text-lg font-bold text-gray-900 mb-1">郵便番号→住所変換ツール</h1>
-        <p className="text-muted text-sm">
-          7桁の郵便番号から都道府県を判定します。市区町村・町域の詳細は日本郵便サイトでご確認ください。
-        </p>
+    <div className="w-full max-w-4xl mx-auto space-y-5">
+      <style>{`
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.1); }
+          50% { box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 0 60px rgba(139,92,246,0.2); }
+        }
+        @keyframes float-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes border-spin { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text { text-shadow: 0 0 30px rgba(196,181,253,0.6); }
+        .result-card-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        .gradient-border-box { position: relative; }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .table-row-stripe:hover { background: rgba(139,92,246,0.08); transition: background 0.2s ease; }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
       </div>
 
-      {/* Mode selector */}
-      <div className="bg-surface rounded-2xl border border-border p-4 space-y-4">
+      {/* Mode selector + inputs */}
+      <div className="glass-card rounded-2xl p-4 space-y-4">
         <div className="flex gap-2">
-          <button
-            onClick={() => setMode("single")}
-            className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-              mode === "single"
-                ? "bg-accent text-white"
-                : "border border-border text-gray-700 hover:bg-gray-50"
-            }`}
-          >
-            1件検索
-          </button>
-          <button
-            onClick={() => setMode("batch")}
-            className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-              mode === "batch"
-                ? "bg-accent text-white"
-                : "border border-border text-gray-700 hover:bg-gray-50"
-            }`}
-          >
-            一括検索
-          </button>
+          {(["single", "batch"] as const).map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              className={`px-4 py-2 text-sm rounded-xl font-medium transition-all duration-200 ${
+                mode === m
+                  ? "bg-violet-600 text-white"
+                  : "glass-card text-violet-200 hover:text-white"
+              }`}
+            >
+              {m === "single" ? t.singleMode : t.batchMode}
+            </button>
+          ))}
         </div>
 
         {mode === "single" ? (
           <div className="space-y-3">
             <div>
-              <label className="text-muted text-xs block mb-1">郵便番号（7桁）</label>
+              <label className="text-xs font-medium text-violet-100 block mb-1 uppercase tracking-wider">{t.zipLabel}</label>
               <input
                 type="text"
                 value={singleZip}
                 onChange={(e) => setSingleZip(formatZip(e.target.value))}
-                placeholder="例: 100-0001"
+                placeholder={t.zipPlaceholder}
                 maxLength={8}
-                className="w-full sm:w-64 px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                className="w-full sm:w-64 px-3 py-2 number-input rounded-xl text-sm focus:outline-none neon-focus font-mono"
               />
             </div>
-
             {singleResult && (
-              <div
-                className={`rounded-lg p-4 ${
-                  singleResult.error
-                    ? "bg-red-50 border border-red-200"
-                    : "bg-green-50 border border-green-200"
-                }`}
-              >
+              <div className={`rounded-xl p-4 ${
+                singleResult.error
+                  ? "glass-card border-red-500/20"
+                  : "gradient-border-box glass-card-bright result-card-glow"
+              }`}>
                 {singleResult.error ? (
-                  <p className="text-red-700 text-sm">{singleResult.error}</p>
+                  <p className="text-red-400 text-sm">{singleResult.error}</p>
                 ) : (
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between flex-wrap gap-3">
                       <div>
-                        <span className="text-muted text-xs block">郵便番号</span>
-                        <span className="font-mono font-semibold text-gray-900">〒{singleResult.zip}</span>
+                        <span className="text-violet-200 text-xs block mb-1">{t.zipNum}</span>
+                        <span className="font-mono font-semibold text-white">〒{singleResult.zip}</span>
                       </div>
                       <div>
-                        <span className="text-muted text-xs block">都道府県</span>
-                        <span className="text-2xl font-bold text-green-700">{singleResult.prefecture}</span>
+                        <span className="text-violet-200 text-xs block mb-1">{t.prefecture}</span>
+                        <span className="text-3xl font-bold text-white glow-text">{singleResult.prefecture}</span>
                       </div>
-                      <CopyButton text={`〒${singleResult.zip} ${singleResult.prefecture}`} />
+                      <CopyButton text={`〒${singleResult.zip} ${singleResult.prefecture}`} t={t} />
                     </div>
-                    <div className="pt-2 border-t border-green-200">
-                      <p className="text-xs text-gray-600">
-                        市区町村・町域の詳細は
+                    <div className="pt-2 border-t border-white/8">
+                      <p className="text-xs text-violet-200">
+                        {t.detailsNote}
                         <a
                           href={`https://www.post.japanpost.jp/cgi-zip/zipcode.php?zip=${singleResult.zip.replace("-", "")}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 underline mx-1"
+                          className="text-cyan-300 underline mx-1"
                         >
-                          日本郵便の公式サイト
+                          {t.detailsNote2}
                         </a>
-                        でご確認ください。
+                        {t.detailsNote3}
                       </p>
                     </div>
                   </div>
@@ -283,45 +424,40 @@ export default function ZipToAddress() {
         ) : (
           <div className="space-y-3">
             <div>
-              <label className="text-muted text-xs block mb-1">
-                郵便番号を複数入力（改行・カンマ・スペース区切り）
-              </label>
+              <label className="text-xs font-medium text-violet-100 block mb-1 uppercase tracking-wider">{t.batchLabel}</label>
               <textarea
                 value={batchInput}
                 onChange={(e) => setBatchInput(e.target.value)}
                 rows={5}
                 placeholder={"100-0001\n530-0001\n810-0001\n..."}
-                className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono resize-y"
+                className="w-full px-3 py-2 number-input rounded-xl text-sm focus:outline-none neon-focus font-mono resize-y"
               />
             </div>
-
             {batchResults.length > 0 && (
-              <div className="bg-surface rounded-xl border border-border overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-border">
-                  <span className="text-sm font-medium text-gray-700">
-                    結果 {batchResults.length}件
+              <div className="glass-card rounded-xl overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-2 border-b border-white/8">
+                  <span className="text-sm font-medium text-violet-100">
+                    {t.batchResults} {batchResults.length}{t.batchCount}
                   </span>
-                  <CopyButton text={batchCopyText} />
+                  <CopyButton text={batchCopyText} t={t} />
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gray-50 border-b border-border">
-                        <th className="text-left px-4 py-2 text-muted text-xs font-medium">郵便番号</th>
-                        <th className="text-left px-4 py-2 text-muted text-xs font-medium">都道府県</th>
-                        <th className="text-left px-4 py-2 text-muted text-xs font-medium">詳細</th>
+                      <tr className="border-b border-white/8">
+                        <th className="text-left px-4 py-2 text-xs font-medium text-violet-200 uppercase tracking-wider">{t.zipNum}</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-violet-200 uppercase tracking-wider">{t.prefecture}</th>
+                        <th className="text-left px-4 py-2 text-xs font-medium text-violet-200 uppercase tracking-wider">{t.details}</th>
                       </tr>
                     </thead>
                     <tbody>
                       {batchResults.map((r, i) => (
-                        <tr key={i} className="border-b border-border last:border-0">
-                          <td className="px-4 py-2 font-mono text-gray-800">〒{r.zip}</td>
+                        <tr key={i} className="border-b border-white/5 table-row-stripe">
+                          <td className="px-4 py-2 font-mono text-white/90">〒{r.zip}</td>
                           <td className="px-4 py-2">
-                            {r.prefecture ? (
-                              <span className="font-semibold text-gray-900">{r.prefecture}</span>
-                            ) : (
-                              <span className="text-red-500 text-xs">{r.error}</span>
-                            )}
+                            {r.prefecture
+                              ? <span className="font-semibold text-white">{r.prefecture}</span>
+                              : <span className="text-red-400 text-xs">{r.error}</span>}
                           </td>
                           <td className="px-4 py-2">
                             {r.prefecture && (
@@ -329,9 +465,9 @@ export default function ZipToAddress() {
                                 href={`https://www.post.japanpost.jp/cgi-zip/zipcode.php?zip=${r.zip.replace("-", "")}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-500 text-xs underline"
+                                className="text-cyan-300 text-xs underline"
                               >
-                                日本郵便で確認
+                                {t.detailsLink}
                               </a>
                             )}
                           </td>
@@ -346,47 +482,40 @@ export default function ZipToAddress() {
         )}
       </div>
 
-      {/* 都道府県一覧テーブル */}
-      <div className="bg-surface rounded-2xl border border-border overflow-hidden">
+      {/* Prefecture table */}
+      <div className="glass-card rounded-2xl overflow-hidden">
         <button
           onClick={() => setShowTable(!showTable)}
-          className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-violet-100 hover:bg-white/5 transition-colors"
         >
-          <span>都道府県別 郵便番号帯一覧</span>
-          <span className="text-muted">{showTable ? "▲ 閉じる" : "▼ 開く"}</span>
+          <span>{t.tableToggleOpen}</span>
+          <span className="text-violet-200">{showTable ? t.tableToggleClose : t.tableToggleShow}</span>
         </button>
-
         {showTable && (
-          <div className="border-t border-border overflow-x-auto">
+          <div className="border-t border-white/8 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-50 border-b border-border">
-                  <th className="text-left px-4 py-2 text-muted text-xs font-medium">都道府県</th>
-                  <th className="text-left px-4 py-2 text-muted text-xs font-medium">郵便番号帯（上3桁）</th>
+                <tr className="border-b border-white/8">
+                  <th className="text-left px-4 py-2 text-xs font-medium text-violet-200 uppercase tracking-wider">{t.tablePref}</th>
+                  <th className="text-left px-4 py-2 text-xs font-medium text-violet-200 uppercase tracking-wider">{t.tableRange}</th>
                 </tr>
               </thead>
               <tbody>
                 {PREFECTURE_TABLE.map((row, i) => (
-                  <tr key={i} className="border-b border-border last:border-0">
-                    <td className="px-4 py-2 font-medium text-gray-800">{row.pref}</td>
-                    <td className="px-4 py-2 font-mono text-gray-600 text-xs">{row.range}</td>
+                  <tr key={i} className="border-b border-white/5 table-row-stripe">
+                    <td className="px-4 py-2 font-medium text-white/90">{row.pref}</td>
+                    <td className="px-4 py-2 font-mono text-violet-200 text-xs">{row.range}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <div className="px-4 py-3 bg-gray-50 border-t border-border">
-              <p className="text-xs text-muted">
-                ※ 上3桁による都道府県判定は概算です。同一番号帯に複数県が含まれる場合があります。
-                正確な住所は
-                <a
-                  href="https://www.post.japanpost.jp/zipcode/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline mx-1"
-                >
-                  日本郵便公式
+            <div className="px-4 py-3 border-t border-white/8">
+              <p className="text-xs text-violet-200">
+                {t.tableNote}
+                <a href="https://www.post.japanpost.jp/zipcode/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 underline mx-1">
+                  {t.tableNoteLink}
                 </a>
-                でご確認ください。
+                {t.tableNoteEnd}
               </p>
             </div>
           </div>
@@ -394,65 +523,43 @@ export default function ZipToAddress() {
       </div>
 
       {/* Ad placeholder */}
-      <div className="w-full h-20 bg-gray-50 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm">
-        広告スペース
+      <div className="glass-card rounded-xl flex items-center justify-center h-20 text-violet-200/30 text-sm select-none">
+        {t.adPlaceholder}
       </div>
 
-      {/* ── SEO: 使い方ガイド ── */}
-      <div className="bg-surface rounded-2xl border border-border p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">郵便番号 住所変換ツールの使い方</h2>
-        <ol className="space-y-3">
-          {[
-            { step: "1", title: "モードを選ぶ", body: "1件だけ調べたい場合は「1件検索」、複数の郵便番号をまとめて変換したい場合は「一括検索」を選んでください。" },
-            { step: "2", title: "郵便番号を入力する", body: "7桁の数字を入力してください。ハイフンあり（100-0001）・なし（1000001）どちらの形式にも対応しています。" },
-            { step: "3", title: "都道府県を確認する", body: "入力に合わせてリアルタイムで都道府県が表示されます。市区町村・町域の詳細は日本郵便公式サイトへのリンクで確認できます。" },
-            { step: "4", title: "結果をコピーする", body: "「コピー」ボタンで郵便番号と都道府県をまとめてクリップボードにコピーできます。一括検索はタブ区切りでスプレッドシートにも貼り付け可能です。" },
-          ].map(({ step, title, body }) => (
-            <li key={step} className="flex gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-sm font-bold flex items-center justify-center">{step}</span>
+      {/* Guide */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.guideTitle}</h2>
+        <ol className="space-y-3.5">
+          {t.guide.map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-sm font-bold flex items-center justify-center border border-violet-500/30">{item.step}</span>
               <div>
-                <p className="text-sm font-semibold text-gray-800">{title}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+                <div className="font-medium text-white/90 text-sm">{item.title}</div>
+                <div className="text-xs text-violet-200 mt-0.5">{item.body}</div>
               </div>
             </li>
           ))}
         </ol>
       </div>
 
-      {/* ── SEO: FAQ ── */}
-      <div className="bg-surface rounded-2xl border border-border p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">郵便番号・住所変換に関するよくある質問</h2>
+      {/* FAQ */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.faqTitle}</h2>
         <div className="space-y-4">
-          {[
-            {
-              q: "郵便番号から市区町村まで調べられますか？",
-              a: "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便の公式サイト（post.japanpost.jp）へのリンクで確認できます。",
-            },
-            {
-              q: "複数の郵便番号を一度に変換できますか？",
-              a: "「一括検索」モードで改行・カンマ・スペース区切りで複数の郵便番号を貼り付けると、まとめて都道府県に変換できます。結果はタブ区切りでコピーできます。",
-            },
-            {
-              q: "郵便番号の都道府県判定は正確ですか？",
-              a: "上3桁による範囲判定のため概算です。一部の境界では複数の都道府県が重なる場合があります。正確な住所は日本郵便の公式データベースでご確認ください。",
-            },
-            {
-              q: "ハイフンなしの郵便番号でも使えますか？",
-              a: "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。入力時に自動でハイフン付きフォーマットに整形されます。",
-            },
-          ].map(({ q, a }, i) => (
-            <details key={i} className="group border border-border rounded-xl overflow-hidden">
-              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-blue-50 list-none">
-                <span>Q. {q}</span>
-                <span className="text-blue-500 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+          {t.faq.map((item, i) => (
+            <details key={i} className="group glass-card rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-white/90 hover:bg-white/5 list-none">
+                <span>Q. {item.q}</span>
+                <span className="text-violet-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
               </summary>
-              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-border">{a}</div>
+              <div className="px-4 pb-4 pt-1 text-sm text-violet-100 border-t border-white/6">{item.a}</div>
             </details>
           ))}
         </div>
       </div>
 
-      {/* ── SEO: JSON-LD FAQPage ── */}
+      {/* JSON-LD FAQPage */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -460,51 +567,43 @@ export default function ZipToAddress() {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "郵便番号から市区町村まで調べられますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便公式サイトへのリンクで確認できます。" },
-              },
-              {
-                "@type": "Question",
-                "name": "複数の郵便番号を一度に変換できますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "「一括検索」モードで改行・カンマ・スペース区切りで複数貼り付けると、まとめて都道府県に変換できます。" },
-              },
-              {
-                "@type": "Question",
-                "name": "ハイフンなしの郵便番号でも使えますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。" },
-              },
+              { "@type": "Question", "name": "郵便番号から市区町村まで調べられますか？", "acceptedAnswer": { "@type": "Answer", "text": "このツールは上3桁から都道府県を判定します。市区町村・町域の詳細は日本郵便公式サイトへのリンクで確認できます。" } },
+              { "@type": "Question", "name": "複数の郵便番号を一度に変換できますか？", "acceptedAnswer": { "@type": "Answer", "text": "「一括検索」モードで改行・カンマ・スペース区切りで複数貼り付けると、まとめて都道府県に変換できます。" } },
+              { "@type": "Question", "name": "ハイフンなしの郵便番号でも使えますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。1000001（ハイフンなし）でも100-0001（ハイフンあり）でも自動的に解釈します。" } },
             ],
           }),
         }}
       />
 
-      {/* ── SEO: 関連ツール ── */}
-      <div className="bg-blue-50 rounded-2xl border border-blue-100 p-5">
-        <h2 className="text-sm font-bold text-blue-800 mb-3">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {[
-            { href: "/tools/bank-code-lookup", label: "銀行コード検索ツール", desc: "銀行・支店コードを素早く調べる" },
-            { href: "/tools/houjin-bangou-validator", label: "法人番号 検証ツール", desc: "13桁の法人番号を検証・フォーマット" },
-          ].map(({ href, label, desc }) => (
-            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-blue-100 hover:border-blue-300 transition-colors">
-              <span className="text-sm font-semibold text-blue-700">{label}</span>
-              <span className="text-xs text-gray-500">{desc}</span>
+      {/* Related tools */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.relatedTools}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {t.related.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-white/8 hover:border-violet-500/40 transition-all duration-200"
+              style={{ background: "rgba(139,92,246,0)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.08)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0)"; }}
+            >
+              <div className="font-medium text-white/90 text-sm">{link.label}</div>
+              <div className="text-xs text-violet-100 mt-1">{link.desc}</div>
             </a>
           ))}
         </div>
       </div>
 
-      {/* ── SEO: CTA ── */}
-      <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-5 text-white text-center space-y-3">
-        <p className="text-base font-bold">住所・コード変換ツールをまとめて活用</p>
-        <p className="text-xs opacity-80">郵便番号・銀行コード・法人番号など、業務データの変換・検証ツールを無料で提供しています。</p>
-        <a href="/tools" className="inline-block bg-white text-blue-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-blue-50 transition-colors">
-          全ツール一覧を見る
+      {/* CTA */}
+      <div className="rounded-2xl p-5 text-white text-center space-y-3" style={{ background: "linear-gradient(135deg, rgba(109,40,217,0.8), rgba(124,58,237,0.6))", border: "1px solid rgba(139,92,246,0.3)" }}>
+        <p className="text-base font-bold">{t.ctaTitle}</p>
+        <p className="text-xs opacity-80">{t.ctaDesc}</p>
+        <a href="/tools" className="inline-block bg-white text-violet-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-violet-50 transition-colors">
+          {t.ctaBtn}
         </a>
       </div>
-    
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -516,15 +615,11 @@ export default function ZipToAddress() {
   "url": "https://tools.loresync.dev/zip-to-address",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "inLanguage": "ja"
 }`
         }}
       />
-      </div>
+    </div>
   );
 }

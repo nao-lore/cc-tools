@@ -14,6 +14,129 @@ interface ChainStep {
   expectedOutput: string;
 }
 
+type Lang = "ja" | "en";
+
+// ---------------------------------------------------------------------------
+// Translations
+// ---------------------------------------------------------------------------
+
+const T = {
+  ja: {
+    title: "プロンプトチェーン設計ツール",
+    subtitle: "複数ステップのLLM呼び出しを視覚的に設計・連結",
+    totalTokens: "チェーン合計トークン",
+    stepCount: "ステップ数",
+    dependencies: "依存関係",
+    connected: "接続",
+    reset: "リセット",
+    export: "JSONエクスポート",
+    copied: "JSONをコピーしました",
+    downloaded: "ダウンロードしました",
+    noSteps: "ステップがありません。「ステップを追加」から始めてください。",
+    addStep: "ステップを追加",
+    systemPrompt: "システムプロンプト",
+    userPrompt: "ユーザープロンプト",
+    expectedOutput: "期待する出力（説明）",
+    insertPlaceholder: "+ {{previous_output}}",
+    prevOutputRef: "の出力を",
+    prevOutputRef2: "で参照",
+    step: "ステップ",
+    collapse: "折りたたむ",
+    expand: "展開",
+    moveUp: "上に移動",
+    moveDown: "下に移動",
+    delete: "削除",
+    tok: "tok",
+    output: "output",
+    input: "input",
+    systemPlaceholder: "AIの役割・制約・指示を記述...",
+    userPlaceholder: "ユーザーからの入力・指示を記述...",
+    outputPlaceholder: "このステップでAIが返すべき出力の形式・内容を説明...",
+    confirmReset: "チェーンをリセットしますか？",
+    adPlaceholder: "広告",
+    guideTitle: "プロンプトチェーンビルダーの使い方",
+    guide: [
+      { step: "1", title: "ステップを追加・編集する", body: "デフォルトの3ステップを参考に、各ステップにシステムプロンプトとユーザープロンプトを入力します。" },
+      { step: "2", title: "前のステップの出力を参照する", body: "ユーザープロンプトに {{previous_output}} を挿入すると、前ステップの出力を次ステップへ自動で引き渡せます。" },
+      { step: "3", title: "ステップを並べ替え・削除する", body: "▲▼ボタンでステップの順序を変更、ゴミ箱ボタンで削除できます。" },
+      { step: "4", title: "JSONエクスポートする", body: "完成したチェーンは「JSONエクスポート」ボタンでクリップボードにコピーできます。" },
+    ],
+    faqTitle: "プロンプトチェーンに関するよくある質問",
+    faq: [
+      { q: "プロンプトチェーンとは何ですか？", a: "複数のLLM呼び出しを連結し、前のステップの出力を次のステップの入力として使う設計パターンです。" },
+      { q: "{{previous_output}} はどのように使いますか？", a: "ユーザープロンプト内に {{previous_output}} と記述すると、実行時に前ステップの出力テキストがそこに挿入されます。" },
+      { q: "トークン数の目安はどう見ればいいですか？", a: "各ステップのトークン推定値はテキスト文字数÷4で概算しています。コンテキストウィンドウを超えないよう調整してください。" },
+      { q: "エクスポートしたJSONはどう使いますか？", a: "JSON内の steps 配列には systemPrompt・userPrompt・expectedOutput が含まれます。Claude API・OpenAI APIのメッセージ配列にそのままマッピングして実装できます。" },
+    ],
+    relatedTools: "関連ツール",
+    related: [
+      { href: "/tools/few-shot-builder", label: "Few-Shot プロンプトビルダー", desc: "例示でAIの出力を制御" },
+      { href: "/tools/temperature-top-p-tester", label: "Temperature / Top-P テスター", desc: "サンプリングパラメータを視覚化" },
+      { href: "/tools/system-prompt-optimizer", label: "システムプロンプト最適化", desc: "プロンプトの構造を改善" },
+    ],
+    ctaTitle: "AIプロンプト設計ツールをもっと活用する",
+    ctaDesc: "Few-Shot設計・システムプロンプト最適化など、プロンプトエンジニアリングを支援するツール集。",
+    ctaBtn: "全ツール一覧を見る",
+  },
+  en: {
+    title: "Prompt Chain Builder",
+    subtitle: "Visually design and connect multi-step LLM call chains",
+    totalTokens: "Chain Total Tokens",
+    stepCount: "Steps",
+    dependencies: "Dependencies",
+    connected: "connected",
+    reset: "Reset",
+    export: "Export JSON",
+    copied: "Copied to clipboard",
+    downloaded: "Downloaded",
+    noSteps: "No steps yet. Click \"Add Step\" to get started.",
+    addStep: "Add Step",
+    systemPrompt: "System Prompt",
+    userPrompt: "User Prompt",
+    expectedOutput: "Expected Output (description)",
+    insertPlaceholder: "+ {{previous_output}}",
+    prevOutputRef: "Step ",
+    prevOutputRef2: " output referenced via",
+    step: "Step",
+    collapse: "Collapse",
+    expand: "Expand",
+    moveUp: "Move up",
+    moveDown: "Move down",
+    delete: "Delete",
+    tok: "tok",
+    output: "output",
+    input: "input",
+    systemPlaceholder: "Describe the AI role, constraints, instructions...",
+    userPlaceholder: "Describe the user input or instructions...",
+    outputPlaceholder: "Describe the expected output format and content...",
+    confirmReset: "Reset the chain?",
+    adPlaceholder: "Advertisement",
+    guideTitle: "How to Use the Prompt Chain Builder",
+    guide: [
+      { step: "1", title: "Add & edit steps", body: "Use the default 3 steps as a reference and fill in system and user prompts for each step." },
+      { step: "2", title: "Reference previous output", body: "Insert {{previous_output}} in a user prompt to automatically pass the previous step's output to the next step." },
+      { step: "3", title: "Reorder & delete steps", body: "Use ▲▼ buttons to reorder steps and the trash button to delete them." },
+      { step: "4", title: "Export as JSON", body: "Click \"Export JSON\" to copy the finished chain to your clipboard." },
+    ],
+    faqTitle: "FAQ about Prompt Chains",
+    faq: [
+      { q: "What is a prompt chain?", a: "A design pattern where multiple LLM calls are chained together, with each step's output used as the next step's input." },
+      { q: "How do I use {{previous_output}}?", a: "Write {{previous_output}} inside a user prompt and the previous step's output text will be inserted there at runtime." },
+      { q: "How should I interpret token counts?", a: "Token estimates are approximated as character count ÷ 4. Adjust steps to stay within the model's context window." },
+      { q: "How do I use the exported JSON?", a: "The steps array contains systemPrompt, userPrompt, and expectedOutput. Map them directly to the message arrays for Claude API or OpenAI API." },
+    ],
+    relatedTools: "Related Tools",
+    related: [
+      { href: "/tools/few-shot-builder", label: "Few-Shot Prompt Builder", desc: "Control AI output with examples" },
+      { href: "/tools/temperature-top-p-tester", label: "Temperature / Top-P Tester", desc: "Visualize sampling parameters" },
+      { href: "/tools/system-prompt-optimizer", label: "System Prompt Optimizer", desc: "Improve prompt structure" },
+    ],
+    ctaTitle: "Get More from AI Prompt Tools",
+    ctaDesc: "A toolkit for prompt engineering: few-shot design, system prompt optimization, and more.",
+    ctaBtn: "View All Tools",
+  },
+} as const;
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -72,47 +195,42 @@ interface StepCardProps {
   step: ChainStep;
   index: number;
   total: number;
+  lang: Lang;
   onChange: (id: string, patch: Partial<ChainStep>) => void;
   onMoveUp: (id: string) => void;
   onMoveDown: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete }: StepCardProps) {
+function StepCard({ step, index, total, lang, onChange, onMoveUp, onMoveDown, onDelete }: StepCardProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const t = T[lang];
   const stepTokens = totalStepTokens(step);
   const hasPrevOutput = step.userPrompt.includes(PLACEHOLDER_TAG);
 
   return (
-    <div className="bg-surface rounded-2xl border border-border p-4 space-y-3">
+    <div className="glass-card rounded-2xl p-4 space-y-3">
       {/* Header */}
       <div className="flex items-center gap-2">
-        {/* Step number badge */}
-        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">
+        <span className="flex-shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-xs font-bold flex items-center justify-center border border-violet-500/30">
           {index + 1}
         </span>
-
-        {/* Step name */}
         <input
           type="text"
           value={step.name}
           onChange={(e) => onChange(step.id, { name: e.target.value })}
-          placeholder={`ステップ${index + 1}の名前`}
-          className="flex-1 text-sm font-semibold bg-transparent border-0 border-b border-transparent focus:border-indigo-300 focus:outline-none text-gray-800 placeholder-gray-400 py-0.5"
+          placeholder={`${t.step}${index + 1}`}
+          className="flex-1 text-sm font-semibold bg-transparent border-0 border-b border-transparent focus:border-violet-400/50 focus:outline-none text-white placeholder-violet-300/40 py-0.5"
         />
-
-        {/* Token badge */}
-        <span className="flex-shrink-0 text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full font-mono whitespace-nowrap">
-          ~{stepTokens.toLocaleString()} tok
+        <span className="flex-shrink-0 text-xs text-violet-200 glass-card px-2 py-0.5 rounded-full font-mono whitespace-nowrap">
+          ~{stepTokens.toLocaleString()} {t.tok}
         </span>
-
-        {/* Controls */}
         <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={() => onMoveUp(step.id)}
             disabled={index === 0}
-            title="上に移動"
-            className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            title={t.moveUp}
+            className="w-6 h-6 flex items-center justify-center rounded text-violet-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
           >
             <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
               <path d="M8 3l5 5H3l5-5z" />
@@ -121,8 +239,8 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
           <button
             onClick={() => onMoveDown(step.id)}
             disabled={index === total - 1}
-            title="下に移動"
-            className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-gray-700 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+            title={t.moveDown}
+            className="w-6 h-6 flex items-center justify-center rounded text-violet-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
           >
             <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
               <path d="M8 13l-5-5h10l-5 5z" />
@@ -130,8 +248,8 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
           </button>
           <button
             onClick={() => setCollapsed((c) => !c)}
-            title={collapsed ? "展開" : "折りたたむ"}
-            className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+            title={collapsed ? t.expand : t.collapse}
+            className="w-6 h-6 flex items-center justify-center rounded text-violet-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <svg viewBox="0 0 16 16" fill="currentColor" className={`w-3.5 h-3.5 transition-transform ${collapsed ? "-rotate-90" : ""}`}>
               <path d="M8 10l-5-5h10l-5 5z" />
@@ -139,8 +257,8 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
           </button>
           <button
             onClick={() => onDelete(step.id)}
-            title="削除"
-            className="w-6 h-6 flex items-center justify-center rounded text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+            title={t.delete}
+            className="w-6 h-6 flex items-center justify-center rounded text-violet-300 hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
           >
             <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
               <path d="M6 2h4a1 1 0 0 1 1 1v1h2v1H3V4h2V3a1 1 0 0 1 1-1zm0 1v1h4V3H6zM4 6h8l-.8 8H4.8L4 6zm2 1v6h1V7H6zm3 0v6h1V7H9z" />
@@ -149,43 +267,40 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
         </div>
       </div>
 
-      {/* Previous output indicator */}
       {hasPrevOutput && index > 0 && (
-        <div className="flex items-center gap-1.5 text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-2.5 py-1.5">
+        <div className="flex items-center gap-1.5 text-xs text-cyan-300 glass-card rounded-lg px-2.5 py-1.5 border border-cyan-500/20">
           <svg viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 flex-shrink-0">
             <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm.5 10.5h-1v-5h1v5zm0-6.5h-1V4h1v1z" />
           </svg>
-          <span>ステップ{index}の出力を <code className="font-mono bg-emerald-100 px-1 rounded">{PLACEHOLDER_TAG}</code> で参照</span>
+          <span>
+            {lang === "ja"
+              ? `ステップ${index}の出力を `
+              : `Step ${index} output referenced via `}
+            <code className="font-mono bg-cyan-500/10 px-1 rounded">{PLACEHOLDER_TAG}</code>
+            {lang === "ja" ? " で参照" : ""}
+          </span>
         </div>
       )}
 
       {!collapsed && (
         <div className="space-y-3">
-          {/* System prompt */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                システムプロンプト
-              </label>
-              <span className="text-xs text-gray-400 font-mono">
-                {estimateTokens(step.systemPrompt).toLocaleString()} tok
-              </span>
+              <label className="text-xs font-medium text-violet-100 uppercase tracking-wide">{t.systemPrompt}</label>
+              <span className="text-xs text-violet-200 font-mono">{estimateTokens(step.systemPrompt).toLocaleString()} {t.tok}</span>
             </div>
             <textarea
               value={step.systemPrompt}
               onChange={(e) => onChange(step.id, { systemPrompt: e.target.value })}
-              placeholder="AIの役割・制約・指示を記述..."
+              placeholder={t.systemPlaceholder}
               rows={3}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-800 resize-y focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-gray-400 font-mono"
+              className="w-full px-3 py-2 text-sm rounded-lg number-input text-white resize-y focus:outline-none neon-focus placeholder-violet-300/40 font-mono"
             />
           </div>
 
-          {/* User prompt */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                ユーザープロンプト
-              </label>
+              <label className="text-xs font-medium text-violet-100 uppercase tracking-wide">{t.userPrompt}</label>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() =>
@@ -193,41 +308,34 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
                       userPrompt: step.userPrompt + (step.userPrompt && !step.userPrompt.endsWith("\n") ? "\n" : "") + PLACEHOLDER_TAG,
                     })
                   }
-                  title="前のステップの出力を参照するプレースホルダーを挿入"
-                  className="text-xs text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-2 py-0.5 rounded transition-colors cursor-pointer"
+                  className="text-xs text-violet-200 hover:text-white bg-violet-500/15 hover:bg-violet-500/25 px-2 py-0.5 rounded transition-colors cursor-pointer"
                 >
-                  + {PLACEHOLDER_TAG}
+                  {t.insertPlaceholder}
                 </button>
-                <span className="text-xs text-gray-400 font-mono">
-                  {estimateTokens(step.userPrompt).toLocaleString()} tok
-                </span>
+                <span className="text-xs text-violet-200 font-mono">{estimateTokens(step.userPrompt).toLocaleString()} {t.tok}</span>
               </div>
             </div>
             <textarea
               value={step.userPrompt}
               onChange={(e) => onChange(step.id, { userPrompt: e.target.value })}
-              placeholder={`ユーザーからの入力・指示を記述...\n前のステップの結果を使う場合は ${PLACEHOLDER_TAG} を挿入`}
+              placeholder={t.userPlaceholder}
               rows={4}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 text-gray-800 resize-y focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 placeholder-gray-400 font-mono"
+              className="w-full px-3 py-2 text-sm rounded-lg number-input text-white resize-y focus:outline-none neon-focus placeholder-violet-300/40 font-mono"
             />
           </div>
 
-          {/* Expected output */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                期待する出力（説明）
-              </label>
-              <span className="text-xs text-gray-400 font-mono">
-                {estimateTokens(step.expectedOutput).toLocaleString()} tok
-              </span>
+              <label className="text-xs font-medium text-violet-100 uppercase tracking-wide">{t.expectedOutput}</label>
+              <span className="text-xs text-violet-200 font-mono">{estimateTokens(step.expectedOutput).toLocaleString()} {t.tok}</span>
             </div>
             <textarea
               value={step.expectedOutput}
               onChange={(e) => onChange(step.id, { expectedOutput: e.target.value })}
-              placeholder="このステップでAIが返すべき出力の形式・内容を説明..."
+              placeholder={t.outputPlaceholder}
               rows={2}
-              className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-amber-50 text-gray-800 resize-y focus:outline-none focus:ring-2 focus:ring-amber-300 focus:border-amber-300 placeholder-gray-400"
+              className="w-full px-3 py-2 text-sm rounded-lg number-input text-white resize-y focus:outline-none neon-focus placeholder-violet-300/40"
+              style={{ background: "rgba(251,191,36,0.05)", borderColor: "rgba(251,191,36,0.15)" }}
             />
           </div>
         </div>
@@ -242,21 +350,23 @@ function StepCard({ step, index, total, onChange, onMoveUp, onMoveDown, onDelete
 
 interface ConnectorProps {
   fromIndex: number;
+  lang: Lang;
 }
 
-function Connector({ fromIndex }: ConnectorProps) {
+function Connector({ fromIndex, lang }: ConnectorProps) {
+  const t = T[lang];
   return (
     <div className="flex flex-col items-center py-1 select-none">
-      <div className="w-px h-3 bg-gray-300" />
+      <div className="w-px h-3" style={{ background: "rgba(139,92,246,0.3)" }} />
       <div className="flex flex-col items-center">
-        <svg viewBox="0 0 24 24" className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg viewBox="0 0 24 24" className="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m0 0l-4-4m4 4l4-4" />
         </svg>
-        <span className="text-xs text-indigo-500 font-mono bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full mt-0.5">
-          output {fromIndex + 1} → input {fromIndex + 2}
+        <span className="text-xs text-cyan-300 font-mono glass-card border border-violet-500/20 px-2 py-0.5 rounded-full mt-0.5">
+          {t.output} {fromIndex + 1} → {t.input} {fromIndex + 2}
         </span>
       </div>
-      <div className="w-px h-3 bg-gray-300" />
+      <div className="w-px h-3" style={{ background: "rgba(139,92,246,0.3)" }} />
     </div>
   );
 }
@@ -268,8 +378,9 @@ function Connector({ fromIndex }: ConnectorProps) {
 export default function PromptChainBuilder() {
   const [steps, setSteps] = useState<ChainStep[]>(DEFAULT_STEPS);
   const [exportMsg, setExportMsg] = useState("");
+  const [lang, setLang] = useState<Lang>("ja");
 
-  // --- Mutations ---
+  const t = T[lang];
 
   const handleChange = useCallback((id: string, patch: Partial<ChainStep>) => {
     setSteps((prev) => prev.map((s) => (s.id === id ? { ...s, ...patch } : s)));
@@ -314,12 +425,10 @@ export default function PromptChainBuilder() {
   }, []);
 
   const handleReset = useCallback(() => {
-    if (window.confirm("チェーンをリセットしますか？")) {
+    if (window.confirm(t.confirmReset)) {
       setSteps(DEFAULT_STEPS.map((s) => ({ ...s, id: makeId() })));
     }
-  }, []);
-
-  // --- Export ---
+  }, [t.confirmReset]);
 
   const handleExport = useCallback(async () => {
     const data = {
@@ -339,9 +448,8 @@ export default function PromptChainBuilder() {
     const json = JSON.stringify(data, null, 2);
     try {
       await navigator.clipboard.writeText(json);
-      setExportMsg("JSONをコピーしました");
+      setExportMsg(t.copied);
     } catch {
-      // Fallback: download
       const blob = new Blob([json], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -349,68 +457,141 @@ export default function PromptChainBuilder() {
       a.download = "prompt-chain.json";
       a.click();
       URL.revokeObjectURL(url);
-      setExportMsg("ダウンロードしました");
+      setExportMsg(t.downloaded);
     }
     setTimeout(() => setExportMsg(""), 2500);
-  }, [steps]);
-
-  // --- Stats ---
+  }, [steps, t.copied, t.downloaded]);
 
   const totalTokens = steps.reduce((sum, s) => sum + totalStepTokens(s), 0);
   const connectedSteps = steps.filter((s, i) => i > 0 && s.userPrompt.includes(PLACEHOLDER_TAG)).length;
 
   return (
     <div className="space-y-4">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.1); }
+          50% { box-shadow: 0 0 30px rgba(139,92,246,0.5), 0 0 60px rgba(139,92,246,0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .tab-panel {
+          animation: float-in 0.25s ease-out;
+        }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .table-row-stripe:hover {
+          background: rgba(139,92,246,0.08);
+          transition: background 0.2s ease;
+        }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
+      </div>
+
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3">
-          {/* Total token estimate */}
-          <div className="flex items-center gap-2 bg-gray-100 rounded-xl px-3 py-1.5">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-gray-500">
+          <div className="flex items-center gap-2 glass-card rounded-xl px-3 py-1.5">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-violet-300">
               <circle cx="8" cy="8" r="6" />
               <path strokeLinecap="round" d="M8 5v3l2 2" />
             </svg>
             <div>
-              <div className="text-xs text-gray-500">チェーン合計トークン</div>
-              <div className="text-sm font-bold text-gray-800 font-mono">~{totalTokens.toLocaleString()}</div>
+              <div className="text-xs text-violet-200">{t.totalTokens}</div>
+              <div className="text-sm font-bold text-white font-mono">~{totalTokens.toLocaleString()}</div>
             </div>
           </div>
-
-          {/* Step count */}
-          <div className="flex items-center gap-2 bg-indigo-50 rounded-xl px-3 py-1.5">
-            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-indigo-500">
+          <div className="flex items-center gap-2 glass-card rounded-xl px-3 py-1.5" style={{ background: "rgba(139,92,246,0.1)" }}>
+            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 text-violet-300">
               <path d="M2 3h12v2H2V3zm0 4h12v2H2V7zm0 4h8v2H2v-2z" />
             </svg>
             <div>
-              <div className="text-xs text-indigo-500">ステップ数</div>
-              <div className="text-sm font-bold text-indigo-800">{steps.length}</div>
+              <div className="text-xs text-violet-200">{t.stepCount}</div>
+              <div className="text-sm font-bold text-white">{steps.length}</div>
             </div>
           </div>
-
-          {/* Connected steps */}
-          <div className="flex items-center gap-2 bg-emerald-50 rounded-xl px-3 py-1.5">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-emerald-600">
+          <div className="flex items-center gap-2 glass-card rounded-xl px-3 py-1.5" style={{ background: "rgba(6,182,212,0.08)" }}>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-cyan-300">
               <path strokeLinecap="round" d="M8 2v12M5 11l3 3 3-3" />
             </svg>
             <div>
-              <div className="text-xs text-emerald-600">依存関係</div>
-              <div className="text-sm font-bold text-emerald-800">{connectedSteps} 接続</div>
+              <div className="text-xs text-violet-200">{t.dependencies}</div>
+              <div className="text-sm font-bold text-white">{connectedSteps} {t.connected}</div>
             </div>
           </div>
         </div>
-
         <div className="flex items-center gap-2">
           <button
             onClick={handleReset}
-            className="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
+            className="px-3 py-1.5 text-xs text-violet-200 hover:text-white glass-card rounded-lg transition-colors cursor-pointer"
           >
-            リセット
+            {t.reset}
           </button>
           <button
             onClick={handleExport}
-            className="px-3 py-1.5 text-xs bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
+            className="px-3 py-1.5 text-xs bg-violet-600 hover:bg-violet-500 text-white rounded-lg transition-colors cursor-pointer"
           >
-            {exportMsg || "JSONエクスポート"}
+            {exportMsg || t.export}
           </button>
         </div>
       </div>
@@ -418,8 +599,8 @@ export default function PromptChainBuilder() {
       {/* Chain flow */}
       <div className="space-y-0">
         {steps.length === 0 ? (
-          <div className="bg-surface rounded-2xl border border-border p-12 text-center text-gray-400">
-            <p className="text-sm">ステップがありません。「ステップを追加」から始めてください。</p>
+          <div className="glass-card rounded-2xl p-12 text-center text-violet-200">
+            <p className="text-sm">{t.noSteps}</p>
           </div>
         ) : (
           steps.map((step, index) => (
@@ -428,12 +609,13 @@ export default function PromptChainBuilder() {
                 step={step}
                 index={index}
                 total={steps.length}
+                lang={lang}
                 onChange={handleChange}
                 onMoveUp={handleMoveUp}
                 onMoveDown={handleMoveDown}
                 onDelete={handleDelete}
               />
-              {index < steps.length - 1 && <Connector fromIndex={index} />}
+              {index < steps.length - 1 && <Connector fromIndex={index} lang={lang} />}
             </div>
           ))
         )}
@@ -442,74 +624,55 @@ export default function PromptChainBuilder() {
       {/* Add step button */}
       <button
         onClick={handleAdd}
-        className="w-full py-3 border-2 border-dashed border-indigo-200 rounded-2xl text-sm text-indigo-500 hover:border-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 transition-colors cursor-pointer flex items-center justify-center gap-2"
+        className="w-full py-3 rounded-2xl text-sm text-violet-300 hover:text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
+        style={{ border: "2px dashed rgba(139,92,246,0.35)" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,92,246,0.6)"; (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.06)"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,92,246,0.35)"; (e.currentTarget as HTMLElement).style.background = ""; }}
       >
         <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
           <path d="M8 2a1 1 0 0 1 1 1v4h4a1 1 0 1 1 0 2H9v4a1 1 0 1 1-2 0V9H3a1 1 0 1 1 0-2h4V3a1 1 0 0 1 1-1z" />
         </svg>
-        ステップを追加
+        {t.addStep}
       </button>
 
       {/* Ad placeholder */}
-      <div className="bg-surface rounded-2xl border border-border p-4 flex items-center justify-center min-h-[90px] text-gray-300 text-sm select-none">
-        広告
+      <div className="glass-card rounded-2xl p-4 flex items-center justify-center min-h-[90px] text-violet-200/30 text-sm select-none">
+        {t.adPlaceholder}
       </div>
 
-      {/* ── SEO: 使い方ガイド ── */}
-      <div className="bg-surface rounded-2xl border border-border p-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-4">プロンプトチェーンビルダーの使い方</h2>
-        <ol className="space-y-3">
-          {[
-            { step: "1", title: "ステップを追加・編集する", body: "デフォルトの3ステップを参考に、各ステップにシステムプロンプトとユーザープロンプトを入力します。ステップ名は自由に変更できます。" },
-            { step: "2", title: "前のステップの出力を参照する", body: "ユーザープロンプトに {{previous_output}} を挿入すると、前ステップの出力を次ステップへ自動で引き渡せます。「+ {{previous_output}}」ボタンで簡単挿入できます。" },
-            { step: "3", title: "ステップを並べ替え・削除する", body: "▲▼ボタンでステップの順序を変更、ゴミ箱ボタンで削除できます。チェーンの全体構造を視覚的に確認しながら設計できます。" },
-            { step: "4", title: "JSONエクスポートする", body: "完成したチェーンは「JSONエクスポート」ボタンでクリップボードにコピーできます。Claude APIやOpenAI APIへの実装時にそのまま活用できます。" },
-          ].map(({ step, title, body }) => (
-            <li key={step} className="flex gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold flex items-center justify-center">{step}</span>
+      {/* Guide */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.guideTitle}</h2>
+        <ol className="space-y-3.5">
+          {t.guide.map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-sm font-bold flex items-center justify-center border border-violet-500/30">{item.step}</span>
               <div>
-                <p className="text-sm font-semibold text-gray-800">{title}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{body}</p>
+                <div className="font-medium text-white/90 text-sm">{item.title}</div>
+                <div className="text-xs text-violet-200 mt-0.5">{item.body}</div>
               </div>
             </li>
           ))}
         </ol>
       </div>
 
-      {/* ── SEO: FAQ ── */}
-      <div className="bg-surface rounded-2xl border border-border p-6">
-        <h2 className="text-lg font-bold text-gray-800 mb-4">プロンプトチェーンに関するよくある質問</h2>
+      {/* FAQ */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.faqTitle}</h2>
         <div className="space-y-4">
-          {[
-            {
-              q: "プロンプトチェーンとは何ですか？",
-              a: "複数のLLM呼び出しを連結し、前のステップの出力を次のステップの入力として使う設計パターンです。単一プロンプトでは難しい複雑なタスク（リサーチ→整理→執筆など）を段階的に処理できます。",
-            },
-            {
-              q: "{{previous_output}} はどのように使いますか？",
-              a: "ユーザープロンプト内に {{previous_output}} と記述すると、実行時に前ステップの出力テキストがそこに挿入されます。チェーン全体でデータを連鎖させる際の標準的な記法です。",
-            },
-            {
-              q: "トークン数の目安はどう見ればいいですか？",
-              a: "各ステップのトークン推定値はテキスト文字数÷4で概算しています。GPT-4やClaudeのコンテキストウィンドウを超えないよう、チェーン合計トークンを目安に調整してください。",
-            },
-            {
-              q: "エクスポートしたJSONはどう使いますか？",
-              a: "JSON内の steps 配列には systemPrompt・userPrompt・expectedOutput が含まれます。Claude API・OpenAI APIのメッセージ配列にそのままマッピングして実装できます。",
-            },
-          ].map(({ q, a }, i) => (
-            <details key={i} className="group border border-border rounded-xl overflow-hidden">
-              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-gray-800 hover:bg-indigo-50 list-none">
-                <span>Q. {q}</span>
-                <span className="text-indigo-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
+          {t.faq.map((item, i) => (
+            <details key={i} className="group glass-card rounded-xl overflow-hidden">
+              <summary className="flex items-center justify-between px-4 py-3 cursor-pointer text-sm font-semibold text-white/90 hover:bg-white/5 list-none">
+                <span>Q. {item.q}</span>
+                <span className="text-violet-400 text-lg leading-none group-open:rotate-45 transition-transform">+</span>
               </summary>
-              <div className="px-4 pb-4 pt-1 text-sm text-gray-600 border-t border-border">{a}</div>
+              <div className="px-4 pb-4 pt-1 text-sm text-violet-100 border-t border-white/6">{item.a}</div>
             </details>
           ))}
         </div>
       </div>
 
-      {/* ── SEO: JSON-LD FAQPage ── */}
+      {/* JSON-LD FAQPage */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -517,52 +680,43 @@ export default function PromptChainBuilder() {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "プロンプトチェーンとは何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "複数のLLM呼び出しを連結し、前ステップの出力を次ステップの入力として使う設計パターンです。" },
-              },
-              {
-                "@type": "Question",
-                "name": "{{previous_output}} はどのように使いますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "ユーザープロンプト内に記述すると、実行時に前ステップの出力テキストがそこに挿入されます。" },
-              },
-              {
-                "@type": "Question",
-                "name": "エクスポートしたJSONはどう使いますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "JSON内のsteps配列にsystemPrompt・userPrompt・expectedOutputが含まれます。Claude API・OpenAI APIのメッセージ配列にマッピングして実装できます。" },
-              },
+              { "@type": "Question", "name": "プロンプトチェーンとは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "複数のLLM呼び出しを連結し、前ステップの出力を次ステップの入力として使う設計パターンです。" } },
+              { "@type": "Question", "name": "{{previous_output}} はどのように使いますか？", "acceptedAnswer": { "@type": "Answer", "text": "ユーザープロンプト内に記述すると、実行時に前ステップの出力テキストがそこに挿入されます。" } },
+              { "@type": "Question", "name": "エクスポートしたJSONはどう使いますか？", "acceptedAnswer": { "@type": "Answer", "text": "JSON内のsteps配列にsystemPrompt・userPrompt・expectedOutputが含まれます。Claude API・OpenAI APIのメッセージ配列にマッピングして実装できます。" } },
             ],
           }),
         }}
       />
 
-      {/* ── SEO: 関連ツール ── */}
-      <div className="bg-indigo-50 rounded-2xl border border-indigo-100 p-5">
-        <h2 className="text-sm font-bold text-indigo-800 mb-3">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {[
-            { href: "/tools/few-shot-builder", label: "Few-Shot プロンプトビルダー", desc: "例示でAIの出力を制御" },
-            { href: "/tools/temperature-top-p-tester", label: "Temperature / Top-P テスター", desc: "サンプリングパラメータを視覚化" },
-            { href: "/tools/system-prompt-optimizer", label: "システムプロンプト最適化", desc: "プロンプトの構造を改善" },
-          ].map(({ href, label, desc }) => (
-            <a key={href} href={href} className="flex flex-col gap-0.5 bg-white rounded-xl p-3 border border-indigo-100 hover:border-indigo-300 transition-colors">
-              <span className="text-sm font-semibold text-indigo-700">{label}</span>
-              <span className="text-xs text-gray-500">{desc}</span>
+      {/* Related tools */}
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.relatedTools}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {t.related.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="block p-4 rounded-xl border border-white/8 hover:border-violet-500/40 transition-all duration-200"
+              style={{ background: "rgba(139,92,246,0)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.08)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0)"; }}
+            >
+              <div className="font-medium text-white/90 text-sm">{link.label}</div>
+              <div className="text-xs text-violet-100 mt-1">{link.desc}</div>
             </a>
           ))}
         </div>
       </div>
 
-      {/* ── SEO: CTA ── */}
-      <div className="bg-gradient-to-r from-indigo-600 to-violet-700 rounded-2xl p-5 text-white text-center space-y-3">
-        <p className="text-base font-bold">AIプロンプト設計ツールをもっと活用する</p>
-        <p className="text-xs opacity-80">Few-Shot設計・システムプロンプト最適化など、プロンプトエンジニアリングを支援するツール集。</p>
-        <a href="/tools" className="inline-block bg-white text-indigo-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-indigo-50 transition-colors">
-          全ツール一覧を見る
+      {/* CTA */}
+      <div className="rounded-2xl p-5 text-white text-center space-y-3" style={{ background: "linear-gradient(135deg, rgba(109,40,217,0.8), rgba(124,58,237,0.6))", border: "1px solid rgba(139,92,246,0.3)" }}>
+        <p className="text-base font-bold">{t.ctaTitle}</p>
+        <p className="text-xs opacity-80">{t.ctaDesc}</p>
+        <a href="/tools" className="inline-block bg-white text-violet-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-violet-50 transition-colors">
+          {t.ctaBtn}
         </a>
       </div>
-    
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -574,15 +728,11 @@ export default function PromptChainBuilder() {
   "url": "https://tools.loresync.dev/prompt-chain-builder",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "inLanguage": "ja"
 }`
         }}
       />
-      </div>
+    </div>
   );
 }

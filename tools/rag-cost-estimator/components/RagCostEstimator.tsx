@@ -106,6 +106,197 @@ const LLM_PROVIDERS: LLMProvider[] = [
   { id: "gemini-flash", name: "Google",    model: "Gemini 2.5 Flash",  inputPer1M: 0.15,  outputPer1M: 0.60  },
 ];
 
+// ─── 翻訳定数 ─────────────────────────────────────────────────────────────────
+
+type Lang = "ja" | "en";
+
+const T = {
+  ja: {
+    // Section headings
+    docSettings: "ドキュメント設定",
+    querySettings: "クエリ設定",
+    providerSelection: "プロバイダー選択",
+    embeddingModel: "Embedding モデル",
+    vectorDB: "ベクトルDB",
+    llmModel: "LLM 推論モデル",
+    exchangeRate: "為替レート",
+    costBreakdown: "コスト内訳",
+    scaleSim: "スケールシミュレーション",
+    scaleSimSub: "現在の設定を基準にスケールした場合のコスト変化",
+    topCombos: "プロバイダー組み合わせ比較 — 最安 Top 3",
+    topCombosSub: "現在のドキュメント・クエリ設定で全組み合わせを試算した結果",
+    guideTitle: "使い方ガイド",
+    faqTitle: "よくある質問",
+    relatedTools: "関連ツール",
+    // Labels
+    docCount: "総ドキュメント数",
+    docCountHint: "（現在の全ドキュメント数）",
+    tokensPerDoc: "平均トークン数 / ドキュメント",
+    tokensPerDocHint: "（チャンク後の1チャンク平均）",
+    monthlyNewDocs: "月次追加ドキュメント数",
+    monthlyNewDocsHint: "（毎月の増分）",
+    queriesPerDay: "1日あたりのクエリ数",
+    topK: "top-k（検索チャンク取得数）",
+    topKHint: "（ベクトル検索で取得する上位件数）",
+    contextTokens: "コンテキストトークン数 / チャンク",
+    contextTokensHint: "（LLMに渡す1チャンクあたりのトークン数）",
+    outputTokens: "LLM 出力トークン数 / クエリ",
+    usd: "1 USD =",
+    yen: "円",
+    // Result labels
+    monthlyTotal: "月額合計（継続コスト）",
+    initialIngest: "初回インジェスト",
+    initialIngestNote: "（初期のみ一回払い）",
+    detailBreakdown: "詳細内訳",
+    embeddingInitialDetail: "Embedding 初回インジェスト",
+    embeddingMonthlyDetail: "Embedding 月次増分",
+    dbStorageDetail: "ベクトルDB 保存",
+    dbQueryDetail: "ベクトルDB 検索",
+    llmDetail: "LLM 推論",
+    monthlyTotalDetail: "月額合計（継続）",
+    perMonth: "/月",
+    perMonthUnit: "件/月",
+    perDayUnit: "回/日",
+    unit: "件",
+    tokensUnit: "tokens",
+    // Scale labels
+    current: "現在",
+    doc10x: "ドキュメント 10倍",
+    query10x: "クエリ 10倍",
+    embedding: "Embedding",
+    vectorDBLabel: "ベクトルDB",
+    llm: "LLM",
+    // Cost bar labels
+    embeddingIncrement: "Embedding 増分",
+    dbStorage: "ベクトルDB 保存",
+    dbQuery: "ベクトルDB 検索",
+    llmInference: "LLM 推論",
+    // Combo
+    currentSelection: "← 現在の選択",
+    freeNote: "注: 無料枠（Weaviate Free / Qdrant Free）はドキュメント数・ストレージが上限内の場合のみ$0として計算されます。",
+    perMToken: "/1Mトークン",
+    // Guide steps
+    guide: [
+      { step: "1", title: "ドキュメント設定を入力", desc: "RAGに投入するドキュメント総数・平均トークン数・月次増分を設定します。チャンク後の1チャンクを1ドキュメントとして換算してください。" },
+      { step: "2", title: "クエリ設定を調整", desc: "1日あたりのクエリ数・top-k・コンテキストトークン数を入力します。top-kはベクトル検索で取得するチャンク数です。" },
+      { step: "3", title: "プロバイダーを選択", desc: "Embedding・ベクトルDB・LLMをそれぞれ選択します。組み合わせに応じてリアルタイムで月額コストが更新されます。" },
+      { step: "4", title: "最安構成 Top 3 を確認", desc: "全組み合わせを自動試算した結果が下部に表示されます。無料枠（Weaviate・Qdrant）は条件内で$0として計算されます。" },
+    ],
+    // FAQ
+    faq: [
+      { q: "RAGのコストで最も高い部分はどこですか？", a: "クエリ数が多い場合はLLM推論コストが支配的になります。ドキュメント数が多い場合はEmbedding初回インジェストとベクトルDBストレージが大きくなります。" },
+      { q: "Pineconeは高いですか？", a: "Serverlessプランは$0.33/GB/月+$8/1Mクエリです。小規模なら安価ですが、大量クエリ時はQdrantやWeaviateの定額プランの方が安くなる場合があります。" },
+      { q: "top-kを増やすとコストが上がりますか？", a: "はい。top-kを増やすとLLMに渡すコンテキストトークン数が増えるため、LLM推論コストが線形に増加します。精度と費用のトレードオフを確認してください。" },
+      { q: "無料枠だけでRAGを構築できますか？", a: "Weaviate Cloud Freeは100万ベクトルまで、Qdrant Freeは1GBまで無料です。小規模なPOCや個人プロジェクトなら無料枠のみで運用可能です。" },
+    ],
+    // Related links
+    relatedLinks: [
+      { href: "/embedding-cost-calculator", title: "Embedding料金計算機", desc: "OpenAI・Cohere・Voyage等のEmbeddingコストを詳細試算" },
+      { href: "/vector-db-comparison", title: "ベクトルDB比較", desc: "Pinecone・Weaviate・Qdrant等の料金・機能を比較" },
+    ],
+    footerNote: "料金は変更される場合があります。LLM入力トークンはシステムプロンプト200トークン+コンテキスト+クエリ100トークンで計算。最新の料金は各社公式サイトをご確認ください。",
+    storageSuffix: "（1536次元 float32 × オーバーヘッド1.5倍）",
+    estimatedStorage: "推定ストレージ:",
+    mTokens: "Mトークン",
+    queriesPerMonth: "クエリ/月",
+    tokens: "tokens",
+    inputLabel: "in:",
+    outputLabel: "out:",
+  },
+  en: {
+    // Section headings
+    docSettings: "Document Settings",
+    querySettings: "Query Settings",
+    providerSelection: "Provider Selection",
+    embeddingModel: "Embedding Model",
+    vectorDB: "Vector DB",
+    llmModel: "LLM Inference Model",
+    exchangeRate: "Exchange Rate",
+    costBreakdown: "Cost Breakdown",
+    scaleSim: "Scale Simulation",
+    scaleSimSub: "Cost changes when scaling from the current configuration",
+    topCombos: "Provider Combos — Cheapest Top 3",
+    topCombosSub: "All combinations estimated with current document & query settings",
+    guideTitle: "How to Use",
+    faqTitle: "FAQ",
+    relatedTools: "Related Tools",
+    // Labels
+    docCount: "Total Document Count",
+    docCountHint: "(current total documents)",
+    tokensPerDoc: "Avg Tokens / Document",
+    tokensPerDocHint: "(avg tokens per chunk after chunking)",
+    monthlyNewDocs: "Monthly New Documents",
+    monthlyNewDocsHint: "(monthly increment)",
+    queriesPerDay: "Queries per Day",
+    topK: "top-k (chunks retrieved)",
+    topKHint: "(top results from vector search)",
+    contextTokens: "Context Tokens / Chunk",
+    contextTokensHint: "(tokens per chunk sent to LLM)",
+    outputTokens: "LLM Output Tokens / Query",
+    usd: "1 USD =",
+    yen: "JPY",
+    // Result labels
+    monthlyTotal: "Monthly Total (recurring cost)",
+    initialIngest: "Initial Ingest",
+    initialIngestNote: "(one-time only)",
+    detailBreakdown: "Detailed Breakdown",
+    embeddingInitialDetail: "Embedding Initial Ingest",
+    embeddingMonthlyDetail: "Embedding Monthly Increment",
+    dbStorageDetail: "Vector DB Storage",
+    dbQueryDetail: "Vector DB Queries",
+    llmDetail: "LLM Inference",
+    monthlyTotalDetail: "Monthly Total (recurring)",
+    perMonth: "/mo",
+    perMonthUnit: "docs/mo",
+    perDayUnit: "req/day",
+    unit: "docs",
+    tokensUnit: "tokens",
+    // Scale labels
+    current: "Current",
+    doc10x: "Docs ×10",
+    query10x: "Queries ×10",
+    embedding: "Embedding",
+    vectorDBLabel: "Vector DB",
+    llm: "LLM",
+    // Cost bar labels
+    embeddingIncrement: "Embedding Increment",
+    dbStorage: "Vector DB Storage",
+    dbQuery: "Vector DB Queries",
+    llmInference: "LLM Inference",
+    // Combo
+    currentSelection: "← current selection",
+    freeNote: "Note: Free tiers (Weaviate Free / Qdrant Free) are calculated as $0 only when document count / storage is within the free limit.",
+    perMToken: "/1M tokens",
+    // Guide steps
+    guide: [
+      { step: "1", title: "Enter Document Settings", desc: "Set total documents, average tokens per chunk, and monthly increment. Treat each post-chunking chunk as one document." },
+      { step: "2", title: "Adjust Query Settings", desc: "Enter daily queries, top-k, and context token counts. top-k is the number of chunks retrieved per vector search." },
+      { step: "3", title: "Select Providers", desc: "Choose Embedding, Vector DB, and LLM separately. Monthly cost updates in real-time as you change the combination." },
+      { step: "4", title: "Review Cheapest Top 3", desc: "All combinations are automatically estimated and shown at the bottom. Free tiers (Weaviate/Qdrant) are $0 when within limits." },
+    ],
+    // FAQ
+    faq: [
+      { q: "Which part of RAG costs the most?", a: "When query volume is high, LLM inference dominates. When document count is high, the initial embedding ingest and vector DB storage become significant." },
+      { q: "Is Pinecone expensive?", a: "The Serverless plan charges $0.33/GB/month + $8/1M queries. It's cheap at small scale, but at high query volumes Qdrant or Weaviate flat-fee plans may be cheaper." },
+      { q: "Does increasing top-k raise costs?", a: "Yes. More top-k means more context tokens sent to the LLM, so LLM inference cost grows linearly. Balance accuracy against cost." },
+      { q: "Can I build a RAG system on free tiers only?", a: "Weaviate Cloud Free supports up to 1M vectors; Qdrant Free up to 1GB. Small POCs and personal projects can run entirely on free tiers." },
+    ],
+    // Related links
+    relatedLinks: [
+      { href: "/embedding-cost-calculator", title: "Embedding Cost Calculator", desc: "Detailed cost estimates for OpenAI, Cohere, Voyage and more." },
+      { href: "/vector-db-comparison", title: "Vector DB Comparison", desc: "Compare pricing and features of Pinecone, Weaviate, Qdrant and more." },
+    ],
+    footerNote: "Prices are subject to change. LLM input tokens calculated as system prompt 200 tokens + context + query 100 tokens. Check each provider's official site for the latest rates.",
+    storageSuffix: "(1536-dim float32 × 1.5× overhead)",
+    estimatedStorage: "Est. Storage:",
+    mTokens: "M tokens",
+    queriesPerMonth: "queries/mo",
+    tokens: "tokens",
+    inputLabel: "in:",
+    outputLabel: "out:",
+  },
+} as const;
+
 // ─── ユーティリティ ────────────────────────────────────────────────────────────
 
 function fmtUSD(n: number): string {
@@ -124,24 +315,20 @@ function fmtJPY(n: number): string {
 
 // ─── 計算ロジック ──────────────────────────────────────────────────────────────
 
-/**
- * ベクトルのサイズ（バイト）を推定する。
- * 一般的な埋め込みモデルの次元数は1536前後。float32換算。
- */
 function estimateStorageGB(vectorCount: number): number {
   const dims = 1536;
   const bytesPerVector = dims * 4; // float32
-  const overheadFactor = 1.5; // インデックスオーバーヘッド
+  const overheadFactor = 1.5;
   return (vectorCount * bytesPerVector * overheadFactor) / (1024 ** 3);
 }
 
 type CostBreakdown = {
-  embeddingInitial: number;       // 初回インジェスト embedding コスト
-  embeddingMonthlyIncrement: number; // 月次増分 embedding コスト
-  dbStorageMonth: number;         // DB保存コスト/月
-  dbQueryMonth: number;           // DB検索コスト/月
-  llmMonth: number;               // LLM推論コスト/月
-  totalMonth: number;             // 月額合計
+  embeddingInitial: number;
+  embeddingMonthlyIncrement: number;
+  dbStorageMonth: number;
+  dbQueryMonth: number;
+  llmMonth: number;
+  totalMonth: number;
 };
 
 function calcCosts({
@@ -171,12 +358,10 @@ function calcCosts({
   const totalTokensInitial = docCount * tokensPerDoc;
   const monthlyIncrementTokens = monthlyNewDocs * tokensPerDoc;
 
-  // 1. Embedding コスト
   const embeddingInitial = (totalTokensInitial / 1_000_000) * embeddingProvider.pricePerMTokens;
   const embeddingMonthlyIncrement = (monthlyIncrementTokens / 1_000_000) * embeddingProvider.pricePerMTokens;
 
-  // 2. Vector DB コスト
-  const totalVectors = docCount + monthlyNewDocs; // 月末時点の概算
+  const totalVectors = docCount + monthlyNewDocs;
   const storageGB = estimateStorageGB(totalVectors);
   const db = vectorDBProvider;
 
@@ -184,7 +369,6 @@ function calcCosts({
   let dbQueryMonth = 0;
 
   if (db.freeVectors > 0 && totalVectors <= db.freeVectors) {
-    // 無料枠内
     dbStorageMonth = 0;
     dbQueryMonth = 0;
   } else if (db.freeStorageGB > 0 && storageGB <= db.freeStorageGB) {
@@ -197,8 +381,6 @@ function calcCosts({
     dbQueryMonth = db.readsPer1MQueries > 0 ? (queriesPerMonth / 1_000_000) * db.readsPer1MQueries : 0;
   }
 
-  // 3. LLM 推論コスト
-  // 入力 = システムプロンプト(200) + topK×contextTokensPerChunk + クエリ(100)
   const inputTokensPerQuery = 200 + topK * contextTokensPerChunk + 100;
   const llmInputMonth = (inputTokensPerQuery / 1_000_000) * llmProvider.inputPer1M * queriesPerMonth;
   const llmOutputMonth = (outputTokensPerQuery / 1_000_000) * llmProvider.outputPer1M * queriesPerMonth;
@@ -239,9 +421,9 @@ function SliderInput({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
+      <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">
         {label}
-        {hint && <span className="ml-1 text-xs text-gray-400 font-normal">{hint}</span>}
+        {hint && <span className="ml-1.5 text-violet-300 font-normal normal-case">{hint}</span>}
       </label>
       <div className="flex items-center gap-3">
         <input
@@ -251,9 +433,9 @@ function SliderInput({
           step={step}
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-violet-600"
+          className="flex-1 cursor-pointer"
         />
-        <div className="flex items-center gap-1 shrink-0">
+        <div className="flex items-center gap-1.5 shrink-0">
           <input
             type="number"
             min={min}
@@ -264,25 +446,25 @@ function SliderInput({
               const v = Number(e.target.value);
               if (!isNaN(v)) onChange(Math.min(Math.max(v, min), max));
             }}
-            className="w-28 px-2 py-1 text-right border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="number-input w-28 px-3 py-2 text-right rounded-xl text-sm font-mono neon-focus transition-all"
           />
-          {unit && <span className="text-sm text-gray-500 whitespace-nowrap">{unit}</span>}
+          {unit && <span className="text-xs text-violet-200 whitespace-nowrap">{unit}</span>}
         </div>
       </div>
     </div>
   );
 }
 
-function CostBar({ label, value, total, color }: { label: string; value: number; total: number; color: string }) {
+function CostBar({ label, value, total, colorClass }: { label: string; value: number; total: number; colorClass: string }) {
   const pct = total > 0 ? (value / total) * 100 : 0;
   return (
     <div>
-      <div className="flex justify-between text-xs text-gray-600 mb-1">
+      <div className="flex justify-between text-xs text-violet-200 mb-1.5">
         <span>{label}</span>
-        <span className="font-medium">{fmtUSD(value)} ({pct.toFixed(0)}%)</span>
+        <span className="font-mono text-white/90">{fmtUSD(value)} ({pct.toFixed(0)}%)</span>
       </div>
-      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full transition-all ${color}`} style={{ width: `${Math.min(pct, 100)}%` }} />
+      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+        <div className={`h-full rounded-full transition-all ${colorClass}`} style={{ width: `${Math.min(pct, 100)}%` }} />
       </div>
     </div>
   );
@@ -291,6 +473,9 @@ function CostBar({ label, value, total, color }: { label: string; value: number;
 // ─── メインコンポーネント ──────────────────────────────────────────────────────
 
 export default function RagCostEstimator() {
+  const [lang, setLang] = useState<Lang>("ja");
+  const t = T[lang];
+
   // ドキュメント設定
   const [docCount, setDocCount] = useState(10_000);
   const [tokensPerDoc, setTokensPerDoc] = useState(500);
@@ -317,68 +502,33 @@ export default function RagCostEstimator() {
   const costs = useMemo(
     () =>
       calcCosts({
-        docCount,
-        tokensPerDoc,
-        monthlyNewDocs,
-        queriesPerDay,
-        topK,
-        contextTokensPerChunk,
-        outputTokensPerQuery,
-        embeddingProvider,
-        vectorDBProvider,
-        llmProvider,
+        docCount, tokensPerDoc, monthlyNewDocs,
+        queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
+        embeddingProvider, vectorDBProvider, llmProvider,
       }),
-    [
-      docCount, tokensPerDoc, monthlyNewDocs,
-      queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
-      embeddingProvider, vectorDBProvider, llmProvider,
-    ]
+    [docCount, tokensPerDoc, monthlyNewDocs, queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery, embeddingProvider, vectorDBProvider, llmProvider]
   );
 
-  // スケールシミュレーション
   const costsDoc10x = useMemo(
     () =>
       calcCosts({
-        docCount: docCount * 10,
-        tokensPerDoc,
-        monthlyNewDocs: monthlyNewDocs * 10,
-        queriesPerDay,
-        topK,
-        contextTokensPerChunk,
-        outputTokensPerQuery,
-        embeddingProvider,
-        vectorDBProvider,
-        llmProvider,
+        docCount: docCount * 10, tokensPerDoc, monthlyNewDocs: monthlyNewDocs * 10,
+        queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
+        embeddingProvider, vectorDBProvider, llmProvider,
       }),
-    [
-      docCount, tokensPerDoc, monthlyNewDocs,
-      queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
-      embeddingProvider, vectorDBProvider, llmProvider,
-    ]
+    [docCount, tokensPerDoc, monthlyNewDocs, queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery, embeddingProvider, vectorDBProvider, llmProvider]
   );
 
   const costsQuery10x = useMemo(
     () =>
       calcCosts({
-        docCount,
-        tokensPerDoc,
-        monthlyNewDocs,
-        queriesPerDay: queriesPerDay * 10,
-        topK,
-        contextTokensPerChunk,
-        outputTokensPerQuery,
-        embeddingProvider,
-        vectorDBProvider,
-        llmProvider,
+        docCount, tokensPerDoc, monthlyNewDocs, queriesPerDay: queriesPerDay * 10,
+        topK, contextTokensPerChunk, outputTokensPerQuery,
+        embeddingProvider, vectorDBProvider, llmProvider,
       }),
-    [
-      docCount, tokensPerDoc, monthlyNewDocs,
-      queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
-      embeddingProvider, vectorDBProvider, llmProvider,
-    ]
+    [docCount, tokensPerDoc, monthlyNewDocs, queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery, embeddingProvider, vectorDBProvider, llmProvider]
   );
 
-  // 最安構成を判定
   const cheapestCombos = useMemo(() => {
     const results: { emb: EmbeddingProvider; db: VectorDBProvider; llm: LLMProvider; total: number }[] = [];
     for (const emb of EMBEDDING_PROVIDERS) {
@@ -394,130 +544,240 @@ export default function RagCostEstimator() {
       }
     }
     return results.sort((a, b) => a.total - b.total).slice(0, 3);
-  }, [
-    docCount, tokensPerDoc, monthlyNewDocs,
-    queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery,
-  ]);
+  }, [docCount, tokensPerDoc, monthlyNewDocs, queriesPerDay, topK, contextTokensPerChunk, outputTokensPerQuery]);
 
   const storageGB = estimateStorageGB(docCount + monthlyNewDocs);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1); }
+          50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .tab-panel {
+          animation: float-in 0.25s ease-out;
+        }
+        .method-btn:hover {
+          box-shadow: 0 0 16px rgba(167,139,250,0.2);
+        }
+        .method-btn-active {
+          box-shadow: 0 0 20px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+          background: rgba(139,92,246,0.2);
+          border-color: rgba(167,139,250,0.6) !important;
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button { opacity: 0.3; }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          height: 4px;
+          border-radius: 2px;
+          background: rgba(139,92,246,0.3);
+          outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #a78bfa, #818cf8);
+          cursor: pointer;
+          box-shadow: 0 0 10px rgba(139,92,246,0.5), 0 2px 6px rgba(0,0,0,0.4);
+          border: 2px solid rgba(255,255,255,0.2);
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+          transform: scale(1.2);
+          box-shadow: 0 0 16px rgba(139,92,246,0.7), 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .table-row-stripe:hover {
+          background: rgba(139,92,246,0.08);
+          transition: background 0.2s ease;
+        }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
+      </div>
 
       {/* ===== ドキュメント設定 ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">ドキュメント設定</h2>
-        <p className="text-xs text-gray-500 mb-5">
-          推定ストレージ: <span className="font-medium text-gray-700">{storageGB < 1 ? `${(storageGB * 1024).toFixed(0)} MB` : `${storageGB.toFixed(2)} GB`}</span>
-          （1536次元 float32 × オーバーヘッド1.5倍）
+      <div className="glass-card rounded-2xl p-6 tab-panel">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-1">{t.docSettings}</h2>
+        <p className="text-xs text-violet-200 mb-5">
+          {t.estimatedStorage} <span className="font-medium text-cyan-300 font-mono">{storageGB < 1 ? `${(storageGB * 1024).toFixed(0)} MB` : `${storageGB.toFixed(2)} GB`}</span>
+          <span className="text-violet-300 ml-1">{t.storageSuffix}</span>
         </p>
         <div className="space-y-5">
           <SliderInput
-            label="総ドキュメント数"
+            label={t.docCount}
             value={docCount}
             onChange={setDocCount}
             min={100}
             max={1_000_000}
             step={100}
-            unit="件"
-            hint="（現在の全ドキュメント数）"
+            unit={t.unit}
+            hint={t.docCountHint}
           />
           <SliderInput
-            label="平均トークン数 / ドキュメント"
+            label={t.tokensPerDoc}
             value={tokensPerDoc}
             onChange={setTokensPerDoc}
             min={50}
             max={8_000}
             step={50}
-            unit="tokens"
-            hint="（チャンク後の1チャンク平均）"
+            unit={t.tokensUnit}
+            hint={t.tokensPerDocHint}
           />
           <SliderInput
-            label="月次追加ドキュメント数"
+            label={t.monthlyNewDocs}
             value={monthlyNewDocs}
             onChange={setMonthlyNewDocs}
             min={0}
             max={500_000}
             step={100}
-            unit="件/月"
-            hint="（毎月の増分）"
+            unit={t.perMonthUnit}
+            hint={t.monthlyNewDocsHint}
           />
         </div>
       </div>
 
       {/* ===== クエリ設定 ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5">クエリ設定</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.querySettings}</h2>
         <div className="space-y-5">
           <SliderInput
-            label="1日あたりのクエリ数"
+            label={t.queriesPerDay}
             value={queriesPerDay}
             onChange={setQueriesPerDay}
             min={1}
             max={100_000}
             step={1}
-            unit="回/日"
+            unit={t.perDayUnit}
           />
           <SliderInput
-            label="top-k（検索チャンク取得数）"
+            label={t.topK}
             value={topK}
             onChange={setTopK}
             min={1}
             max={20}
             step={1}
-            unit="件"
-            hint="（ベクトル検索で取得する上位件数）"
+            unit={t.unit}
+            hint={t.topKHint}
           />
           <SliderInput
-            label="コンテキストトークン数 / チャンク"
+            label={t.contextTokens}
             value={contextTokensPerChunk}
             onChange={setContextTokensPerChunk}
             min={50}
             max={2_000}
             step={50}
-            unit="tokens"
-            hint="（LLMに渡す1チャンクあたりのトークン数）"
+            unit={t.tokensUnit}
+            hint={t.contextTokensHint}
           />
           <SliderInput
-            label="LLM 出力トークン数 / クエリ"
+            label={t.outputTokens}
             value={outputTokensPerQuery}
             onChange={setOutputTokensPerQuery}
             min={50}
             max={4_000}
             step={50}
-            unit="tokens"
+            unit={t.tokensUnit}
           />
         </div>
       </div>
 
       {/* ===== プロバイダー選択 ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5">プロバイダー選択</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.providerSelection}</h2>
 
         {/* Embedding */}
         <div className="mb-6">
-          <h3 className="text-sm font-semibold text-violet-700 mb-3 flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-5 h-5 bg-violet-100 text-violet-700 rounded-full text-xs font-bold">1</span>
-            Embedding モデル
+          <h3 className="text-xs font-semibold text-violet-200 mb-3 flex items-center gap-2 uppercase tracking-wider">
+            <span className="inline-flex items-center justify-center w-5 h-5 bg-violet-500/20 text-violet-300 rounded-full text-xs font-bold border border-violet-500/30">1</span>
+            {t.embeddingModel}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {EMBEDDING_PROVIDERS.map((p) => (
               <button
                 key={p.id}
                 onClick={() => setEmbeddingId(p.id)}
-                className={`flex items-start justify-between p-3 rounded-xl border text-left transition-all ${
+                className={`method-btn flex items-start justify-between p-3.5 rounded-xl border text-left transition-all duration-200 ${
                   embeddingId === p.id
-                    ? "bg-violet-50 border-violet-400 ring-2 ring-violet-300 shadow-sm"
-                    : "border-gray-200 hover:border-violet-200 hover:bg-violet-50/40"
+                    ? "method-btn-active border-violet-500/60"
+                    : "border-white/8 hover:border-violet-500/30"
                 }`}
               >
                 <div>
-                  <div className="text-xs text-gray-500 font-medium">{p.name}</div>
-                  <div className="font-semibold text-gray-900 text-sm">{p.model}</div>
+                  <div className="text-xs text-violet-300 font-medium">{p.name}</div>
+                  <div className={`font-semibold text-sm mt-0.5 ${embeddingId === p.id ? "text-violet-100" : "text-white/90"}`}>{p.model}</div>
                 </div>
                 <div className="text-right ml-2 shrink-0">
-                  <div className="text-sm font-bold text-gray-900">${p.pricePerMTokens}</div>
-                  <div className="text-xs text-gray-400">/1Mトークン</div>
+                  <div className="text-sm font-bold text-white/90 font-mono">${p.pricePerMTokens}</div>
+                  <div className="text-xs text-violet-300">{t.perMToken}</div>
                 </div>
               </button>
             ))}
@@ -526,24 +786,24 @@ export default function RagCostEstimator() {
 
         {/* Vector DB */}
         <div className="mb-6">
-          <h3 className="text-sm font-semibold text-indigo-700 mb-3 flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-5 h-5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">2</span>
-            ベクトルDB
+          <h3 className="text-xs font-semibold text-violet-200 mb-3 flex items-center gap-2 uppercase tracking-wider">
+            <span className="inline-flex items-center justify-center w-5 h-5 bg-violet-500/20 text-violet-300 rounded-full text-xs font-bold border border-violet-500/30">2</span>
+            {t.vectorDB}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {VECTOR_DB_PROVIDERS.map((p) => (
               <button
                 key={p.id}
                 onClick={() => setVectorDBId(p.id)}
-                className={`flex items-start justify-between p-3 rounded-xl border text-left transition-all ${
+                className={`method-btn flex items-start justify-between p-3.5 rounded-xl border text-left transition-all duration-200 ${
                   vectorDBId === p.id
-                    ? "bg-indigo-50 border-indigo-400 ring-2 ring-indigo-300 shadow-sm"
-                    : "border-gray-200 hover:border-indigo-200 hover:bg-indigo-50/40"
+                    ? "method-btn-active border-violet-500/60"
+                    : "border-white/8 hover:border-violet-500/30"
                 }`}
               >
                 <div>
-                  <div className="font-semibold text-gray-900 text-sm">{p.name}</div>
-                  <div className="text-xs text-gray-500 mt-0.5">{p.note}</div>
+                  <div className={`font-semibold text-sm ${vectorDBId === p.id ? "text-violet-100" : "text-white/90"}`}>{p.name}</div>
+                  <div className="text-xs text-violet-300 mt-0.5">{p.note}</div>
                 </div>
               </button>
             ))}
@@ -552,26 +812,26 @@ export default function RagCostEstimator() {
 
         {/* LLM */}
         <div>
-          <h3 className="text-sm font-semibold text-purple-700 mb-3 flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-5 h-5 bg-purple-100 text-purple-700 rounded-full text-xs font-bold">3</span>
-            LLM 推論モデル
+          <h3 className="text-xs font-semibold text-violet-200 mb-3 flex items-center gap-2 uppercase tracking-wider">
+            <span className="inline-flex items-center justify-center w-5 h-5 bg-violet-500/20 text-violet-300 rounded-full text-xs font-bold border border-violet-500/30">3</span>
+            {t.llmModel}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {LLM_PROVIDERS.map((p) => (
               <button
                 key={p.id}
                 onClick={() => setLlmId(p.id)}
-                className={`flex flex-col p-3 rounded-xl border text-left transition-all ${
+                className={`method-btn flex flex-col p-3.5 rounded-xl border text-left transition-all duration-200 ${
                   llmId === p.id
-                    ? "bg-purple-50 border-purple-400 ring-2 ring-purple-300 shadow-sm"
-                    : "border-gray-200 hover:border-purple-200 hover:bg-purple-50/40"
+                    ? "method-btn-active border-violet-500/60"
+                    : "border-white/8 hover:border-violet-500/30"
                 }`}
               >
-                <div className="text-xs text-gray-500 font-medium">{p.name}</div>
-                <div className="font-semibold text-gray-900 text-sm mt-0.5">{p.model}</div>
+                <div className="text-xs text-violet-300 font-medium">{p.name}</div>
+                <div className={`font-semibold text-sm mt-0.5 ${llmId === p.id ? "text-violet-100" : "text-white/90"}`}>{p.model}</div>
                 <div className="mt-2 space-y-0.5">
-                  <div className="text-xs text-gray-500">in: <span className="font-medium text-gray-700">${p.inputPer1M}/1M</span></div>
-                  <div className="text-xs text-gray-500">out: <span className="font-medium text-gray-700">${p.outputPer1M}/1M</span></div>
+                  <div className="text-xs text-violet-300">{t.inputLabel} <span className="font-medium text-white/80 font-mono">${p.inputPer1M}/1M</span></div>
+                  <div className="text-xs text-violet-300">{t.outputLabel} <span className="font-medium text-white/80 font-mono">${p.outputPer1M}/1M</span></div>
                 </div>
               </button>
             ))}
@@ -580,10 +840,10 @@ export default function RagCostEstimator() {
       </div>
 
       {/* ===== 為替レート ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-4">
+      <div className="glass-card rounded-2xl p-4">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-gray-700">為替レート</span>
-          <span className="text-sm text-gray-500">1 USD =</span>
+          <span className="text-xs font-medium text-violet-100 uppercase tracking-wider">{t.exchangeRate}</span>
+          <span className="text-sm text-violet-300">{t.usd}</span>
           <input
             type="number"
             min={50}
@@ -594,119 +854,119 @@ export default function RagCostEstimator() {
               const v = Number(e.target.value);
               if (!isNaN(v) && v > 0) setExchangeRate(v);
             }}
-            className="w-24 px-2 py-1 text-right border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="number-input w-24 px-3 py-2 text-right rounded-xl text-sm font-mono neon-focus transition-all"
           />
-          <span className="text-sm text-gray-500">円</span>
+          <span className="text-sm text-violet-300">{t.yen}</span>
         </div>
       </div>
 
       {/* ===== 計算結果 ===== */}
-      <div className="rounded-2xl shadow-sm border border-violet-300 p-6 bg-gradient-to-br from-violet-50 to-indigo-50">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5">コスト内訳</h2>
+      <div className="gradient-border-box glass-card-bright rounded-2xl p-6 result-card-glow">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.costBreakdown}</h2>
 
         {/* 月額合計 */}
         <div className="mb-6">
-          <div className="text-xs text-gray-500 mb-1">月額合計（継続コスト）</div>
+          <div className="text-xs text-violet-200 mb-2">{t.monthlyTotal}</div>
           <div className="flex items-baseline gap-3 flex-wrap">
-            <span className="text-4xl font-bold text-gray-900">{fmtUSD(costs.totalMonth)}</span>
-            <span className="text-xl text-gray-600">{fmtJPY(costs.totalMonth * exchangeRate)}</span>
+            <span className="text-5xl font-bold text-white glow-text tracking-tight font-mono">{fmtUSD(costs.totalMonth)}</span>
+            <span className="text-xl text-violet-200 font-mono">{fmtJPY(costs.totalMonth * exchangeRate)}</span>
           </div>
           {costs.embeddingInitial > 0 && (
-            <div className="mt-2 text-sm text-gray-600">
-              + 初回インジェスト: <span className="font-semibold text-gray-800">{fmtUSD(costs.embeddingInitial)}</span>
-              <span className="text-xs text-gray-400 ml-1">（初期のみ一回払い）</span>
+            <div className="mt-3 text-sm text-violet-100 glass-card rounded-xl px-4 py-2.5">
+              + {t.initialIngest}: <span className="font-semibold text-white font-mono">{fmtUSD(costs.embeddingInitial)}</span>
+              <span className="text-xs text-violet-300 ml-1">{t.initialIngestNote}</span>
             </div>
           )}
         </div>
 
         {/* コストバー */}
-        <div className="space-y-3 mb-6">
+        <div className="space-y-3.5 mb-6">
           <CostBar
-            label={`Embedding 増分（${embeddingProvider.model}）`}
+            label={`${t.embeddingIncrement}（${embeddingProvider.model}）`}
             value={costs.embeddingMonthlyIncrement}
             total={costs.totalMonth}
-            color="bg-violet-400"
+            colorClass="bg-violet-400"
           />
           <CostBar
-            label={`ベクトルDB 保存（${vectorDBProvider.name}）`}
+            label={`${t.dbStorage}（${vectorDBProvider.name}）`}
             value={costs.dbStorageMonth}
             total={costs.totalMonth}
-            color="bg-indigo-400"
+            colorClass="bg-indigo-400"
           />
           <CostBar
-            label="ベクトルDB 検索"
+            label={t.dbQuery}
             value={costs.dbQueryMonth}
             total={costs.totalMonth}
-            color="bg-blue-400"
+            colorClass="bg-blue-400"
           />
           <CostBar
-            label={`LLM 推論（${llmProvider.model}）`}
+            label={`${t.llmInference}（${llmProvider.model}）`}
             value={costs.llmMonth}
             total={costs.totalMonth}
-            color="bg-purple-400"
+            colorClass="bg-purple-400"
           />
         </div>
 
         {/* 詳細内訳 */}
-        <div className="p-4 bg-white bg-opacity-60 rounded-xl text-xs text-gray-600 space-y-2">
-          <div className="font-semibold text-gray-700 mb-2">詳細内訳</div>
+        <div className="glass-card rounded-xl p-4 text-xs space-y-2">
+          <div className="font-semibold text-violet-100 mb-2">{t.detailBreakdown}</div>
 
-          <div className="flex justify-between">
-            <span>Embedding 初回インジェスト（{(docCount * tokensPerDoc / 1_000_000).toFixed(2)}Mトークン × ${embeddingProvider.pricePerMTokens}/1M）</span>
-            <span className="font-medium ml-2 shrink-0">{fmtUSD(costs.embeddingInitial)}</span>
+          <div className="flex justify-between text-violet-200">
+            <span>{t.embeddingInitialDetail}（{(docCount * tokensPerDoc / 1_000_000).toFixed(2)}{t.mTokens} × ${embeddingProvider.pricePerMTokens}/1M）</span>
+            <span className="font-mono text-white/90 ml-2 shrink-0">{fmtUSD(costs.embeddingInitial)}</span>
           </div>
-          <div className="flex justify-between">
-            <span>Embedding 月次増分（{(monthlyNewDocs * tokensPerDoc / 1_000_000).toFixed(3)}Mトークン/月）</span>
-            <span className="font-medium ml-2 shrink-0">{fmtUSD(costs.embeddingMonthlyIncrement)}/月</span>
+          <div className="flex justify-between text-violet-200">
+            <span>{t.embeddingMonthlyDetail}（{(monthlyNewDocs * tokensPerDoc / 1_000_000).toFixed(3)}{t.mTokens}/{lang === "ja" ? "月" : "mo"}）</span>
+            <span className="font-mono text-white/90 ml-2 shrink-0">{fmtUSD(costs.embeddingMonthlyIncrement)}{t.perMonth}</span>
           </div>
-          <div className="flex justify-between border-t border-gray-200 pt-2 mt-1">
-            <span>ベクトルDB 保存（{storageGB < 1 ? `${(storageGB * 1024).toFixed(0)}MB` : `${storageGB.toFixed(2)}GB`}）</span>
-            <span className="font-medium ml-2 shrink-0">{fmtUSD(costs.dbStorageMonth)}/月</span>
+          <div className="flex justify-between text-violet-200 border-t border-white/10 pt-2 mt-1">
+            <span>{t.dbStorageDetail}（{storageGB < 1 ? `${(storageGB * 1024).toFixed(0)}MB` : `${storageGB.toFixed(2)}GB`}）</span>
+            <span className="font-mono text-white/90 ml-2 shrink-0">{fmtUSD(costs.dbStorageMonth)}{t.perMonth}</span>
           </div>
-          <div className="flex justify-between">
-            <span>ベクトルDB 検索（{(queriesPerDay * 30).toLocaleString()}クエリ/月）</span>
-            <span className="font-medium ml-2 shrink-0">{fmtUSD(costs.dbQueryMonth)}/月</span>
+          <div className="flex justify-between text-violet-200">
+            <span>{t.dbQueryDetail}（{(queriesPerDay * 30).toLocaleString()} {t.queriesPerMonth}）</span>
+            <span className="font-mono text-white/90 ml-2 shrink-0">{fmtUSD(costs.dbQueryMonth)}{t.perMonth}</span>
           </div>
-          <div className="flex justify-between border-t border-gray-200 pt-2 mt-1">
+          <div className="flex justify-between text-violet-200 border-t border-white/10 pt-2 mt-1">
             <span>
-              LLM 推論（入力 {(200 + topK * contextTokensPerChunk + 100).toLocaleString()} tokens + 出力 {outputTokensPerQuery.toLocaleString()} tokens）× {(queriesPerDay * 30).toLocaleString()}クエリ
+              {t.llmDetail}（{lang === "ja" ? "入力" : "in"} {(200 + topK * contextTokensPerChunk + 100).toLocaleString()} {t.tokens} + {lang === "ja" ? "出力" : "out"} {outputTokensPerQuery.toLocaleString()} {t.tokens}）× {(queriesPerDay * 30).toLocaleString()} {t.queriesPerMonth}
             </span>
-            <span className="font-medium ml-2 shrink-0">{fmtUSD(costs.llmMonth)}/月</span>
+            <span className="font-mono text-white/90 ml-2 shrink-0">{fmtUSD(costs.llmMonth)}{t.perMonth}</span>
           </div>
-          <div className="flex justify-between border-t border-gray-200 pt-2 mt-1 font-semibold text-gray-800">
-            <span>月額合計（継続）</span>
-            <span className="ml-2 shrink-0">{fmtUSD(costs.totalMonth)}</span>
+          <div className="flex justify-between border-t border-white/10 pt-2 mt-1 font-semibold text-white/90">
+            <span>{t.monthlyTotalDetail}</span>
+            <span className="font-mono ml-2 shrink-0">{fmtUSD(costs.totalMonth)}</span>
           </div>
         </div>
       </div>
 
       {/* ===== スケールシミュレーション ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">スケールシミュレーション</h2>
-        <p className="text-xs text-gray-500 mb-5">現在の設定を基準にスケールした場合のコスト変化</p>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-1">{t.scaleSim}</h2>
+        <p className="text-xs text-violet-200 mb-5">{t.scaleSimSub}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: "現在", costs: costs, highlight: false },
-            { label: "ドキュメント 10倍", costs: costsDoc10x, highlight: false },
-            { label: "クエリ 10倍", costs: costsQuery10x, highlight: false },
+            { label: t.current, costs: costs },
+            { label: t.doc10x, costs: costsDoc10x },
+            { label: t.query10x, costs: costsQuery10x },
           ].map(({ label, costs: c }) => (
-            <div key={label} className="border border-gray-200 rounded-xl p-4">
-              <div className="text-xs font-semibold text-gray-500 mb-3">{label}</div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">{fmtUSD(c.totalMonth)}</div>
-              <div className="text-sm text-gray-500 mb-3">{fmtJPY(c.totalMonth * exchangeRate)}/月</div>
-              <div className="space-y-1 text-xs text-gray-500">
-                <div className="flex justify-between">
-                  <span>Embedding</span>
-                  <span className="font-medium text-gray-700">{fmtUSD(c.embeddingMonthlyIncrement)}</span>
+            <div key={label} className="glass-card-bright rounded-xl p-4">
+              <div className="text-xs font-semibold text-violet-200 mb-3 uppercase tracking-wider">{label}</div>
+              <div className="text-2xl font-bold text-white font-mono mb-1">{fmtUSD(c.totalMonth)}</div>
+              <div className="text-sm text-violet-300 font-mono mb-3">{fmtJPY(c.totalMonth * exchangeRate)}{t.perMonth}</div>
+              <div className="space-y-1.5 text-xs">
+                <div className="flex justify-between text-violet-200">
+                  <span>{t.embedding}</span>
+                  <span className="font-mono text-white/80">{fmtUSD(c.embeddingMonthlyIncrement)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>ベクトルDB</span>
-                  <span className="font-medium text-gray-700">{fmtUSD(c.dbStorageMonth + c.dbQueryMonth)}</span>
+                <div className="flex justify-between text-violet-200">
+                  <span>{t.vectorDBLabel}</span>
+                  <span className="font-mono text-white/80">{fmtUSD(c.dbStorageMonth + c.dbQueryMonth)}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>LLM</span>
-                  <span className="font-medium text-gray-700">{fmtUSD(c.llmMonth)}</span>
+                <div className="flex justify-between text-violet-200">
+                  <span>{t.llm}</span>
+                  <span className="font-mono text-white/80">{fmtUSD(c.llmMonth)}</span>
                 </div>
               </div>
             </div>
@@ -715,9 +975,9 @@ export default function RagCostEstimator() {
       </div>
 
       {/* ===== 最安構成 ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">プロバイダー組み合わせ比較 — 最安 Top 3</h2>
-        <p className="text-xs text-gray-500 mb-5">現在のドキュメント・クエリ設定で全組み合わせを試算した結果</p>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-1">{t.topCombos}</h2>
+        <p className="text-xs text-violet-200 mb-5">{t.topCombosSub}</p>
 
         <div className="space-y-3">
           {cheapestCombos.map((combo, i) => {
@@ -725,68 +985,62 @@ export default function RagCostEstimator() {
               combo.emb.id === embeddingId &&
               combo.db.id === vectorDBId &&
               combo.llm.id === llmId;
-            const medals = ["gold", "silver", "bronze"] as const;
-            const medalColors = {
-              gold:   "bg-yellow-100 text-yellow-800 border-yellow-300",
-              silver: "bg-gray-100   text-gray-700   border-gray-300",
-              bronze: "bg-orange-100 text-orange-800 border-orange-300",
-            };
+            const medalColors = [
+              "bg-yellow-500/15 text-yellow-300 border-yellow-500/30",
+              "bg-white/10 text-white/70 border-white/20",
+              "bg-orange-500/15 text-orange-300 border-orange-500/30",
+            ];
             return (
               <div
                 key={`${combo.emb.id}-${combo.db.id}-${combo.llm.id}`}
                 className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
                   isCurrentSelection
-                    ? "bg-violet-50 border-violet-300 ring-2 ring-violet-200"
-                    : "border-gray-200"
+                    ? "method-btn-active border-violet-500/60"
+                    : "border-white/8 table-row-stripe"
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className={`shrink-0 text-xs font-bold px-2 py-0.5 rounded-full border ${medalColors[medals[i]]}`}>
+                  <span className={`shrink-0 text-xs font-bold px-2 py-0.5 rounded-full border ${medalColors[i]}`}>
                     #{i + 1}
                   </span>
                   <div className="min-w-0">
-                    <div className="text-sm font-medium text-gray-900 truncate">
+                    <div className="text-sm font-medium text-white/90 truncate">
                       {combo.emb.model} / {combo.db.name} / {combo.llm.model}
                     </div>
                     {isCurrentSelection && (
-                      <div className="text-xs text-violet-600 font-medium mt-0.5">← 現在の選択</div>
+                      <div className="text-xs text-cyan-300 font-medium mt-0.5">{t.currentSelection}</div>
                     )}
                   </div>
                 </div>
                 <div className="text-right ml-3 shrink-0">
-                  <div className="text-lg font-bold text-gray-900">{fmtUSD(combo.total)}</div>
-                  <div className="text-xs text-gray-500">/月</div>
+                  <div className="text-lg font-bold text-white font-mono">{fmtUSD(combo.total)}</div>
+                  <div className="text-xs text-violet-300">{t.perMonth}</div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        <div className="mt-4 p-3 bg-violet-50 rounded-xl text-xs text-violet-700">
-          <span className="font-semibold">注:</span> 無料枠（Weaviate Free / Qdrant Free）はドキュメント数・ストレージが上限内の場合のみ$0として計算されます。
+        <div className="mt-4 glass-card rounded-xl px-4 py-3 text-xs text-violet-200 border border-violet-500/15">
+          <span className="font-semibold text-violet-100">{lang === "ja" ? "注:" : "Note:"}</span> {t.freeNote.replace(/^注: |^Note: /, "")}
         </div>
       </div>
 
-      {/* ===== フッター ===== */}
-      <p className="text-xs text-gray-400 text-center pb-4">
-        料金は変更される場合があります。LLM入力トークンはシステムプロンプト200トークン+コンテキスト+クエリ100トークンで計算。最新の料金は各社公式サイトをご確認ください。
+      {/* フッター */}
+      <p className="text-xs text-violet-300 text-center pb-2">
+        {t.footerNote}
       </p>
 
       {/* ===== 使い方ガイド ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
-        <ol className="space-y-3">
-          {[
-            { step: "1", title: "ドキュメント設定を入力", desc: "RAGに投入するドキュメント総数・平均トークン数・月次増分を設定します。チャンク後の1チャンクを1ドキュメントとして換算してください。" },
-            { step: "2", title: "クエリ設定を調整", desc: "1日あたりのクエリ数・top-k・コンテキストトークン数を入力します。top-kはベクトル検索で取得するチャンク数です。" },
-            { step: "3", title: "プロバイダーを選択", desc: "Embedding・ベクトルDB・LLMをそれぞれ選択します。組み合わせに応じてリアルタイムで月額コストが更新されます。" },
-            { step: "4", title: "最安構成 Top 3 を確認", desc: "全組み合わせを自動試算した結果が下部に表示されます。無料枠（Weaviate・Qdrant）は条件内で$0として計算されます。" },
-          ].map((item) => (
-            <li key={item.step} className="flex gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-600 text-white text-xs font-bold flex items-center justify-center">{item.step}</span>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.guideTitle}</h2>
+        <ol className="space-y-3.5">
+          {t.guide.map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-sm font-bold flex items-center justify-center border border-violet-500/30">{item.step}</span>
               <div>
-                <span className="text-gray-800 font-bold text-sm">{item.title}</span>
-                <p className="text-gray-500 text-xs mt-0.5">{item.desc}</p>
+                <div className="font-medium text-white/90 text-sm">{item.title}</div>
+                <div className="text-xs text-violet-200 mt-0.5">{item.desc}</div>
               </div>
             </li>
           ))}
@@ -794,30 +1048,13 @@ export default function RagCostEstimator() {
       </div>
 
       {/* ===== FAQ ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.faqTitle}</h2>
         <div className="space-y-4">
-          {[
-            {
-              q: "RAGのコストで最も高い部分はどこですか？",
-              a: "クエリ数が多い場合はLLM推論コストが支配的になります。ドキュメント数が多い場合はEmbedding初回インジェストとベクトルDBストレージが大きくなります。",
-            },
-            {
-              q: "Pineconeは高いですか？",
-              a: "Serverlessプランは$0.33/GB/月+$8/1Mクエリです。小規模なら安価ですが、大量クエリ時はQdrantやWeaviateの定額プランの方が安くなる場合があります。",
-            },
-            {
-              q: "top-kを増やすとコストが上がりますか？",
-              a: "はい。top-kを増やすとLLMに渡すコンテキストトークン数が増えるため、LLM推論コストが線形に増加します。精度と費用のトレードオフを確認してください。",
-            },
-            {
-              q: "無料枠だけでRAGを構築できますか？",
-              a: "Weaviate Cloud Freeは100万ベクトルまで、Qdrant Freeは1GBまで無料です。小規模なPOCや個人プロジェクトなら無料枠のみで運用可能です。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
+          {t.faq.map((item, i) => (
+            <div key={i} className="border-b border-white/6 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-white/90 text-sm mb-1.5">{item.q}</div>
+              <div className="text-sm text-violet-100 leading-relaxed">{item.a}</div>
             </div>
           ))}
         </div>
@@ -852,25 +1089,25 @@ export default function RagCostEstimator() {
       />
 
       {/* ===== 関連ツール ===== */}
-      <div className="bg-white rounded-2xl shadow-sm border border-violet-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">関連ツール</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.relatedTools}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/embedding-cost-calculator", label: "Embedding料金計算機", desc: "OpenAI・Cohere・Voyage等のEmbeddingコストを詳細試算" },
-            { href: "/vector-db-comparison", label: "ベクトルDB比較", desc: "Pinecone・Weaviate・Qdrant等の料金・機能を比較" },
-          ].map((link) => (
+          {t.relatedLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="block bg-violet-50 hover:bg-violet-100 border border-violet-200 rounded-xl p-3 transition-colors"
+              className="block p-4 rounded-xl border border-white/8 hover:border-violet-500/40 transition-all duration-200 group"
+              style={{ background: "rgba(139,92,246,0)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.08)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0)"; }}
             >
-              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
-              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
+              <div className="font-medium text-white/90 text-sm group-hover:text-violet-100 transition-colors">{link.title}</div>
+              <div className="text-xs text-violet-200 mt-0.5">{link.desc}</div>
             </a>
           ))}
         </div>
       </div>
-    
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -891,6 +1128,6 @@ export default function RagCostEstimator() {
 }`
         }}
       />
-      </div>
+    </div>
   );
 }

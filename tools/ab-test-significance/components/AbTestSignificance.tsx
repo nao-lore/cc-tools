@@ -90,9 +90,9 @@ function calcTest(nA: number, cvA: number, nB: number, cvB: number): TestResult 
 // 必要サンプルサイズ
 function calcSampleSize(
   baseRate: number,
-  mde: number,         // minimum detectable effect (絶対差)
-  alpha: number,       // 有意水準 (片側でなく両側なので alpha/2)
-  power: number        // 検定力
+  mde: number,
+  alpha: number,
+  power: number
 ): number {
   if (baseRate <= 0 || baseRate >= 1 || mde === 0) return 0;
   const p1 = baseRate;
@@ -120,11 +120,226 @@ function fmtDiff(n: number): string {
   return `${sign}${(n * 100).toFixed(3)}pp`;
 }
 
+// --- 翻訳定数 ---
+type Lang = "ja" | "en";
+
+const T = {
+  ja: {
+    // Tabs
+    test: "有意差検定",
+    samplesize: "サンプルサイズ",
+    guide: "解説",
+    // Section headings
+    inputTitle: "A/B 両群のデータ入力",
+    ssTitle: "必要サンプルサイズ計算",
+    ssSubtitle: "「この改善効果を検出したい」という目標から、テストに必要な最低訪問数を算出します。",
+    guideTitle: "使い方ガイド",
+    faqTitle: "よくある質問",
+    relatedTools: "関連ツール",
+    ssRelationTitle: "サンプルサイズと検出力の関係",
+    ssResult: "必要サンプルサイズ",
+    ciInterpretTitle: "% 信頼区間の解釈",
+    testResult: "検定結果",
+    // Labels
+    groupA: "コントロール群",
+    groupB: "テスト群",
+    visits: "訪問数（セッション数）",
+    cvCount: "CV数（コンバージョン数）",
+    significanceLevel: "有意水準",
+    confidenceInterval: "信頼区間",
+    cvrCompare: "CVR 比較",
+    baselineCvr: "ベースラインCVR（現在のA群CVR）",
+    minEffect: "検出したい最小改善効果（相対値）",
+    alphaLabel: "有意水準（α）",
+    powerLabel: "検定力（1−β）",
+    // Result labels
+    cvrA: "CVR A",
+    cvrB: "CVR B",
+    lift: "リフト率",
+    pVal: "p値",
+    zStat: "Z統計量",
+    ciLabel: "% 信頼区間（差）",
+    minPerGroup: "1群あたりの最低訪問数",
+    totalVisits: "合計",
+    totalVisitsSuffix: " 訪問（A+B）",
+    // Buttons
+    alpha5: "5%（標準）",
+    alpha1: "1%（厳格）",
+    power80: "80%（標準）",
+    power90: "90%（高精度）",
+    // Significant
+    significant: "統計的に有意です",
+    notSignificant: "有意差はありません",
+    pValueLabel: "p値 = ",
+    pValueSuffix: "　（有意水準 ",
+    pValueSuffix2: "%・両側検定）",
+    also1pct: "有意水準1%でも有意です（非常に強いエビデンス）",
+    not1pct: "有意水準1%では有意ではありません（追加データ収集を検討）",
+    // CI interpretation
+    ciEstimate1: "B群のCVRはA群に対して、",
+    ciEstimate2: "%の確率で",
+    ciEstimate3: "の範囲にあると推定されます（pp = パーセンテージポイント差）。",
+    ciAllPlus: "区間全体がプラス → B群の改善効果は確実と考えられます。",
+    ciAllMinus: "区間全体がマイナス → B群はA群より悪いと考えられます。",
+    ciCrossZero: "区間がゼロをまたいでいます → 差がない可能性を排除できません。",
+    // Empty state
+    emptyState: "有効な数値を入力してください（CV数は訪問数以下）",
+    // SS details
+    ssBaseRate: "ベースラインCVR",
+    ssTargetCvr: "目標CVR（B群）",
+    ssMinDiff: "最小検出差（絶対）",
+    ssAlphaPower: "有意水準 / 検定力",
+    ssRelation1: "検出したい効果が小さいほど、必要なサンプルが増えます。",
+    ssRelation2: "改善効果5%を検出するには、20%を検出するより約16倍のサンプルが必要です。",
+    ssRelation3: "テスト期間の目安: 日次訪問数 ÷ 1群必要数 で必要日数を計算できます。",
+    mdeExample: "例: {mde}%改善 = CVR {base}% → {target}%",
+    improve: "% 改善",
+    // Guide steps
+    guideSteps: [
+      { step: "1", title: "A群・B群のデータを入力", desc: "「有意差検定」タブで、コントロール群（A）とテスト群（B）それぞれの訪問数とCV数を入力します。デフォルト値で動作確認できます。" },
+      { step: "2", title: "有意水準を設定", desc: "一般的なWebテストでは5%（標準）、重要な意思決定には1%（厳格）を選びます。信頼区間は90/95/99%から選択できます。" },
+      { step: "3", title: "結果を確認", desc: "p値・Z統計量・リフト率・信頼区間が表示されます。「統計的に有意です」と表示されれば差は偶然でない可能性が高いです。" },
+      { step: "4", title: "サンプルサイズを事前計算", desc: "テスト前に「サンプルサイズ」タブで必要訪問数を計算しましょう。テスト期間の目安が立てられます。" },
+    ],
+    // Guide articles
+    articles: [
+      { title: "A/Bテストとは", body: "2つのバージョン（A: 現行, B: 変更案）をランダムにユーザーに見せ、どちらが目標指標（CVRなど）を改善するか統計的に判断する手法です。感覚や直感ではなくデータで意思決定できます。" },
+      { title: "p値とは", body: "「帰無仮説（A=Bに差がない）が真であるとき、今回観測されたような差かそれ以上の差が偶然生じる確率」です。p < 0.05 なら、偶然である確率が5%未満 = 統計的に有意と判断します。p値は「B群が優れている確率」ではありません。" },
+      { title: "信頼区間とは", body: "95%信頼区間は「同じ方法で繰り返し実験したとき、95%の確率で真の差が含まれる区間」です。区間全体がプラスなら改善確実、ゼロをまたぐなら結論を出すのに更なるデータが必要です。" },
+      { title: "リフト率とは", body: "B群のCVRがA群に対して何%改善したかを示す相対指標です。例: A=2%, B=2.4% のとき、リフト率=+20%。ただしリフト率が高くても絶対差が小さい（0.4pp）場合は実用的意義が小さいこともあります。" },
+      { title: "よくある間違い", body: "① 「p < 0.05 になるまで毎日チェックして止める」は偽陽性が増えます（Peekingと呼ばれる問題）。② サンプルサイズを決める前にテストを開始してはいけません。③ 統計的有意 ≠ 実務的に重要。効果が小さくても有意になることはあります。" },
+      { title: "検定力（Power）とは", body: "真に差がある場合に、それを正しく検出できる確率です。80%は「本当に差があるとき、20回に1回は見落とす」ことを意味します。重要な判断ほど90%以上を推奨します。" },
+    ],
+    // FAQ
+    faq: [
+      { q: "ABテストの有意差とはどういう意味ですか？", a: "「A群とB群に差がない」という仮説（帰無仮説）を棄却できる統計的な根拠があることを意味します。p値が有意水準（通常5%）未満であれば、観測された差が偶然生じた確率が低いと判断します。" },
+      { q: "p値が0.05未満でも採用しない方がいいですか？", a: "統計的有意 ≠ 実務的に重要です。リフト率が0.1%でも大規模なトラフィックがあればp値は小さくなります。信頼区間の幅と実際の効果量（pp差）を合わせて判断することが重要です。" },
+      { q: "必要なサンプルサイズはどう決めますか？", a: "「サンプルサイズ」タブで現在のCVRと検出したい最小改善効果（例: 20%改善）を入力すると1群あたりの最低訪問数が計算されます。日次訪問数で割れば必要なテスト期間がわかります。" },
+      { q: "テスト中に毎日p値を確認してもいいですか？", a: "推奨しません。「p < 0.05になったら止める」という方法はPeeking問題と呼ばれ、偽陽性（実際には差がないのに有意と判断）が大幅に増えます。事前に決めたサンプルサイズに達してから判断してください。" },
+      { q: "カイ二乗検定との違いは何ですか？", a: "本ツールは二項比率の差のZ検定（両側）を使用しています。2×2の分割表に対するカイ二乗検定と数学的に等価であり、Z統計量の二乗がカイ二乗値に対応します。" },
+    ],
+    // Related
+    relatedLinks: [
+      { href: "/nps-score", icon: "📈", title: "NPS スコア計算" },
+      { href: "/funnel-conversion", icon: "🔻", title: "ファネル コンバージョン計算" },
+      { href: "/chi-square-test", icon: "📊", title: "カイ二乗検定" },
+    ],
+    footnote: "二項比率の差のZ検定（両側）。正規分布CDF: Abramowitz & Stegun近似を使用。",
+    cvr: "CVR",
+  },
+  en: {
+    // Tabs
+    test: "Significance Test",
+    samplesize: "Sample Size",
+    guide: "Guide",
+    // Section headings
+    inputTitle: "Enter A/B Group Data",
+    ssTitle: "Required Sample Size Calculator",
+    ssSubtitle: "Calculate the minimum visits needed for your test based on the improvement you want to detect.",
+    guideTitle: "How to Use",
+    faqTitle: "FAQ",
+    relatedTools: "Related Tools",
+    ssRelationTitle: "Sample Size vs. Statistical Power",
+    ssResult: "Required Sample Size",
+    ciInterpretTitle: "% Confidence Interval Interpretation",
+    testResult: "Test Results",
+    // Labels
+    groupA: "Control Group",
+    groupB: "Test Group",
+    visits: "Visits (Sessions)",
+    cvCount: "Conversions",
+    significanceLevel: "Significance Level",
+    confidenceInterval: "Confidence Interval",
+    cvrCompare: "CVR Comparison",
+    baselineCvr: "Baseline CVR (current group A)",
+    minEffect: "Minimum Detectable Effect (relative)",
+    alphaLabel: "Significance Level (α)",
+    powerLabel: "Statistical Power (1−β)",
+    // Result labels
+    cvrA: "CVR A",
+    cvrB: "CVR B",
+    lift: "Lift",
+    pVal: "p-value",
+    zStat: "Z Statistic",
+    ciLabel: "% CI (difference)",
+    minPerGroup: "Min. visits per group",
+    totalVisits: "Total",
+    totalVisitsSuffix: " visits (A+B)",
+    // Buttons
+    alpha5: "5% (standard)",
+    alpha1: "1% (strict)",
+    power80: "80% (standard)",
+    power90: "90% (high)",
+    // Significant
+    significant: "Statistically Significant",
+    notSignificant: "Not Significant",
+    pValueLabel: "p = ",
+    pValueSuffix: "　(α = ",
+    pValueSuffix2: "%, two-tailed)",
+    also1pct: "Also significant at 1% level (very strong evidence)",
+    not1pct: "Not significant at 1% level — consider collecting more data",
+    // CI interpretation
+    ciEstimate1: "The CVR of group B vs group A is estimated to be in the range ",
+    ciEstimate2: " with ",
+    ciEstimate3: "% confidence (pp = percentage point difference).",
+    ciAllPlus: "Entire interval is positive → B's improvement is reliable.",
+    ciAllMinus: "Entire interval is negative → B appears worse than A.",
+    ciCrossZero: "Interval crosses zero → cannot rule out no difference.",
+    // Empty state
+    emptyState: "Enter valid numbers (conversions must not exceed visits)",
+    // SS details
+    ssBaseRate: "Baseline CVR",
+    ssTargetCvr: "Target CVR (group B)",
+    ssMinDiff: "Min. detectable diff (absolute)",
+    ssAlphaPower: "Significance / Power",
+    ssRelation1: "Smaller effects require exponentially more samples.",
+    ssRelation2: "Detecting a 5% improvement needs ~16x more samples than detecting 20%.",
+    ssRelation3: "Estimate test duration: required per group ÷ daily visits.",
+    mdeExample: "e.g. {mde}% improvement = CVR {base}% → {target}%",
+    improve: "% improvement",
+    // Guide steps
+    guideSteps: [
+      { step: "1", title: "Enter A/B data", desc: "In the 'Significance Test' tab, enter visits and conversions for both control (A) and test (B) groups. Default values are pre-filled." },
+      { step: "2", title: "Set significance level", desc: "Use 5% for typical web tests, 1% for high-stakes decisions. Choose 90/95/99% confidence interval." },
+      { step: "3", title: "Read results", desc: "p-value, Z-statistic, lift, and confidence interval are shown instantly. 'Statistically Significant' means the difference is unlikely to be random." },
+      { step: "4", title: "Pre-calculate sample size", desc: "Before starting a test, use the 'Sample Size' tab to find the minimum visits needed. Divide by daily traffic to estimate test duration." },
+    ],
+    // Guide articles
+    articles: [
+      { title: "What is an A/B test?", body: "A/B testing randomly shows users two versions (A: control, B: variant) and uses statistics to determine which one better achieves a goal (e.g. higher CVR). It replaces gut feeling with data-driven decisions." },
+      { title: "What is a p-value?", body: "The p-value is the probability of observing a difference as large as this one (or larger) by chance, assuming no real difference exists. p < 0.05 means there is less than a 5% chance the result is random. It is NOT the probability that B is better." },
+      { title: "What is a confidence interval?", body: "A 95% confidence interval means: if you ran the same test many times, 95% of the intervals would contain the true difference. If the entire interval is positive, B's improvement is reliable. If it crosses zero, you need more data." },
+      { title: "What is lift?", body: "Lift is the relative improvement of group B's CVR over group A. Example: A=2%, B=2.4% → lift=+20%. Even a high lift can have small practical impact if the absolute difference (0.4pp) is small." },
+      { title: "Common mistakes", body: "① Stopping when p < 0.05 causes inflated false positives (Peeking problem). ② Never start a test without pre-determining sample size. ③ Statistical significance ≠ practical importance. Small effects can be significant at scale." },
+      { title: "What is statistical power?", body: "Power is the probability of detecting a real effect when it exists. 80% means you'll miss 1 in 5 real effects. For high-stakes decisions, aim for 90% or higher." },
+    ],
+    // FAQ
+    faq: [
+      { q: "What does statistical significance mean in an A/B test?", a: "It means there is statistical evidence to reject the null hypothesis (no difference between A and B). If the p-value is below the significance level (typically 5%), the observed difference is unlikely to be due to chance." },
+      { q: "Should I always adopt B when p < 0.05?", a: "Statistical significance does not equal practical importance. With large traffic, even a 0.1% lift can be significant. Always evaluate the confidence interval width and actual effect size (pp difference) alongside the p-value." },
+      { q: "How do I determine the required sample size?", a: "Use the 'Sample Size' tab: enter your current CVR and the minimum improvement you want to detect (e.g. 20%). The tool calculates the minimum visits per group. Divide by daily traffic to estimate test duration." },
+      { q: "Can I check the p-value every day during the test?", a: "Not recommended. Stopping as soon as p < 0.05 is the 'Peeking problem' and dramatically inflates false positives. Always wait until you reach the pre-calculated sample size." },
+      { q: "How is this different from a chi-square test?", a: "This tool uses a two-tailed Z-test for the difference between two proportions, which is mathematically equivalent to the chi-square test on a 2×2 contingency table. Z² = χ²." },
+    ],
+    // Related
+    relatedLinks: [
+      { href: "/nps-score", icon: "📈", title: "NPS Score Calculator" },
+      { href: "/funnel-conversion", icon: "🔻", title: "Funnel Conversion Calculator" },
+      { href: "/chi-square-test", icon: "📊", title: "Chi-Square Test" },
+    ],
+    footnote: "Two-tailed Z-test for difference between two proportions. Normal CDF: Abramowitz & Stegun approximation.",
+    cvr: "CVR",
+  },
+} as const;
+
 // --- タブ ---
 type Tab = "test" | "samplesize" | "guide";
 
 export default function AbTestSignificance() {
   const [activeTab, setActiveTab] = useState<Tab>("test");
+  const [lang, setLang] = useState<Lang>("ja");
+
+  const t = T[lang];
 
   // 検定入力
   const [nA, setNA] = useState<number>(10000);
@@ -135,8 +350,8 @@ export default function AbTestSignificance() {
   const [ciLevel, setCiLevel] = useState<90 | 95 | 99>(95);
 
   // サンプルサイズ入力
-  const [ssBaseRate, setSsBaseRate] = useState<number>(2.0);   // %
-  const [ssMde, setSsMde] = useState<number>(20);              // 相対% (e.g. 20% improvement)
+  const [ssBaseRate, setSsBaseRate] = useState<number>(2.0);
+  const [ssMde, setSsMde] = useState<number>(20);
   const [ssPower, setSsPower] = useState<0.8 | 0.9>(0.8);
   const [ssAlpha, setSsAlpha] = useState<0.05 | 0.01>(0.05);
 
@@ -149,7 +364,6 @@ export default function AbTestSignificance() {
     return calcSampleSize(base, mde, ssAlpha, ssPower);
   }, [ssBaseRate, ssMde, ssPower, ssAlpha]);
 
-  // 信頼区間値の選択
   const ci = useMemo(() => {
     if (!result) return null;
     if (ciLevel === 90) return { low: result.ciLow90, high: result.ciHigh90 };
@@ -157,26 +371,160 @@ export default function AbTestSignificance() {
     return { low: result.ciLow95, high: result.ciHigh95 };
   }, [result, ciLevel]);
 
-  const TABS: { id: Tab; label: string }[] = [
-    { id: "test", label: "有意差検定" },
-    { id: "samplesize", label: "サンプルサイズ" },
-    { id: "guide", label: "解説" },
+  const TABS: { id: Tab; label: string; icon: string }[] = [
+    { id: "test", label: t.test, icon: "◎" },
+    { id: "samplesize", label: t.samplesize, icon: "∿" },
+    { id: "guide", label: t.guide, icon: "?" },
   ];
 
+  const isSignificant = alpha === 0.05 ? result?.significant5 : result?.significant1;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1); }
+          50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2); }
+        }
+        @keyframes float-in {
+          from { opacity: 0; transform: translateY(8px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes border-spin {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .glass-card {
+          background: rgba(255,255,255,0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .glass-card-bright {
+          background: rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.12);
+        }
+        .neon-focus:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(167,139,250,0.6), 0 0 20px rgba(167,139,250,0.2);
+        }
+        .glow-text {
+          text-shadow: 0 0 30px rgba(196,181,253,0.6);
+        }
+        .tab-active-glow {
+          box-shadow: 0 0 16px rgba(139,92,246,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+        .result-card-glow {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+        .tab-panel {
+          animation: float-in 0.25s ease-out;
+        }
+        .method-btn:hover {
+          box-shadow: 0 0 16px rgba(167,139,250,0.2);
+        }
+        .method-btn-active {
+          box-shadow: 0 0 20px rgba(139,92,246,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+          background: rgba(139,92,246,0.2);
+          border-color: rgba(167,139,250,0.6) !important;
+        }
+        .preset-active {
+          background: rgba(139,92,246,0.25);
+          border-color: rgba(167,139,250,0.6);
+          color: #c4b5fd;
+          box-shadow: 0 0 10px rgba(139,92,246,0.3);
+        }
+        .number-input {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          color: #e2d9f3;
+        }
+        .number-input::placeholder { color: rgba(196,181,253,0.4); }
+        .number-input::-webkit-inner-spin-button,
+        .number-input::-webkit-outer-spin-button { opacity: 0.3; }
+        .gradient-border-box {
+          position: relative;
+        }
+        .gradient-border-box::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(6,182,212,0.4), rgba(139,92,246,0.2));
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          height: 4px;
+          border-radius: 2px;
+          background: rgba(139,92,246,0.3);
+          outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #a78bfa, #818cf8);
+          cursor: pointer;
+          box-shadow: 0 0 10px rgba(139,92,246,0.5), 0 2px 6px rgba(0,0,0,0.4);
+          border: 2px solid rgba(255,255,255,0.2);
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+          transform: scale(1.2);
+          box-shadow: 0 0 16px rgba(139,92,246,0.7), 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .table-row-stripe:hover {
+          background: rgba(139,92,246,0.08);
+          transition: background 0.2s ease;
+        }
+        .sig-banner-yes {
+          background: rgba(16,185,129,0.1);
+          border: 1px solid rgba(16,185,129,0.3);
+        }
+        .sig-banner-no {
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+      `}</style>
+
+      {/* Language toggle */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setLang(lang === "ja" ? "en" : "ja")}
+          className="glass-card px-3 py-1.5 rounded-full text-xs font-medium text-violet-200 hover:text-white transition-colors"
+        >
+          {lang === "ja" ? "EN" : "JP"}
+        </button>
+      </div>
+
       {/* タブ */}
-      <div className="flex gap-1.5 flex-wrap">
+      <div className="glass-card rounded-2xl p-1.5 flex gap-1 flex-wrap">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium border transition-all ${
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
-                : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                ? "bg-violet-600 text-white tab-active-glow"
+                : "text-violet-200 hover:text-violet-100 hover:bg-white/5"
             }`}
           >
+            <span className="text-xs opacity-70">{tab.icon}</span>
             {tab.label}
           </button>
         ))}
@@ -184,43 +532,43 @@ export default function AbTestSignificance() {
 
       {/* ===== 有意差検定 ===== */}
       {activeTab === "test" && (
-        <div className="space-y-5">
+        <div className="space-y-5 tab-panel">
           {/* 入力 */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-5">A/B 両群のデータ入力</h2>
+          <div className="glass-card rounded-2xl p-6">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.inputTitle}</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* グループA */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-700 text-xs font-bold">A</span>
-                  <span className="font-medium text-gray-800 text-sm">コントロール群</span>
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/10 text-violet-200 text-xs font-bold border border-white/15">A</span>
+                  <span className="font-medium text-white text-sm">{t.groupA}</span>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">訪問数（セッション数）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-1 uppercase tracking-wider">{t.visits}</label>
                   <input
                     type="number"
                     min={1}
                     step={100}
                     value={nA}
                     onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v > 0) setNA(v); }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="number-input w-full px-3 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">CV数（コンバージョン数）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-1 uppercase tracking-wider">{t.cvCount}</label>
                   <input
                     type="number"
                     min={0}
                     step={1}
                     value={cvA}
                     onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v >= 0) setCvA(v); }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="number-input w-full px-3 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
                   />
                 </div>
                 {nA > 0 && cvA >= 0 && (
-                  <div className="text-xs text-gray-500">
-                    CVR: <span className="font-semibold text-gray-700">{fmtPct(cvA / nA)}</span>
+                  <div className="text-xs text-violet-200">
+                    {t.cvr}: <span className="font-semibold text-white font-mono">{fmtPct(cvA / nA)}</span>
                   </div>
                 )}
               </div>
@@ -228,34 +576,34 @@ export default function AbTestSignificance() {
               {/* グループB */}
               <div className="space-y-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">B</span>
-                  <span className="font-medium text-gray-800 text-sm">テスト群</span>
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-violet-500/20 text-violet-200 text-xs font-bold border border-violet-500/40">B</span>
+                  <span className="font-medium text-white text-sm">{t.groupB}</span>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">訪問数（セッション数）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-1 uppercase tracking-wider">{t.visits}</label>
                   <input
                     type="number"
                     min={1}
                     step={100}
                     value={nB}
                     onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v > 0) setNB(v); }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="number-input w-full px-3 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">CV数（コンバージョン数）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-1 uppercase tracking-wider">{t.cvCount}</label>
                   <input
                     type="number"
                     min={0}
                     step={1}
                     value={cvB}
                     onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v >= 0) setCvB(v); }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="number-input w-full px-3 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
                   />
                 </div>
                 {nB > 0 && cvB >= 0 && (
-                  <div className="text-xs text-gray-500">
-                    CVR: <span className="font-semibold text-gray-700">{fmtPct(cvB / nB)}</span>
+                  <div className="text-xs text-violet-200">
+                    {t.cvr}: <span className="font-semibold text-white font-mono">{fmtPct(cvB / nB)}</span>
                   </div>
                 )}
               </div>
@@ -264,23 +612,23 @@ export default function AbTestSignificance() {
             {/* CVRバー比較 */}
             {result && (
               <div className="mt-5 space-y-2">
-                <div className="text-xs font-medium text-gray-600 mb-2">CVR 比較</div>
+                <div className="text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.cvrCompare}</div>
                 {[
-                  { label: "A", pct: result.pA, color: "bg-gray-400" },
-                  { label: "B", pct: result.pB, color: "bg-indigo-500" },
+                  { label: "A", pct: result.pA, color: "rgba(255,255,255,0.25)" },
+                  { label: "B", pct: result.pB, color: "rgba(139,92,246,0.7)" },
                 ].map(({ label, pct, color }) => {
                   const max = Math.max(result.pA, result.pB);
                   const barWidth = max > 0 ? (pct / max) * 100 : 0;
                   return (
                     <div key={label} className="flex items-center gap-3">
-                      <span className="text-xs font-bold w-4 text-gray-500">{label}</span>
-                      <div className="flex-1 bg-gray-100 rounded-full h-4 overflow-hidden">
+                      <span className="text-xs font-bold w-4 text-violet-200">{label}</span>
+                      <div className="flex-1 rounded-full h-4 overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
                         <div
-                          className={`${color} h-full rounded-full transition-all duration-300`}
-                          style={{ width: `${barWidth}%` }}
+                          className="h-full rounded-full transition-all duration-300"
+                          style={{ width: `${barWidth}%`, background: color }}
                         />
                       </div>
-                      <span className="text-xs font-semibold text-gray-700 w-14 text-right">{fmtPct(pct)}</span>
+                      <span className="text-xs font-semibold text-white font-mono w-14 text-right">{fmtPct(pct)}</span>
                     </div>
                   );
                 })}
@@ -288,9 +636,9 @@ export default function AbTestSignificance() {
             )}
 
             {/* オプション */}
-            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/8">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-2">有意水準</label>
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.significanceLevel}</label>
                 <div className="flex gap-2">
                   {([0.05, 0.01] as const).map((a) => (
                     <button
@@ -298,17 +646,17 @@ export default function AbTestSignificance() {
                       onClick={() => setAlpha(a)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                         alpha === a
-                          ? "bg-indigo-50 text-indigo-700 border-indigo-300"
-                          : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                          ? "method-btn-active border-violet-500/60 text-violet-100"
+                          : "border-white/10 text-violet-200 hover:border-violet-500/30"
                       }`}
                     >
-                      {a === 0.05 ? "5%（標準）" : "1%（厳格）"}
+                      {a === 0.05 ? t.alpha5 : t.alpha1}
                     </button>
                   ))}
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-2">信頼区間</label>
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.confidenceInterval}</label>
                 <div className="flex gap-2">
                   {([90, 95, 99] as const).map((c) => (
                     <button
@@ -316,8 +664,8 @@ export default function AbTestSignificance() {
                       onClick={() => setCiLevel(c)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                         ciLevel === c
-                          ? "bg-indigo-50 text-indigo-700 border-indigo-300"
-                          : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                          ? "method-btn-active border-violet-500/60 text-violet-100"
+                          : "border-white/10 text-violet-200 hover:border-violet-500/30"
                       }`}
                     >
                       {c}%
@@ -332,118 +680,94 @@ export default function AbTestSignificance() {
           {result && ci ? (
             <div className="space-y-4">
               {/* 判定バナー */}
-              <div
-                className={`rounded-2xl p-5 flex items-center gap-4 shadow-sm ${
-                  (alpha === 0.05 ? result.significant5 : result.significant1)
-                    ? "bg-green-50 border border-green-200"
-                    : "bg-gray-50 border border-gray-200"
-                }`}
-              >
+              <div className={`rounded-2xl p-5 flex items-center gap-4 ${isSignificant ? "sig-banner-yes" : "sig-banner-no"}`}>
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0 ${
-                    (alpha === 0.05 ? result.significant5 : result.significant1)
-                      ? "bg-green-100"
-                      : "bg-gray-200"
+                    isSignificant ? "bg-emerald-500/20 border border-emerald-500/30" : "bg-white/5 border border-white/10"
                   }`}
                 >
-                  {(alpha === 0.05 ? result.significant5 : result.significant1) ? "✓" : "—"}
+                  {isSignificant ? "✓" : "—"}
                 </div>
                 <div>
-                  <div
-                    className={`font-bold text-lg ${
-                      (alpha === 0.05 ? result.significant5 : result.significant1)
-                        ? "text-green-700"
-                        : "text-gray-600"
-                    }`}
-                  >
-                    {(alpha === 0.05 ? result.significant5 : result.significant1)
-                      ? "統計的に有意です"
-                      : "有意差はありません"}
+                  <div className={`font-bold text-lg ${isSignificant ? "text-emerald-400" : "text-white/60"}`}>
+                    {isSignificant ? t.significant : t.notSignificant}
                   </div>
-                  <div className="text-sm text-gray-500 mt-0.5">
-                    p値 = {fmtPValue(result.pValue)}　（有意水準 {alpha * 100}%・両側検定）
+                  <div className="text-sm text-violet-200 mt-0.5">
+                    {t.pValueLabel}{fmtPValue(result.pValue)}{t.pValueSuffix}{alpha * 100}{t.pValueSuffix2}
                   </div>
                 </div>
               </div>
 
               {/* 数値カード */}
-              <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-6 text-white shadow-lg">
-                <h2 className="text-base font-semibold text-indigo-100 mb-4">検定結果</h2>
+              <div className="gradient-border-box glass-card-bright rounded-2xl p-6 result-card-glow">
+                <div className="text-xs font-semibold text-violet-100 uppercase tracking-widest mb-5">{t.testResult}</div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                  <div className="bg-white bg-opacity-15 rounded-xl p-3 text-center">
-                    <div className="text-indigo-200 text-xs mb-1">CVR A</div>
-                    <div className="font-bold text-lg">{fmtPct(result.pA)}</div>
+                  <div className="glass-card rounded-xl p-3 text-center">
+                    <div className="text-violet-200 text-xs mb-1.5">{t.cvrA}</div>
+                    <div className="font-bold text-lg text-white font-mono">{fmtPct(result.pA)}</div>
                   </div>
-                  <div className="bg-white bg-opacity-15 rounded-xl p-3 text-center">
-                    <div className="text-indigo-200 text-xs mb-1">CVR B</div>
-                    <div className="font-bold text-lg">{fmtPct(result.pB)}</div>
+                  <div className="glass-card rounded-xl p-3 text-center">
+                    <div className="text-violet-200 text-xs mb-1.5">{t.cvrB}</div>
+                    <div className="font-bold text-lg text-white font-mono">{fmtPct(result.pB)}</div>
                   </div>
-                  <div className="bg-white bg-opacity-15 rounded-xl p-3 text-center">
-                    <div className="text-indigo-200 text-xs mb-1">リフト率</div>
-                    <div className={`font-bold text-lg ${result.lift >= 0 ? "text-green-300" : "text-red-300"}`}>
+                  <div className="glass-card rounded-xl p-3 text-center">
+                    <div className="text-violet-200 text-xs mb-1.5">{t.lift}</div>
+                    <div className={`font-bold text-lg font-mono ${result.lift >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                       {result.lift >= 0 ? "+" : ""}{(result.lift * 100).toFixed(1)}%
                     </div>
                   </div>
-                  <div className="bg-white bg-opacity-15 rounded-xl p-3 text-center">
-                    <div className="text-indigo-200 text-xs mb-1">p値</div>
-                    <div className="font-bold text-lg">{fmtPValue(result.pValue)}</div>
+                  <div className="glass-card rounded-xl p-3 text-center">
+                    <div className="text-violet-200 text-xs mb-1.5">{t.pVal}</div>
+                    <div className="font-bold text-lg text-white font-mono">{fmtPValue(result.pValue)}</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white bg-opacity-10 rounded-xl p-3">
-                    <div className="text-indigo-200 text-xs mb-1">Z統計量</div>
-                    <div className="font-semibold">{result.zStat.toFixed(4)}</div>
+                  <div className="glass-card rounded-xl p-3">
+                    <div className="text-violet-200 text-xs mb-1.5">{t.zStat}</div>
+                    <div className="font-semibold text-white font-mono">{result.zStat.toFixed(4)}</div>
                   </div>
-                  <div className="bg-white bg-opacity-10 rounded-xl p-3">
-                    <div className="text-indigo-200 text-xs mb-1">{ciLevel}% 信頼区間（差）</div>
-                    <div className="font-semibold text-sm">
+                  <div className="glass-card rounded-xl p-3">
+                    <div className="text-violet-200 text-xs mb-1.5">{ciLevel}{t.ciLabel}</div>
+                    <div className="font-semibold text-sm text-cyan-300 font-mono">
                       {fmtDiff(ci.low)} 〜 {fmtDiff(ci.high)}
                     </div>
                   </div>
                 </div>
 
-                {/* 有意水準1%での追加判定 */}
                 {alpha === 0.05 && result.significant5 && (
-                  <div className="mt-3 text-xs text-indigo-200 bg-white bg-opacity-10 rounded-lg px-3 py-2">
-                    {result.significant1
-                      ? "有意水準1%でも有意です（非常に強いエビデンス）"
-                      : "有意水準1%では有意ではありません（追加データ収集を検討）"}
+                  <div className="mt-3 text-xs text-violet-200 glass-card rounded-lg px-3 py-2">
+                    {result.significant1 ? t.also1pct : t.not1pct}
                   </div>
                 )}
               </div>
 
               {/* 信頼区間の解釈 */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h2 className="text-base font-semibold text-gray-800 mb-3">{ciLevel}% 信頼区間の解釈</h2>
-                <div className="text-sm text-gray-600 leading-relaxed">
+              <div className="glass-card rounded-2xl p-6">
+                <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3">{ciLevel}{t.ciInterpretTitle}</h2>
+                <div className="text-sm text-violet-100 leading-relaxed">
                   <p>
-                    B群のCVRはA群に対して、{ciLevel}%の確率で
-                    <span className="font-semibold text-indigo-700 mx-1">{fmtDiff(ci.low)} 〜 {fmtDiff(ci.high)}</span>
-                    の範囲にあると推定されます（pp = パーセンテージポイント差）。
+                    {lang === "ja"
+                      ? <>{t.ciEstimate1}{ciLevel}{t.ciEstimate2}<span className="font-semibold text-cyan-300 mx-1">{fmtDiff(ci.low)} 〜 {fmtDiff(ci.high)}</span>{t.ciEstimate3}</>
+                      : <>{t.ciEstimate1}<span className="font-semibold text-cyan-300 mx-1">{fmtDiff(ci.low)} to {fmtDiff(ci.high)}</span>{t.ciEstimate2}{ciLevel}{t.ciEstimate3}</>
+                    }
                   </p>
                   {ci.low > 0 && (
-                    <p className="mt-2 text-green-700 font-medium">
-                      区間全体がプラス → B群の改善効果は確実と考えられます。
-                    </p>
+                    <p className="mt-2 text-emerald-400 font-medium">{t.ciAllPlus}</p>
                   )}
                   {ci.high < 0 && (
-                    <p className="mt-2 text-red-600 font-medium">
-                      区間全体がマイナス → B群はA群より悪いと考えられます。
-                    </p>
+                    <p className="mt-2 text-red-400 font-medium">{t.ciAllMinus}</p>
                   )}
                   {ci.low <= 0 && ci.high >= 0 && (
-                    <p className="mt-2 text-gray-500">
-                      区間がゼロをまたいでいます → 差がない可能性を排除できません。
-                    </p>
+                    <p className="mt-2 text-violet-200">{t.ciCrossZero}</p>
                   )}
                 </div>
               </div>
             </div>
           ) : (
-            <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6 text-center text-gray-400 text-sm">
-              有効な数値を入力してください（CV数は訪問数以下）
+            <div className="glass-card rounded-2xl p-6 text-center text-violet-200 text-sm">
+              {t.emptyState}
             </div>
           )}
         </div>
@@ -451,18 +775,14 @@ export default function AbTestSignificance() {
 
       {/* ===== サンプルサイズ ===== */}
       {activeTab === "samplesize" && (
-        <div className="space-y-5">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">必要サンプルサイズ計算</h2>
-            <p className="text-xs text-gray-500 mb-5">
-              「この改善効果を検出したい」という目標から、テストに必要な最低訪問数を算出します。
-            </p>
+        <div className="space-y-5 tab-panel">
+          <div className="glass-card rounded-2xl p-6">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-2">{t.ssTitle}</h2>
+            <p className="text-xs text-violet-100 mb-5">{t.ssSubtitle}</p>
 
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  ベースラインCVR（現在のA群CVR）
-                </label>
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.baselineCvr}</label>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
@@ -471,19 +791,19 @@ export default function AbTestSignificance() {
                     step={0.1}
                     value={ssBaseRate}
                     onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v > 0 && v < 100) setSsBaseRate(v); }}
-                    className="w-32 px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                    className="number-input w-32 px-3 py-2 rounded-xl text-sm font-mono neon-focus transition-all"
                   />
-                  <span className="text-gray-500 text-sm">%</span>
+                  <span className="text-violet-200 text-sm">%</span>
                 </div>
                 <div className="flex gap-2 mt-2 flex-wrap">
                   {[0.5, 1.0, 2.0, 3.0, 5.0, 10.0].map((preset) => (
                     <button
                       key={preset}
                       onClick={() => setSsBaseRate(preset)}
-                      className={`text-xs px-2.5 py-1 rounded-lg border transition-all ${
+                      className={`text-xs px-2.5 py-1 rounded-lg border transition-all font-mono ${
                         ssBaseRate === preset
-                          ? "bg-indigo-50 text-indigo-700 border-indigo-300"
-                          : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                          ? "preset-active"
+                          : "border-white/10 text-violet-100 hover:border-violet-500/40 hover:text-violet-200"
                       }`}
                     >
                       {preset}%
@@ -493,9 +813,7 @@ export default function AbTestSignificance() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  検出したい最小改善効果（相対値）
-                </label>
+                <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.minEffect}</label>
                 <div className="flex items-center gap-3">
                   <input
                     type="range"
@@ -504,7 +822,7 @@ export default function AbTestSignificance() {
                     step={1}
                     value={ssMde}
                     onChange={(e) => setSsMde(Number(e.target.value))}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    className="flex-1 cursor-pointer"
                   />
                   <div className="flex items-center gap-1">
                     <input
@@ -513,19 +831,22 @@ export default function AbTestSignificance() {
                       max={100}
                       value={ssMde}
                       onChange={(e) => { const v = Number(e.target.value); if (!isNaN(v) && v > 0) setSsMde(Math.min(v, 100)); }}
-                      className="w-20 px-2 py-1 text-right border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      className="number-input w-20 px-2 py-1 text-right rounded-xl text-sm font-mono neon-focus"
                     />
-                    <span className="text-sm text-gray-500 whitespace-nowrap">% 改善</span>
+                    <span className="text-sm text-violet-200 whitespace-nowrap">{t.improve}</span>
                   </div>
                 </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  例: 20%改善 = CVR {ssBaseRate}% → {(ssBaseRate * (1 + ssMde / 100)).toFixed(2)}%
+                <div className="text-xs text-violet-200 mt-1">
+                  {lang === "ja"
+                    ? `例: ${ssMde}%改善 = CVR ${ssBaseRate}% → ${(ssBaseRate * (1 + ssMde / 100)).toFixed(2)}%`
+                    : `e.g. ${ssMde}% improvement = CVR ${ssBaseRate}% → ${(ssBaseRate * (1 + ssMde / 100)).toFixed(2)}%`
+                  }
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">有意水準（α）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.alphaLabel}</label>
                   <div className="flex gap-2">
                     {([0.05, 0.01] as const).map((a) => (
                       <button
@@ -533,17 +854,17 @@ export default function AbTestSignificance() {
                         onClick={() => setSsAlpha(a)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                           ssAlpha === a
-                            ? "bg-indigo-50 text-indigo-700 border-indigo-300"
-                            : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                            ? "method-btn-active border-violet-500/60 text-violet-100"
+                            : "border-white/10 text-violet-200 hover:border-violet-500/30"
                         }`}
                       >
-                        {a === 0.05 ? "5%（標準）" : "1%（厳格）"}
+                        {a === 0.05 ? t.alpha5 : t.alpha1}
                       </button>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">検定力（1−β）</label>
+                  <label className="block text-xs font-medium text-violet-100 mb-2 uppercase tracking-wider">{t.powerLabel}</label>
                   <div className="flex gap-2">
                     {([0.8, 0.9] as const).map((pw) => (
                       <button
@@ -551,11 +872,11 @@ export default function AbTestSignificance() {
                         onClick={() => setSsPower(pw)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                           ssPower === pw
-                            ? "bg-indigo-50 text-indigo-700 border-indigo-300"
-                            : "bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100"
+                            ? "method-btn-active border-violet-500/60 text-violet-100"
+                            : "border-white/10 text-violet-200 hover:border-violet-500/30"
                         }`}
                       >
-                        {pw === 0.8 ? "80%（標準）" : "90%（高精度）"}
+                        {pw === 0.8 ? t.power80 : t.power90}
                       </button>
                     ))}
                   </div>
@@ -565,49 +886,49 @@ export default function AbTestSignificance() {
           </div>
 
           {/* サンプルサイズ結果 */}
-          <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-6 text-white shadow-lg">
-            <h2 className="text-base font-semibold text-indigo-100 mb-4">必要サンプルサイズ</h2>
+          <div className="gradient-border-box glass-card-bright rounded-2xl p-6 result-card-glow">
+            <div className="text-xs font-semibold text-violet-100 uppercase tracking-widest mb-5">{t.ssResult}</div>
 
             <div className="mb-5">
-              <div className="text-indigo-200 text-xs mb-1">1群あたりの最低訪問数</div>
-              <div className="text-5xl font-bold">
+              <div className="text-violet-200 text-xs mb-2">{t.minPerGroup}</div>
+              <div className="text-5xl font-bold text-white glow-text tracking-tight font-mono">
                 {ssCiLow > 0 ? ssCiLow.toLocaleString() : "—"}
               </div>
               {ssCiLow > 0 && (
-                <div className="text-indigo-200 text-sm mt-1">
-                  合計: {(ssCiLow * 2).toLocaleString()} 訪問（A+B）
+                <div className="text-violet-200 text-sm mt-1">
+                  {t.totalVisits}: <span className="text-white font-mono">{(ssCiLow * 2).toLocaleString()}</span>{t.totalVisitsSuffix}
                 </div>
               )}
             </div>
 
             {ssCiLow > 0 && (
-              <div className="bg-white bg-opacity-10 rounded-xl p-4 text-sm space-y-1.5">
-                <div className="flex justify-between">
-                  <span className="text-indigo-200">ベースラインCVR</span>
-                  <span>{ssBaseRate}%</span>
+              <div className="glass-card rounded-xl p-4 text-xs space-y-2">
+                <div className="flex justify-between text-violet-100">
+                  <span>{t.ssBaseRate}</span>
+                  <span className="font-mono text-white">{ssBaseRate}%</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-indigo-200">目標CVR（B群）</span>
-                  <span>{(ssBaseRate * (1 + ssMde / 100)).toFixed(2)}%</span>
+                <div className="flex justify-between text-violet-100">
+                  <span>{t.ssTargetCvr}</span>
+                  <span className="font-mono text-white">{(ssBaseRate * (1 + ssMde / 100)).toFixed(2)}%</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-indigo-200">最小検出差（絶対）</span>
-                  <span>{((ssBaseRate / 100) * (ssMde / 100) * 100).toFixed(3)}pp</span>
+                <div className="flex justify-between text-violet-100">
+                  <span>{t.ssMinDiff}</span>
+                  <span className="font-mono text-cyan-300">{((ssBaseRate / 100) * (ssMde / 100) * 100).toFixed(3)}pp</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-indigo-200">有意水準 / 検定力</span>
-                  <span>{ssAlpha * 100}% / {ssPower * 100}%</span>
+                <div className="flex justify-between border-t border-white/10 pt-2 mt-1 text-violet-100">
+                  <span>{t.ssAlphaPower}</span>
+                  <span className="font-mono text-white">{ssAlpha * 100}% / {ssPower * 100}%</span>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">サンプルサイズと検出力の関係</h3>
-            <div className="text-xs text-gray-500 space-y-1.5">
-              <p>検出したい効果が小さいほど、必要なサンプルが増えます。</p>
-              <p>改善効果5%を検出するには、20%を検出するより約16倍のサンプルが必要です。</p>
-              <p>テスト期間の目安: 日次訪問数 ÷ 1群必要数 で必要日数を計算できます。</p>
+          <div className="glass-card rounded-2xl p-5">
+            <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-3">{t.ssRelationTitle}</h3>
+            <div className="text-xs text-violet-200 space-y-1.5">
+              <p>{t.ssRelation1}</p>
+              <p>{t.ssRelation2}</p>
+              <p>{t.ssRelation3}</p>
             </div>
           </div>
         </div>
@@ -615,60 +936,30 @@ export default function AbTestSignificance() {
 
       {/* ===== 解説 ===== */}
       {activeTab === "guide" && (
-        <div className="space-y-4">
-          {[
-            {
-              title: "A/Bテストとは",
-              body: "2つのバージョン（A: 現行, B: 変更案）をランダムにユーザーに見せ、どちらが目標指標（CVRなど）を改善するか統計的に判断する手法です。感覚や直感ではなくデータで意思決定できます。",
-            },
-            {
-              title: "p値とは",
-              body: "「帰無仮説（A=Bに差がない）が真であるとき、今回観測されたような差かそれ以上の差が偶然生じる確率」です。p < 0.05 なら、偶然である確率が5%未満 = 統計的に有意と判断します。p値は「B群が優れている確率」ではありません。",
-            },
-            {
-              title: "信頼区間とは",
-              body: "95%信頼区間は「同じ方法で繰り返し実験したとき、95%の確率で真の差が含まれる区間」です。区間全体がプラスなら改善確実、ゼロをまたぐなら結論を出すのに更なるデータが必要です。",
-            },
-            {
-              title: "リフト率とは",
-              body: "B群のCVRがA群に対して何%改善したかを示す相対指標です。例: A=2%, B=2.4% のとき、リフト率=+20%。ただしリフト率が高くても絶対差が小さい（0.4pp）場合は実用的意義が小さいこともあります。",
-            },
-            {
-              title: "よくある間違い",
-              body: "① 「p < 0.05 になるまで毎日チェックして止める」は偽陽性が増えます（Peekingと呼ばれる問題）。② サンプルサイズを決める前にテストを開始してはいけません。③ 統計的有意 ≠ 実務的に重要。効果が小さくても有意になることはあります。",
-            },
-            {
-              title: "検定力（Power）とは",
-              body: "真に差がある場合に、それを正しく検出できる確率です。80%は「本当に差があるとき、20回に1回は見落とす」ことを意味します。重要な判断ほど90%以上を推奨します。",
-            },
-          ].map((item) => (
-            <div key={item.title} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-              <h3 className="font-semibold text-gray-800 mb-2">{item.title}</h3>
-              <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+        <div className="space-y-4 tab-panel">
+          {t.articles.map((item) => (
+            <div key={item.title} className="glass-card rounded-2xl p-5 hover:border-violet-500/20 transition-all border border-transparent">
+              <h3 className="font-semibold text-white mb-2 text-sm">{item.title}</h3>
+              <p className="text-sm text-violet-100 leading-relaxed">{item.body}</p>
             </div>
           ))}
         </div>
       )}
 
-      <p className="text-xs text-gray-400 text-center pb-4">
-        二項比率の差のZ検定（両側）。正規分布CDF: Abramowitz &amp; Stegun近似を使用。
+      <p className="text-xs text-violet-200 text-center pb-2">
+        {t.footnote}
       </p>
 
       {/* 使い方ガイド */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">使い方ガイド</h2>
-        <ol className="space-y-3">
-          {[
-            { step: "1", title: "A群・B群のデータを入力", desc: "「有意差検定」タブで、コントロール群（A）とテスト群（B）それぞれの訪問数とCV数を入力します。デフォルト値で動作確認できます。" },
-            { step: "2", title: "有意水準を設定", desc: "一般的なWebテストでは5%（標準）、重要な意思決定には1%（厳格）を選びます。信頼区間は90/95/99%から選択できます。" },
-            { step: "3", title: "結果を確認", desc: "p値・Z統計量・リフト率・信頼区間が表示されます。「統計的に有意です」と表示されれば差は偶然でない可能性が高いです。" },
-            { step: "4", title: "サンプルサイズを事前計算", desc: "テスト前に「サンプルサイズ」タブで必要訪問数を計算しましょう。テスト期間の目安が立てられます。" },
-          ].map((item) => (
-            <li key={item.step} className="flex gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">{item.step}</span>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.guideTitle}</h2>
+        <ol className="space-y-3.5">
+          {t.guideSteps.map((item) => (
+            <li key={item.step} className="flex gap-4">
+              <span className="shrink-0 w-7 h-7 rounded-full bg-violet-500/20 text-violet-200 text-sm font-bold flex items-center justify-center border border-violet-500/30">{item.step}</span>
               <div>
-                <div className="font-medium text-gray-800 text-sm">{item.title}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
+                <div className="font-medium text-white text-sm">{item.title}</div>
+                <div className="text-xs text-violet-200 mt-0.5">{item.desc}</div>
               </div>
             </li>
           ))}
@@ -676,56 +967,38 @@ export default function AbTestSignificance() {
       </div>
 
       {/* FAQ */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-5">{t.faqTitle}</h2>
         <div className="space-y-4">
-          {[
-            {
-              q: "ABテストの有意差とはどういう意味ですか？",
-              a: "「A群とB群に差がない」という仮説（帰無仮説）を棄却できる統計的な根拠があることを意味します。p値が有意水準（通常5%）未満であれば、観測された差が偶然生じた確率が低いと判断します。",
-            },
-            {
-              q: "p値が0.05未満でも採用しない方がいいですか？",
-              a: "統計的有意 ≠ 実務的に重要です。リフト率が0.1%でも大規模なトラフィックがあればp値は小さくなります。信頼区間の幅と実際の効果量（pp差）を合わせて判断することが重要です。",
-            },
-            {
-              q: "必要なサンプルサイズはどう決めますか？",
-              a: "「サンプルサイズ」タブで現在のCVRと検出したい最小改善効果（例: 20%改善）を入力すると1群あたりの最低訪問数が計算されます。日次訪問数で割れば必要なテスト期間がわかります。",
-            },
-            {
-              q: "テスト中に毎日p値を確認してもいいですか？",
-              a: "推奨しません。「p < 0.05になったら止める」という方法はPeeking問題と呼ばれ、偽陽性（実際には差がないのに有意と判断）が大幅に増えます。事前に決めたサンプルサイズに達してから判断してください。",
-            },
-            {
-              q: "カイ二乗検定との違いは何ですか？",
-              a: "本ツールは二項比率の差のZ検定（両側）を使用しています。2×2の分割表に対するカイ二乗検定と数学的に等価であり、Z統計量の二乗がカイ二乗値に対応します。",
-            },
-          ].map((item, i) => (
-            <div key={i} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
-              <div className="font-medium text-gray-800 text-sm mb-1">Q. {item.q}</div>
-              <div className="text-xs text-gray-600 leading-relaxed">A. {item.a}</div>
+          {t.faq.map((item, i) => (
+            <div key={i} className="border-b border-white/6 pb-4 last:border-0 last:pb-0">
+              <div className="font-bold text-white text-sm mb-1.5">Q. {item.q}</div>
+              <div className="text-sm text-violet-100 leading-relaxed">A. {item.a}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* 関連ツール */}
-      <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
+      <div className="glass-card rounded-2xl p-5">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-4">{t.relatedTools}</h2>
         <div className="flex flex-wrap gap-2">
-          <a href="/nps-score" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
-            <span>📈</span> NPS スコア計算
-          </a>
-          <a href="/funnel-conversion" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
-            <span>🔻</span> ファネル コンバージョン計算
-          </a>
-          <a href="/chi-square-test" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-indigo-300 hover:text-indigo-700 transition-colors">
-            <span>📊</span> カイ二乗検定
-          </a>
+          {t.relatedLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm text-violet-100 hover:text-violet-100 transition-colors border border-white/8 hover:border-violet-500/40"
+              style={{ background: "rgba(139,92,246,0)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0.08)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(139,92,246,0)"; }}
+            >
+              <span>{link.icon}</span> {link.title}
+            </a>
+          ))}
         </div>
       </div>
 
-      {/* JSON-LD FAQPage */}
+      {/* JSON-LD FAQPage (stays Japanese) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

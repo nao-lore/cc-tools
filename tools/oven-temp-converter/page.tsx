@@ -2,14 +2,14 @@ import OvenTempConverter from "./components/OvenTempConverter";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f0a1a] via-[#1a1030] to-[#0d0d2b]">
       {/* Header */}
-      <header className="border-b border-border bg-card">
+      <header className="border-b border-white/8" style={{ background: "rgba(255,255,255,0.03)" }}>
         <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold text-white">
             オーブン温度換算ツール
           </h1>
-          <p className="text-sm text-muted mt-1">
+          <p className="text-sm text-violet-100 mt-1">
             摂氏・華氏・ガスマーク を相互変換 — お菓子・料理レシピの温度確認に
           </p>
         </div>
