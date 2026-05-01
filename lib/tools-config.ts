@@ -104,6 +104,11 @@ export const tools: Tool[] = [
   { slug: "aws-s3-cost", name: "AWS S3 料金計算", description: "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
   { slug: "azure-openai-cost", name: "Azure OpenAI 料金計算", description: "Azure OpenAI Serviceの料金をリージョン・モデル・トークン数から試算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "cdn-pricing-comparison", name: "CDN 料金比較", description: "主要CDN4社の料金をトラフィック量・リージョンから比較", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "context-window-visualizer", name: "コンテキストウィンドウ 可視化", description: "主要LLMモデルのコンテキスト長をトークン・文字数・ページ数で視覚化", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "dalle-pricing", name: "DALL-E 料金計算", description: "DALL-E 3の解像度別・品質別の画像生成コストを枚数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "dpi-resolution", name: "DPI / 解像度 / 印刷サイズ計算", description: "印刷サイズとDPIからピクセル数を計算、またはピクセル数から印刷可能サイズを逆算", market: "JP", category: "Design Tools", oldUrl: "" },
+  { slug: "elevenlabs-pricing", name: "ElevenLabs 料金試算", description: "ElevenLabsの音声合成料金を文字数・プラン別に計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "fine-tuning-cost", name: "ファインチューニング 料金計算", description: "LLMファインチューニングの学習コスト+推論コストをトレーニングデータ量から試算", market: "JP", category: "AI Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];

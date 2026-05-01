@@ -1,1 +1,0 @@
-{"slug": "fine-tuning-cost", "name": "ファインチューニング 料金計算", "title": "ファインチューニング 料金計算 — OpenAI GPT / Claude の学習+推論コスト", "description": "LLMファインチューニングの学習コスト+推論コストをトレーニングデータ量から試算", "metaDescription": "GPT-4o-mini/GPT-4.1-miniのファインチューニング料金を即計算。学習トークン数・エポック数から学習コスト、推論コストとの比較シミュレーション付き。", "market": "JP", "category": "AI Tools", "tier": "A"}
