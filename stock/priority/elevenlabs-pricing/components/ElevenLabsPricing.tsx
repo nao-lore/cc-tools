@@ -135,7 +135,7 @@ const PLAN_COLORS: Record<string, { bg: string; border: string; ring: string; te
 // --- 最適プラン判定 ---
 function findOptimalPlan(chars: number): (typeof PLANS)[number] {
   // コストが最小のプランを返す（Free は超過不可なので枠内のみ）
-  let best = PLANS[0];
+  let best: (typeof PLANS)[number] = PLANS[0];
   let bestCost = Infinity;
 
   for (const plan of PLANS) {
