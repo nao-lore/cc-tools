@@ -109,6 +109,11 @@ export const tools: Tool[] = [
   { slug: "dpi-resolution", name: "DPI / 解像度 / 印刷サイズ計算", description: "印刷サイズとDPIからピクセル数を計算、またはピクセル数から印刷可能サイズを逆算", market: "JP", category: "Design Tools", oldUrl: "" },
   { slug: "elevenlabs-pricing", name: "ElevenLabs 料金試算", description: "ElevenLabsの音声合成料金を文字数・プラン別に計算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "fine-tuning-cost", name: "ファインチューニング 料金計算", description: "LLMファインチューニングの学習コスト+推論コストをトレーニングデータ量から試算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "gcp-pricing", name: "Google Cloud 料金試算", description: "Google Cloudの主要サービス料金をリソース量から日本円で試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "gyomu-itaku-hikaku", name: "業務委託 vs 正社員 手取り比較", description: "同じ額面で業務委託と正社員の手取り・社会保障・将来年金を比較", market: "JP", category: "Labor Tools", oldUrl: "" },
+  { slug: "ideco-tax-saving", name: "iDeCo 節税額シミュレーター", description: "iDeCoの掛金から所得税+住民税の節税効果を計算。年齢・職業別の掛金上限対応", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "kaji-anbun", name: "家事按分 計算", description: "家賃・光熱費・通信費を事業割合で按分。フリーランスの確定申告に必要な経費計算", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "meeting-cost", name: "会議コスト計算機", description: "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に", market: "JP", category: "Business Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
