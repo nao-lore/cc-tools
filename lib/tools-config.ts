@@ -114,6 +114,11 @@ export const tools: Tool[] = [
   { slug: "ideco-tax-saving", name: "iDeCo 節税額シミュレーター", description: "iDeCoの掛金から所得税+住民税の節税効果を計算。年齢・職業別の掛金上限対応", market: "JP", category: "Tax Tools", oldUrl: "" },
   { slug: "kaji-anbun", name: "家事按分 計算", description: "家賃・光熱費・通信費を事業割合で按分。フリーランスの確定申告に必要な経費計算", market: "JP", category: "Tax Tools", oldUrl: "" },
   { slug: "meeting-cost", name: "会議コスト計算機", description: "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "neon-planetscale-comparison", name: "Neon / PlanetScale / Turso 比較", description: "モダンサーバーレスDB 3社の料金・機能・レイテンシを横断比較", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "netlify-pricing", name: "Netlify 料金試算", description: "Netlifyの月額料金をビルド時間・帯域・Functions実行数から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "sho-kigyo-kyosai", name: "小規模企業共済 節税計算", description: "小規模企業共済の掛金による節税効果と解約時の手取り額を計算", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "shopify-fee-jp", name: "Shopify 日本円手数料計算", description: "Shopifyの日本向けプラン別月額・トランザクション手数料・決済手数料を統合計算", market: "JP", category: "EC Tools", oldUrl: "" },
+  { slug: "video-bitrate", name: "動画ビットレート / ファイルサイズ計算", description: "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き", market: "JP", category: "Creator Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];

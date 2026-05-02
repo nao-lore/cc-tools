@@ -1,1 +1,0 @@
-{"slug": "video-bitrate", "name": "動画ビットレート / ファイルサイズ計算", "title": "動画ビットレート計算 — 解像度・fps・コーデック別のファイルサイズ予測", "description": "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き", "metaDescription": "動画のビットレートからファイルサイズを即計算。解像度（720p/1080p/4K）・fps・コーデック（H.264/H.265/VP9/AV1）別の推奨ビットレート表付き。", "market": "JP", "category": "Creator Tools", "tier": "A"}
