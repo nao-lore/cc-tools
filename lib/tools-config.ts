@@ -119,6 +119,11 @@ export const tools: Tool[] = [
   { slug: "sho-kigyo-kyosai", name: "小規模企業共済 節税計算", description: "小規模企業共済の掛金による節税効果と解約時の手取り額を計算", market: "JP", category: "Tax Tools", oldUrl: "" },
   { slug: "shopify-fee-jp", name: "Shopify 日本円手数料計算", description: "Shopifyの日本向けプラン別月額・トランザクション手数料・決済手数料を統合計算", market: "JP", category: "EC Tools", oldUrl: "" },
   { slug: "video-bitrate", name: "動画ビットレート / ファイルサイズ計算", description: "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き", market: "JP", category: "Creator Tools", oldUrl: "" },
+  { slug: "whisper-api-cost", name: "Whisper API 料金計算", description: "OpenAI Whisper APIの料金を音声時間・ファイル数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "youtube-revenue", name: "YouTube 収益シミュレーター", description: "YouTube動画の再生回数とRPMから広告収益を計算。ジャンル別RPM目安付き", market: "JP", category: "Creator Tools", oldUrl: "" },
+  { slug: "yukyu-nissuu", name: "有給休暇 付与日数計算", description: "有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示", market: "JP", category: "Labor Tools", oldUrl: "" },
+  { slug: "ai-cost-calculator", name: "AI API コスト計算", description: "ChatGPT、Claude、Geminiの各モデルのAPI利用料金をリアルタイムで計算。トークン数・リクエスト数から月額コストを試算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "ai-model-comparison", name: "AIモデル比較", description: "主要AIモデル（GPT-4o, Claude Opus, Gemini Pro等）の料金・コンテキスト長・特徴を一覧比較", market: "JP", category: "AI Tools", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
