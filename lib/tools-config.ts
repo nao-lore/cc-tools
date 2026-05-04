@@ -124,6 +124,11 @@ export const tools: Tool[] = [
   { slug: "yukyu-nissuu", name: "有給休暇 付与日数計算", description: "有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示", market: "JP", category: "Labor Tools", oldUrl: "" },
   { slug: "ai-cost-calculator", name: "AI API コスト計算", description: "ChatGPT、Claude、Geminiの各モデルのAPI利用料金をリアルタイムで計算。トークン数・リクエスト数から月額コストを試算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "ai-model-comparison", name: "AIモデル比較", description: "主要AIモデル（GPT-4o, Claude Opus, Gemini Pro等）の料金・コンテキスト長・特徴を一覧比較", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "aws-lambda-cost", name: "AWS Lambda 料金計算", description: "AWS Lambdaの月額コストをリクエスト数・実行時間・メモリサイズから試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "claude-api-cost", name: "Claude API コスト計算", description: "Anthropic Claude APIの各モデル（Opus 4, Sonnet 4, Haiku 3.5）の利用料金をトークン数から即座に計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "cloudflare-workers-cost", name: "Cloudflare Workers 料金計算", description: "Cloudflare Workersの月額コストをリクエスト数・CPU時間・KV・R2・D1から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "gemini-api-cost", name: "Gemini API コスト計算", description: "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "github-actions-cost", name: "GitHub Actions 料金計算", description: "GitHub Actionsの月額コストをランナー種別・実行時間・ストレージから計算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
