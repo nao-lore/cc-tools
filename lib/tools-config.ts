@@ -129,6 +129,11 @@ export const tools: Tool[] = [
   { slug: "cloudflare-workers-cost", name: "Cloudflare Workers 料金計算", description: "Cloudflare Workersの月額コストをリクエスト数・CPU時間・KV・R2・D1から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
   { slug: "gemini-api-cost", name: "Gemini API コスト計算", description: "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算", market: "JP", category: "AI Tools", oldUrl: "" },
   { slug: "github-actions-cost", name: "GitHub Actions 料金計算", description: "GitHub Actionsの月額コストをランナー種別・実行時間・ストレージから計算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "prompt-token-counter", name: "プロンプト トークンカウンター", description: "テキストを貼り付けてAI各モデルのトークン数・API料金を即座に推定", market: "JP", category: "AI Tools", oldUrl: "" },
+  { slug: "sme-dx-subsidy", name: "DX補助金 適合度診断", description: "企業規模・業種・導入予定ツールからIT導入補助金/ものづくり補助金/DX推進補助金の適合度を判定", market: "JP", category: "Business Tools", oldUrl: "" },
+  { slug: "supabase-pricing", name: "Supabase 料金試算", description: "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "vercel-pricing", name: "Vercel 料金試算", description: "Vercelの利用料金をプラン・帯域幅・ビルド時間・関数実行時間から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
+  { slug: "ai-output-json-validator", name: "AI出力 JSON整形・スキーマ検証", description: "LLMが返した崩れたJSONを自動修復＋事前定義スキーマとの差分表示", market: "JP", category: "AI Workflow", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
