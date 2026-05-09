@@ -65,6 +65,7 @@ export const JAPANESE_HOLIDAYS: Holiday[] = [
   { date: "2026-07-20", name: "海の日" },
   { date: "2026-08-11", name: "山の日" },
   { date: "2026-09-21", name: "敬老の日" },
+  { date: "2026-09-22", name: "休日（祝日法第3条第3項）" },
   { date: "2026-09-23", name: "秋分の日" },
   { date: "2026-10-12", name: "スポーツの日" },
   { date: "2026-11-03", name: "文化の日" },

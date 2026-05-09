@@ -18,67 +18,63 @@ export function CustomHolidays({
 
   const sorted = Array.from(customHolidays).sort();
 
-  const handleAdd = () => {
-    if (newDate) {
-      onAdd(newDate);
-      setNewDate("");
-    }
-  };
+  function addHoliday() {
+    if (!newDate) return;
+    onAdd(newDate);
+    setNewDate("");
+    setIsOpen(true);
+  }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full text-sm font-semibold text-gray-700"
+        type="button"
+        onClick={() => setIsOpen((value) => !value)}
+        className="flex w-full items-center justify-between gap-3 text-left"
       >
-        <span>カスタム休日（{customHolidays.size}件）</span>
-        <svg
-          className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
+        <span>
+          <span className="block text-sm font-semibold text-slate-950">会社独自の休日</span>
+          <span className="mt-0.5 block text-xs text-slate-500">年末年始、創立記念日、有給消化日などを追加できます。</span>
+        </span>
+        <span className="rounded-full border border-slate-300 bg-white px-2 py-1 text-xs font-medium text-slate-600">
+          {customHolidays.size}件
+        </span>
       </button>
 
       {isOpen && (
         <div className="mt-4 space-y-3">
-          <p className="text-xs text-gray-500">
-            会社独自の休業日や有給休暇など、追加の休日を設定できます。
-          </p>
-          <div className="flex gap-2">
-            <input
-              type="date"
-              value={newDate}
-              onChange={(e) => setNewDate(e.target.value)}
-              className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
-            />
-            <button
-              onClick={handleAdd}
-              disabled={!newDate}
-              className="px-4 py-2 bg-[var(--color-primary)] text-white text-sm rounded-md hover:bg-[var(--color-primary-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              追加
-            </button>
+          <div>
+            <label htmlFor="custom-holiday-date" className="text-xs font-medium text-slate-600">
+              追加する休日
+            </label>
+            <div className="mt-2 flex gap-2">
+              <input
+                id="custom-holiday-date"
+                type="date"
+                value={newDate}
+                onChange={(event) => setNewDate(event.target.value)}
+                className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-slate-900"
+              />
+              <button
+                type="button"
+                onClick={addHoliday}
+                disabled={!newDate}
+                className="whitespace-nowrap rounded-lg bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                追加
+              </button>
+            </div>
           </div>
 
-          {sorted.length > 0 && (
-            <ul className="space-y-1">
+          {sorted.length > 0 ? (
+            <ul className="space-y-2">
               {sorted.map((date) => (
-                <li
-                  key={date}
-                  className="flex items-center justify-between py-1.5 px-2 bg-gray-50 rounded text-sm"
-                >
-                  <span>{date}</span>
+                <li key={date} className="flex items-center justify-between gap-3 rounded-lg bg-white px-3 py-2 text-sm">
+                  <span className="font-mono text-slate-800">{date}</span>
                   <button
+                    type="button"
                     onClick={() => onRemove(date)}
-                    className="text-red-500 hover:text-red-700 text-xs"
+                    className="rounded-md px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
                     aria-label={`${date}を削除`}
                   >
                     削除
@@ -86,6 +82,8 @@ export function CustomHolidays({
                 </li>
               ))}
             </ul>
+          ) : (
+            <p className="rounded-lg bg-white px-3 py-2 text-sm text-slate-500">追加されたカスタム休日はありません。</p>
           )}
         </div>
       )}

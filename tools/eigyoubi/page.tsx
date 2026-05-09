@@ -1,117 +1,164 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import { BusinessDaysCalculator } from "./components/BusinessDaysCalculator";
 
-export default function Home() {
-  return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-2">
-            <svg
-              className="w-6 h-6 text-[var(--color-primary)]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="font-bold text-lg">eigyoubi</span>
-          </div>
-        </div>
-      </header>
+const faq = [
+  {
+    q: "営業日数は開始日を含めて数えますか？",
+    a: "期間指定モードでは「開始日を営業日数に含める」を切り替えられます。逆算モードでは開始日は0日目として扱い、翌営業日から1営業日目として数えます。",
+  },
+  {
+    q: "どの休日に対応していますか？",
+    a: "土日と、内閣府が公表している2024年から2027年までの国民の祝日・振替休日・祝日法第3条第3項の休日に対応しています。会社独自の休業日はカスタム休日として追加できます。",
+  },
+  {
+    q: "年末年始や会社の休業日は反映できますか？",
+    a: "はい。会社独自の休日に日付を追加すると、その日も営業日から除外して計算します。年末年始休業、創立記念日、有給消化日などに使えます。",
+  },
+  {
+    q: "入力した日付は保存されますか？",
+    a: "保存されません。計算はブラウザ上で完結し、入力した日付やカスタム休日を外部に送信しません。",
+  },
+];
 
-      {/* Main Tool */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">
-          営業日数計算ツール
-        </h1>
-        <p className="text-center text-gray-500 text-sm mb-8">
-          日本の祝日・振替休日に完全対応
-        </p>
+export default function Home() {
+  const toolCount = tools.length;
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← 無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">日付・ビジネス計算</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">営業日数計算ツール</h1>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+                開始日と終了日から営業日数を計算し、営業日数から納期も逆算できます。土日、2024〜2027年の日本の祝日、会社独自の休業日をまとめて除外できます。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">このツールでできること</div>
+              <ul className="mt-2 space-y-1.5">
+                <li>・期間内の営業日数を計算</li>
+                <li>・N営業日後の納期を逆算</li>
+                <li>・独自休業日を追加</li>
+                <li>・結果をコピー / CSV出力</li>
+              </ul>
+            </div>
+          </div>
+        </header>
 
         <BusinessDaysCalculator />
 
-        {/* AdSense Placeholder */}
-        <div className="mt-12 mb-8 bg-gray-100 border border-dashed border-gray-300 rounded-lg p-8 text-center">
-          <p className="text-xs text-gray-400">広告スペース</p>
-        </div>
-
-        {/* SEO Content */}
-        <section className="mt-8 prose prose-sm max-w-none">
-          <h2 className="text-xl font-bold mb-4">営業日とは</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            営業日とは、企業や官公庁が業務を行う日のことです。一般的に土曜日・日曜日と国民の祝日を除いた平日が営業日となります。ビジネスにおいて「営業日ベースで5日以内」「10営業日以内に納品」といった期限を正確に計算することは、プロジェクト管理や契約遵守において非常に重要です。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">
-            営業日数の計算方法
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            営業日数を手計算する場合、カレンダーを見ながら土日と祝日を一つずつ除外していく必要があります。特にゴールデンウィークやお盆、年末年始をまたぐ期間では、振替休日や会社独自の休業日も考慮しなければならず、計算ミスが起こりやすくなります。このツールでは、日本の国民の祝日と振替休日を自動的に除外し、正確な営業日数を瞬時に計算します。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">
-            日本の祝日について
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            日本には年間16日の国民の祝日があります。元日、成人の日、建国記念の日、天皇誕生日、春分の日、昭和の日、憲法記念日、みどりの日、こどもの日、海の日、山の日、敬老の日、秋分の日、スポーツの日、文化の日、勤労感謝の日です。祝日が日曜日と重なった場合、その翌日の月曜日が振替休日となります。このツールは2024年から2027年までの全ての祝日と振替休日に対応しています。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">このツールの使い方</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            「期間指定で計算」モードでは、開始日と終了日を選択するだけで営業日数が表示されます。「営業日数から逆算」モードでは、開始日と営業日数を入力すると、その営業日数後の日付を計算します。納期の逆算やスケジュール作成に便利です。さらに、会社独自の休業日がある場合は「カスタム休日」機能で追加でき、より正確な計算が可能です。カレンダー表示で期間内の営業日・休日を視覚的に確認することもできます。
-          </p>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="営業日ベースの納期" body="「5営業日以内」「10営業日後」など、土日祝を除いた締切を確認できます。" />
+          <InfoCard title="祝日と振替休日" body="内閣府公表の祝日データを使い、振替休日や祝日法上の休日も除外します。" />
+          <InfoCard title="社内カレンダー対応" body="年末年始や会社独自の休業日を追加して、自社基準の営業日数に近づけられます。" />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 mt-12 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">
-            eigyoubi — 営業日数計算ツール。登録不要・無料。
-          </p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Wareki Converter</Link>
-              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tax Calculator</Link>
-              <Link href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Zenkaku Hankaku</Link>
-              <Link href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Furigana</Link>
-              <Link href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Timezone Converter</Link>
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">営業日数の数え方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">期間指定</h3>
+              <p className="mt-1">
+                開始日から終了日までの暦日を見て、土曜日、日曜日、国民の祝日、カスタム休日を除外します。開始日を含めるかどうかは案件や契約の表現に合わせて切り替えられます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">営業日数から逆算</h3>
+              <p className="mt-1">
+                開始日は0日目として扱い、翌営業日から1営業日目として数えます。納品予定日、審査期限、支払期限、問い合わせ回答期限の確認に使えます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">祝日データ</h3>
+              <p className="mt-1">
+                祝日は内閣府「国民の祝日について」の公表情報を参考にしています。祝日が将来変更された場合は、最新の公表情報を優先してください。
+              </p>
+              <a
+                href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+              >
+                内閣府の祝日資料
+              </a>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">注意点</h3>
+              <p className="mt-1">
+                業界や会社によって営業日の定義は異なります。銀行営業日、行政窓口、配送業者、取引先の休業日は別基準になることがあるため、重要な契約では相手先の定義を確認してください。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/nissuu-keisan" title="日数計算" body="日付間の日数・週数を計算" />
+            <Related href="/wareki-converter" title="和暦変換" body="西暦と和暦を相互変換" />
+            <Related href="/timezone-converter" title="タイムゾーン変換" body="海外との日時調整に使う" />
+            <Related href="/gyomu-itaku-hikaku" title="業務委託比較" body="契約条件と手取りを比較" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "営業日数計算ツール",
-  "description": "日本の祝日・振替休日に完全対応",
-  "url": "https://tools.loresync.dev/eigyoubi",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

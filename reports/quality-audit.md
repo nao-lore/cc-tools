@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 67.8/100
-- Priority tiers: {"A": 7, "B": 61, "C": 73, "S": 1}
+- Average quality score: 68.3/100
+- Priority tiers: {"A": 7, "B": 61, "C": 74}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| S | 96 | 42 | `eigyoubi` | calculator | Japanese Tools | faq, copy, examples, reset_clear, validation; penalties: old_count, ad_placeholder |
 | A | 89 | 46 | `calorie-keisan` | calculator | Japanese Tools | faq, copy, examples, reset_clear, validation; penalties: old_count, ad_placeholder |
 | A | 82 | 50 | `menseki-keisan` | converter | Japanese Tools | copy, examples, reset_clear, validation, privacy; penalties: old_count, ad_placeholder |
 | A | 76 | 54 | `nissuu-keisan` | calculator | Japanese Tools | copy, examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
@@ -42,12 +41,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 58 | 65 | `whisper-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `zenkaku-hankaku` | converter | Japanese Tools | examples, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 57 | 56 | `kenpei-yoseki` | calculator | Life Tools | copy, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
+| B | 57 | 62 | `bank-code-lookup` | reference | Japanese Tools | h1, related_links, labels, reset_clear, validation |
 
 ## Strongest Current Tools
 
 | Quality | Slug | Type | Category |
 | ---: | --- | --- | --- |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
+| 100 | `eigyoubi` | calculator | Japanese Tools |
 | 92 | `ai-output-json-validator` | utility | AI Workflow |
 | 92 | `zei-kin-henkan` | converter | Finance |
 | 89 | `prompt-chain-builder` | reference | AI Workflow |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 82 | `ai-video-pricing` | comparison | AI Tools |
 | 82 | `auth-service-comparison` | comparison | SaaS Pricing |
 | 82 | `gacha-probability` | calculator | Game Tools |
-| 82 | `prompt-token-counter` | utility | AI Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 67.0 |
+| calculator | 68.1 |
 | comparison | 71.2 |
 | converter | 71.0 |
 | generator | 69.8 |
@@ -85,9 +85,9 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Home | 60 | 1 |
 | Text & String Tools | 60.5 | 6 |
 | CSS Tools | 62 | 8 |
-| Japanese Tools | 62.1 | 20 |
 | Image Tools | 63 | 5 |
 | Cooking Tools | 63 | 3 |
+| Japanese Tools | 65 | 20 |
 | Creator Tools | 67 | 2 |
 | Music | 67 | 1 |
 | SaaS Pricing | 67.5 | 13 |

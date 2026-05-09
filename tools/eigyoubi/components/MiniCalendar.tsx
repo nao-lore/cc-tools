@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 import {
-  isWeekend,
-  isJapaneseHoliday,
-  getHolidayName,
   formatDate,
+  getHolidayName,
+  isJapaneseHoliday,
+  isWeekend,
 } from "../lib/holidays";
 
 interface MiniCalendarProps {
@@ -14,12 +14,15 @@ interface MiniCalendarProps {
   customHolidays: Set<string>;
 }
 
+const DAY_NAMES = ["日", "月", "火", "水", "木", "金", "土"];
+const MONTH_NAMES = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+
 function getMonthsBetween(start: Date, end: Date): Date[] {
   const months: Date[] = [];
   const current = new Date(start.getFullYear(), start.getMonth(), 1);
   const endMonth = new Date(end.getFullYear(), end.getMonth(), 1);
 
-  while (current <= endMonth) {
+  while (current <= endMonth && months.length < 14) {
     months.push(new Date(current));
     current.setMonth(current.getMonth() + 1);
   }
@@ -27,26 +30,26 @@ function getMonthsBetween(start: Date, end: Date): Date[] {
   return months;
 }
 
-function getDaysInMonth(year: number, month: number): number {
-  return new Date(year, month + 1, 0).getDate();
-}
-
 export function MiniCalendar({
   startDate,
   endDate,
   customHolidays,
 }: MiniCalendarProps) {
-  const months = useMemo(
-    () => getMonthsBetween(startDate, endDate),
-    [startDate, endDate]
-  );
-
+  const months = useMemo(() => getMonthsBetween(startDate, endDate), [startDate, endDate]);
   const startStr = formatDate(startDate);
   const endStr = formatDate(endDate);
   const todayStr = formatDate(new Date());
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-sm font-semibold text-slate-950">カレンダー確認</h3>
+        <div className="flex flex-wrap justify-end gap-2 text-[11px] text-slate-500">
+          <Legend color="bg-emerald-100" label="営業日" />
+          <Legend color="bg-slate-100" label="土日" />
+          <Legend color="bg-red-100" label="祝日" />
+        </div>
+      </div>
       {months.map((monthDate) => (
         <MonthView
           key={`${monthDate.getFullYear()}-${monthDate.getMonth()}`}
@@ -59,6 +62,15 @@ export function MiniCalendar({
         />
       ))}
     </div>
+  );
+}
+
+function Legend({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1">
+      <span className={`h-2.5 w-2.5 rounded-full border border-white ${color}`} />
+      {label}
+    </span>
   );
 }
 
@@ -79,56 +91,31 @@ function MonthView({
   today,
   customHolidays,
 }: MonthViewProps) {
-  const daysInMonth = getDaysInMonth(year, month);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfWeek = new Date(year, month, 1).getDay();
-  const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
-  const monthNames = [
-    "1月",
-    "2月",
-    "3月",
-    "4月",
-    "5月",
-    "6月",
-    "7月",
-    "8月",
-    "9月",
-    "10月",
-    "11月",
-    "12月",
+  const cells: (number | null)[] = [
+    ...Array.from({ length: firstDayOfWeek }, () => null),
+    ...Array.from({ length: daysInMonth }, (_, index) => index + 1),
   ];
 
-  const cells: (number | null)[] = [];
-  for (let i = 0; i < firstDayOfWeek; i++) {
-    cells.push(null);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    cells.push(d);
-  }
-
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4">
-      <h3 className="text-center font-semibold text-sm mb-3">
-        {year}年{monthNames[month]}
-      </h3>
-      <div className="grid grid-cols-7 gap-0">
-        {dayNames.map((name, i) => (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4">
+      <h4 className="text-center text-sm font-semibold text-slate-950">
+        {year}年{MONTH_NAMES[month]}
+      </h4>
+      <div className="mt-3 grid grid-cols-7 gap-1">
+        {DAY_NAMES.map((name, index) => (
           <div
             key={name}
-            className={`text-center text-xs font-medium py-1 ${
-              i === 0
-                ? "text-red-500"
-                : i === 6
-                  ? "text-blue-500"
-                  : "text-gray-500"
+            className={`text-center text-[11px] font-semibold ${
+              index === 0 ? "text-red-500" : index === 6 ? "text-sky-500" : "text-slate-500"
             }`}
           >
             {name}
           </div>
         ))}
-        {cells.map((day, idx) => {
-          if (day === null) {
-            return <div key={`empty-${idx}`} className="p-1" />;
-          }
+        {cells.map((day, index) => {
+          if (day === null) return <div key={`empty-${index}`} className="aspect-square" />;
 
           const date = new Date(year, month, day);
           const dateStr = formatDate(date);
@@ -137,58 +124,27 @@ function MonthView({
           const holiday = isJapaneseHoliday(date);
           const customHoliday = customHolidays.has(dateStr);
           const isToday = dateStr === today;
-          const holidayName = getHolidayName(date);
-          const dayOfWeek = date.getDay();
+          const holidayName = getHolidayName(date) ?? (customHoliday ? "カスタム休日" : "");
 
-          let bgClass = "";
-          let textClass = "text-gray-900";
-
-          if (inRange) {
-            bgClass = "bg-blue-50";
-          }
-
-          if (holiday || customHoliday) {
-            bgClass = inRange ? "bg-red-100" : "bg-red-50";
-            textClass = "text-red-600";
-          } else if (weekend) {
-            bgClass = inRange ? "bg-gray-100" : "bg-gray-50";
-            textClass = dayOfWeek === 0 ? "text-red-400" : "text-blue-400";
-          }
-
-          if (isToday) {
-            bgClass += " ring-2 ring-[var(--color-primary)] ring-inset";
-          }
+          let className = "bg-white text-slate-800";
+          if (inRange) className = "bg-emerald-50 text-emerald-900";
+          if (weekend) className = inRange ? "bg-slate-100 text-slate-500" : "bg-slate-50 text-slate-400";
+          if (holiday || customHoliday) className = inRange ? "bg-red-100 text-red-700" : "bg-red-50 text-red-500";
+          if (isToday) className += " ring-2 ring-slate-950 ring-inset";
 
           return (
             <div
               key={dateStr}
-              className={`relative p-1 text-center rounded-md ${bgClass}`}
-              title={
-                holidayName ||
-                (customHoliday ? "カスタム休日" : undefined)
-              }
+              title={holidayName || undefined}
+              className={`relative flex aspect-square items-center justify-center rounded-lg text-xs font-medium ${className}`}
             >
-              <span className={`text-xs ${textClass}`}>{day}</span>
-              {(holiday || customHoliday) && inRange && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-red-500" />
+              {day}
+              {(holiday || customHoliday) && (
+                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-current" />
               )}
             </div>
           );
         })}
-      </div>
-      <div className="flex gap-3 mt-3 text-[10px] text-gray-500 justify-center">
-        <span className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded bg-blue-50 border border-gray-200" />
-          営業日
-        </span>
-        <span className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded bg-gray-100 border border-gray-200" />
-          土日
-        </span>
-        <span className="flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded bg-red-100 border border-gray-200" />
-          祝日
-        </span>
       </div>
     </div>
   );
