@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/risoku-keisan/page";
 
 export const metadata: Metadata = {
-  title: "利息計算 - 単利・複利シミュレーション",
-  description: "元金・年利率・期間から利息額と元利合計を計算。単利・複利対応、年次推移表付き。",
+  title: "利息計算ツール - 単利・複利・税引後の元利合計をシミュレーション",
+  description: "元金・年利率・期間から単利・複利の利息、元利合計、税引後の概算受取額を計算。年次推移、コピー、CSV出力に対応。",
   alternates: { canonical: "https://tools.loresync.dev/risoku-keisan" },
 };
 
