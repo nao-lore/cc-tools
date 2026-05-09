@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 const PRESETS = [
@@ -303,8 +304,8 @@ export default function PlaceholderImage() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGP画像プレビュー</a>
-            <a href="/svg-to-png" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">SVG → PNG 変換</a>
+            <Link href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGP画像プレビュー</Link>
+            <Link href="/svg-to-png" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">SVG → PNG 変換</Link>
           </div>
         </div>
       </div>

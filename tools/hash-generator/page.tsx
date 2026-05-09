@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HashGenerator from './components/HashGenerator';
 
 export default function Home() {
@@ -108,15 +109,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/password-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Password Generator</a>
-              <a href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</a>
-              <a href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUID Generator</a>
-              <a href="/jwt-decoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JWT Decoder</a>
-              <a href="/url-encoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">URL Encoder</a>
+              <Link href="/password-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Password Generator</Link>
+              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
+              <Link href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUID Generator</Link>
+              <Link href="/jwt-decoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JWT Decoder</Link>
+              <Link href="/url-encoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">URL Encoder</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
           </div>
         </div>
       </footer>

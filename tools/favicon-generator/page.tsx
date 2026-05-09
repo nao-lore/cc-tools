@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useCallback, useEffect } from "react";
 import {
   FAVICON_SIZES,
@@ -525,15 +526,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/svg-to-png" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SVG to PNG</a>
-              <a href="/image-compressor" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Image Compressor</a>
-              <a href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</a>
-              <a href="/qr-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">QR Generator</a>
-              <a href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</a>
+              <Link href="/svg-to-png" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SVG to PNG</Link>
+              <Link href="/image-compressor" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Image Compressor</Link>
+              <Link href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</Link>
+              <Link href="/qr-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">QR Generator</Link>
+              <Link href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
           </div>
         
       <script

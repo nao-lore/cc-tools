@@ -54,7 +54,7 @@ export function markdownToHtml(markdown: string): string {
   }
 
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i];
+    const line = lines[i];
 
     // Skip lines inside pre blocks
     if (line.startsWith('<pre>')) {

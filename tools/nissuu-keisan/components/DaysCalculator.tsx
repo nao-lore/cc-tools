@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 interface Holiday {
@@ -484,8 +485,8 @@ function HolidayList({ holidays }: { holidays: Holiday[] }) {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</a>
-            <a href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</a>
+            <Link href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</Link>
+            <Link href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 import { convert, type ConversionOptions } from "../lib/converter";
 
@@ -250,8 +251,8 @@ export default function Converter() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</a>
-            <a href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</a>
+            <Link href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</Link>
+            <Link href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</Link>
           </div>
         </div>
       </div>

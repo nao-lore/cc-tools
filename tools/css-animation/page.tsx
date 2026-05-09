@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AnimationGenerator from "./components/AnimationGenerator";
 
 export default function Home() {
@@ -142,15 +143,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/css-flexbox" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Flexbox Generator</a>
-              <a href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid Generator</a>
-              <a href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius Generator</a>
-              <a href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient Generator</a>
-              <a href="/css-box-shadow" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Box Shadow Generator</a>
+              <Link href="/css-flexbox" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Flexbox Generator</Link>
+              <Link href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid Generator</Link>
+              <Link href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius Generator</Link>
+              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient Generator</Link>
+              <Link href="/css-box-shadow" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Box Shadow Generator</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
           </div>
         </div>
       </footer>

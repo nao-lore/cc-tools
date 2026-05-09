@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo } from "react";
 import { westernToWareki, getZodiac, getEraForYear } from "../lib/wareki";
 
@@ -121,8 +122,8 @@ export default function AgeTable() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</a>
-            <a href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</a>
+            <Link href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</Link>
+            <Link href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</Link>
           </div>
         </div>
       </div>

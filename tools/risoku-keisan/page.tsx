@@ -1,3 +1,4 @@
+import Link from "next/link";
 import InterestCalculator from "./components/InterestCalculator";
 
 export default function Home() {
@@ -74,7 +75,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
           </div>
         </div>
       </footer>

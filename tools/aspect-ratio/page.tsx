@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AspectRatioCalculator from "./components/AspectRatioCalculator";
 
 export default function Home() {
@@ -121,15 +122,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</a>
-              <a href="/image-compressor" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Image Compressor</a>
-              <a href="/px-to-rem" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">PX to REM</a>
-              <a href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid</a>
-              <a href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Timezone Converter</a>
+              <Link href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</Link>
+              <Link href="/image-compressor" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Image Compressor</Link>
+              <Link href="/px-to-rem" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">PX to REM</Link>
+              <Link href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid</Link>
+              <Link href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Timezone Converter</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</Link>
           </div>
         </div>
       </footer>

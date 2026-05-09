@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useRef, useEffect } from "react";
 
 type Mode = "encode" | "decode";
@@ -357,8 +358,8 @@ export default function Base64Converter() {
       <div className="mt-4 p-4 rounded-lg border border-panel-border bg-panel-bg">
         <p className="text-sm font-medium text-foreground mb-2">関連ツール</p>
         <div className="flex flex-wrap gap-3">
-          <a href="/tools/image-to-base64" className="text-sm text-accent hover:underline">画像→Base64変換</a>
-          <a href="/tools/url-encoder" className="text-sm text-accent hover:underline">URLエンコーダー</a>
+          <Link href="/image-to-base64" className="text-sm text-accent hover:underline">画像→Base64変換</Link>
+          <Link href="/url-encoder" className="text-sm text-accent hover:underline">URLエンコーダー</Link>
         </div>
       </div>
     </div>

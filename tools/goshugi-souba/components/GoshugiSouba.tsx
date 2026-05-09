@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 
 // ---- 型定義 ----
@@ -860,9 +861,9 @@ export default function GoshugiSouba() {
       >
         <p className="text-base font-bold text-white">{t.ctaTitle}</p>
         <p className="text-xs text-violet-200">{t.ctaDesc}</p>
-        <a href="/tools" className="inline-block glass-card text-pink-300 text-sm font-bold px-5 py-2 rounded-xl hover:text-white transition-colors border border-pink-500/30">
+        <Link href="/" className="inline-block glass-card text-pink-300 text-sm font-bold px-5 py-2 rounded-xl hover:text-white transition-colors border border-pink-500/30">
           {t.ctaBtn}
-        </a>
+        </Link>
       </div>
 
       <script

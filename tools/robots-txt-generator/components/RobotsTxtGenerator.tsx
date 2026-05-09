@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
 
 interface Rule {
@@ -631,8 +632,8 @@ export default function RobotsTxtGenerator() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/meta-tag-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">メタタグジェネレーター</a>
-            <a href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGPプレビュー</a>
+            <Link href="/meta-tag-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">メタタグジェネレーター</Link>
+            <Link href="/og-image-preview" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">OGPプレビュー</Link>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HebonRomaji from "./components/HebonRomaji";
 
 export default function Home() {
@@ -109,9 +110,9 @@ export default function Home() {
 
             <h2 className="text-lg font-bold text-foreground mt-8">関連ツール</h2>
             <div className="flex flex-wrap gap-2">
-              <a href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">ふりがな変換</a>
-              <a href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">全角半角変換</a>
-              <a href="/moji-count" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">文字数カウント</a>
+              <Link href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">ふりがな変換</Link>
+              <Link href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">全角半角変換</Link>
+              <Link href="/moji-count" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">文字数カウント</Link>
             </div>
 
             <div className="mt-6 bg-card border border-border rounded-xl p-5 text-center space-y-2">
@@ -129,14 +130,14 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">ふりがな変換</a>
-              <a href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">全角半角変換</a>
-              <a href="/moji-count" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">文字数カウント</a>
-              <a href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">和暦変換</a>
+              <Link href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">ふりがな変換</Link>
+              <Link href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">全角半角変換</Link>
+              <Link href="/moji-count" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">文字数カウント</Link>
+              <Link href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">和暦変換</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">60+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">60+ Free Tools →</Link>
           </div>
         </div>
       </footer>

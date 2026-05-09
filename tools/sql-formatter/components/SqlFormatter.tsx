@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 // --- SQL Keywords ---
@@ -59,7 +60,7 @@ function tokenize(sql: string): Token[] {
   while (i < sql.length) {
     // Whitespace
     if (/\s/.test(sql[i])) {
-      let start = i;
+      const start = i;
       while (i < sql.length && /\s/.test(sql[i])) i++;
       tokens.push({ type: "whitespace", value: sql.slice(start, i), upper: " " });
       continue;
@@ -67,7 +68,7 @@ function tokenize(sql: string): Token[] {
 
     // Single-line comment --
     if (sql[i] === "-" && sql[i + 1] === "-") {
-      let start = i;
+      const start = i;
       while (i < sql.length && sql[i] !== "\n") i++;
       tokens.push({ type: "comment", value: sql.slice(start, i), upper: sql.slice(start, i).toUpperCase() });
       continue;
@@ -75,7 +76,7 @@ function tokenize(sql: string): Token[] {
 
     // Multi-line comment /* */
     if (sql[i] === "/" && sql[i + 1] === "*") {
-      let start = i;
+      const start = i;
       i += 2;
       while (i < sql.length && !(sql[i - 1] === "*" && sql[i] === "/")) i++;
       i++;
@@ -85,7 +86,7 @@ function tokenize(sql: string): Token[] {
 
     // String (single quote)
     if (sql[i] === "'") {
-      let start = i;
+      const start = i;
       i++;
       while (i < sql.length && (sql[i] !== "'" || sql[i + 1] === "'")) {
         if (sql[i] === "'" && sql[i + 1] === "'") i++;
@@ -119,7 +120,7 @@ function tokenize(sql: string): Token[] {
 
     // Operators
     if (/[=<>!+\-*/%&|^~]/.test(sql[i])) {
-      let start = i;
+      const start = i;
       // Handle multi-char operators
       if ((sql[i] === "<" || sql[i] === ">" || sql[i] === "!" || sql[i] === "=") && sql[i + 1] === "=") i++;
       if (sql[i] === "<" && sql[i + 1] === ">") i++;
@@ -131,7 +132,7 @@ function tokenize(sql: string): Token[] {
 
     // Numbers
     if (/\d/.test(sql[i])) {
-      let start = i;
+      const start = i;
       while (i < sql.length && /[\d.]/.test(sql[i])) i++;
       tokens.push({ type: "number", value: sql.slice(start, i), upper: sql.slice(start, i) });
       continue;
@@ -139,7 +140,7 @@ function tokenize(sql: string): Token[] {
 
     // Words (identifiers / keywords)
     if (/[a-zA-Z_]/.test(sql[i])) {
-      let start = i;
+      const start = i;
       while (i < sql.length && /[a-zA-Z0-9_.]/.test(sql[i])) i++;
       const word = sql.slice(start, i);
       const upper = word.toUpperCase();
@@ -554,8 +555,8 @@ export default function SqlFormatter() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</a>
-            <a href="/xml-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">XML フォーマッター</a>
+            <Link href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</Link>
+            <Link href="/xml-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">XML フォーマッター</Link>
           </div>
         </div>
       </div>

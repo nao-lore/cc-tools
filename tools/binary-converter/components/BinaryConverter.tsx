@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 type Base = "binary" | "decimal" | "hex" | "octal";
@@ -322,8 +323,8 @@ export default function BinaryConverter() {
       <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl">
         <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
         <div className="flex flex-wrap gap-3">
-          <a href="/tools/color-converter" className="text-sm text-blue-600 hover:underline">カラーコード変換</a>
-          <a href="/tools/hash-generator" className="text-sm text-blue-600 hover:underline">ハッシュ生成</a>
+          <Link href="/color-converter" className="text-sm text-blue-600 hover:underline">カラーコード変換</Link>
+          <Link href="/hash-generator" className="text-sm text-blue-600 hover:underline">ハッシュ生成</Link>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 // ---- 送料データ ----
@@ -568,15 +569,15 @@ export default function MercariTesuryou() {
       <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
         <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
         <div className="flex flex-wrap gap-2">
-          <a href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+          <Link href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
             <span>🚚</span> 宅配便 送料比較
-          </a>
-          <a href="/stripe-fee-calculator" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+          </Link>
+          <Link href="/stripe-fee-calculator" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
             <span>💳</span> Stripe手数料計算
-          </a>
-          <a href="/shopify-fee-jp" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
+          </Link>
+          <Link href="/shopify-fee-jp" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-[#FF0211]/40 hover:text-[#FF0211] transition-colors">
             <span>🛒</span> eBay手数料計算
-          </a>
+          </Link>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 const COMMON_SIZES = [8, 10, 12, 14, 16, 18, 20, 24, 32, 48, 64];
@@ -260,8 +261,8 @@ export default function PxRemConverter() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/tailwindconvert" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">Tailwind CSS 変換</a>
-            <a href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</a>
+            <Link href="/tailwindconvert" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">Tailwind CSS 変換</Link>
+            <Link href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</Link>
           </div>
         </div>
       </div>

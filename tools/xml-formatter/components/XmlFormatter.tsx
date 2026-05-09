@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useRef } from "react";
 
 type IndentType = "2" | "4" | "tab";
@@ -377,8 +378,8 @@ export default function XmlFormatter() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</a>
-            <a href="/yaml-to-json" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">YAML → JSON 変換</a>
+            <Link href="/json-formatter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">JSON フォーマッター</Link>
+            <Link href="/yaml-to-json" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">YAML → JSON 変換</Link>
           </div>
         </div>
       </div>

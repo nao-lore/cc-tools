@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 // 5x7 bitmap font for A-Z, 0-9, space, and common punctuation
@@ -854,8 +855,8 @@ export default function AsciiArtGenerator() {
       <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-xl">
         <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
         <div className="flex flex-wrap gap-2">
-          <a href="/tools/ascii-flowchart" className="text-sm text-blue-600 hover:underline">ASCIIフローチャート生成</a>
-          <a href="/tools/dummy-text" className="text-sm text-blue-600 hover:underline">ダミーテキスト生成</a>
+          <Link href="/ascii-flowchart" className="text-sm text-blue-600 hover:underline">ASCIIフローチャート生成</Link>
+          <Link href="/dummy-text" className="text-sm text-blue-600 hover:underline">ダミーテキスト生成</Link>
         </div>
       </div>
     </div>

@@ -75,7 +75,7 @@ function minifyCss(css: string): string {
 function beautifyCss(css: string): string {
   if (!css.trim()) return "";
 
-  let result = css.trim();
+  const result = css.trim();
   let output = "";
   let indent = 0;
   let i = 0;

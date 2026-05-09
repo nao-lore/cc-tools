@@ -81,7 +81,7 @@ function rhex(n: number) {
 
 export function md5(data: Uint8Array): string {
   const n = data.length;
-  let state = [1732584193, -271733879, -1732584194, 271733878];
+  const state = [1732584193, -271733879, -1732584194, 271733878];
   let i: number;
 
   for (i = 64; i <= n; i += 64) {

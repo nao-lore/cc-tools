@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
 import {
   TaxEntry,
@@ -292,8 +293,8 @@ export default function TaxCalculator() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/waribiki-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">割引計算ツール</a>
-            <a href="/tedori-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">手取り計算ツール</a>
+            <Link href="/waribiki-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">割引計算ツール</Link>
+            <Link href="/tedori-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">手取り計算ツール</Link>
           </div>
         </div>
       </div>

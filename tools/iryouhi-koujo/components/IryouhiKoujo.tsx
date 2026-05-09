@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 所得税率テーブル ---
@@ -862,9 +863,9 @@ export default function IryouhiKoujo() {
       <div className="glass-card rounded-2xl p-5 border border-violet-500/15">
         <p className="text-sm font-semibold text-white mb-1">{t.ctaTitle}</p>
         <p className="text-xs text-violet-200 mb-3">{t.ctaDesc}</p>
-        <a href="/tools/aojiro-shinkoku-sim" className="inline-flex items-center gap-1.5 text-xs font-medium text-cyan-300 hover:text-cyan-200 underline">
+        <Link href="/aojiro-shinkoku-sim" className="inline-flex items-center gap-1.5 text-xs font-medium text-cyan-300 hover:text-cyan-200 underline">
           {t.ctaLink}
-        </a>
+        </Link>
       </div>
 
       {/* ===== 関連ツール ===== */}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import Converter from "./components/Converter";
 
@@ -352,15 +353,15 @@ export default function Home() {
             <div className="mb-4">
               <p className="text-xs text-gray-400 mb-2">Related Tools</p>
               <div className="flex flex-wrap justify-center gap-2">
-                <a href="/markdown-preview" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Preview</a>
-                <a href="/mdtable" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">MD Table</a>
-                <a href="/html-entity" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML Entity</a>
-                <a href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</a>
-                <a href="/minify-css" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify CSS</a>
+                <Link href="/markdown-preview" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Preview</Link>
+                <Link href="/mdtable" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">MD Table</Link>
+                <Link href="/html-entity" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML Entity</Link>
+                <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
+                <Link href="/minify-css" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify CSS</Link>
               </div>
             </div>
             <div className="flex justify-center gap-3 text-xs text-gray-400">
-              <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+              <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
             </div>
           </div>
         </footer>

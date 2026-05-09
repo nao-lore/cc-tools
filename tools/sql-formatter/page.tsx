@@ -1,3 +1,4 @@
+import Link from "next/link";
 import SqlFormatter from "./components/SqlFormatter";
 
 export default function Home() {
@@ -54,7 +55,7 @@ export default function Home() {
             </li>
             <li>
               <strong>Set indentation</strong> to 2 or 4 spaces depending on your
-              team's style guide.
+              team&apos;s style guide.
             </li>
             <li>
               <strong>Copy the result</strong> with one click and paste it into
@@ -127,15 +128,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</a>
-              <a href="/xml-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">XML Formatter</a>
-              <a href="/yaml-to-json" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">YAML to JSON</a>
-              <a href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</a>
-              <a href="/minify-js" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify JS</a>
+              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
+              <Link href="/xml-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">XML Formatter</Link>
+              <Link href="/yaml-to-json" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">YAML to JSON</Link>
+              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</Link>
+              <Link href="/minify-js" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify JS</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</Link>
           </div>
         </div>
       </footer>

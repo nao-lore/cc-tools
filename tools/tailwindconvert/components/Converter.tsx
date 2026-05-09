@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { cssToTailwind, tailwindToCss } from "../lib/converter";
 
@@ -273,8 +274,8 @@ export default function Converter() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/px-to-rem" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">px → rem 変換</a>
-            <a href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</a>
+            <Link href="/px-to-rem" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">px → rem 変換</Link>
+            <Link href="/css-box-shadow" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">CSS ボックスシャドウ</Link>
           </div>
         </div>
       </div>

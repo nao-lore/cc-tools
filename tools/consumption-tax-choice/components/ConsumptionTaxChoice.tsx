@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 型定義 ---
@@ -728,9 +729,9 @@ export default function ConsumptionTaxChoice() {
       <div className="bg-amber-50 rounded-2xl border border-amber-200 p-5">
         <p className="text-sm font-semibold text-amber-900 mb-1">確定申告ソフトで消費税申告を簡単に</p>
         <p className="text-xs text-amber-700 mb-3">freee・弥生・マネーフォワードクラウドなどの会計ソフトは、簡易課税・本則課税の切り替えや消費税申告書の自動作成に対応しています。</p>
-        <a href="/tools/aojiro-shinkoku-sim" className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 hover:text-amber-900 underline">
+        <Link href="/aojiro-shinkoku-sim" className="inline-flex items-center gap-1.5 text-xs font-medium text-amber-800 hover:text-amber-900 underline">
           青色申告の節税効果もシミュレーションする
-        </a>
+        </Link>
       </div>
 
       {/* ===== 関連ツール ===== */}

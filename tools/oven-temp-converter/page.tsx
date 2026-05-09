@@ -1,3 +1,4 @@
+import Link from "next/link";
 import OvenTempConverter from "./components/OvenTempConverter";
 
 export default function Home() {
@@ -105,8 +106,8 @@ export default function Home() {
 
             <h2 className="text-lg font-bold text-foreground mt-8">関連ツール</h2>
             <div className="flex flex-wrap gap-2">
-              <a href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">計量スプーン・カップ換算</a>
-              <a href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">カロリー計算</a>
+              <Link href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">計量スプーン・カップ換算</Link>
+              <Link href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">カロリー計算</Link>
             </div>
 
             <div className="mt-6 bg-card border border-border rounded-xl p-5 text-center space-y-2">
@@ -124,13 +125,13 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">計量スプーン換算</a>
-              <a href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">カロリー計算</a>
-              <a href="/bmi-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">BMI計算</a>
+              <Link href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">計量スプーン換算</Link>
+              <Link href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">カロリー計算</Link>
+              <Link href="/bmi-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">BMI計算</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">60+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">60+ Free Tools →</Link>
           </div>
         </div>
       </footer>

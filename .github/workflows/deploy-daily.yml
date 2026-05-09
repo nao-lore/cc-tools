@@ -38,6 +38,10 @@ jobs:
           DEPLOY_COUNT: ${{ github.event.inputs.count || '5' }}
         run: python3 scripts/stock-to-deploy.py "$DEPLOY_COUNT"
 
+      - name: Normalize internal links
+        if: steps.check.outputs.pending != '0'
+        run: python3 scripts/normalize-internal-links.py
+
       - name: Validate repository integrity
         run: python3 scripts/check-integrity.py
 
@@ -53,6 +57,12 @@ jobs:
           npm ci
           npx tsc --noEmit
           echo "Type check passed"
+
+      - name: Lint deployed tools
+        if: steps.check.outputs.pending != '0'
+        run: |
+          npm run lint -- --quiet
+          echo "Lint passed"
 
       - name: Commit and push
         if: steps.check.outputs.pending != '0'

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -449,8 +450,8 @@ export default function AsciiFlowchart() {
       <div className="mt-4 p-4 border border-[var(--border)] rounded-lg bg-[var(--muted)]">
         <p className="text-sm font-medium text-[var(--foreground)] mb-2">関連ツール</p>
         <div className="flex flex-wrap gap-3">
-          <a href="/tools/ascii-art" className="text-sm text-[var(--accent)] hover:underline">ASCIIアート生成</a>
-          <a href="/tools/markdown-preview" className="text-sm text-[var(--accent)] hover:underline">Markdownプレビュー</a>
+          <Link href="/ascii-art" className="text-sm text-[var(--accent)] hover:underline">ASCIIアート生成</Link>
+          <Link href="/markdown-preview" className="text-sm text-[var(--accent)] hover:underline">Markdownプレビュー</Link>
         </div>
       </div>
     </div>

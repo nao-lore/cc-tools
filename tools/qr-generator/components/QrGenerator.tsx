@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // ============================================================
@@ -806,8 +807,8 @@ function Field({
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/barcode-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">バーコード生成</a>
-            <a href="/placeholder-image" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">プレースホルダー画像生成</a>
+            <Link href="/image-to-base64" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">画像→Base64</Link>
+            <Link href="/placeholder-image" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">プレースホルダー画像生成</Link>
           </div>
         </div>
       </div>

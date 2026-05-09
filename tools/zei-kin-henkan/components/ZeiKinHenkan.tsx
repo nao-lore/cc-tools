@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 type Direction = "excl_to_incl" | "incl_to_excl";
@@ -565,9 +566,9 @@ export default function ZeiKinHenkan() {
       <div className="rounded-2xl p-5 text-white text-center space-y-3" style={{ background: "linear-gradient(135deg, rgba(109,40,217,0.8), rgba(124,58,237,0.6))", border: "1px solid rgba(139,92,246,0.3)" }}>
         <p className="text-base font-bold">{t.ctaTitle}</p>
         <p className="text-xs opacity-80">{t.ctaDesc}</p>
-        <a href="/tools" className="inline-block bg-white text-violet-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-violet-50 transition-colors">
+        <Link href="/" className="inline-block bg-white text-violet-700 text-sm font-bold px-5 py-2 rounded-xl hover:bg-violet-50 transition-colors">
           {t.ctaBtn}
-        </a>
+        </Link>
       </div>
 
       <script

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useEffect } from "react";
 
 function gcd(a: number, b: number): number {
@@ -587,8 +588,8 @@ function ResizeCalculator() {
       <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
         <p className="text-sm font-medium text-gray-700 mb-2">関連ツール</p>
         <div className="flex flex-wrap gap-3">
-          <a href="/tools/px-to-rem" className="text-sm text-blue-600 hover:underline">px ↔ rem 変換</a>
-          <a href="/tools/image-compressor" className="text-sm text-blue-600 hover:underline">画像圧縮ツール</a>
+          <Link href="/px-to-rem" className="text-sm text-blue-600 hover:underline">px ↔ rem 変換</Link>
+          <Link href="/image-compressor" className="text-sm text-blue-600 hover:underline">画像圧縮ツール</Link>
         </div>
       </div>
     </div>

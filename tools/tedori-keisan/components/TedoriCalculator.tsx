@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 interface TedoriInput {
@@ -369,8 +370,8 @@ export default function TedoriCalculator() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</a>
-            <a href="/tsumitate-sim" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">積立シミュレーター</a>
+            <Link href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</Link>
+            <Link href="/tsumitate-sim" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">積立シミュレーター</Link>
           </div>
         </div>
       </div>

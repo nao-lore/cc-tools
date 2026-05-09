@@ -353,7 +353,7 @@ function calcFly(input: UserInput, t: TDict): CostResult {
     breakdown.push({ label: t.flyPostgres, cost: dbCost });
   }
 
-  let subtotal = vmCost + memCost + volCost + bwOverage + dbCost;
+  const subtotal = vmCost + memCost + volCost + bwOverage + dbCost;
 
   const credit = FLY.hobbyCredit;
   breakdown.push({ label: t.hobbyCredit, cost: -credit });

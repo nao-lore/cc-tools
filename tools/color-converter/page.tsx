@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ColorConverter from "./components/ColorConverter";
 
 export default function Home() {
@@ -120,15 +121,15 @@ export default function Home() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">Related Tools</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</a>
-              <a href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient</a>
-              <a href="/binary-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HEX Converter</a>
-              <a href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Convert</a>
-              <a href="/px-to-rem" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">PX to REM</a>
+              <Link href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</Link>
+              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient</Link>
+              <Link href="/binary-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HEX Converter</Link>
+              <Link href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Convert</Link>
+              <Link href="/px-to-rem" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">PX to REM</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53+ Free Tools →</a>
+            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
           </div>
         </div>
       </footer>

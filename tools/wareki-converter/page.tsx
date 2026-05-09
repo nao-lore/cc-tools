@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useMemo } from "react";
 
 // ─── データ定義 ───────────────────────────────────────────────
@@ -636,14 +637,14 @@ export default function WarekiConverterPage() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">関連ツール</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/eigyoubi" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">営業日計算</a>
-              <a href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">全角半角変換</a>
-              <a href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">ふりがな変換</a>
-              <a href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">税額計算</a>
-              <a href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">タイムゾーン変換</a>
+              <Link href="/eigyoubi" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">営業日計算</Link>
+              <Link href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">全角半角変換</Link>
+              <Link href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">ふりがな変換</Link>
+              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">税額計算</Link>
+              <Link href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1 bg-blue-50 rounded-full transition-colors">タイムゾーン変換</Link>
             </div>
           </div>
-          <a href="/" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">53以上の無料ツール一覧 →</a>
+          <Link href="/" className="text-xs text-gray-400 hover:text-gray-600 transition-colors">53以上の無料ツール一覧 →</Link>
         </div>
       </footer>
     

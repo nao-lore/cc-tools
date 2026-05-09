@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 定数 ---
@@ -985,9 +986,9 @@ export default function HourlyToAnnual() {
       >
         <p className="text-base font-bold text-white">{t.ctaHeading}</p>
         <p className="text-xs text-violet-200">{t.ctaSubtitle}</p>
-        <a href="/tools" className="inline-block glass-card text-violet-100 text-sm font-bold px-5 py-2 rounded-xl hover:text-white transition-colors">
+        <Link href="/" className="inline-block glass-card text-violet-100 text-sm font-bold px-5 py-2 rounded-xl hover:text-white transition-colors">
           {t.ctaButton}
-        </a>
+        </Link>
       </div>
 
       <script

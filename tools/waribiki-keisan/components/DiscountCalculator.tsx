@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useMemo } from "react";
 
 type DiscountMode = "percent" | "amount" | "wari";
@@ -251,8 +252,8 @@ function ItemCard({
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</a>
-            <a href="/gacha-cost-ceiling" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ガチャ天井計算</a>
+            <Link href="/tax-calculator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">消費税計算ツール</Link>
+            <Link href="/gacha-cost-ceiling" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ガチャ天井計算</Link>
           </div>
         </div>
       </div>

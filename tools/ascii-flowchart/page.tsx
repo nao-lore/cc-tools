@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AsciiFlowchart from "./components/AsciiFlowchart";
 
 export default function Home() {
@@ -118,14 +119,14 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a
+            <Link
               href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-600"
             >
               53+ Free Tools →
-            </a>
+            </Link>
           </div>
         </div>
       </footer>

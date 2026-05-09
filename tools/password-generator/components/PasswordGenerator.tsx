@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useEffect } from "react";
 
 const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -388,8 +389,8 @@ export default function PasswordGenerator() {
         <div className="mt-6 pt-4 border-t" style={{ borderColor: "var(--border)" }}>
           <p className="text-sm font-medium opacity-50 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/hash-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</a>
-            <a href="/uuid-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">UUID ジェネレーター</a>
+            <Link href="/hash-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</Link>
+            <Link href="/uuid-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">UUID ジェネレーター</Link>
           </div>
         </div>
       </div>

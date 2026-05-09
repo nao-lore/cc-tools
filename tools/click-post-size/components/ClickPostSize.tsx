@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 配送サービスデータ ---
@@ -661,12 +662,12 @@ export default function ClickPostSize() {
       <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
         <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
         <div className="flex flex-wrap gap-2">
-          <a href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
+          <Link href="/takuhaibin-hikaku" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
             <span>🚚</span> 宅配便 送料比較（佐川・ヤマト・ゆうパック）
-          </a>
-          <a href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
+          </Link>
+          <Link href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-sky-300 hover:text-sky-700 transition-colors">
             <span>💰</span> メルカリ手数料計算
-          </a>
+          </Link>
         </div>
       </div>
 

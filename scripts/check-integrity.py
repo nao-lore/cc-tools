@@ -17,7 +17,9 @@ STOCK_DIRS = [ROOT / "stock" / "priority", ROOT / "stock" / "pending"]
 TOOLS_CONFIG = ROOT / "lib" / "tools-config.ts"
 TOOL_CATEGORIES = ROOT / "lib" / "tool-categories.ts"
 CATEGORIES = ROOT / "lib" / "categories.ts"
+BLOG_POSTS = ROOT / "lib" / "blog-posts.ts"
 NON_TOOL_APP_DIRS = {"blog", "category"}
+STATIC_HREF_RE = re.compile(r'href=["\'](/[^"\'?#]*)(?:[?#][^"\']*)?["\']')
 
 
 def fail(message: str) -> None:
@@ -41,6 +43,12 @@ def parse_category_slugs() -> set[str]:
 def parse_category_map() -> dict[str, str]:
     text = TOOL_CATEGORIES.read_text()
     return dict(re.findall(r'"([^"]+)":\s*"([^"]+)"', text))
+
+
+def parse_blog_slugs() -> set[str]:
+    if not BLOG_POSTS.exists():
+        return set()
+    return set(re.findall(r'slug:\s*"([^"]+)"', BLOG_POSTS.read_text()))
 
 
 def child_dirs(path: Path) -> set[str]:
@@ -74,6 +82,33 @@ def stock_is_deployable(path: Path) -> bool:
     return len(components) == 1
 
 
+def known_routes(config_slug_set: set[str], category_slugs: set[str]) -> set[str]:
+    routes = {
+        "/",
+        "/blog",
+        "/robots.txt",
+        "/sitemap.xml",
+    }
+    routes.update(f"/{slug}" for slug in config_slug_set)
+    routes.update(f"/category/{slug}" for slug in category_slugs)
+    routes.update(f"/blog/{slug}" for slug in parse_blog_slugs())
+    return routes
+
+
+def static_internal_hrefs() -> list[tuple[Path, int, str]]:
+    hrefs = []
+    for root in [APP_DIR, TOOLS_DIR]:
+        for path in sorted(root.rglob("*.tsx")):
+            text = path.read_text()
+            for match in STATIC_HREF_RE.finditer(text):
+                href = match.group(1)
+                if href != "/":
+                    href = href.rstrip("/")
+                line = text.count("\n", 0, match.start()) + 1
+                hrefs.append((path, line, href))
+    return hrefs
+
+
 def main() -> int:
     errors = 0
 
@@ -85,6 +120,7 @@ def main() -> int:
     app_dirs = child_dirs(APP_DIR) - NON_TOOL_APP_DIRS
     category_slugs = parse_category_slugs()
     category_map = parse_category_map()
+    routes = known_routes(config_slug_set, category_slugs)
 
     for slug, count in Counter(config_slugs).items():
         if count > 1:
@@ -122,6 +158,11 @@ def main() -> int:
     for category, slug in sorted(category_map.items()):
         if slug not in category_slugs:
             fail(f"tool-categories.ts maps {category} to missing category slug {slug}")
+            errors += 1
+
+    for path, line, href in static_internal_hrefs():
+        if href not in routes:
+            fail(f"static internal href points to a missing route: {href} ({path.relative_to(ROOT)}:{line})")
             errors += 1
 
     seen_stock = set()

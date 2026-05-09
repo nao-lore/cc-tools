@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback, useRef, useEffect } from "react";
 
 // ─── 型定義 ──────────────────────────────────────────────────────────────────
@@ -517,7 +518,7 @@ function ExplainerSection() {
               24ビットを6ビットずつ4分割し、各6ビットの値（0〜63）を対応するASCII文字に置き換えます。
             </p>
             <div className="font-mono text-xs bg-panel-bg border border-panel-border rounded-lg p-4 space-y-2 overflow-x-auto">
-              <div className="text-muted/60">入力: "Man" = 0x4D 0x61 0x6E</div>
+              <div className="text-muted/60">入力: &quot;Man&quot; = 0x4D 0x61 0x6E</div>
               <div className="flex gap-1 flex-wrap">
                 {[
                   { bits: "01001101", color: "text-blue-400" },
@@ -738,15 +739,15 @@ export default function Base64ToolsPage() {
           <div className="mb-4">
             <p className="text-xs text-muted/60 mb-2">関連ツール</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/url-encoder" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">URLエンコーダー</a>
-              <a href="/jwt-decoder" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">JWTデコーダー</a>
-              <a href="/hash-generator" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">ハッシュ生成</a>
-              <a href="/image-to-base64" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">画像→Base64</a>
-              <a href="/html-entity" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">HTMLエンティティ</a>
+              <Link href="/url-encoder" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">URLエンコーダー</Link>
+              <Link href="/jwt-decoder" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">JWTデコーダー</Link>
+              <Link href="/hash-generator" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">ハッシュ生成</Link>
+              <Link href="/image-to-base64" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">画像→Base64</Link>
+              <Link href="/html-entity" className="text-xs text-accent hover:text-accent/80 px-2 py-1 bg-panel-bg border border-panel-border rounded">HTMLエンティティ</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-muted/60">
-            <a href="/" className="hover:text-muted">53+ 無料ツール →</a>
+            <Link href="/" className="hover:text-muted">53+ 無料ツール →</Link>
           </div>
         </div>
       </footer>

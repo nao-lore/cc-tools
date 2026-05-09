@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 所得税率テーブル（累進課税） ---
@@ -666,9 +667,9 @@ export default function AojiroShinkokuSim() {
       <div className="bg-blue-50 rounded-2xl border border-blue-200 p-5">
         <p className="text-sm font-semibold text-blue-900 mb-1">確定申告ソフトを比較する</p>
         <p className="text-xs text-blue-700 mb-3">青色申告65万円控除を受けるには複式簿記対応の会計ソフトが便利です。freee・弥生・マネーフォワードクラウドが3大定番です。</p>
-        <a href="/tools/consumption-tax-choice" className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 hover:text-blue-900 underline">
+        <Link href="/consumption-tax-choice" className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-800 hover:text-blue-900 underline">
           消費税の課税方式（簡易課税/本則課税）も比較する
-        </a>
+        </Link>
       </div>
 
       {/* ===== 関連ツール ===== */}

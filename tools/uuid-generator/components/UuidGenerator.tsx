@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 type UuidFormat = "standard" | "no-dashes" | "uppercase" | "lowercase";
@@ -193,8 +194,8 @@ export default function UuidGenerator() {
         <div className="mt-6 pt-4 border-t border-gray-100">
           <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
           <div className="flex flex-wrap gap-2">
-            <a href="/hash-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</a>
-            <a href="/password-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">パスワード生成ツール</a>
+            <Link href="/hash-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</Link>
+            <Link href="/password-generator" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">パスワード生成ツール</Link>
           </div>
         </div>
       </div>

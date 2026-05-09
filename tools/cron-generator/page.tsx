@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useCallback } from "react";
 
 // ── 型定義 ──────────────────────────────────────────────────────────────────
@@ -989,15 +990,15 @@ export default function CronGeneratorPage() {
           <div className="mb-4">
             <p className="text-xs text-gray-400 mb-2">関連ツール</p>
             <div className="flex flex-wrap justify-center gap-2">
-              <a href="/epoch-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Epoch変換</a>
-              <a href="/chmod-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Chmod計算</a>
-              <a href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">正規表現テスター</a>
-              <a href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUIDジェネレーター</a>
-              <a href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">タイムゾーン変換</a>
+              <Link href="/epoch-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Epoch変換</Link>
+              <Link href="/chmod-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Chmod計算</Link>
+              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">正規表現テスター</Link>
+              <Link href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUIDジェネレーター</Link>
+              <Link href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">タイムゾーン変換</Link>
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <a href="/" className="hover:text-gray-600">53以上の無料ツール →</a>
+            <Link href="/" className="hover:text-gray-600">53以上の無料ツール →</Link>
           </div>
         </div>
       </footer>

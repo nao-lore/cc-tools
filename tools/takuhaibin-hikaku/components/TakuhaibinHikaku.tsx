@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useMemo } from "react";
 
 // --- 地域区分 ---
@@ -553,12 +554,12 @@ export default function TakuhaibinHikaku() {
       <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5">
         <h2 className="text-sm font-semibold text-gray-700 mb-3">関連ツール</h2>
         <div className="flex flex-wrap gap-2">
-          <a href="/click-post-size" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
+          <Link href="/click-post-size" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
             <span>📦</span> ネコポス・クリックポスト サイズ判定
-          </a>
-          <a href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
+          </Link>
+          <Link href="/mercari-tesuryou" className="inline-flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm text-gray-700 hover:border-blue-300 hover:text-blue-700 transition-colors">
             <span>💰</span> メルカリ手数料計算
-          </a>
+          </Link>
         </div>
       </div>
 
