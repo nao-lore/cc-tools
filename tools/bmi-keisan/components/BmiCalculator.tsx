@@ -1,206 +1,377 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
 type BmiCategory = {
   label: string;
-  color: string;
-  bgColor: string;
-  borderColor: string;
+  shortLabel: string;
+  tone: string;
+  range: string;
   min: number;
   max: number;
+  advice: string;
 };
 
 const BMI_CATEGORIES: BmiCategory[] = [
-  { label: "低体重（やせ）", color: "text-blue-600", bgColor: "bg-blue-50", borderColor: "border-blue-300", min: 0, max: 18.5 },
-  { label: "普通体重", color: "text-green-600", bgColor: "bg-green-50", borderColor: "border-green-300", min: 18.5, max: 25 },
-  { label: "肥満（1度）", color: "text-yellow-600", bgColor: "bg-yellow-50", borderColor: "border-yellow-300", min: 25, max: 30 },
-  { label: "肥満（2度）", color: "text-orange-600", bgColor: "bg-orange-50", borderColor: "border-orange-300", min: 30, max: 35 },
-  { label: "肥満（3度）", color: "text-red-500", bgColor: "bg-red-50", borderColor: "border-red-300", min: 35, max: 40 },
-  { label: "肥満（4度）", color: "text-red-700", bgColor: "bg-red-100", borderColor: "border-red-400", min: 40, max: Infinity },
+  {
+    label: "低体重（やせ）",
+    shortLabel: "低体重",
+    tone: "text-sky-700 bg-sky-50 border-sky-200",
+    range: "18.5 未満",
+    min: 0,
+    max: 18.5,
+    advice: "体重だけで判断せず、食事量・筋肉量・体調の変化も確認してください。",
+  },
+  {
+    label: "普通体重",
+    shortLabel: "普通",
+    tone: "text-emerald-700 bg-emerald-50 border-emerald-200",
+    range: "18.5 以上 25.0 未満",
+    min: 18.5,
+    max: 25,
+    advice: "現在の範囲を維持しながら、体脂肪率や腹囲もあわせて見ると実用的です。",
+  },
+  {
+    label: "肥満（1度）",
+    shortLabel: "肥満1度",
+    tone: "text-amber-700 bg-amber-50 border-amber-200",
+    range: "25.0 以上 30.0 未満",
+    min: 25,
+    max: 30,
+    advice: "生活習慣の見直し候補です。腹囲・血圧・血糖・脂質も一緒に確認してください。",
+  },
+  {
+    label: "肥満（2度）",
+    shortLabel: "肥満2度",
+    tone: "text-orange-700 bg-orange-50 border-orange-200",
+    range: "30.0 以上 35.0 未満",
+    min: 30,
+    max: 35,
+    advice: "健康リスクの確認優先度が上がります。健診結果とあわせて判断してください。",
+  },
+  {
+    label: "肥満（3度）",
+    shortLabel: "肥満3度",
+    tone: "text-red-700 bg-red-50 border-red-200",
+    range: "35.0 以上 40.0 未満",
+    min: 35,
+    max: 40,
+    advice: "高度肥満に含まれる範囲です。医療機関や専門家への相談も検討してください。",
+  },
+  {
+    label: "肥満（4度）",
+    shortLabel: "肥満4度",
+    tone: "text-rose-800 bg-rose-50 border-rose-200",
+    range: "40.0 以上",
+    min: 40,
+    max: Infinity,
+    advice: "高度肥満に含まれる範囲です。自己判断だけでなく専門家に相談してください。",
+  },
 ];
 
-function getCategory(bmi: number): BmiCategory {
-  return BMI_CATEGORIES.find((c) => bmi >= c.min && bmi < c.max) ?? BMI_CATEGORIES[BMI_CATEGORIES.length - 1];
+const EXAMPLES = [
+  { label: "170cm / 65kg", height: "170", weight: "65" },
+  { label: "160cm / 50kg", height: "160", weight: "50" },
+  { label: "175cm / 82kg", height: "175", weight: "82" },
+];
+
+function parseNumber(value: string) {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function BmiGauge({ bmi }: { bmi: number }) {
-  // Scale: 10 to 40 displayed, clamp pointer
-  const MIN_SCALE = 10;
-  const MAX_SCALE = 40;
-  const pct = Math.min(100, Math.max(0, ((bmi - MIN_SCALE) / (MAX_SCALE - MIN_SCALE)) * 100));
+function format(value: number, digits = 1) {
+  return value.toFixed(digits);
+}
 
+function getCategory(bmi: number): BmiCategory {
+  return BMI_CATEGORIES.find((category) => bmi >= category.min && bmi < category.max) ?? BMI_CATEGORIES[BMI_CATEGORIES.length - 1];
+}
+
+function getInputError(height: number, weight: number) {
+  if (!height && !weight) return "";
+  if (!height || !weight) return "身長と体重を両方入力してください。";
+  if (height < 80 || height > 240) return "身長は 80〜240cm の範囲で入力してください。";
+  if (weight < 20 || weight > 300) return "体重は 20〜300kg の範囲で入力してください。";
+  return "";
+}
+
+function buildCopyText(result: BmiResult) {
+  return [
+    `BMI: ${format(result.bmi)}`,
+    `判定: ${result.category.label}`,
+    `標準体重: ${format(result.standardWeight)}kg`,
+    `普通体重の目安: ${format(result.normalMin)}kg〜${format(result.normalMax)}kg未満`,
+    `現在体重との差: ${result.diffFromStandard >= 0 ? "+" : ""}${format(result.diffFromStandard)}kg`,
+  ].join("\n");
+}
+
+type BmiResult = {
+  bmi: number;
+  category: BmiCategory;
+  standardWeight: number;
+  normalMin: number;
+  normalMax: number;
+  diffFromStandard: number;
+  distanceToNormal: string;
+};
+
+function BmiGauge({ bmi }: { bmi: number }) {
+  const min = 14;
+  const max = 42;
+  const pct = Math.min(100, Math.max(0, ((bmi - min) / (max - min)) * 100));
   const segments = [
-    { label: "やせ", width: ((18.5 - MIN_SCALE) / (MAX_SCALE - MIN_SCALE)) * 100, color: "bg-blue-400" },
-    { label: "普通", width: ((25 - 18.5) / (MAX_SCALE - MIN_SCALE)) * 100, color: "bg-green-400" },
-    { label: "肥満1", width: ((30 - 25) / (MAX_SCALE - MIN_SCALE)) * 100, color: "bg-yellow-400" },
-    { label: "肥満2", width: ((35 - 30) / (MAX_SCALE - MIN_SCALE)) * 100, color: "bg-orange-400" },
-    { label: "肥満3+", width: ((MAX_SCALE - 35) / (MAX_SCALE - MIN_SCALE)) * 100, color: "bg-red-500" },
+    { label: "低体重", from: min, to: 18.5, className: "bg-sky-400" },
+    { label: "普通", from: 18.5, to: 25, className: "bg-emerald-400" },
+    { label: "肥満1", from: 25, to: 30, className: "bg-amber-400" },
+    { label: "肥満2", from: 30, to: 35, className: "bg-orange-400" },
+    { label: "肥満3+", from: 35, to: max, className: "bg-red-500" },
   ];
 
   return (
-    <div className="mt-4">
-      <div className="relative h-6 rounded-full overflow-hidden flex">
-        {segments.map((seg) => (
-          <div
-            key={seg.label}
-            className={`${seg.color} h-full`}
-            style={{ width: `${seg.width}%` }}
-          />
-        ))}
-      </div>
-      {/* Pointer */}
-      <div className="relative h-3 mt-1">
+    <div className="space-y-3">
+      <div className="relative h-4 overflow-hidden rounded-full bg-slate-100">
+        <div className="flex h-full">
+          {segments.map((segment) => (
+            <div
+              key={segment.label}
+              className={segment.className}
+              style={{ width: `${((segment.to - segment.from) / (max - min)) * 100}%` }}
+            />
+          ))}
+        </div>
         <div
-          className="absolute top-0 w-0.5 h-3 bg-gray-800 rounded"
-          style={{ left: `calc(${pct}% - 1px)` }}
+          className="absolute top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-slate-950 shadow"
+          style={{ left: `calc(${pct}% - 2px)` }}
         />
       </div>
-      {/* Scale labels */}
-      <div className="flex justify-between text-xs text-muted mt-1">
-        <span>10</span>
+      <div className="flex justify-between text-[11px] text-slate-500">
+        <span>14</span>
         <span>18.5</span>
         <span>25</span>
         <span>30</span>
         <span>35</span>
-        <span>40</span>
-      </div>
-      {/* Legend */}
-      <div className="flex flex-wrap gap-2 mt-2">
-        {[
-          { label: "やせ", color: "bg-blue-400" },
-          { label: "普通", color: "bg-green-400" },
-          { label: "肥満1", color: "bg-yellow-400" },
-          { label: "肥満2", color: "bg-orange-400" },
-          { label: "肥満3+", color: "bg-red-500" },
-        ].map((item) => (
-          <div key={item.label} className="flex items-center gap-1 text-xs text-muted">
-            <span className={`w-3 h-3 rounded-sm ${item.color} inline-block`} />
-            {item.label}
-          </div>
-        ))}
+        <span>42</span>
       </div>
     </div>
   );
 }
 
 export default function BmiCalculator() {
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("170");
+  const [weight, setWeight] = useState("65");
+  const [copied, setCopied] = useState(false);
 
-  const result = useMemo(() => {
-    const h = parseFloat(height);
-    const w = parseFloat(weight);
-    if (!h || !w || h <= 0 || w <= 0) return null;
+  const heightValue = parseNumber(height);
+  const weightValue = parseNumber(weight);
+  const error = getInputError(heightValue, weightValue);
 
-    const hm = h / 100;
-    const bmi = w / (hm * hm);
-    const standardWeight = 22 * hm * hm; // BMI 22
-    const minWeight = 18.5 * hm * hm;
-    const maxWeight = 25 * hm * hm;
+  const result = useMemo<BmiResult | null>(() => {
+    if (error || !heightValue || !weightValue) return null;
+
+    const meters = heightValue / 100;
+    const bmi = weightValue / (meters * meters);
+    const standardWeight = 22 * meters * meters;
+    const normalMin = 18.5 * meters * meters;
+    const normalMax = 25 * meters * meters;
+    const diffFromStandard = weightValue - standardWeight;
     const category = getCategory(bmi);
+    let distanceToNormal = "普通体重の範囲内です。";
 
-    return { bmi, standardWeight, minWeight, maxWeight, category };
-  }, [height, weight]);
+    if (bmi < 18.5) {
+      distanceToNormal = `普通体重の下限まで ${format(normalMin - weightValue)}kg です。`;
+    } else if (bmi >= 25) {
+      distanceToNormal = `普通体重の上限まで ${format(weightValue - normalMax)}kg です。`;
+    }
 
-  const fmt = (n: number) => n.toFixed(1);
+    return { bmi, category, standardWeight, normalMin, normalMax, diffFromStandard, distanceToNormal };
+  }, [error, heightValue, weightValue]);
+
+  function updateNumber(setter: (value: string) => void, value: string) {
+    setter(value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1"));
+    setCopied(false);
+  }
+
+  function reset() {
+    setHeight("");
+    setWeight("");
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!result) return;
+    await navigator.clipboard.writeText(buildCopyText(result));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-4">
-      {/* Input card */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h2 className="font-bold text-base mb-4">身体情報を入力</h2>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <label className="block text-xs text-muted mb-1">身長（cm）</label>
-            <div className="relative">
-              <input
-                type="text"
-                inputMode="decimal"
-                placeholder="170"
-                value={height}
-                onChange={(e) => setHeight(e.target.value.replace(/[^0-9.]/g, ""))}
-                className="w-full px-3 py-2.5 border border-border rounded-lg text-right text-lg font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent pr-10"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted">cm</span>
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">身長・体重</h2>
+              <p className="mt-1 text-sm text-slate-500">成人向けのBMI、標準体重、普通体重範囲を計算します。</p>
+            </div>
+            <button
+              type="button"
+              onClick={reset}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              クリア
+            </button>
+          </div>
+
+          <div className="mt-5 grid gap-4">
+            <div>
+              <label htmlFor="bmi-height" className="text-sm font-medium text-slate-700">
+                身長
+              </label>
+              <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+                <input
+                  id="bmi-height"
+                  type="text"
+                  inputMode="decimal"
+                  value={height}
+                  onChange={(event) => updateNumber(setHeight, event.target.value)}
+                  placeholder="170"
+                  className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+                  aria-describedby="bmi-input-error"
+                />
+                <span className="flex items-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">cm</span>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="bmi-weight" className="text-sm font-medium text-slate-700">
+                体重
+              </label>
+              <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+                <input
+                  id="bmi-weight"
+                  type="text"
+                  inputMode="decimal"
+                  value={weight}
+                  onChange={(event) => updateNumber(setWeight, event.target.value)}
+                  placeholder="65"
+                  className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+                  aria-describedby="bmi-input-error"
+                />
+                <span className="flex items-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">kg</span>
+              </div>
             </div>
           </div>
-          <div className="flex-1">
-            <label className="block text-xs text-muted mb-1">体重（kg）</label>
-            <div className="relative">
-              <input
-                type="text"
-                inputMode="decimal"
-                placeholder="60"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value.replace(/[^0-9.]/g, ""))}
-                className="w-full px-3 py-2.5 border border-border rounded-lg text-right text-lg font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent pr-10"
-              />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted">kg</span>
+
+          <p id="bmi-input-error" className={`mt-3 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || "小数も入力できます。結果は端末内で計算され、外部に送信されません。"}
+          </p>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => {
+                    setHeight(example.height);
+                    setWeight(example.weight);
+                    setCopied(false);
+                  }}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label}
+                </button>
+              ))}
             </div>
           </div>
+        </div>
+
+        <div className="p-5 sm:p-6">
+          {!result ? (
+            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 text-center">
+              <div>
+                <p className="text-sm font-medium text-slate-700">入力を確認してください</p>
+                <p className="mt-1 text-sm text-slate-500">身長と体重を入れると、判定と標準体重が表示されます。</p>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div className={`rounded-2xl border p-5 ${result.category.tone}`}>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-sm font-medium opacity-80">あなたのBMI</p>
+                    <p className="mt-1 font-mono text-5xl font-bold tracking-tight">{format(result.bmi)}</p>
+                  </div>
+                  <div className="sm:text-right">
+                    <p className="text-sm font-medium opacity-80">判定</p>
+                    <p className="mt-1 text-2xl font-bold">{result.category.label}</p>
+                  </div>
+                </div>
+                <div className="mt-5">
+                  <BmiGauge bmi={result.bmi} />
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <ResultCard label="標準体重" value={`${format(result.standardWeight)} kg`} note="BMI 22 を基準" />
+                <ResultCard label="普通体重の範囲" value={`${format(result.normalMin)} - ${format(result.normalMax)} kg未満`} note="BMI 18.5以上25未満" />
+                <ResultCard
+                  label="標準体重との差"
+                  value={`${result.diffFromStandard >= 0 ? "+" : ""}${format(result.diffFromStandard)} kg`}
+                  note={result.diffFromStandard >= 0 ? "現在体重が標準より重い" : "現在体重が標準より軽い"}
+                />
+                <ResultCard label="普通体重まで" value={result.distanceToNormal} note="境界値との差分" />
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-800">結果の見方</p>
+                <p className="mt-1 text-sm leading-6 text-slate-600">{result.category.advice}</p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={copyResult}
+                  className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                >
+                  {copied ? "コピーしました" : "結果をコピー"}
+                </button>
+                <button
+                  type="button"
+                  onClick={reset}
+                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  入力をクリア
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Result card */}
-      {result && (
-        <div className={`bg-card border-2 ${result.category.borderColor} rounded-xl p-5 shadow-sm`}>
-          {/* BMI value + category */}
-          <div className={`flex items-center justify-between mb-4 p-4 ${result.category.bgColor} rounded-lg`}>
-            <div>
-              <p className="text-xs text-muted mb-1">あなたのBMI</p>
-              <p className={`text-4xl font-bold ${result.category.color}`}>{fmt(result.bmi)}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs text-muted mb-1">肥満度判定</p>
-              <p className={`text-xl font-bold ${result.category.color}`}>{result.category.label}</p>
-            </div>
-          </div>
-
-          {/* BMI gauge */}
-          <BmiGauge bmi={result.bmi} />
-
-          {/* Details */}
-          <div className="mt-4 divide-y divide-border">
-            {[
-              { label: "標準体重（BMI 22）", value: `${fmt(result.standardWeight)} kg` },
-              { label: "理想体重（BMI 22）", value: `${fmt(result.standardWeight)} kg` },
-              { label: "適正体重範囲", value: `${fmt(result.minWeight)} 〜 ${fmt(result.maxWeight)} kg` },
-              { label: "現体重との差（標準比）", value: (() => {
-                const diff = parseFloat(weight) - result.standardWeight;
-                return `${diff >= 0 ? "+" : ""}${fmt(diff)} kg`;
-              })() },
-            ].map(({ label, value }) => (
-              <div key={label} className="flex justify-between items-center py-2.5">
-                <span className="text-sm text-muted">{label}</span>
-                <span className="text-sm font-medium">{value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Category table */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h3 className="font-bold text-sm mb-3">日本肥満学会の判定基準</h3>
-        <div className="space-y-1">
-          {BMI_CATEGORIES.map((cat) => (
-            <div
-              key={cat.label}
-              className={`flex justify-between items-center px-3 py-2 rounded-lg text-sm ${
-                result && result.category.label === cat.label
-                  ? `${cat.bgColor} ${cat.borderColor} border font-bold`
-                  : ""
-              }`}
-            >
-              <span className={cat.color}>{cat.label}</span>
-              <span className="text-muted text-xs">
-                {cat.max === Infinity ? `${cat.min} 以上` : `${cat.min} 〜 ${cat.max} 未満`}
-              </span>
+      <div className="border-t border-slate-200 p-5 sm:p-6">
+        <h3 className="text-sm font-semibold text-slate-950">日本肥満学会のBMI判定基準</h3>
+        <div className="mt-3 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
+          {BMI_CATEGORIES.map((category) => (
+            <div key={category.label} className={`rounded-xl border p-3 ${category.tone}`}>
+              <div className="text-sm font-semibold">{category.label}</div>
+              <div className="mt-1 text-xs opacity-80">BMI {category.range}</div>
             </div>
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+function ResultCard({ label, value, note }: { label: string; value: string; note: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 text-lg font-semibold text-slate-950">{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{note}</p>
     </div>
   );
 }

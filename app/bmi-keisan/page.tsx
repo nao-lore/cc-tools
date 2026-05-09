@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/bmi-keisan/page";
 
 export const metadata: Metadata = {
-  title: "BMI計算 - 肥満度判定ツール",
-  description: "身長と体重からBMI値を計算し、日本肥満学会の基準で肥満度を判定。標準体重・理想体重も表示。",
+  title: "BMI計算ツール - 肥満度・標準体重・普通体重範囲を確認",
+  description: "身長と体重からBMI、肥満度、標準体重、普通体重の範囲を計算。日本肥満学会の判定基準に沿った成人向けの確認ツール。",
   alternates: { canonical: "https://tools.loresync.dev/bmi-keisan" },
 };
 

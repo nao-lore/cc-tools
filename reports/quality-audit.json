@@ -1,0 +1,6386 @@
+{
+  "summary": {
+    "toolCount": 142,
+    "averageQualityScore": 67.8,
+    "priorityTierCounts": {
+      "A": 7,
+      "B": 61,
+      "C": 73,
+      "S": 1
+    },
+    "averageByArchetype": {
+      "calculator": 67.0,
+      "comparison": 71.2,
+      "converter": 71.0,
+      "generator": 69.8,
+      "image": 63.3,
+      "reference": 70.3,
+      "utility": 65.7
+    },
+    "weakestCategories": [
+      {
+        "category": "EC",
+        "averageQualityScore": 49,
+        "toolCount": 1
+      },
+      {
+        "category": "Business",
+        "averageQualityScore": 53,
+        "toolCount": 1
+      },
+      {
+        "category": "Color Tools",
+        "averageQualityScore": 55.5,
+        "toolCount": 2
+      },
+      {
+        "category": "Home",
+        "averageQualityScore": 60,
+        "toolCount": 1
+      },
+      {
+        "category": "Text & String Tools",
+        "averageQualityScore": 60.5,
+        "toolCount": 6
+      },
+      {
+        "category": "CSS Tools",
+        "averageQualityScore": 62,
+        "toolCount": 8
+      },
+      {
+        "category": "Japanese Tools",
+        "averageQualityScore": 62.1,
+        "toolCount": 20
+      },
+      {
+        "category": "Image Tools",
+        "averageQualityScore": 63,
+        "toolCount": 5
+      },
+      {
+        "category": "Cooking Tools",
+        "averageQualityScore": 63,
+        "toolCount": 3
+      },
+      {
+        "category": "Creator Tools",
+        "averageQualityScore": 67,
+        "toolCount": 2
+      },
+      {
+        "category": "Music",
+        "averageQualityScore": 67,
+        "toolCount": 1
+      },
+      {
+        "category": "SaaS Pricing",
+        "averageQualityScore": 67.5,
+        "toolCount": 13
+      }
+    ]
+  },
+  "checks": [
+    {
+      "key": "metadata",
+      "label": "page metadata",
+      "weight": 6
+    },
+    {
+      "key": "canonical",
+      "label": "canonical URL",
+      "weight": 4
+    },
+    {
+      "key": "h1",
+      "label": "visible h1",
+      "weight": 4
+    },
+    {
+      "key": "h2_sections",
+      "label": "supporting sections",
+      "weight": 4
+    },
+    {
+      "key": "faq",
+      "label": "FAQ or FAQ schema",
+      "weight": 6
+    },
+    {
+      "key": "jsonld",
+      "label": "structured data",
+      "weight": 5
+    },
+    {
+      "key": "related_links",
+      "label": "related internal links",
+      "weight": 5
+    },
+    {
+      "key": "labels",
+      "label": "form labels",
+      "weight": 4
+    },
+    {
+      "key": "copy",
+      "label": "copy action",
+      "weight": 5
+    },
+    {
+      "key": "download_export",
+      "label": "download/export action",
+      "weight": 4
+    },
+    {
+      "key": "examples",
+      "label": "examples/samples",
+      "weight": 4
+    },
+    {
+      "key": "reset_clear",
+      "label": "reset/clear action",
+      "weight": 3
+    },
+    {
+      "key": "validation",
+      "label": "validation/error handling",
+      "weight": 5
+    },
+    {
+      "key": "privacy",
+      "label": "local/privacy assurance",
+      "weight": 3
+    },
+    {
+      "key": "responsive",
+      "label": "responsive layout",
+      "weight": 4
+    },
+    {
+      "key": "accessible_buttons",
+      "label": "button controls",
+      "weight": 3
+    },
+    {
+      "key": "current_count",
+      "label": "current site count",
+      "weight": 3
+    }
+  ],
+  "antiChecks": [
+    {
+      "key": "old_count",
+      "label": "stale 53+/60+ copy",
+      "weight": 8
+    },
+    {
+      "key": "ad_placeholder",
+      "label": "visible ad placeholder",
+      "weight": 5
+    },
+    {
+      "key": "missing_route_link",
+      "label": "legacy /tools route link",
+      "weight": 10
+    },
+    {
+      "key": "raw_anchor_internal",
+      "label": "raw internal anchor",
+      "weight": 4
+    },
+    {
+      "key": "any_type",
+      "label": "loose any type",
+      "weight": 3
+    }
+  ],
+  "tools": [
+    {
+      "slug": "eigyoubi",
+      "name": "営業日数計算",
+      "description": "Calculate business days between dates",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 42,
+      "priorityScore": 96,
+      "priorityTier": "S",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 4,
+        "internalLinkCount": 6,
+        "componentCount": 3,
+        "hasOpenGraphImage": true,
+        "sourceLines": 926
+      }
+    },
+    {
+      "slug": "calorie-keisan",
+      "name": "カロリー計算",
+      "description": "基礎代謝量と1日の消費カロリーを計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 46,
+      "priorityScore": 89,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 394
+      }
+    },
+    {
+      "slug": "menseki-keisan",
+      "name": "面積計算",
+      "description": "8図形の面積計算と坪・畳変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 50,
+      "priorityScore": 82,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 1,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 600
+      }
+    },
+    {
+      "slug": "nissuu-keisan",
+      "name": "日数計算",
+      "description": "日付間の日数や○日後・○日前の日付を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 54,
+      "priorityScore": 76,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 4,
+        "inputCount": 4,
+        "internalLinkCount": 7,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 648
+      }
+    },
+    {
+      "slug": "risoku-keisan",
+      "name": "利息計算",
+      "description": "単利・複利の利息額と元利合計を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 54,
+      "priorityScore": 76,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 1,
+        "inputCount": 5,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 539
+      }
+    },
+    {
+      "slug": "tsumitate-sim",
+      "name": "積立シミュレーション",
+      "description": "毎月の積立額から最終積立額・運用益を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 54,
+      "priorityScore": 76,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 1,
+        "inputCount": 4,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 482
+      }
+    },
+    {
+      "slug": "denki-keisan",
+      "name": "電気代計算",
+      "description": "家電の消費電力から電気料金を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 56,
+      "priorityScore": 73,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 4,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 417
+      }
+    },
+    {
+      "slug": "ai-tool-roi",
+      "name": "AIツール導入 ROI計算",
+      "description": "月額コスト vs 時短効果 × 時給で投資回収期間を算出",
+      "market": "JP",
+      "category": "AI Workflow",
+      "archetype": "calculator",
+      "qualityScore": 57,
+      "priorityScore": 71,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 452
+      }
+    },
+    {
+      "slug": "favicon-generator",
+      "name": "Favicon Generator",
+      "description": "Generate favicons from text, emoji, or images",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 54,
+      "priorityScore": 69,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 7,
+        "inputCount": 10,
+        "internalLinkCount": 6,
+        "componentCount": 0,
+        "hasOpenGraphImage": true,
+        "sourceLines": 767
+      }
+    },
+    {
+      "slug": "base-stores-fee",
+      "name": "BASE / STORES 手数料比較",
+      "description": "売上規模別の両サービスの実質手数料と損益分岐点",
+      "market": "JP",
+      "category": "EC",
+      "archetype": "comparison",
+      "qualityScore": 49,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 0,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 496
+      }
+    },
+    {
+      "slug": "loan-simulator",
+      "name": "ローン計算",
+      "description": "ローンの毎月返済額・総返済額をシミュレーション",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 60,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 5,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 680
+      }
+    },
+    {
+      "slug": "tedori-keisan",
+      "name": "手取り計算",
+      "description": "額面年収から手取り月額・年額を概算計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 60,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 1,
+        "inputCount": 3,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 521
+      }
+    },
+    {
+      "slug": "waribiki-keisan",
+      "name": "割引計算",
+      "description": "割引率から割引後の価格・税込価格を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 60,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 532
+      }
+    },
+    {
+      "slug": "measuring-converter",
+      "name": "計量スプーン・カップ グラム換算",
+      "description": "大さじ・小さじ・カップを食材別にグラム換算",
+      "market": "JP",
+      "category": "Cooking Tools",
+      "archetype": "converter",
+      "qualityScore": 50,
+      "priorityScore": 65,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "copy",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 385
+      }
+    },
+    {
+      "slug": "jigyou-keihi-bunrui",
+      "name": "経費 勘定科目 判別",
+      "description": "経費の内容から勘定科目を判別。確定申告・青色申告の仕訳作業を補助",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "utility",
+      "qualityScore": 57,
+      "priorityScore": 64,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 439
+      }
+    },
+    {
+      "slug": "hebon-romaji",
+      "name": "ヘボン式ローマ字変換",
+      "description": "ひらがな・カタカナを外務省基準のヘボン式ローマ字に変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 62,
+      "priorityScore": 63,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 423
+      }
+    },
+    {
+      "slug": "oven-temp-converter",
+      "name": "オーブン温度換算",
+      "description": "摂氏・華氏・ガスマークを相互変換。海外レシピの温度確認に対応",
+      "market": "JP",
+      "category": "Cooking Tools",
+      "archetype": "converter",
+      "qualityScore": 54,
+      "priorityScore": 60,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "copy",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 372
+      }
+    },
+    {
+      "slug": "moji-count",
+      "name": "文字数カウント",
+      "description": "ひらがな・カタカナ・漢字別にリアルタイムカウント",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "utility",
+      "qualityScore": 60,
+      "priorityScore": 60,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 443
+      }
+    },
+    {
+      "slug": "elevenlabs-pricing",
+      "name": "ElevenLabs 料金試算",
+      "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 64,
+      "priorityScore": 59,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "labels",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 4,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 622
+      }
+    },
+    {
+      "slug": "url-encoder",
+      "name": "URL Encoder/Decoder",
+      "description": "Encode and decode URL components",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "reference",
+      "qualityScore": 57,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 6,
+        "inputCount": 6,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 770
+      }
+    },
+    {
+      "slug": "image-compressor",
+      "name": "Image Compressor",
+      "description": "Compress images without losing quality",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 61,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 6,
+        "inputCount": 5,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 917
+      }
+    },
+    {
+      "slug": "azure-openai-cost",
+      "name": "Azure OpenAI 料金計算",
+      "description": "Azure OpenAI Serviceの料金をリージョン・モデル・トークン数から試算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 5,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 950
+      }
+    },
+    {
+      "slug": "claude-api-cost",
+      "name": "Claude API コスト計算",
+      "description": "Anthropic Claude APIの各モデル（Opus 4, Sonnet 4, Haiku 3.5）の利用料金をトークン数から即座に計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 7,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 675
+      }
+    },
+    {
+      "slug": "dalle-pricing",
+      "name": "DALL-E 料金計算",
+      "description": "DALL-E 3の解像度別・品質別の画像生成コストを枚数から計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "image",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 4,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 520
+      }
+    },
+    {
+      "slug": "gemini-api-cost",
+      "name": "Gemini API コスト計算",
+      "description": "Google Gemini APIの各モデル（2.5 Pro, 2.5 Flash, 2.0 Flash）の利用料金をトークン数から計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 603
+      }
+    },
+    {
+      "slug": "nenrei-keisan",
+      "name": "年齢計算",
+      "description": "生年月日から満年齢・数え年・干支・星座を計算",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 437
+      }
+    },
+    {
+      "slug": "sho-kigyo-kyosai",
+      "name": "小規模企業共済 節税計算",
+      "description": "小規模企業共済の掛金による節税効果と解約時の手取り額を計算",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 5,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 749
+      }
+    },
+    {
+      "slug": "whisper-api-cost",
+      "name": "Whisper API 料金計算",
+      "description": "OpenAI Whisper APIの料金を音声時間・ファイル数から計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 677
+      }
+    },
+    {
+      "slug": "zenkaku-hankaku",
+      "name": "全角半角変換",
+      "description": "Convert between fullwidth and halfwidth characters",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 65,
+      "priorityScore": 58,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 4,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 563
+      }
+    },
+    {
+      "slug": "kenpei-yoseki",
+      "name": "建蔽率・容積率 計算",
+      "description": "敷地面積と用途地域から最大建築面積・延べ床面積を計算",
+      "market": "JP",
+      "category": "Life Tools",
+      "archetype": "calculator",
+      "qualityScore": 56,
+      "priorityScore": 57,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 1,
+        "inputCount": 5,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 417
+      }
+    },
+    {
+      "slug": "bank-code-lookup",
+      "name": "銀行・支店コード検索",
+      "description": "銀行名/支店名↔コードの相互検索",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "reference",
+      "qualityScore": 62,
+      "priorityScore": 57,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "copy",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "labels",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 675
+      }
+    },
+    {
+      "slug": "asset-allocation",
+      "name": "アセットアロケーション 可視化",
+      "description": "株・債券・現金・暗号資産の配分を円グラフ、リスク目安表示",
+      "market": "JP",
+      "category": "Finance",
+      "archetype": "utility",
+      "qualityScore": 51,
+      "priorityScore": 56,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "labels",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 467
+      }
+    },
+    {
+      "slug": "gacha-cost-ceiling",
+      "name": "ガチャ 天井コスト計算",
+      "description": "ガチャの天井・排出率・1回コストから期待値と最大コストを計算",
+      "market": "JP",
+      "category": "Game Tools",
+      "archetype": "calculator",
+      "qualityScore": 58,
+      "priorityScore": 55,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 1,
+        "inputCount": 6,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 436
+      }
+    },
+    {
+      "slug": "ad-budget-estimator",
+      "name": "広告予算逆算ツール",
+      "description": "目標CV数・CPA・CTRから必要インプレッション・予算を逆算",
+      "market": "JP",
+      "category": "Business",
+      "archetype": "utility",
+      "qualityScore": 53,
+      "priorityScore": 54,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 1,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 585
+      }
+    },
+    {
+      "slug": "hash-generator",
+      "name": "Hash Generator",
+      "description": "Generate MD5, SHA-1, SHA-256, and other hashes",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "generator",
+      "qualityScore": 60,
+      "priorityScore": 54,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 2,
+        "inputCount": 5,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 650
+      }
+    },
+    {
+      "slug": "placeholder-image",
+      "name": "Placeholder Image Generator",
+      "description": "Create placeholder images with custom dimensions",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 64,
+      "priorityScore": 54,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 3,
+        "inputCount": 9,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 522
+      }
+    },
+    {
+      "slug": "tax-calculator",
+      "name": "税金計算",
+      "description": "Calculate Japanese consumption tax",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 67,
+      "priorityScore": 54,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 559
+      }
+    },
+    {
+      "slug": "password-generator",
+      "name": "Password Generator",
+      "description": "Generate secure random passwords",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "generator",
+      "qualityScore": 61,
+      "priorityScore": 53,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 587
+      }
+    },
+    {
+      "slug": "aircon-capacity",
+      "name": "エアコン適正容量 計算",
+      "description": "部屋の畳数・向き・階・断熱から必要kWを算出",
+      "market": "JP",
+      "category": "Home",
+      "archetype": "calculator",
+      "qualityScore": 60,
+      "priorityScore": 52,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 1,
+        "inputCount": 0,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 278
+      }
+    },
+    {
+      "slug": "neon-planetscale-comparison",
+      "name": "Neon / PlanetScale / Turso 比較",
+      "description": "モダンサーバーレスDB 3社の料金・機能・レイテンシを横断比較",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "comparison",
+      "qualityScore": 60,
+      "priorityScore": 52,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "labels",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 697
+      }
+    },
+    {
+      "slug": "chmod-calculator",
+      "name": "Chmod Calculator",
+      "description": "Calculate file permission values",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 52,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 472
+      }
+    },
+    {
+      "slug": "context-window-visualizer",
+      "name": "コンテキストウィンドウ 可視化",
+      "description": "主要LLMモデルのコンテキスト長をトークン・文字数・ページ数で視覚化",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "utility",
+      "qualityScore": 65,
+      "priorityScore": 52,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "labels",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 353
+      }
+    },
+    {
+      "slug": "cdn-pricing-comparison",
+      "name": "CDN 料金比較",
+      "description": "主要CDN4社の料金をトラフィック量・リージョンから比較",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "comparison",
+      "qualityScore": 61,
+      "priorityScore": 51,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 680
+      }
+    },
+    {
+      "slug": "yukyu-nissuu",
+      "name": "有給休暇 付与日数計算",
+      "description": "有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示",
+      "market": "JP",
+      "category": "Labor Tools",
+      "archetype": "calculator",
+      "qualityScore": 61,
+      "priorityScore": 51,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 1,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 610
+      }
+    },
+    {
+      "slug": "ai-cost-calculator",
+      "name": "AI API コスト計算",
+      "description": "ChatGPT、Claude、Geminiの各モデルのAPI利用料金をリアルタイムで計算。トークン数・リクエスト数から月額コストを試算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 51,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 594
+      }
+    },
+    {
+      "slug": "furigana",
+      "name": "ふりがな変換",
+      "description": "Add furigana readings to Japanese text",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 69,
+      "priorityScore": 51,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1231
+      }
+    },
+    {
+      "slug": "meeting-cost",
+      "name": "会議コスト計算機",
+      "description": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 51,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 6,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 576
+      }
+    },
+    {
+      "slug": "color-palette",
+      "name": "Color Palette Generator",
+      "description": "Generate harmonious color palettes",
+      "market": "EN",
+      "category": "Color Tools",
+      "archetype": "utility",
+      "qualityScore": 50,
+      "priorityScore": 50,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "labels",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 738
+      }
+    },
+    {
+      "slug": "svg-to-png",
+      "name": "SVG to PNG Converter",
+      "description": "Convert SVG files to PNG images",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 67,
+      "priorityScore": 50,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 9,
+        "inputCount": 5,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 855
+      }
+    },
+    {
+      "slug": "css-flexbox",
+      "name": "CSS Flexbox Generator",
+      "description": "Build flexbox layouts with a visual playground",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 51,
+      "priorityScore": 49,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 4,
+        "inputCount": 5,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 574
+      }
+    },
+    {
+      "slug": "regex-tester",
+      "name": "Regex Tester",
+      "description": "Test and debug regular expressions with live matching",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "utility",
+      "qualityScore": 64,
+      "priorityScore": 49,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 1,
+        "inputCount": 4,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 536
+      }
+    },
+    {
+      "slug": "ai-model-comparison",
+      "name": "AIモデル比較",
+      "description": "主要AIモデル（GPT-4o, Claude Opus, Gemini Pro等）の料金・コンテキスト長・特徴を一覧比較",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "comparison",
+      "qualityScore": 71,
+      "priorityScore": 48,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 457
+      }
+    },
+    {
+      "slug": "fine-tuning-cost",
+      "name": "ファインチューニング 料金計算",
+      "description": "LLMファインチューニングの学習コスト+推論コストをトレーニングデータ量から試算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 71,
+      "priorityScore": 48,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 662
+      }
+    },
+    {
+      "slug": "ideco-tax-saving",
+      "name": "iDeCo 節税額シミュレーター",
+      "description": "iDeCoの掛金から所得税+住民税の節税効果を計算。年齢・職業別の掛金上限対応",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 71,
+      "priorityScore": 48,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 656
+      }
+    },
+    {
+      "slug": "kaji-anbun",
+      "name": "家事按分 計算",
+      "description": "家賃・光熱費・通信費を事業割合で按分。フリーランスの確定申告に必要な経費計算",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 71,
+      "priorityScore": 48,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 661
+      }
+    },
+    {
+      "slug": "css-box-shadow",
+      "name": "CSS Box Shadow",
+      "description": "Design box shadows with a visual editor",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 53,
+      "priorityScore": 47,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 5,
+        "inputCount": 6,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 593
+      }
+    },
+    {
+      "slug": "uuid-generator",
+      "name": "UUID Generator",
+      "description": "Generate UUID v4 identifiers",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "generator",
+      "qualityScore": 65,
+      "priorityScore": 47,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 406
+      }
+    },
+    {
+      "slug": "ascii-art",
+      "name": "ASCII Art Generator",
+      "description": "Convert text into ASCII art with various fonts",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 54,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1054
+      }
+    },
+    {
+      "slug": "qr-generator",
+      "name": "QR Code Generator",
+      "description": "Generate QR codes from text or URLs",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 69,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 3,
+        "inputCount": 8,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1029
+      }
+    },
+    {
+      "slug": "sql-formatter",
+      "name": "SQL Formatter",
+      "description": "Format and beautify SQL queries",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 69,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 774
+      }
+    },
+    {
+      "slug": "yaml-to-json",
+      "name": "YAML to JSON Converter",
+      "description": "Convert between YAML and JSON formats",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 69,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "examples",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 8,
+        "inputCount": 2,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 793
+      }
+    },
+    {
+      "slug": "aojiro-shinkoku-sim",
+      "name": "青色申告 節税シミュレーター",
+      "description": "青色申告特別控除の3段階（65万/55万/10万）の適用条件と節税効果を可視化",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 805
+      }
+    },
+    {
+      "slug": "embedding-cost-calculator",
+      "name": "埋め込みAPI 料金計算",
+      "description": "テキスト埋め込み（Embedding）APIの料金をドキュメント数・トークン数から計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 9,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1061
+      }
+    },
+    {
+      "slug": "iryouhi-koujo",
+      "name": "医療費控除 シミュレーター",
+      "description": "年間医療費・保険金・家族分を入力して医療費控除の還付額を計算",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 4,
+        "inputCount": 6,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 993
+      }
+    },
+    {
+      "slug": "teigaku-genzei",
+      "name": "定額減税 計算機",
+      "description": "2024-2025年の定額減税（所得税3万円/住民税1万円）の適用額をシミュレーション。扶養家族数に応じた減税総額を即計算",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 46,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 6,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 890
+      }
+    },
+    {
+      "slug": "color-converter",
+      "name": "Color Converter",
+      "description": "Convert between HEX, RGB, HSL, and other color formats",
+      "market": "EN",
+      "category": "Color Tools",
+      "archetype": "converter",
+      "qualityScore": 61,
+      "priorityScore": 45,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [
+        "faq",
+        "reset_clear",
+        "privacy"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 2,
+        "inputCount": 11,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 923
+      }
+    },
+    {
+      "slug": "cloudflare-workers-cost",
+      "name": "Cloudflare Workers 料金計算",
+      "description": "Cloudflare Workersの月額コストをリクエスト数・CPU時間・KV・R2・D1から試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 45,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 958
+      }
+    },
+    {
+      "slug": "github-actions-cost",
+      "name": "GitHub Actions 料金計算",
+      "description": "GitHub Actionsの月額コストをランナー種別・実行時間・ストレージから計算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 45,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 3,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 659
+      }
+    },
+    {
+      "slug": "video-bitrate",
+      "name": "動画ビットレート / ファイルサイズ計算",
+      "description": "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き",
+      "market": "JP",
+      "category": "Creator Tools",
+      "archetype": "calculator",
+      "qualityScore": 65,
+      "priorityScore": 45,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 7,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 619
+      }
+    },
+    {
+      "slug": "border-radius",
+      "name": "Border Radius Generator",
+      "description": "Create custom border radius values visually",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 56,
+      "priorityScore": 44,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 7,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 614
+      }
+    },
+    {
+      "slug": "word-counter",
+      "name": "Word & Character Counter",
+      "description": "Count words, characters, sentences, and paragraphs",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 56,
+      "priorityScore": 44,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 478
+      }
+    },
+    {
+      "slug": "timezone-converter",
+      "name": "Time Zone Converter",
+      "description": "Convert times between different time zones",
+      "market": "EN",
+      "category": "Time & Date",
+      "archetype": "converter",
+      "qualityScore": 62,
+      "priorityScore": 44,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 619
+      }
+    },
+    {
+      "slug": "takuhaibin-hikaku",
+      "name": "宅配便 送料比較",
+      "description": "ヤマト運輸・佐川急便・日本郵便の送料をサイズ・重量・発送元/先から比較して最安を表示",
+      "market": "JP",
+      "category": "EC Tools",
+      "archetype": "comparison",
+      "qualityScore": 68,
+      "priorityScore": 42,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 0,
+        "inputCount": 6,
+        "internalLinkCount": 2,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 672
+      }
+    },
+    {
+      "slug": "ascii-flowchart",
+      "name": "ASCII Flowchart Generator",
+      "description": "Convert a simple node-edge list into an ASCII flowchart",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "reference",
+      "qualityScore": 69,
+      "priorityScore": 42,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 651
+      }
+    },
+    {
+      "slug": "binary-converter",
+      "name": "Binary/Decimal/Hex Converter",
+      "description": "Convert between binary, decimal, and hexadecimal",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "converter",
+      "qualityScore": 72,
+      "priorityScore": 42,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 1,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 613
+      }
+    },
+    {
+      "slug": "rag-cost-estimator",
+      "name": "RAG 運用コスト試算",
+      "description": "RAGシステムの月額コストをドキュメント数・クエリ数・モデル選択から試算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "utility",
+      "qualityScore": 72,
+      "priorityScore": 42,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 4,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1172
+      }
+    },
+    {
+      "slug": "wareki-converter",
+      "name": "和暦西暦変換",
+      "description": "Convert between Japanese and Western calendar years",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 75,
+      "priorityScore": 41,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 22,
+        "buttonCount": 5,
+        "inputCount": 6,
+        "internalLinkCount": 8,
+        "componentCount": 4,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1243
+      }
+    },
+    {
+      "slug": "css-grid",
+      "name": "CSS Grid Generator",
+      "description": "Create CSS Grid layouts visually",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 60,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 6,
+        "inputCount": 8,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 849
+      }
+    },
+    {
+      "slug": "markdown-preview",
+      "name": "Markdown Live Preview",
+      "description": "Write Markdown and preview rendered output in real time",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 60,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "examples",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 630
+      }
+    },
+    {
+      "slug": "gcp-pricing",
+      "name": "Google Cloud 料金試算",
+      "description": "Google Cloudの主要サービス料金をリソース量から日本円で試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "utility",
+      "qualityScore": 65,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 7,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 870
+      }
+    },
+    {
+      "slug": "netlify-pricing",
+      "name": "Netlify 料金試算",
+      "description": "Netlifyの月額料金をビルド時間・帯域・Functions実行数から試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "utility",
+      "qualityScore": 65,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 1,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 636
+      }
+    },
+    {
+      "slug": "supabase-pricing",
+      "name": "Supabase 料金試算",
+      "description": "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "utility",
+      "qualityScore": 65,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 3,
+        "inputCount": 13,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 744
+      }
+    },
+    {
+      "slug": "vercel-pricing",
+      "name": "Vercel 料金試算",
+      "description": "Vercelの利用料金をプラン・帯域幅・ビルド時間・関数実行時間から試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "utility",
+      "qualityScore": 65,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 1,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 671
+      }
+    },
+    {
+      "slug": "aws-lambda-cost",
+      "name": "AWS Lambda 料金計算",
+      "description": "AWS Lambdaの月額コストをリクエスト数・実行時間・メモリサイズから試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 3,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 724
+      }
+    },
+    {
+      "slug": "dpi-resolution",
+      "name": "DPI / 解像度 / 印刷サイズ計算",
+      "description": "印刷サイズとDPIからピクセル数を計算、またはピクセル数から印刷可能サイズを逆算",
+      "market": "JP",
+      "category": "Design Tools",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 5,
+        "inputCount": 6,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 443
+      }
+    },
+    {
+      "slug": "gyomu-itaku-hikaku",
+      "name": "業務委託 vs 正社員 手取り比較",
+      "description": "同じ額面で業務委託と正社員の手取り・社会保障・将来年金を比較",
+      "market": "JP",
+      "category": "Labor Tools",
+      "archetype": "comparison",
+      "qualityScore": 69,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 1,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 581
+      }
+    },
+    {
+      "slug": "shopify-fee-jp",
+      "name": "Shopify 日本円手数料計算",
+      "description": "Shopifyの日本向けプラン別月額・トランザクション手数料・決済手数料を統合計算",
+      "market": "JP",
+      "category": "EC Tools",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 8,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 698
+      }
+    },
+    {
+      "slug": "youtube-revenue",
+      "name": "YouTube 収益シミュレーター",
+      "description": "YouTube動画の再生回数とRPMから広告収益を計算。ジャンル別RPM目安付き",
+      "market": "JP",
+      "category": "Creator Tools",
+      "archetype": "calculator",
+      "qualityScore": 69,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 616
+      }
+    },
+    {
+      "slug": "ai-coding-tool-comparison",
+      "name": "AIコーディングツール 料金比較",
+      "description": "主要AIコーディングツールの月額料金・機能・対応モデルを横断比較",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "comparison",
+      "qualityScore": 76,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1032
+      }
+    },
+    {
+      "slug": "houjin-nari",
+      "name": "法人成り 損益分岐シミュレーター",
+      "description": "年収別に個人事業主と法人（1人社長）の手取り・税金・社会保険を比較",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "comparison",
+      "qualityScore": 76,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 1,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 828
+      }
+    },
+    {
+      "slug": "stripe-fee-calculator",
+      "name": "Stripe 手数料計算",
+      "description": "Stripeの決済手数料を決済方法別に計算。売上から手数料を引いた実収入を即座に確認",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "calculator",
+      "qualityScore": 76,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 10,
+        "inputCount": 8,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1272
+      }
+    },
+    {
+      "slug": "css-gradient",
+      "name": "CSS Gradient Generator",
+      "description": "Create linear and radial CSS gradients visually",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 61,
+      "priorityScore": 39,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 8,
+        "inputCount": 6,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 559
+      }
+    },
+    {
+      "slug": "http-status",
+      "name": "HTTP Status Codes",
+      "description": "Reference for all HTTP status codes",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "reference",
+      "qualityScore": 71,
+      "priorityScore": 39,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 1,
+        "inputCount": 1,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 898
+      }
+    },
+    {
+      "slug": "image-to-base64",
+      "name": "Image to Base64",
+      "description": "Convert images to Base64 encoded strings",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "reference",
+      "qualityScore": 71,
+      "priorityScore": 39,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 6,
+        "inputCount": 3,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 699
+      }
+    },
+    {
+      "slug": "dummy-text",
+      "name": "Placeholder Text Generator",
+      "description": "Generate lorem ipsum and other placeholder text",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 62,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 4,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 577
+      }
+    },
+    {
+      "slug": "text-diff",
+      "name": "Text Diff Checker",
+      "description": "Compare two texts and highlight differences",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 62,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 5,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 902
+      }
+    },
+    {
+      "slug": "bpm-delay",
+      "name": "BPM ↔ ディレイタイム(ms)",
+      "description": "BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出",
+      "market": "JP",
+      "category": "Music",
+      "archetype": "reference",
+      "qualityScore": 67,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 6,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 500
+      }
+    },
+    {
+      "slug": "amazon-fba-fee",
+      "name": "Amazon FBA 手数料計算",
+      "description": "Amazon FBAの販売手数料・配送代行手数料・保管手数料を販売価格・サイズから計算",
+      "market": "JP",
+      "category": "EC Tools",
+      "archetype": "calculator",
+      "qualityScore": 71,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 4,
+        "inputCount": 10,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 835
+      }
+    },
+    {
+      "slug": "html-entity",
+      "name": "HTML Entity Encoder",
+      "description": "Encode and decode HTML entities",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "reference",
+      "qualityScore": 72,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 5,
+        "inputCount": 6,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 681
+      }
+    },
+    {
+      "slug": "jwt-decoder",
+      "name": "JWT Decoder",
+      "description": "Decode and inspect JSON Web Tokens",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "utility",
+      "qualityScore": 72,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 9,
+        "inputCount": 4,
+        "internalLinkCount": 6,
+        "componentCount": 5,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1258
+      }
+    },
+    {
+      "slug": "json-to-csv",
+      "name": "JSON to CSV Converter",
+      "description": "Convert JSON arrays to CSV format",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 75,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 6,
+        "inputCount": 5,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 671
+      }
+    },
+    {
+      "slug": "xml-formatter",
+      "name": "XML Formatter",
+      "description": "Format and prettify XML documents",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 75,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 2,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 602
+      }
+    },
+    {
+      "slug": "aws-s3-cost",
+      "name": "AWS S3 料金計算",
+      "description": "AWS S3の月額料金をストレージクラス・容量・リクエスト数・転送量から計算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 36,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "copy",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 693
+      }
+    },
+    {
+      "slug": "render-fly-railway-comparison",
+      "name": "Render / Fly / Railway 料金比較",
+      "description": "Render・Fly.io・Railwayの料金・リソース・リージョンを横断比較",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "comparison",
+      "qualityScore": 72,
+      "priorityScore": 36,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1046
+      }
+    },
+    {
+      "slug": "zangyou-dai",
+      "name": "残業代 計算機",
+      "description": "残業代を法定時間外・所定時間外・深夜・休日・月60時間超に区分して正確に計算",
+      "market": "JP",
+      "category": "Labor Tools",
+      "archetype": "calculator",
+      "qualityScore": 72,
+      "priorityScore": 36,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1036
+      }
+    },
+    {
+      "slug": "css-animation",
+      "name": "CSS Animation Generator",
+      "description": "Build CSS keyframe animations with a visual editor",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "reference",
+      "qualityScore": 65,
+      "priorityScore": 35,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 8,
+        "inputCount": 16,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 799
+      }
+    },
+    {
+      "slug": "base64-tools",
+      "name": "Base64 Encoder/Decoder",
+      "description": "Encode and decode Base64 strings",
+      "market": "EN",
+      "category": "Encoding & Decoding",
+      "archetype": "utility",
+      "qualityScore": 74,
+      "priorityScore": 35,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 13,
+        "inputCount": 14,
+        "internalLinkCount": 8,
+        "componentCount": 2,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1276
+      }
+    },
+    {
+      "slug": "consumption-tax-choice",
+      "name": "簡易課税 vs 本則課税 判定",
+      "description": "売上・仕入・業種から簡易課税と本則課税のどちらが有利か判定。2割特例の適用可否も確認",
+      "market": "JP",
+      "category": "Tax Tools",
+      "archetype": "utility",
+      "qualityScore": 78,
+      "priorityScore": 33,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 850
+      }
+    },
+    {
+      "slug": "epoch-converter",
+      "name": "Unix Timestamp Converter",
+      "description": "Convert between Unix timestamps and dates",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "converter",
+      "qualityScore": 78,
+      "priorityScore": 33,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 733
+      }
+    },
+    {
+      "slug": "minify-css",
+      "name": "CSS Minifier",
+      "description": "Minify CSS stylesheets to reduce file size",
+      "market": "EN",
+      "category": "Minifier Tools",
+      "archetype": "utility",
+      "qualityScore": 68,
+      "priorityScore": 32,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 568
+      }
+    },
+    {
+      "slug": "minify-js",
+      "name": "JavaScript Minifier",
+      "description": "Minify JavaScript code to reduce file size",
+      "market": "EN",
+      "category": "Minifier Tools",
+      "archetype": "utility",
+      "qualityScore": 68,
+      "priorityScore": 32,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "examples",
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 657
+      }
+    },
+    {
+      "slug": "firebase-pricing",
+      "name": "Firebase 料金試算",
+      "description": "Firebaseの月額料金をFirestore読み書き数・Storage・Functions実行回数から試算",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "utility",
+      "qualityScore": 72,
+      "priorityScore": 32,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1362
+      }
+    },
+    {
+      "slug": "cron-generator",
+      "name": "Cron Expression Generator",
+      "description": "Build and validate cron schedule expressions",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "generator",
+      "qualityScore": 76,
+      "priorityScore": 32,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "faq",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 21,
+        "buttonCount": 11,
+        "inputCount": 14,
+        "internalLinkCount": 6,
+        "componentCount": 3,
+        "hasOpenGraphImage": true,
+        "sourceLines": 2158
+      }
+    },
+    {
+      "slug": "mdtable",
+      "name": "Markdown Table Generator",
+      "description": "Create and edit Markdown tables visually",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 69,
+      "priorityScore": 31,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 10,
+        "inputCount": 3,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 789
+      }
+    },
+    {
+      "slug": "click-post-size",
+      "name": "メール便・小型配送 判定",
+      "description": "荷物サイズ・重量から使える小型配送サービスを即判定。最安の送り方を比較",
+      "market": "JP",
+      "category": "EC Tools",
+      "archetype": "comparison",
+      "qualityScore": 76,
+      "priorityScore": 31,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 2,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 778
+      }
+    },
+    {
+      "slug": "hourly-to-annual",
+      "name": "時給 ↔ 年収 ↔ 月収 逆算",
+      "description": "時給から年収、年収から時給を即変換。勤務時間・日数・有給・残業込みで正確に計算",
+      "market": "JP",
+      "category": "Labor Tools",
+      "archetype": "converter",
+      "qualityScore": 76,
+      "priorityScore": 31,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1150
+      }
+    },
+    {
+      "slug": "zip-to-address",
+      "name": "郵便番号 ↔ 住所変換",
+      "description": "7桁郵便番号から住所（都道府県・市区町村・町域）、逆引きにも対応",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 81,
+      "priorityScore": 31,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 665
+      }
+    },
+    {
+      "slug": "ab-test-significance",
+      "name": "A/Bテスト 有意差計算",
+      "description": "A/BテストのCV数と訪問数からp値・信頼区間・必要サンプルサイズを計算",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "calculator",
+      "qualityScore": 82,
+      "priorityScore": 30,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 7,
+        "inputCount": 7,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1118
+      }
+    },
+    {
+      "slug": "ai-video-pricing",
+      "name": "AI動画生成 料金比較",
+      "description": "主要AI動画生成サービスの料金・生成時間・解像度・機能を横断比較",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "comparison",
+      "qualityScore": 82,
+      "priorityScore": 30,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 965
+      }
+    },
+    {
+      "slug": "goshugi-souba",
+      "name": "ご祝儀相場 計算",
+      "description": "結婚式のご祝儀金額を続柄・年代・地域・関係性から判定。相場表と注意事項付き",
+      "market": "JP",
+      "category": "Life Tools",
+      "archetype": "calculator",
+      "qualityScore": 78,
+      "priorityScore": 29,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 932
+      }
+    },
+    {
+      "slug": "mercari-tesuryou",
+      "name": "メルカリ 手数料・利益計算",
+      "description": "メルカリの販売手数料・送料・梱包費を引いた実利益を計算。逆算で目標利益から販売価格も算出",
+      "market": "JP",
+      "category": "EC Tools",
+      "archetype": "calculator",
+      "qualityScore": 78,
+      "priorityScore": 29,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 8,
+        "internalLinkCount": 3,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 684
+      }
+    },
+    {
+      "slug": "subscription-lifetime",
+      "name": "サブスク 生涯コスト可視化",
+      "description": "月額サブスクリプションの合計額を1年・5年・10年で可視化。登録中の全サービスの総額を計算",
+      "market": "JP",
+      "category": "Life Tools",
+      "archetype": "calculator",
+      "qualityScore": 78,
+      "priorityScore": 29,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "labels",
+        "examples",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 11,
+        "buttonCount": 6,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 686
+      }
+    },
+    {
+      "slug": "openrouter-pricing",
+      "name": "OpenRouter 料金比較",
+      "description": "OpenRouter経由で使える主要LLMモデルのAPI料金・速度・性能を一覧比較",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "comparison",
+      "qualityScore": 83,
+      "priorityScore": 28,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "examples",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 7,
+        "inputCount": 3,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1137
+      }
+    },
+    {
+      "slug": "prompt-token-counter",
+      "name": "プロンプト トークンカウンター",
+      "description": "テキストを貼り付けてAI各モデルのトークン数・API料金を即座に推定",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "utility",
+      "qualityScore": 82,
+      "priorityScore": 27,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 764
+      }
+    },
+    {
+      "slug": "sme-dx-subsidy",
+      "name": "DX補助金 適合度診断",
+      "description": "企業規模・業種・導入予定ツールからIT導入補助金/ものづくり補助金/DX推進補助金の適合度を判定",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "utility",
+      "qualityScore": 82,
+      "priorityScore": 27,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [
+        "related_links",
+        "reset_clear",
+        "validation"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 736
+      }
+    },
+    {
+      "slug": "aspect-ratio",
+      "name": "Aspect Ratio Calculator",
+      "description": "Calculate and convert aspect ratios",
+      "market": "EN",
+      "category": "Time & Date",
+      "archetype": "utility",
+      "qualityScore": 74,
+      "priorityScore": 26,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 7,
+        "inputCount": 5,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 800
+      }
+    },
+    {
+      "slug": "tailwindconvert",
+      "name": "CSS to Tailwind Converter",
+      "description": "Convert vanilla CSS to Tailwind CSS utility classes",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "reference",
+      "qualityScore": 74,
+      "priorityScore": 26,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "current_count"
+      ],
+      "penalties": [
+        "old_count",
+        "ad_placeholder",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 8,
+        "componentCount": 2,
+        "hasOpenGraphImage": true,
+        "sourceLines": 2749
+      }
+    },
+    {
+      "slug": "withholding-tax-calculator",
+      "name": "源泉徴収税 計算",
+      "description": "フリーランス・個人事業主への報酬にかかる源泉徴収税額を計算。税込/税抜・消費税考慮対応",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "calculator",
+      "qualityScore": 85,
+      "priorityScore": 25,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 11,
+        "buttonCount": 2,
+        "inputCount": 4,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 694
+      }
+    },
+    {
+      "slug": "meta-tag-generator",
+      "name": "Meta Tag Generator",
+      "description": "Generate HTML meta tags for SEO",
+      "market": "EN",
+      "category": "SEO Tools",
+      "archetype": "generator",
+      "qualityScore": 76,
+      "priorityScore": 24,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 2,
+        "inputCount": 18,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 864
+      }
+    },
+    {
+      "slug": "og-image-preview",
+      "name": "OG Image Preview",
+      "description": "Preview Open Graph images for social sharing",
+      "market": "EN",
+      "category": "SEO Tools",
+      "archetype": "utility",
+      "qualityScore": 76,
+      "priorityScore": 24,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 3,
+        "inputCount": 5,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 805
+      }
+    },
+    {
+      "slug": "px-to-rem",
+      "name": "PX to REM Converter",
+      "description": "Convert pixel values to REM units",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "reference",
+      "qualityScore": 76,
+      "priorityScore": 24,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 4,
+        "inputCount": 4,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 463
+      }
+    },
+    {
+      "slug": "auth-service-comparison",
+      "name": "認証SaaS 料金比較",
+      "description": "主要認証サービスの料金をMAU別に比較。無料枠・機能・SSO対応を一覧",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "comparison",
+      "qualityScore": 82,
+      "priorityScore": 23,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1143
+      }
+    },
+    {
+      "slug": "gacha-probability",
+      "name": "ガチャ確率 計算",
+      "description": "ソシャゲのガチャ排出率と試行回数から、目当てのキャラ・装備を引ける確率を計算",
+      "market": "JP",
+      "category": "Game Tools",
+      "archetype": "calculator",
+      "qualityScore": 82,
+      "priorityScore": 23,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 999
+      }
+    },
+    {
+      "slug": "html-to-markdown",
+      "name": "HTML to Markdown",
+      "description": "Convert HTML markup to Markdown syntax",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 85,
+      "priorityScore": 22,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [
+        "old_count",
+        "any_type"
+      ],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1318
+      }
+    },
+    {
+      "slug": "invoice-qualified-checker",
+      "name": "適格請求書 チェッカー",
+      "description": "適格請求書（インボイス）の必須記載事項を項目ごとにチェック。漏れがないか確認できます",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "utility",
+      "qualityScore": 85,
+      "priorityScore": 22,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "download_export",
+        "examples",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "copy",
+        "reset_clear",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 5,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 887
+      }
+    },
+    {
+      "slug": "json-formatter",
+      "name": "JSON Formatter & Validator",
+      "description": "Format, validate, and beautify JSON data",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 85,
+      "priorityScore": 22,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 6,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 505
+      }
+    },
+    {
+      "slug": "robots-txt-generator",
+      "name": "Robots.txt Generator",
+      "description": "Generate robots.txt files for search engines",
+      "market": "EN",
+      "category": "SEO Tools",
+      "archetype": "generator",
+      "qualityScore": 81,
+      "priorityScore": 19,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [
+        "old_count"
+      ],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 7,
+        "inputCount": 6,
+        "internalLinkCount": 8,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 879
+      }
+    },
+    {
+      "slug": "recipe-scaling",
+      "name": "レシピ 分量スケーリング",
+      "description": "レシピの人数を変えた時の材料分量を自動計算。分数・小数・計量単位変換対応",
+      "market": "JP",
+      "category": "Cooking Tools",
+      "archetype": "converter",
+      "qualityScore": 85,
+      "priorityScore": 19,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "privacy",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 8,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 1037
+      }
+    },
+    {
+      "slug": "prompt-chain-builder",
+      "name": "プロンプトチェーン設計ツール",
+      "description": "複数ステップのプロンプトを視覚的に連結、入出力依存関係を可視化",
+      "market": "JP",
+      "category": "AI Workflow",
+      "archetype": "reference",
+      "qualityScore": 89,
+      "priorityScore": 16,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 9,
+        "inputCount": 4,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 776
+      }
+    },
+    {
+      "slug": "ai-output-json-validator",
+      "name": "AI出力 JSON整形・スキーマ検証",
+      "description": "LLMが返した崩れたJSONを自動修復＋事前定義スキーマとの差分表示",
+      "market": "JP",
+      "category": "AI Workflow",
+      "archetype": "utility",
+      "qualityScore": 92,
+      "priorityScore": 12,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 648
+      }
+    },
+    {
+      "slug": "zei-kin-henkan",
+      "name": "税込 ↔ 税抜 変換（軽減税率対応）",
+      "description": "8%/10%切替、レシート複数行をまとめて計算、内税外税両対応",
+      "market": "JP",
+      "category": "Finance",
+      "archetype": "converter",
+      "qualityScore": 92,
+      "priorityScore": 10,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "reset_clear",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 3,
+        "buttonCount": 8,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 629
+      }
+    },
+    {
+      "slug": "bmi-keisan",
+      "name": "BMI計算",
+      "description": "身長と体重からBMI値と肥満度を判定",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 583
+      }
+    }
+  ]
+}

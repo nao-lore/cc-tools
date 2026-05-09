@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint app lib tools"
+    "lint": "eslint app lib tools",
+    "audit:quality": "python3 scripts/quality-audit.py"
   },
   "dependencies": {
     "next": "16.2.4",
