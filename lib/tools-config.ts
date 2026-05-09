@@ -145,6 +145,11 @@ export const tools: Tool[] = [
   { slug: "zip-to-address", name: "郵便番号 ↔ 住所変換", description: "7桁郵便番号から住所（都道府県・市区町村・町域）、逆引きにも対応", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "ad-budget-estimator", name: "広告予算逆算ツール", description: "目標CV数・CPA・CTRから必要インプレッション・予算を逆算", market: "JP", category: "Business", oldUrl: "" },
   { slug: "ai-tool-roi", name: "AIツール導入 ROI計算", description: "月額コスト vs 時短効果 × 時給で投資回収期間を算出", market: "JP", category: "AI Workflow", oldUrl: "" },
+  { slug: "aircon-capacity", name: "エアコン適正容量 計算", description: "部屋の畳数・向き・階・断熱から必要kWを算出", market: "JP", category: "Home", oldUrl: "" },
+  { slug: "asset-allocation", name: "アセットアロケーション 可視化", description: "株・債券・現金・暗号資産の配分を円グラフ、リスク目安表示", market: "JP", category: "Finance", oldUrl: "" },
+  { slug: "bank-code-lookup", name: "銀行・支店コード検索", description: "銀行名/支店名↔コードの相互検索", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "base-stores-fee", name: "BASE / STORES 手数料比較", description: "売上規模別の両サービスの実質手数料と損益分岐点", market: "JP", category: "EC", oldUrl: "" },
+  { slug: "bpm-delay", name: "BPM ↔ ディレイタイム(ms)", description: "BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出", market: "JP", category: "Music", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
