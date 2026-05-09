@@ -1,112 +1,156 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import AreaCalculator from "./components/AreaCalculator";
 
+const faq = [
+  {
+    q: "坪と平方メートルはどう換算していますか？",
+    a: "1坪 = 3.305785124平方メートルとして換算しています。住宅や土地の広さを確認するときの目安として使えます。",
+  },
+  {
+    q: "畳はどの大きさで計算していますか？",
+    a: "このツールでは1畳 = 1.62平方メートルを目安にしています。地域や物件表示によって畳の大きさは変わるため、厳密な設計値が必要な場合は指定寸法を優先してください。",
+  },
+  {
+    q: "三角形や台形の周囲長は出ますか？",
+    a: "底辺と高さだけでは全ての辺の長さが決まらないため、周囲長は表示しません。面積だけを計算します。",
+  },
+  {
+    q: "入力値は保存されますか？",
+    a: "保存されません。計算はブラウザ上で完結し、寸法や計算結果を外部に送信しません。",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
-            面積計算ツール
-          </h1>
-          <p className="text-sm text-muted mt-1">
-            8種類の図形の面積・周囲長を計算 — 坪・畳・ヘクタールなど日本単位にも対応
-          </p>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          {/* Calculator */}
-          <AreaCalculator />
-
-          {/* AdSense Placeholder */}
-          <div className="mt-8 border border-dashed border-border rounded-xl p-8 text-center text-muted text-sm bg-card">
-            <p>広告スペース</p>
-          </div>
-
-          {/* SEO Content */}
-          <section className="mt-10 space-y-6 text-sm leading-relaxed text-muted">
-            <h2 className="text-lg font-bold text-foreground">
-              面積計算ツールについて
-            </h2>
-            <p>
-              正方形・長方形・三角形・円・台形・平行四辺形・ひし形・楕円の8種類の図形に対応した面積計算ツールです。各図形の寸法を入力するだけで面積と周囲長が即座に求められます。入力単位はm（メートル）・cm（センチメートル）・mm（ミリメートル）・km（キロメートル）から選択でき、計算結果はm²・cm²・mm²・km²・坪・畳・a（アール）・ha（ヘクタール）など8種類の単位に自動変換されます。
-            </p>
-
-            <h2 className="text-lg font-bold text-foreground">
-              日本の面積単位（坪・畳）について
-            </h2>
-            <p>
-              日本では不動産・建築分野で「坪」や「畳」が広く使われています。1坪は約3.30579m²で、一般的に2畳分の広さに相当します。1畳は地域によって多少異なりますが、本ツールでは1畳＝約1.65290m²（京間）を基準に計算しています。マンションや住宅の間取り検討時に、平米数から坪数・畳数への換算にご活用ください。
-            </p>
-
-            <h2 className="text-lg font-bold text-foreground">
-              アール・ヘクタールとは
-            </h2>
-            <p>
-              a（アール）とha（ヘクタール）は主に農地・土地の広さを表す単位です。1a＝100m²、1ha＝10,000m²（＝100a）で、1ヘクタールはおよそ東京ドーム（約46,755m²）の約0.21個分の広さです。田畑・山林・公園などの広大な面積を扱う際に便利な単位です。本ツールでは土地の面積をm²からアール・ヘクタールに瞬時に変換できます。
-            </p>
-
-            <h2 className="text-lg font-bold text-foreground">
-              各図形の計算式
-            </h2>
-            <p>
-              正方形：一辺²、長方形：縦×横、三角形：底辺×高さ÷2、円：半径²×π、台形：（上底＋下底）×高さ÷2、平行四辺形：底辺×高さ、ひし形：対角線1×対角線2÷2、楕円：長半径×短半径×π。周囲長は正方形・長方形・円・ひし形・楕円（ラマヌジャン近似）で計算されます。三角形・台形・平行四辺形は全辺の長さが必要なため周囲長の表示を省略しています。
-            </p>
-
-            <h2 className="text-lg font-bold text-foreground">
-              このツールの使い方
-            </h2>
-            <p>
-              まず上部の図形ボタンから計算したい図形を選択します。次に「入力単位」で寸法の単位を選択し、各フィールドに数値を入力してください。面積と周囲長が自動で計算され、右側の単位セレクターで表示単位を切り替えられます。「単位変換一覧」では8種類すべての単位での面積が一覧表示されます。
-            </p>
-          </section>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">面積計算ツール — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <a href="https://bmi-keisan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">BMI計算</a>
-              <a href="https://denki-keisan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">電気代計算</a>
-              <a href="https://risoku-keisan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">利息計算</a>
-              <a href="https://nenrei-keisan.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">年齢計算</a>
-              <a href="https://px-to-rem.vercel.app" target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">px to rem</a>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← 無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">面積・単位変換</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">面積計算ツール</h1>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+                正方形、長方形、三角形、円など8種類の図形の面積を計算します。平方メートル、坪、畳、アール、ヘクタールへの換算もまとめて確認できます。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">このツールでできること</div>
+              <ul className="mt-2 space-y-1.5">
+                <li>・8種類の図形の面積を計算</li>
+                <li>・周囲長を出せる図形は同時表示</li>
+                <li>・坪、畳、a、haへ換算</li>
+                <li>・結果をコピー / CSV出力</li>
+              </ul>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <AreaCalculator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="土地・部屋の広さ" body="m²から坪・畳へ変換して、不動産や間取りの感覚に合わせて確認できます。" />
+          <InfoCard title="図形の公式" body="長方形、円、台形、ひし形など、よく使う図形の公式を切り替えて計算できます。" />
+          <InfoCard title="単位変換" body="面積をm²、cm²、km²、a、haなど複数単位で同時に確認できます。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">面積計算の使い方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">図形を選ぶ</h3>
+              <p className="mt-1">
+                最初に図形を選びます。図形ごとに必要な入力項目だけが表示されるため、長方形なら横と縦、円なら半径、台形なら上底・下底・高さを入力します。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">長さ単位と面積単位を分ける</h3>
+              <p className="mt-1">
+                入力する寸法はmm、cm、m、kmから選べます。結果はm²、坪、畳、a、haなどへ変換できます。長さ単位と面積単位を分けることで計算ミスを減らします。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">坪・畳の目安</h3>
+              <p className="mt-1">
+                坪は1坪=3.305785124m²、畳は1畳=1.62m²として換算しています。畳の大きさは地域や表示基準で変わるため、厳密な建築設計では指定寸法を使ってください。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">周囲長について</h3>
+              <p className="mt-1">
+                正方形、長方形、円、ひし形、楕円は周囲長も表示します。三角形、台形、平行四辺形は全辺の長さが必要なため、入力値だけでは周囲長を出しません。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/kenpei-yoseki" title="建蔽率・容積率" body="敷地面積から建築上限を計算" />
+            <Related href="/measuring-converter" title="計量換算" body="料理用の容量と重量を換算" />
+            <Related href="/px-to-rem" title="px to rem" body="CSSのサイズ単位を変換" />
+            <Related href="/waribiki-keisan" title="割引計算" body="価格と割合の計算に使う" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "面積計算ツール",
-  "description": "面積計算ツール — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/menseki-keisan",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

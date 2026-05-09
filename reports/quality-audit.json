@@ -1,16 +1,16 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 68.6,
+    "averageQualityScore": 69.0,
     "priorityTierCounts": {
-      "A": 6,
+      "A": 5,
       "B": 61,
-      "C": 75
+      "C": 76
     },
     "averageByArchetype": {
       "calculator": 69.2,
       "comparison": 71.2,
-      "converter": 71.0,
+      "converter": 73.3,
       "generator": 69.8,
       "image": 63.3,
       "reference": 70.3,
@@ -73,9 +73,9 @@
         "toolCount": 13
       },
       {
-        "category": "Japanese Tools",
-        "averageQualityScore": 67.7,
-        "toolCount": 20
+        "category": "Time & Date",
+        "averageQualityScore": 68,
+        "toolCount": 2
       }
     ]
   },
@@ -194,51 +194,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "menseki-keisan",
-      "name": "面積計算",
-      "description": "8図形の面積計算と坪・畳変換",
-      "market": "JP",
-      "category": "Japanese Tools",
-      "archetype": "converter",
-      "qualityScore": 50,
-      "priorityScore": 82,
-      "priorityTier": "A",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "download_export",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "copy",
-        "examples",
-        "reset_clear",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder"
-      ],
-      "signals": {
-        "h2Count": 10,
-        "buttonCount": 1,
-        "inputCount": 3,
-        "internalLinkCount": 1,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 600
-      }
-    },
     {
       "slug": "nissuu-keisan",
       "name": "日数計算",
@@ -6371,6 +6326,47 @@
         "componentCount": 3,
         "hasOpenGraphImage": true,
         "sourceLines": 1231
+      }
+    },
+    {
+      "slug": "menseki-keisan",
+      "name": "面積計算",
+      "description": "8図形の面積計算と坪・畳変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 7,
+        "inputCount": 2,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 740
       }
     }
   ]
