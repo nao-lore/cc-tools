@@ -117,6 +117,8 @@ const T = {
   },
 } as const;
 
+type Messages = (typeof T)[Lang];
+
 // Prefecture lookup data (unchanged)
 const PREFECTURE_RANGES: Array<{ start: number; end: number; pref: string }> = [
   { start: 10, end: 19, pref: "秋田県" },
@@ -240,7 +242,7 @@ interface LookupResult {
   error?: string;
 }
 
-function CopyButton({ text, t }: { text: string; t: typeof T["ja"] }) {
+function CopyButton({ text, t }: { text: string; t: Messages }) {
   const [copied, setCopied] = useState(false);
   return (
     <button

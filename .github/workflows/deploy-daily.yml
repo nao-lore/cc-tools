@@ -38,6 +38,9 @@ jobs:
           DEPLOY_COUNT: ${{ github.event.inputs.count || '5' }}
         run: python3 scripts/stock-to-deploy.py "$DEPLOY_COUNT"
 
+      - name: Validate repository integrity
+        run: python3 scripts/check-integrity.py
+
       - uses: actions/setup-node@v4
         if: steps.check.outputs.pending != '0'
         with:
@@ -58,12 +61,15 @@ jobs:
           git config user.email "nao@loresync.dev"
           git add app/ tools/ lib/ stock/
           DEPLOYED=$(git diff --cached --name-only --diff-filter=A -- 'app/*/page.tsx' | wc -l | tr -d ' ')
-          if [ "$DEPLOYED" -gt 0 ]; then
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          elif [ "$DEPLOYED" -gt 0 ]; then
             SLUGS=$(git diff --cached --name-only --diff-filter=A -- 'app/*/page.tsx' | sed 's|app/||;s|/page.tsx||' | tr '\n' ', ' | sed 's/,$//')
             git commit -m "feat: deploy $DEPLOYED tools — $SLUGS"
             git push
             echo "Deployed $DEPLOYED tools: $SLUGS"
           else
-            echo "No new tools to commit"
-            git reset HEAD
+            git commit -m "chore: clean deployed stock entries"
+            git push
+            echo "Cleaned stock entries"
           fi

@@ -17,6 +17,11 @@ export const categories: Category[] = [
   { slug: "tax-tools", name: "税金・確定申告", description: "税金計算・確定申告シミュレーター", icon: "🏛️", color: "#ef4444" },
   { slug: "life-money", name: "生活・お金", description: "日常の計算・シミュレーションツール", icon: "💰", color: "#f97316" },
   { slug: "ec-shipping", name: "EC・配送", description: "手数料計算・送料比較ツール", icon: "📦", color: "#84cc16" },
+  { slug: "business-tools", name: "ビジネス計算", description: "業務・会議・請求・補助金の計算ツール", icon: "💼", color: "#0ea5e9" },
+  { slug: "labor-tools", name: "労務・働き方", description: "手取り・残業代・業務委託比較ツール", icon: "⚖️", color: "#22c55e" },
+  { slug: "creator-tools", name: "クリエイター", description: "動画・収益・制作向けの計算ツール", icon: "🎬", color: "#d946ef" },
+  { slug: "cooking-tools", name: "料理・レシピ", description: "料理とレシピの換算ツール", icon: "🍳", color: "#f59e0b" },
+  { slug: "game-tools", name: "ゲーム", description: "ゲーム内確率・コスト計算ツール", icon: "🎮", color: "#8b5cf6" },
   { slug: "dev-tools", name: "開発者ツール", description: "プログラミング支援ツール", icon: "⚡", color: "#06b6d4" },
   { slug: "math-stats", name: "数学・統計", description: "計算・統計分析ツール", icon: "📊", color: "#a855f7" },
 ];

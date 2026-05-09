@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { tools } from "@/lib/tools-config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,41 +13,42 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const toolCount = tools.length;
+const siteTitle = `無料オンラインツール集 - ${toolCount}+ Web Tools | cc-tools`;
+const siteDescription = `${toolCount}以上の無料オンラインツール集。AI料金、SaaS料金、税金、開発、変換、デザイン計算まで登録不要で使えます。`;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://tools.loresync.dev"),
   verification: {
     google: "uRTAz7j8N8jDW5BzJaGn-wzrFY5C7KNStVLMKlGzo_4",
   },
   title: {
-    default: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
+    default: siteTitle,
     template: "%s | cc-tools",
   },
-  description:
-    "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more. No signup required.",
+  description: siteDescription,
   keywords: [
-    "free developer tools",
-    "online tools",
+    "無料オンラインツール",
+    "AI料金計算",
+    "SaaS料金計算",
+    "税金計算",
+    "開発者ツール",
+    "変換ツール",
     "web tools",
-    "json formatter",
-    "css generator",
-    "encoding tools",
-    "developer utilities",
   ],
   authors: [{ name: "cc-tools" }],
   openGraph: {
-    title: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
-    description:
-      "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more. No signup required.",
+    title: siteTitle,
+    description: siteDescription,
     url: "https://tools.loresync.dev",
     siteName: "cc-tools",
     type: "website",
-    locale: "en_US",
+    locale: "ja_JP",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Online Developer Tools - 53+ Web Tools | cc-tools",
-    description:
-      "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more. No signup required.",
+    title: siteTitle,
+    description: siteDescription,
   },
   robots: {
     index: true,
@@ -64,7 +66,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ja"
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <head>
@@ -80,9 +82,8 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "cc-tools - Free Online Developer Tools",
-              description:
-                "Collection of 53+ free online developer tools. JSON formatter, regex tester, color converter, CSS generators, encoding/decoding tools, and more.",
+              name: "cc-tools - 無料オンラインツール集",
+              description: siteDescription,
               url: "https://tools.loresync.dev",
             }),
           }}

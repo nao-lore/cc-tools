@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tools } from "@/lib/tools-config";
 import { categories, getCategoryBySlug } from "@/lib/categories";
-import { toolCategoryMap } from "@/lib/tool-categories";
+import { getCategorySlugForToolCategory } from "@/lib/tool-categories";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!category) return {};
 
   const title = `${category.name} - 無料オンラインツール`;
-  const description = `${category.description}。無料で使える${category.name}ツール一覧。登録不要、広告なし。`;
+  const description = `${category.description}。無料で使える${category.name}ツール一覧。登録不要で使えます。`;
 
   return {
     title,
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 function getToolsForCategory(categorySlug: string) {
-  return tools.filter((tool) => toolCategoryMap[tool.slug] === categorySlug);
+  return tools.filter((tool) => getCategorySlugForToolCategory(tool.category) === categorySlug);
 }
 
 function ToolCard({ tool, color }: { tool: { slug: string; name: string; description: string; market: "EN" | "JP" }; color: string }) {

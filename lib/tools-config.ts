@@ -134,6 +134,17 @@ export const tools: Tool[] = [
   { slug: "supabase-pricing", name: "Supabase 料金試算", description: "Supabaseの月額料金をDB容量・ストレージ・MAU・Edge Functions数から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
   { slug: "vercel-pricing", name: "Vercel 料金試算", description: "Vercelの利用料金をプラン・帯域幅・ビルド時間・関数実行時間から試算", market: "JP", category: "SaaS Pricing", oldUrl: "" },
   { slug: "ai-output-json-validator", name: "AI出力 JSON整形・スキーマ検証", description: "LLMが返した崩れたJSONを自動修復＋事前定義スキーマとの差分表示", market: "JP", category: "AI Workflow", oldUrl: "" },
+  { slug: "gacha-cost-ceiling", name: "ガチャ 天井コスト計算", description: "ガチャの天井・排出率・1回コストから期待値と最大コストを計算", market: "JP", category: "Game Tools", oldUrl: "" },
+  { slug: "hebon-romaji", name: "ヘボン式ローマ字変換", description: "ひらがな・カタカナを外務省基準のヘボン式ローマ字に変換", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "jigyou-keihi-bunrui", name: "経費 勘定科目 判別", description: "経費の内容から勘定科目を判別。確定申告・青色申告の仕訳作業を補助", market: "JP", category: "Tax Tools", oldUrl: "" },
+  { slug: "kenpei-yoseki", name: "建蔽率・容積率 計算", description: "敷地面積と用途地域から最大建築面積・延べ床面積を計算", market: "JP", category: "Life Tools", oldUrl: "" },
+  { slug: "measuring-converter", name: "計量スプーン・カップ グラム換算", description: "大さじ・小さじ・カップを食材別にグラム換算", market: "JP", category: "Cooking Tools", oldUrl: "" },
+  { slug: "oven-temp-converter", name: "オーブン温度換算", description: "摂氏・華氏・ガスマークを相互変換。海外レシピの温度確認に対応", market: "JP", category: "Cooking Tools", oldUrl: "" },
+  { slug: "prompt-chain-builder", name: "プロンプトチェーン設計ツール", description: "複数ステップのプロンプトを視覚的に連結、入出力依存関係を可視化", market: "JP", category: "AI Workflow", oldUrl: "" },
+  { slug: "zei-kin-henkan", name: "税込 ↔ 税抜 変換（軽減税率対応）", description: "8%/10%切替、レシート複数行をまとめて計算、内税外税両対応", market: "JP", category: "Finance", oldUrl: "" },
+  { slug: "zip-to-address", name: "郵便番号 ↔ 住所変換", description: "7桁郵便番号から住所（都道府県・市区町村・町域）、逆引きにも対応", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "ad-budget-estimator", name: "広告予算逆算ツール", description: "目標CV数・CPA・CTRから必要インプレッション・予算を逆算", market: "JP", category: "Business", oldUrl: "" },
+  { slug: "ai-tool-roi", name: "AIツール導入 ROI計算", description: "月額コスト vs 時短効果 × 時給で投資回収期間を算出", market: "JP", category: "AI Workflow", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];

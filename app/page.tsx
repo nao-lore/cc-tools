@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { tools } from "@/lib/tools-config";
 import type { Tool } from "@/lib/tools-config";
+import { categorySlugByName } from "@/lib/tool-categories";
 
 const totalTools = tools.length;
 
@@ -18,28 +19,17 @@ const CATEGORIES = [
   { label: "税金・確定申告",   slug: "tax-tools",      icon: "¥",  color: "#f87171" },
   { label: "生活・お金",       slug: "life-money",     icon: "🏠", color: "#fbbf24" },
   { label: "EC・配送",         slug: "ec-shipping",    icon: "📦", color: "#a3e635" },
+  { label: "ビジネス計算",     slug: "business-tools", icon: "B",  color: "#0ea5e9" },
+  { label: "労務・働き方",     slug: "labor-tools",    icon: "⚖",  color: "#22c55e" },
+  { label: "クリエイター",     slug: "creator-tools",  icon: "▶",  color: "#d946ef" },
+  { label: "料理・レシピ",     slug: "cooking-tools",  icon: "C",  color: "#f59e0b" },
+  { label: "ゲーム",           slug: "game-tools",     icon: "G",  color: "#8b5cf6" },
   { label: "開発者ツール",     slug: "dev-tools",      icon: "</>" , color: "#ef4444" },
   { label: "数学・統計",       slug: "math-stats",     icon: "∑",  color: "#6366f1" },
 ] as const;
 
 // Map config category strings → our slugs for the "全ツール一覧" badges
-const CAT_SLUG_MAP: Record<string, string> = {
-  "AI Tools":        "ai-tools",
-  "SaaS Pricing":    "saas-pricing",
-  "CSS Tools":       "css-design",
-  "Color Tools":     "css-design",
-  "Text & String Tools": "text-tools",
-  "Data Format Tools":   "data-format",
-  "Encoding & Decoding": "encoding",
-  "Image Tools":         "image-tools",
-  "Tax Tools":           "tax-tools",
-  "Japanese Tools":      "life-money",
-  "Business Tools":      "math-stats",
-  "Developer Tools":     "dev-tools",
-  "SEO Tools":           "dev-tools",
-  "Minifier Tools":      "dev-tools",
-  "Time & Date":         "dev-tools",
-};
+const CAT_SLUG_MAP = categorySlugByName;
 
 // ── Popular tools (hand-picked, diverse) ────────────────────────────────────
 const POPULAR_SLUGS = [

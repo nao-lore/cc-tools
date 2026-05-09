@@ -10,7 +10,7 @@ Usage:
 """
 
 import json
-import os
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -24,6 +24,40 @@ CONFIG_FILE = ROOT / "lib" / "tools-config.ts"
 
 
 TIER_ORDER = {"S": 0, "A": 1, "B": 2, "C": 3, "D": 4}
+
+
+def ts_string(value: str) -> str:
+    """Return a TypeScript-safe string literal."""
+    return json.dumps(value, ensure_ascii=False)
+
+
+def read_config_slugs() -> set[str]:
+    if not CONFIG_FILE.exists():
+        return set()
+    return set(re.findall(r'slug:\s*"([^"]+)"', CONFIG_FILE.read_text()))
+
+
+def is_already_deployed(slug: str, config_slugs: set[str]) -> bool:
+    return slug in config_slugs or (TOOLS_DIR / slug).exists() or (APP_DIR / slug).exists()
+
+
+def ensure_tool_page(tool_dir: Path) -> None:
+    page = tool_dir / "page.tsx"
+    if page.exists():
+        return
+
+    components_dir = tool_dir / "components"
+    components = sorted(components_dir.glob("*.tsx")) if components_dir.exists() else []
+    if len(components) != 1:
+        raise RuntimeError(f"Cannot generate {page}: expected exactly one component file")
+
+    component_name = components[0].stem
+    page.write_text(
+        f'import {component_name} from "./components/{component_name}";\n\n'
+        "export default function Home() {\n"
+        f"  return <{component_name} />;\n"
+        "}\n"
+    )
 
 
 def list_pending() -> list[dict]:
@@ -48,6 +82,33 @@ def list_pending() -> list[dict]:
     return tools
 
 
+def remove_blocking_stock(pending: list[dict]) -> tuple[list[dict], int]:
+    """Remove stock entries that can never deploy because their slug already exists."""
+    config_slugs = read_config_slugs()
+    seen = set()
+    deployable = []
+    removed = 0
+
+    for meta in pending:
+        slug = meta["slug"]
+        if slug in seen:
+            print(f"  REMOVE {slug} (duplicate stock entry)")
+            shutil.rmtree(meta["_dir"])
+            removed += 1
+            continue
+        seen.add(slug)
+
+        if is_already_deployed(slug, config_slugs):
+            print(f"  REMOVE {slug} (already deployed)")
+            shutil.rmtree(meta["_dir"])
+            removed += 1
+            continue
+
+        deployable.append(meta)
+
+    return deployable, removed
+
+
 def deploy_tool(meta: dict) -> bool:
     """Deploy a single tool from stock to live."""
     slug = meta["slug"]
@@ -70,6 +131,7 @@ def deploy_tool(meta: dict) -> bool:
             shutil.copytree(item, dest)
         else:
             shutil.copy2(item, dest)
+    ensure_tool_page(dest_tool_dir)
 
     # 2. Generate app/[slug]/page.tsx wrapper
     dest_app_dir.mkdir(parents=True, exist_ok=True)
@@ -79,8 +141,8 @@ def deploy_tool(meta: dict) -> bool:
 import ToolPage from "@/tools/{slug}/page";
 
 export const metadata: Metadata = {{
-  title: "{title}",
-  description: "{description}",
+  title: {ts_string(title)},
+  description: {ts_string(description)},
   alternates: {{ canonical: "https://tools.loresync.dev/{slug}" }},
 }};
 
@@ -96,7 +158,11 @@ export default function Page() {{
     category = meta.get("category", "Developer Tools")
     name = meta["name"]
     desc = meta["description"]
-    new_entry = f'  {{ slug: "{slug}", name: "{name}", description: "{desc}", market: "{market}", category: "{category}", oldUrl: "" }},'
+    new_entry = (
+        f"  {{ slug: {ts_string(slug)}, name: {ts_string(name)}, "
+        f"description: {ts_string(desc)}, market: {ts_string(market)}, "
+        f"category: {ts_string(category)}, oldUrl: \"\" }},"
+    )
 
     # Insert before the closing ];
     config_content = config_content.replace(
@@ -137,15 +203,27 @@ def main():
         print("No pending tools in stock. Nothing to deploy.")
         return
 
-    to_deploy = pending[:count]
-    print(f"\nDeploying {len(to_deploy)} of {len(pending)} pending tools:\n")
+    deployable, removed = remove_blocking_stock(pending)
+    if removed:
+        print(f"\nRemoved {removed} blocking stock entries.")
+
+    if not deployable:
+        print("No deployable tools remain in stock.")
+        return
+
+    to_deploy = deployable[:count]
+    print(f"\nDeploying {len(to_deploy)} of {len(deployable)} deployable tools:\n")
 
     deployed = 0
     for meta in to_deploy:
         if deploy_tool(meta):
             deployed += 1
 
-    print(f"\nDone. {deployed} tools deployed, {len(pending) - deployed} remaining in stock.")
+    remaining = max(len(deployable) - deployed, 0)
+    print(f"\nDone. {deployed} tools deployed, {remaining} deployable tools remaining in stock.")
+
+    if deployed == 0 and deployable:
+        raise SystemExit("Deploy requested but no deployable tools were deployed.")
 
 
 if __name__ == "__main__":

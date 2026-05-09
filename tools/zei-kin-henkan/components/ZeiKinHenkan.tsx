@@ -122,6 +122,8 @@ const T = {
   },
 } as const;
 
+type Messages = (typeof T)[Lang];
+
 function applyRounding(value: number, rounding: Rounding): number {
   if (rounding === "floor") return Math.floor(value);
   if (rounding === "ceil") return Math.ceil(value);
@@ -153,7 +155,7 @@ interface BatchRow {
   error?: string;
 }
 
-function parseBatchLine(line: string, defaultRate: TaxRate, direction: Direction, rounding: Rounding, t: typeof T["ja"]): BatchRow {
+function parseBatchLine(line: string, defaultRate: TaxRate, direction: Direction, rounding: Rounding, t: Messages): BatchRow {
   const trimmed = line.trim();
   if (!trimmed) return { original: line, amount: 0, rate: defaultRate, excl: 0, tax: 0, incl: 0, error: t.emptyRow };
   const parts = trimmed.split(/\s+/);
