@@ -1,495 +1,629 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useMemo } from "react";
-
-interface Holiday {
-  date: string;
-  name: string;
-}
-
-const JAPANESE_HOLIDAYS: Holiday[] = [
-  // 2024
-  { date: "2024-01-01", name: "元日" },
-  { date: "2024-01-08", name: "成人の日" },
-  { date: "2024-02-11", name: "建国記念の日" },
-  { date: "2024-02-12", name: "振替休日（建国記念の日）" },
-  { date: "2024-02-23", name: "天皇誕生日" },
-  { date: "2024-03-20", name: "春分の日" },
-  { date: "2024-04-29", name: "昭和の日" },
-  { date: "2024-05-03", name: "憲法記念日" },
-  { date: "2024-05-04", name: "みどりの日" },
-  { date: "2024-05-05", name: "こどもの日" },
-  { date: "2024-05-06", name: "振替休日（こどもの日）" },
-  { date: "2024-07-15", name: "海の日" },
-  { date: "2024-08-11", name: "山の日" },
-  { date: "2024-08-12", name: "振替休日（山の日）" },
-  { date: "2024-09-16", name: "敬老の日" },
-  { date: "2024-09-22", name: "秋分の日" },
-  { date: "2024-09-23", name: "振替休日（秋分の日）" },
-  { date: "2024-10-14", name: "スポーツの日" },
-  { date: "2024-11-03", name: "文化の日" },
-  { date: "2024-11-04", name: "振替休日（文化の日）" },
-  { date: "2024-11-23", name: "勤労感謝の日" },
-  // 2025
-  { date: "2025-01-01", name: "元日" },
-  { date: "2025-01-13", name: "成人の日" },
-  { date: "2025-02-11", name: "建国記念の日" },
-  { date: "2025-02-23", name: "天皇誕生日" },
-  { date: "2025-02-24", name: "振替休日（天皇誕生日）" },
-  { date: "2025-03-20", name: "春分の日" },
-  { date: "2025-04-29", name: "昭和の日" },
-  { date: "2025-05-03", name: "憲法記念日" },
-  { date: "2025-05-04", name: "みどりの日" },
-  { date: "2025-05-05", name: "こどもの日" },
-  { date: "2025-05-06", name: "振替休日（こどもの日）" },
-  { date: "2025-07-21", name: "海の日" },
-  { date: "2025-08-11", name: "山の日" },
-  { date: "2025-09-15", name: "敬老の日" },
-  { date: "2025-09-23", name: "秋分の日" },
-  { date: "2025-10-13", name: "スポーツの日" },
-  { date: "2025-11-03", name: "文化の日" },
-  { date: "2025-11-23", name: "勤労感謝の日" },
-  { date: "2025-11-24", name: "振替休日（勤労感謝の日）" },
-  // 2026
-  { date: "2026-01-01", name: "元日" },
-  { date: "2026-01-12", name: "成人の日" },
-  { date: "2026-02-11", name: "建国記念の日" },
-  { date: "2026-02-23", name: "天皇誕生日" },
-  { date: "2026-03-20", name: "春分の日" },
-  { date: "2026-04-29", name: "昭和の日" },
-  { date: "2026-05-03", name: "憲法記念日" },
-  { date: "2026-05-04", name: "みどりの日" },
-  { date: "2026-05-05", name: "こどもの日" },
-  { date: "2026-05-06", name: "振替休日（こどもの日）" },
-  { date: "2026-07-20", name: "海の日" },
-  { date: "2026-08-11", name: "山の日" },
-  { date: "2026-09-21", name: "敬老の日" },
-  { date: "2026-09-23", name: "秋分の日" },
-  { date: "2026-10-12", name: "スポーツの日" },
-  { date: "2026-11-03", name: "文化の日" },
-  { date: "2026-11-23", name: "勤労感謝の日" },
-  // 2027
-  { date: "2027-01-01", name: "元日" },
-  { date: "2027-01-11", name: "成人の日" },
-  { date: "2027-02-11", name: "建国記念の日" },
-  { date: "2027-02-23", name: "天皇誕生日" },
-  { date: "2027-03-21", name: "春分の日" },
-  { date: "2027-03-22", name: "振替休日（春分の日）" },
-  { date: "2027-04-29", name: "昭和の日" },
-  { date: "2027-05-03", name: "憲法記念日" },
-  { date: "2027-05-04", name: "みどりの日" },
-  { date: "2027-05-05", name: "こどもの日" },
-  { date: "2027-07-19", name: "海の日" },
-  { date: "2027-08-11", name: "山の日" },
-  { date: "2027-09-20", name: "敬老の日" },
-  { date: "2027-09-23", name: "秋分の日" },
-  { date: "2027-10-11", name: "スポーツの日" },
-  { date: "2027-11-03", name: "文化の日" },
-  { date: "2027-11-23", name: "勤労感謝の日" },
-];
-
-const holidaySet = new Set(JAPANESE_HOLIDAYS.map((h) => h.date));
-
-function formatDate(date: Date): string {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
-
-function parseDate(dateStr: string): Date {
-  const [y, m, d] = dateStr.split("-").map(Number);
-  return new Date(y, m - 1, d);
-}
-
-function getTodayStr(): string {
-  return formatDate(new Date());
-}
-
-function getDefaultEndStr(): string {
-  const d = new Date();
-  d.setMonth(d.getMonth() + 1);
-  return formatDate(d);
-}
-
-function getHolidaysInRange(start: Date, end: Date): Holiday[] {
-  const s = formatDate(start);
-  const e = formatDate(end);
-  return JAPANESE_HOLIDAYS.filter((h) => h.date >= s && h.date <= e);
-}
-
-function addDays(date: Date, days: number): Date {
-  const d = new Date(date);
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-const DAY_NAMES = ["日", "月", "火", "水", "木", "金", "土"];
-
-function formatJpDate(date: Date): string {
-  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${DAY_NAMES[date.getDay()]}）`;
-}
-
-interface RangeResult {
-  totalDays: number;
-  weeks: number;
-  remainingDays: number;
-  months: number;
-  remainingDaysAfterMonths: number;
-  years: number;
-  remainingMonths: number;
-  finalRemainingDays: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  holidays: Holiday[];
-}
-
-function calcRange(start: Date, end: Date): RangeResult {
-  const diffMs = end.getTime() - start.getTime();
-  const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  const weeks = Math.floor(totalDays / 7);
-  const remainingDays = totalDays % 7;
-
-  // months diff
-  let months =
-    (end.getFullYear() - start.getFullYear()) * 12 +
-    (end.getMonth() - start.getMonth());
-  const monthsEnd = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
-  if (monthsEnd > end) months--;
-  const afterMonths = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
-  const remainingDaysAfterMonths = Math.floor(
-    (end.getTime() - afterMonths.getTime()) / (1000 * 60 * 60 * 24)
-  );
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-  const afterYears = new Date(start.getFullYear() + years, start.getMonth() + remainingMonths, start.getDate());
-  const finalRemainingDays = Math.floor(
-    (end.getTime() - afterYears.getTime()) / (1000 * 60 * 60 * 24)
-  );
-
-  const hours = totalDays * 24;
-  const minutes = hours * 60;
-  const seconds = minutes * 60;
-
-  const holidays = getHolidaysInRange(start, end);
-
-  return {
-    totalDays,
-    weeks,
-    remainingDays,
-    months,
-    remainingDaysAfterMonths,
-    years,
-    remainingMonths,
-    finalRemainingDays,
-    hours,
-    minutes,
-    seconds,
-    holidays,
-  };
-}
+import { useMemo, useState, type ReactNode } from "react";
+import {
+  formatDate,
+  getHolidaysInRange,
+  parseDate,
+  type Holiday,
+} from "@/tools/eigyoubi/lib/holidays";
 
 type Mode = "range" | "offset";
 type Direction = "after" | "before";
+type CopiedTarget = "summary" | "csv" | null;
+
+const DAY_NAMES = ["日", "月", "火", "水", "木", "金", "土"];
+const MS_PER_DAY = 86_400_000;
+
+const RANGE_EXAMPLES = [
+  { label: "今日から30日", startOffset: 0, endOffset: 30 },
+  { label: "今月末まで", startOffset: 0, endOfMonth: true },
+  { label: "GWをまたぐ", start: "2026-04-27", end: "2026-05-08" },
+];
+
+const OFFSET_EXAMPLES = [
+  { label: "30日後", days: "30", direction: "after" as const },
+  { label: "90日後", days: "90", direction: "after" as const },
+  { label: "14日前", days: "14", direction: "before" as const },
+];
+
+function todayStr() {
+  return formatDate(new Date());
+}
+
+function addDays(date: Date, days: number) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function defaultEndStr() {
+  return formatDate(addDays(new Date(), 30));
+}
+
+function isValidDateString(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  return formatDate(parseDate(value)) === value;
+}
+
+function formatJaDate(date: Date) {
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日（${DAY_NAMES[date.getDay()]}）`;
+}
+
+function diffDays(start: Date, end: Date) {
+  return Math.round((end.getTime() - start.getTime()) / MS_PER_DAY);
+}
+
+function daysInYear(year: number) {
+  return new Date(year, 1, 29).getMonth() === 1 ? 366 : 365;
+}
+
+function dayOfYear(date: Date) {
+  return diffDays(new Date(date.getFullYear(), 0, 1), date) + 1;
+}
+
+function durationParts(start: Date, end: Date) {
+  let cursor = new Date(start);
+  let years = 0;
+  let months = 0;
+
+  while (new Date(cursor.getFullYear() + 1, cursor.getMonth(), cursor.getDate()) <= end) {
+    cursor = new Date(cursor.getFullYear() + 1, cursor.getMonth(), cursor.getDate());
+    years++;
+  }
+  while (new Date(cursor.getFullYear(), cursor.getMonth() + 1, cursor.getDate()) <= end) {
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, cursor.getDate());
+    months++;
+  }
+
+  return { years, months, days: diffDays(cursor, end) };
+}
+
+function supportedHolidayWarning(startDate: string, endDate: string) {
+  if (startDate < "2024-01-01" || endDate > "2027-12-31") {
+    return "祝日表示は2024年から2027年までの内閣府公表データに対応しています。範囲外の日付は祝日一覧に出ない可能性があります。";
+  }
+  return "";
+}
+
+function makeCsv(rows: string[][]) {
+  return rows
+    .map((row) =>
+      row
+        .map((cell) => `"${String(cell).replace(/"/g, '""')}"`)
+        .join(",")
+    )
+    .join("\n");
+}
+
+function formatNumber(value: number) {
+  return Math.round(value).toLocaleString();
+}
 
 export function DaysCalculator() {
   const [mode, setMode] = useState<Mode>("range");
-  const [startDate, setStartDate] = useState(getTodayStr);
-  const [endDate, setEndDate] = useState(getDefaultEndStr);
-  const [offsetDays, setOffsetDays] = useState(30);
+  const [startDate, setStartDate] = useState(todayStr);
+  const [endDate, setEndDate] = useState(defaultEndStr);
+  const [offsetDays, setOffsetDays] = useState("30");
   const [direction, setDirection] = useState<Direction>("after");
+  const [includeEndDate, setIncludeEndDate] = useState(false);
+  const [copiedTarget, setCopiedTarget] = useState<CopiedTarget>(null);
 
-  const rangeResult = useMemo((): RangeResult | null => {
-    if (!startDate || !endDate) return null;
-    const s = parseDate(startDate);
-    const e = parseDate(endDate);
-    if (s >= e) return null;
-    return calcRange(s, e);
-  }, [startDate, endDate]);
+  const start = useMemo(() => (isValidDateString(startDate) ? parseDate(startDate) : null), [startDate]);
+  const end = useMemo(() => (isValidDateString(endDate) ? parseDate(endDate) : null), [endDate]);
+  const offsetValue = Number.parseInt(offsetDays, 10);
 
-  const offsetResult = useMemo((): { date: Date; holidays: Holiday[] } | null => {
-    if (!startDate || offsetDays < 1) return null;
-    const s = parseDate(startDate);
-    const delta = direction === "after" ? offsetDays : -offsetDays;
-    const resultDate = addDays(s, delta);
-    const rangeStart = direction === "after" ? s : resultDate;
-    const rangeEnd = direction === "after" ? resultDate : s;
-    const holidays = getHolidaysInRange(rangeStart, rangeEnd);
-    return { date: resultDate, holidays };
-  }, [startDate, offsetDays, direction]);
+  const validation = useMemo(() => {
+    if (!isValidDateString(startDate)) return "開始日を正しく入力してください。";
+    if (mode === "range") {
+      if (!isValidDateString(endDate)) return "終了日を正しく入力してください。";
+      if (start && end && start > end) return "終了日は開始日以降の日付にしてください。";
+      if (start && end && diffDays(start, end) > 36_500) return "計算範囲は100年以内にしてください。";
+    }
+    if (mode === "offset") {
+      if (!Number.isFinite(offsetValue) || offsetValue < 0) return "日数は0以上で入力してください。";
+      if (offsetValue > 36_500) return "前後計算の日数は36,500日以内にしてください。";
+    }
+    return "";
+  }, [end, endDate, mode, offsetValue, start, startDate]);
+
+  const rangeResult = useMemo(() => {
+    if (mode !== "range" || validation || !start || !end) return null;
+    const elapsedDays = diffDays(start, end);
+    const countedDays = includeEndDate ? elapsedDays + 1 : elapsedDays;
+    const parts = durationParts(start, end);
+    const holidays = getHolidaysInRange(start, end);
+    return {
+      start,
+      end,
+      elapsedDays,
+      countedDays,
+      weeks: Math.floor(countedDays / 7),
+      remainingDays: countedDays % 7,
+      hours: countedDays * 24,
+      minutes: countedDays * 24 * 60,
+      seconds: countedDays * 24 * 60 * 60,
+      parts,
+      holidays,
+      dayOfYearStart: dayOfYear(start),
+      dayOfYearEnd: dayOfYear(end),
+    };
+  }, [end, includeEndDate, mode, start, validation]);
+
+  const offsetResult = useMemo(() => {
+    if (mode !== "offset" || validation || !start) return null;
+    const signed = direction === "after" ? offsetValue : -offsetValue;
+    const date = addDays(start, signed);
+    const rangeStart = direction === "after" ? start : date;
+    const rangeEnd = direction === "after" ? date : start;
+    return {
+      base: start,
+      date,
+      dateStr: formatDate(date),
+      holidays: getHolidaysInRange(rangeStart, rangeEnd),
+      dayOfYear: dayOfYear(date),
+      daysInYear: daysInYear(date.getFullYear()),
+    };
+  }, [direction, mode, offsetValue, start, validation]);
+
+  const calendarStart = rangeResult?.start ?? offsetResult?.base ?? start ?? new Date();
+  const calendarEnd = rangeResult?.end ?? offsetResult?.date ?? addDays(calendarStart, 30);
+  const warning = supportedHolidayWarning(formatDate(calendarStart), formatDate(calendarEnd));
+
+  const summary = useMemo(() => {
+    if (rangeResult) {
+      return [
+        "日数計算結果",
+        `開始日: ${formatJaDate(rangeResult.start)}`,
+        `終了日: ${formatJaDate(rangeResult.end)}`,
+        `日数: ${rangeResult.countedDays}日`,
+        `経過日数: ${rangeResult.elapsedDays}日`,
+        `週換算: ${rangeResult.weeks}週${rangeResult.remainingDays}日`,
+        `年月日換算: ${rangeResult.parts.years}年${rangeResult.parts.months}ヶ月${rangeResult.parts.days}日`,
+        `終了日を含める: ${includeEndDate ? "はい" : "いいえ"}`,
+      ].join("\n");
+    }
+    if (offsetResult) {
+      return [
+        "日付前後計算結果",
+        `基準日: ${formatJaDate(offsetResult.base)}`,
+        `日数: ${offsetValue}日${direction === "after" ? "後" : "前"}`,
+        `結果日: ${formatJaDate(offsetResult.date)}`,
+        `年内通算日: ${offsetResult.dayOfYear}/${offsetResult.daysInYear}`,
+      ].join("\n");
+    }
+    return "";
+  }, [direction, includeEndDate, offsetResult, offsetValue, rangeResult]);
+
+  const csv = useMemo(() => {
+    const rows = [["項目", "値"]];
+    if (rangeResult) {
+      rows.push(
+        ["モード", "日付間"],
+        ["開始日", formatDate(rangeResult.start)],
+        ["終了日", formatDate(rangeResult.end)],
+        ["日数", String(rangeResult.countedDays)],
+        ["経過日数", String(rangeResult.elapsedDays)],
+        ["週", `${rangeResult.weeks}週${rangeResult.remainingDays}日`],
+        ["年月日", `${rangeResult.parts.years}年${rangeResult.parts.months}ヶ月${rangeResult.parts.days}日`],
+        ["時間", String(rangeResult.hours)],
+        ["分", String(rangeResult.minutes)],
+        ["秒", String(rangeResult.seconds)]
+      );
+      rows.push([], ["祝日", "名称"], ...rangeResult.holidays.map((holiday) => [holiday.date, holiday.name]));
+    } else if (offsetResult) {
+      rows.push(
+        ["モード", "前後計算"],
+        ["基準日", formatDate(offsetResult.base)],
+        ["方向", direction === "after" ? "後" : "前"],
+        ["日数", String(offsetValue)],
+        ["結果日", offsetResult.dateStr],
+        ["年内通算日", `${offsetResult.dayOfYear}/${offsetResult.daysInYear}`]
+      );
+      rows.push([], ["祝日", "名称"], ...offsetResult.holidays.map((holiday) => [holiday.date, holiday.name]));
+    }
+    return makeCsv(rows);
+  }, [direction, offsetResult, offsetValue, rangeResult]);
+
+  function reset() {
+    setMode("range");
+    setStartDate(todayStr());
+    setEndDate(defaultEndStr());
+    setOffsetDays("30");
+    setDirection("after");
+    setIncludeEndDate(false);
+    setCopiedTarget(null);
+  }
+
+  async function copyText(target: Exclude<CopiedTarget, null>, text: string) {
+    if (!text) return;
+    await navigator.clipboard.writeText(text);
+    setCopiedTarget(target);
+    window.setTimeout(() => setCopiedTarget(null), 1600);
+  }
+
+  function downloadCsv() {
+    if (!csv) return;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `nissuu-keisan-${mode}.csv`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function applyRangeExample(example: (typeof RANGE_EXAMPLES)[number]) {
+    setMode("range");
+    setIncludeEndDate(false);
+    if ("start" in example && example.start && example.end) {
+      setStartDate(example.start);
+      setEndDate(example.end);
+      return;
+    }
+    const base = new Date();
+    setStartDate(formatDate(addDays(base, example.startOffset ?? 0)));
+    if ("endOfMonth" in example && example.endOfMonth) {
+      setEndDate(formatDate(new Date(base.getFullYear(), base.getMonth() + 1, 0)));
+    } else {
+      setEndDate(formatDate(addDays(base, example.endOffset ?? 30)));
+    }
+  }
+
+  function applyOffsetExample(example: (typeof OFFSET_EXAMPLES)[number]) {
+    setMode("offset");
+    setOffsetDays(example.days);
+    setDirection(example.direction);
+  }
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      {/* Mode Tabs */}
-      <div className="flex mb-6 border-b border-gray-200">
-        <button
-          onClick={() => setMode("range")}
-          className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
-            mode === "range"
-              ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-              : "border-transparent text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          2つの日付間の日数
-        </button>
-        <button
-          onClick={() => setMode("offset")}
-          className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors ${
-            mode === "offset"
-              ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-              : "border-transparent text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          ○日後・○日前の日付
-        </button>
-      </div>
-
-      <div className="space-y-6">
-        {/* Input Card */}
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
-          {mode === "range" ? (
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-lg font-semibold mb-4">期間を入力</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="start-date" className="block text-sm font-medium text-gray-700 mb-1">
-                    開始日
-                  </label>
-                  <input
-                    id="start-date"
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="end-date" className="block text-sm font-medium text-gray-700 mb-1">
-                    終了日
-                  </label>
-                  <input
-                    id="end-date"
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
-                  />
-                </div>
-              </div>
+              <h2 className="text-base font-semibold text-slate-950">日付条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">日付間の日数、または指定日からN日前後の日付を計算します。</p>
             </div>
-          ) : (
-            <div>
-              <h2 className="text-lg font-semibold mb-4">基準日と日数を入力</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label htmlFor="base-date" className="block text-sm font-medium text-gray-700 mb-1">
-                    基準日
-                  </label>
+            <button
+              type="button"
+              onClick={reset}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              リセット
+            </button>
+          </div>
+
+          <div className="mt-5 grid grid-cols-2 rounded-xl bg-slate-100 p-1">
+            <button
+              type="button"
+              onClick={() => setMode("range")}
+              className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                mode === "range" ? "bg-white text-slate-950 shadow-sm" : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              日付間
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("offset")}
+              className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                mode === "offset" ? "bg-white text-slate-950 shadow-sm" : "text-slate-600 hover:text-slate-950"
+              }`}
+            >
+              前後計算
+            </button>
+          </div>
+
+          <div className="mt-5 grid gap-4">
+            <DateInput id="days-start" label={mode === "range" ? "開始日" : "基準日"} value={startDate} onChange={setStartDate} />
+
+            {mode === "range" ? (
+              <>
+                <DateInput id="days-end" label="終了日" value={endDate} onChange={setEndDate} />
+                <label className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
+                  <span>
+                    <span className="font-medium text-slate-800">終了日を日数に含める</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">イベント日数や宿泊日数など、数え方に合わせて切り替えます。</span>
+                  </span>
                   <input
-                    id="base-date"
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
+                    type="checkbox"
+                    checked={includeEndDate}
+                    onChange={(event) => setIncludeEndDate(event.target.checked)}
+                    className="h-5 w-5 rounded border-slate-300 text-slate-950"
                   />
-                </div>
+                </label>
+              </>
+            ) : (
+              <>
                 <div>
-                  <label htmlFor="offset-days" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="offset-days" className="text-sm font-medium text-slate-700">
                     日数
                   </label>
-                  <input
-                    id="offset-days"
-                    type="number"
-                    min={1}
-                    max={36500}
-                    value={offsetDays}
-                    onChange={(e) => setOffsetDays(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">方向</label>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setDirection("after")}
-                      className={`flex-1 py-2 text-sm rounded-md border transition-colors ${
-                        direction === "after"
-                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
-                      }`}
-                    >
-                      後
-                    </button>
-                    <button
-                      onClick={() => setDirection("before")}
-                      className={`flex-1 py-2 text-sm rounded-md border transition-colors ${
-                        direction === "before"
-                          ? "bg-[var(--color-primary)] text-white border-[var(--color-primary)]"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-gray-400"
-                      }`}
-                    >
-                      前
-                    </button>
+                  <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+                    <input
+                      id="offset-days"
+                      type="text"
+                      inputMode="numeric"
+                      value={offsetDays}
+                      onChange={(event) => setOffsetDays(event.target.value.replace(/\D/g, ""))}
+                      className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+                    />
+                    <span className="flex items-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">日</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Result */}
-        {mode === "range" ? (
-          rangeResult ? (
-            <div className="space-y-4">
-              {/* Primary result */}
-              <div className="bg-[var(--color-primary)] text-white rounded-lg p-6 text-center">
-                <p className="text-sm opacity-90 mb-1">日数</p>
-                <p className="text-6xl font-bold mb-1">
-                  {rangeResult.totalDays.toLocaleString()}
-                  <span className="text-xl font-normal ml-1">日</span>
-                </p>
-                <p className="text-sm opacity-80">
-                  {formatJpDate(parseDate(startDate))} 〜 {formatJpDate(parseDate(endDate))}
-                </p>
-              </div>
-
-              {/* Detail grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                <ResultCard
-                  label="週数 + 日数"
-                  value={`${rangeResult.weeks}週 ${rangeResult.remainingDays}日`}
-                />
-                <ResultCard
-                  label="月数 + 日数"
-                  value={`${rangeResult.months}ヶ月 ${rangeResult.remainingDaysAfterMonths}日`}
-                />
-                <ResultCard
-                  label="年数 + 月数 + 日数"
-                  value={`${rangeResult.years}年 ${rangeResult.remainingMonths}ヶ月 ${rangeResult.finalRemainingDays}日`}
-                />
-                <ResultCard
-                  label="時間数"
-                  value={`${rangeResult.hours.toLocaleString()}時間`}
-                />
-                <ResultCard
-                  label="分数"
-                  value={`${rangeResult.minutes.toLocaleString()}分`}
-                />
-                <ResultCard
-                  label="秒数"
-                  value={`${rangeResult.seconds.toLocaleString()}秒`}
-                />
-              </div>
-
-              {/* Holidays */}
-              {rangeResult.holidays.length > 0 && (
-                <HolidayList holidays={rangeResult.holidays} />
-              )}
-            </div>
-          ) : (
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center text-gray-400 text-sm">
-              開始日と終了日を入力してください（終了日は開始日より後の日付）
-            </div>
-          )
-        ) : offsetResult ? (
-          <div className="space-y-4">
-            <div className="bg-[var(--color-primary)] text-white rounded-lg p-6 text-center">
-              <p className="text-sm opacity-90 mb-1">
-                {formatJpDate(parseDate(startDate))} の {offsetDays}日{direction === "after" ? "後" : "前"}
-              </p>
-              <p className="text-3xl font-bold mb-1">
-                {formatJpDate(offsetResult.date)}
-              </p>
-              <p className="text-sm opacity-80">
-                {offsetResult.date.getFullYear()}年 第{Math.ceil((Math.floor((offsetResult.date.getTime() - new Date(offsetResult.date.getFullYear(), 0, 0).getTime()) / 86400000)) / 7)}週
-              </p>
-            </div>
-
-            {offsetResult.holidays.length > 0 && (
-              <HolidayList holidays={offsetResult.holidays} />
+                <div className="grid grid-cols-2 rounded-xl bg-slate-100 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setDirection("after")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      direction === "after" ? "bg-white text-slate-950 shadow-sm" : "text-slate-600 hover:text-slate-950"
+                    }`}
+                  >
+                    後
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDirection("before")}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      direction === "before" ? "bg-white text-slate-950 shadow-sm" : "text-slate-600 hover:text-slate-950"
+                    }`}
+                  >
+                    前
+                  </button>
+                </div>
+              </>
             )}
           </div>
-        ) : (
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center text-gray-400 text-sm">
-            基準日と日数を入力してください
+
+          <p className={`mt-3 min-h-5 text-sm ${validation ? "text-red-600" : "text-slate-500"}`}>
+            {validation || "計算はブラウザ上で完結し、入力した日付は外部に送信されません。"}
+          </p>
+
+          {warning && <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800">{warning}</div>}
+
+          <div className="mt-5 grid gap-4">
+            <ExampleGroup title="サンプル: 日付間">
+              {RANGE_EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => applyRangeExample(example)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label}
+                </button>
+              ))}
+            </ExampleGroup>
+            <ExampleGroup title="サンプル: 前後計算">
+              {OFFSET_EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => applyOffsetExample(example)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label}
+                </button>
+              ))}
+            </ExampleGroup>
           </div>
-        )}
+        </div>
+
+        <div className="p-5 sm:p-6">
+          <ResultPanel
+            mode={mode}
+            rangeResult={rangeResult}
+            offsetResult={offsetResult}
+            offsetValue={offsetValue}
+            direction={direction}
+            validation={validation}
+          />
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => copyText("summary", summary)}
+              disabled={!summary}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {copiedTarget === "summary" ? "コピーしました" : "結果をコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={() => copyText("csv", csv)}
+              disabled={!summary}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {copiedTarget === "csv" ? "CSVをコピーしました" : "CSVをコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={downloadCsv}
+              disabled={!summary}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              CSVダウンロード
+            </button>
+          </div>
+
+          <div className="mt-6">
+            <HolidayList holidays={rangeResult?.holidays ?? offsetResult?.holidays ?? []} />
+          </div>
+        </div>
       </div>
+    </section>
+  );
+}
+
+function DateInput({
+  id,
+  label,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <input
+        id={id}
+        type="date"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none focus:border-slate-900"
+      />
     </div>
   );
 }
 
-function ResultCard({ label, value }: { label: string; value: string }) {
+function ExampleGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-      <p className="text-xs text-gray-500 mb-1">{label}</p>
-      <p className="text-base font-semibold text-gray-800">{value}</p>
+    <div>
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{title}</p>
+      <div className="mt-2 flex flex-wrap gap-2">{children}</div>
+    </div>
+  );
+}
+
+function ResultPanel({
+  mode,
+  rangeResult,
+  offsetResult,
+  offsetValue,
+  direction,
+  validation,
+}: {
+  mode: Mode;
+  rangeResult: {
+    start: Date;
+    end: Date;
+    elapsedDays: number;
+    countedDays: number;
+    weeks: number;
+    remainingDays: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+    parts: { years: number; months: number; days: number };
+    dayOfYearStart: number;
+    dayOfYearEnd: number;
+  } | null;
+  offsetResult: {
+    base: Date;
+    date: Date;
+    dateStr: string;
+    dayOfYear: number;
+    daysInYear: number;
+  } | null;
+  offsetValue: number;
+  direction: Direction;
+  validation: string;
+}) {
+  if (validation) {
+    return (
+      <div className="flex min-h-[260px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center">
+        <div>
+          <p className="text-sm font-semibold text-slate-800">入力エラーを確認してください</p>
+          <p className="mt-1 text-sm text-slate-500">{validation}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === "range" && rangeResult) {
+    return (
+      <div className="space-y-5">
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-medium text-emerald-700">日数</p>
+              <p className="mt-1 font-mono text-5xl font-bold tracking-tight text-emerald-950">
+                {formatNumber(rangeResult.countedDays)}
+                <span className="ml-1 text-lg font-semibold">日</span>
+              </p>
+            </div>
+            <div className="sm:text-right">
+              <p className="text-sm font-medium text-emerald-700">期間</p>
+              <p className="mt-1 text-base font-bold text-emerald-950">
+                {formatDate(rangeResult.start)} - {formatDate(rangeResult.end)}
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 text-sm leading-6 text-emerald-800">経過日数は {formatNumber(rangeResult.elapsedDays)} 日です。</p>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Metric label="週換算" value={`${rangeResult.weeks}週${rangeResult.remainingDays}日`} note="7日単位で換算" />
+          <Metric label="年月日換算" value={`${rangeResult.parts.years}年${rangeResult.parts.months}ヶ月${rangeResult.parts.days}日`} note="暦に沿った概算" />
+          <Metric label="年内通算日" value={`${rangeResult.dayOfYearStart} → ${rangeResult.dayOfYearEnd}`} note="開始日と終了日" />
+          <Metric label="時間" value={`${formatNumber(rangeResult.hours)}時間`} note="24時間換算" />
+          <Metric label="分" value={`${formatNumber(rangeResult.minutes)}分`} note="60分換算" />
+          <Metric label="秒" value={`${formatNumber(rangeResult.seconds)}秒`} note="60秒換算" />
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === "offset" && offsetResult) {
+    return (
+      <div className="space-y-5">
+        <div className="rounded-2xl border border-sky-200 bg-sky-50 p-5">
+          <p className="text-sm font-medium text-sky-700">
+            {offsetValue}日{direction === "after" ? "後" : "前"}
+          </p>
+          <p className="mt-1 text-3xl font-bold tracking-tight text-sky-950">{formatJaDate(offsetResult.date)}</p>
+          <p className="mt-3 text-sm leading-6 text-sky-800">基準日: {formatJaDate(offsetResult.base)}</p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <Metric label="結果日" value={offsetResult.dateStr} note="YYYY-MM-DD" />
+          <Metric label="年内通算日" value={`${offsetResult.dayOfYear}/${offsetResult.daysInYear}`} note="その年の何日目か" />
+          <Metric label="曜日" value={`${DAY_NAMES[offsetResult.date.getDay()]}曜日`} note="結果日の曜日" />
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+function Metric({ label, value, note }: { label: string; value: string; note: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium text-slate-500">{label}</p>
+      <p className="mt-1 text-lg font-semibold text-slate-950">{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{note}</p>
     </div>
   );
 }
 
 function HolidayList({ holidays }: { holidays: Holiday[] }) {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
-      <h3 className="text-sm font-semibold text-gray-700 mb-3">
-        期間内の祝日（{holidays.length}日）
-      </h3>
-      <ul className="space-y-1">
-        {holidays.map((h) => {
-          const d = parseDate(h.date);
-          return (
-            <li
-              key={h.date}
-              className="flex justify-between text-sm py-1 border-b border-gray-100 last:border-0"
-            >
-              <span className="text-red-600 font-medium">{h.name}</span>
-              <span className="text-gray-500">
-                {d.getMonth() + 1}/{d.getDate()}（{DAY_NAMES[d.getDay()]}）
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-
-      {/* FAQ */}
-      <div className="mt-8 border-t border-gray-100 pt-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "営業日数と暦日数の違いは何ですか？", a: "暦日数は土日祝日を含む全日数です。営業日数は土日および祝日を除いた実際の業務日数を指します。本ツールでは日本の祝日を考慮した営業日計算が可能です。" },
-            { q: "祝日はどの年まで対応していますか？", a: "2024年以降の日本の主要な祝日に対応しています。振替休日も含めて計算されます。" },
-            { q: "○日後の日付を求めるには？", a: "「○日後を計算」モードを選択し、起算日と日数を入力してください。土日祝日をスキップして営業日ベースでの計算も選択できます。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
-              <p className="text-sm text-gray-600">A. {a}</p>
-            </div>
-          ))}
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "営業日数と暦日数の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "暦日数は土日祝日を含む全日数です。営業日数は土日および祝日を除いた実際の業務日数を指します。" } },
-              { "@type": "Question", "name": "祝日はどの年まで対応していますか？", "acceptedAnswer": { "@type": "Answer", "text": "2024年以降の日本の主要な祝日に対応しています。振替休日も含めて計算されます。" } },
-              { "@type": "Question", "name": "○日後の日付を求めるには？", "acceptedAnswer": { "@type": "Answer", "text": "「○日後を計算」モードを選択し、起算日と日数を入力してください。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t border-gray-100">
-          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/nenrei-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">年齢計算ツール</Link>
-            <Link href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</Link>
-          </div>
-        </div>
-      </div>
+    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+      <h3 className="text-sm font-semibold text-slate-950">期間内の祝日</h3>
+      {holidays.length ? (
+        <ul className="mt-3 max-h-[260px] space-y-2 overflow-auto pr-1">
+          {holidays.map((holiday) => {
+            const date = parseDate(holiday.date);
+            return (
+              <li key={`${holiday.date}-${holiday.name}`} className="rounded-lg bg-white px-3 py-2 text-sm">
+                <div className="font-medium text-slate-800">{holiday.name}</div>
+                <div className="mt-0.5 text-xs text-slate-500">
+                  {date.getMonth() + 1}/{date.getDate()}（{DAY_NAMES[date.getDay()]}）
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="mt-3 text-sm leading-6 text-slate-500">この範囲では祝日が見つかりません。</p>
+      )}
     </div>
   );
 }

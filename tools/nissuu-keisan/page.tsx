@@ -1,117 +1,156 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import { DaysCalculator } from "./components/DaysCalculator";
 
-export default function Home() {
-  return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-2">
-            <svg
-              className="w-6 h-6 text-[var(--color-primary)]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span className="font-bold text-lg">nissuu-keisan</span>
-          </div>
-        </div>
-      </header>
+const faq = [
+  {
+    q: "開始日と終了日は両方含めて数えますか？",
+    a: "標準では開始日から終了日までの経過日数を表示します。イベント日数のように終了日も含めたい場合は「終了日を日数に含める」をオンにしてください。",
+  },
+  {
+    q: "○日後は基準日を含めますか？",
+    a: "前後計算では基準日を0日目として扱います。たとえば5月10日の30日後は、5月10日から30日進めた日付です。",
+  },
+  {
+    q: "営業日数も計算できますか？",
+    a: "土日祝を除いた営業日数は、関連ツールの営業日数計算を使ってください。このページは暦日ベースの日数計算です。",
+  },
+  {
+    q: "入力した日付は保存されますか？",
+    a: "保存されません。計算はブラウザ上で完結し、入力した日付を外部に送信しません。",
+  },
+];
 
-      {/* Main Tool */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-center mb-2">
-          日数計算ツール
-        </h1>
-        <p className="text-center text-gray-500 text-sm mb-8">
-          2つの日付間の日数・期間を計算。○日後・○日前の日付も即座に算出。
-        </p>
+export default function Home() {
+  const toolCount = tools.length;
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← 無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">日付・カレンダー計算</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">日数計算ツール</h1>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+                2つの日付間の日数、週数、年月日換算、時間・分・秒への換算をまとめて計算します。指定日からN日後・N日前の日付も確認できます。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">このツールでできること</div>
+              <ul className="mt-2 space-y-1.5">
+                <li>・2つの日付間の日数を計算</li>
+                <li>・週数、年月日、時間へ換算</li>
+                <li>・N日後 / N日前の日付を確認</li>
+                <li>・結果をコピー / CSV出力</li>
+              </ul>
+            </div>
+          </div>
+        </header>
 
         <DaysCalculator />
 
-        {/* AdSense Placeholder */}
-        <div className="mt-12 mb-8 bg-gray-100 border border-dashed border-gray-300 rounded-lg p-8 text-center">
-          <p className="text-xs text-gray-400">広告スペース</p>
-        </div>
-
-        {/* SEO Content */}
-        <section className="mt-8 prose prose-sm max-w-none">
-          <h2 className="text-xl font-bold mb-4">日数計算とは</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            日数計算とは、2つの日付の間に何日あるかを調べたり、ある日付から指定した日数だけ前後した日付を求める計算です。誕生日まで何日か、契約期限まであと何日か、プロジェクト開始から何日経過したかなど、日常生活やビジネスで頻繁に必要になる計算です。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">このツールで計算できること</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            「2つの日付間の日数」モードでは、開始日と終了日を入力するだけで、日数・週数・月数・年数・時間数・分数・秒数をまとめて表示します。期間内に含まれる日本の祝日も一覧表示されるため、スケジュール確認に便利です。「○日後・○日前の日付」モードでは、基準日と日数を入力することで、指定した日数後または日数前の日付を瞬時に計算できます。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">日数計算の主な使い道</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            日数計算は様々な場面で活用されます。契約書や規約の「30日以内」「90日以内」といった期限の確認、試用期間や保証期間の計算、記念日や誕生日までのカウントダウン、プロジェクトの経過日数・残日数の把握、ローンや定期預金の期間計算など、正確な日数把握が求められる場面は多くあります。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">日本の祝日について</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            このツールは2024年から2027年までの日本の国民の祝日・振替休日に対応しています。期間内に祝日が含まれる場合は自動的に一覧表示されます。祝日が日曜日と重なる場合の振替休日も含めて正確に表示されます。
-          </p>
-
-          <h2 className="text-xl font-bold mb-4">このツールの使い方</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            「2つの日付間の日数」モードでは、開始日と終了日を選択するだけで自動的に計算結果が表示されます。日数だけでなく、週数・月数・年数・時間数など複数の単位で同時に確認できます。「○日後・○日前の日付」モードでは、基準日と日数を入力し、「後」または「前」を選択するだけで目的の日付が表示されます。登録不要・完全無料でご利用いただけます。
-          </p>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="期限管理" body="契約期限、保証期間、提出期限など、暦日ベースの日数を確認できます。" />
+          <InfoCard title="記念日・予定" body="誕生日、イベント、旅行までの日数や、経過日数の確認に使えます。" />
+          <InfoCard title="前後計算" body="基準日から30日後、90日前など、指定日数だけ前後した日付を出せます。" />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 mt-12 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">
-            nissuu-keisan — 日数計算ツール。登録不要・無料。
-          </p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/eigyoubi" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">営業日数計算</Link>
-              <Link href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Wareki Converter</Link>
-              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tax Calculator</Link>
-              <Link href="/timezone-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Timezone Converter</Link>
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">日数計算の使い方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">日付間の日数</h3>
+              <p className="mt-1">
+                開始日と終了日を選ぶと、経過日数、週換算、年月日換算、時間・分・秒への換算を表示します。終了日を含めるかどうかは用途に合わせて切り替えられます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">N日後・N日前</h3>
+              <p className="mt-1">
+                基準日と日数を入力し、「後」または「前」を選ぶと結果日を表示します。基準日は0日目として扱います。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">祝日表示</h3>
+              <p className="mt-1">
+                2024年から2027年までの日本の祝日を期間内に表示します。営業日数を計算したい場合は、土日祝を除外できる営業日数計算ツールを使ってください。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">注意点</h3>
+              <p className="mt-1">
+                法務・契約・行政手続きでは「初日不算入」「末日が休日の場合」など個別ルールがあります。重要な期限は該当する規約や専門家の確認を優先してください。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/eigyoubi" title="営業日数計算" body="土日祝を除いた営業日数を計算" />
+            <Related href="/wareki-converter" title="和暦変換" body="西暦と和暦を相互変換" />
+            <Related href="/timezone-converter" title="タイムゾーン変換" body="海外との日時調整に使う" />
+            <Related href="/nenrei-keisan" title="年齢計算" body="満年齢と生年月日の確認" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "日数計算ツール",
-  "description": "2つの日付間の日数・期間を計算。○日後・○日前の日付も即座に算出。",
-  "url": "https://tools.loresync.dev/nissuu-keisan",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
