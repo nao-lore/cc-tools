@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   compressImage,
   formatBytes,
@@ -8,573 +8,636 @@ import {
   type CompressResult,
 } from "../lib/compressor";
 
-interface ImageItem {
+type ImageItem = {
   id: string;
   file: File;
   originalUrl: string;
-  result?: CompressResult;
   status: "pending" | "compressing" | "done" | "error";
+  result?: CompressResult;
   error?: string;
-}
+};
+
+type Preset = {
+  label: string;
+  description: string;
+  quality: number;
+  format: CompressOptions["format"];
+  maxWidth: string;
+  maxHeight: string;
+};
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+const PRESETS: Preset[] = [
+  {
+    label: "Web掲載",
+    description: "WebP 80%, 横幅1600px",
+    quality: 80,
+    format: "image/webp",
+    maxWidth: "1600",
+    maxHeight: "",
+  },
+  {
+    label: "SNS投稿",
+    description: "JPEG 85%, 1080px以内",
+    quality: 85,
+    format: "image/jpeg",
+    maxWidth: "1080",
+    maxHeight: "1080",
+  },
+  {
+    label: "メール添付",
+    description: "WebP 70%, 1280px以内",
+    quality: 70,
+    format: "image/webp",
+    maxWidth: "1280",
+    maxHeight: "1280",
+  },
+];
+
+function parseLimit(value: string) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+}
+
+function percent(value: number) {
+  return `${value > 0 ? "-" : "+"}${Math.abs(value)}%`;
+}
+
+function formatSignedBytes(bytes: number) {
+  const formatted = formatBytes(Math.abs(bytes));
+  return bytes < 0 ? `+${formatted}` : formatted;
+}
+
+function formatFormat(format: CompressOptions["format"]) {
+  if (format === "image/jpeg") return "JPEG";
+  if (format === "image/png") return "PNG";
+  return "WebP";
+}
+
+function buildSummary(images: ImageItem[]) {
+  const rows = images.filter((image) => image.result);
+  if (!rows.length) return "";
+
+  return rows
+    .map((image) => {
+      const result = image.result!;
+      return [
+        image.file.name,
+        `${formatBytes(result.originalSize)} -> ${formatBytes(result.compressedSize)}`,
+        percent(result.reductionPercent),
+        `${result.width}x${result.height}`,
+        result.fileName,
+      ].join("\t");
+    })
+    .join("\n");
+}
 
 export default function ImageCompressor() {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [quality, setQuality] = useState(80);
   const [format, setFormat] = useState<CompressOptions["format"]>("image/webp");
-  const [maxWidth, setMaxWidth] = useState<string>("");
-  const [maxHeight, setMaxHeight] = useState<string>("");
+  const [maxWidth, setMaxWidth] = useState("1600");
+  const [maxHeight, setMaxHeight] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const trackedUrls = useRef(new Set<string>());
+
+  const doneImages = images.filter((image) => image.status === "done" && image.result);
+  const selected = images.find((image) => image.id === selectedId) ?? images[0];
+  const totalOriginalSize = doneImages.reduce((sum, image) => sum + image.result!.originalSize, 0);
+  const totalCompressedSize = doneImages.reduce((sum, image) => sum + image.result!.compressedSize, 0);
+  const totalSaved = totalOriginalSize - totalCompressedSize;
+  const totalReduction = totalOriginalSize > 0 ? Math.round((totalSaved / totalOriginalSize) * 100) : 0;
+
+  const validationError = useMemo(() => {
+    const width = maxWidth ? Number.parseInt(maxWidth, 10) : 0;
+    const height = maxHeight ? Number.parseInt(maxHeight, 10) : 0;
+    if (maxWidth && (!Number.isFinite(width) || width < 1 || width > 12000)) return "Max width must be 1-12000px.";
+    if (maxHeight && (!Number.isFinite(height) || height < 1 || height > 12000)) return "Max height must be 1-12000px.";
+    return "";
+  }, [maxHeight, maxWidth]);
+
+  function trackUrl(url: string) {
+    trackedUrls.current.add(url);
+    return url;
+  }
+
+  function revokeUrl(url: string | undefined) {
+    if (!url || !trackedUrls.current.has(url)) return;
+    URL.revokeObjectURL(url);
+    trackedUrls.current.delete(url);
+  }
+
+  function markResultsStale() {
+    setImages((current) =>
+      current.map((image) => {
+        if (image.result) revokeUrl(image.result.url);
+        return image.result || image.status === "done" || image.status === "error"
+          ? { ...image, status: "pending", result: undefined, error: undefined }
+          : image;
+      })
+    );
+    setCopied(false);
+  }
+
+  function updateQuality(value: number) {
+    setQuality(value);
+    markResultsStale();
+  }
+
+  function updateFormat(value: CompressOptions["format"]) {
+    setFormat(value);
+    markResultsStale();
+  }
+
+  function updateWidth(value: string) {
+    setMaxWidth(value.replace(/[^\d]/g, ""));
+    markResultsStale();
+  }
+
+  function updateHeight(value: string) {
+    setMaxHeight(value.replace(/[^\d]/g, ""));
+    markResultsStale();
+  }
+
+  function applyPreset(preset: Preset) {
+    setQuality(preset.quality);
+    setFormat(preset.format);
+    setMaxWidth(preset.maxWidth);
+    setMaxHeight(preset.maxHeight);
+    markResultsStale();
+  }
 
   const addFiles = useCallback((files: FileList | File[]) => {
-    const newItems: ImageItem[] = Array.from(files)
-      .filter((f) => ACCEPTED_TYPES.includes(f.type))
-      .map((file) => ({
-        id: crypto.randomUUID(),
-        file,
-        originalUrl: URL.createObjectURL(file),
-        status: "pending" as const,
-      }));
-    setImages((prev) => [...prev, ...newItems]);
-    if (newItems.length > 0 && !selectedId) {
-      setSelectedId(newItems[0].id);
+    const incoming = Array.from(files);
+    const accepted = incoming.filter((file) => ACCEPTED_TYPES.includes(file.type));
+    const rejected = incoming.length - accepted.length;
+
+    if (rejected > 0) {
+      setMessage(`${rejected} file(s) were skipped. Use JPEG, PNG, or WebP.`);
+    } else {
+      setMessage("");
     }
-  }, [selectedId]);
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      setIsDragging(false);
-      if (e.dataTransfer.files.length > 0) {
-        addFiles(e.dataTransfer.files);
-      }
-    },
-    [addFiles]
-  );
+    if (!accepted.length) return;
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
+    const newItems: ImageItem[] = accepted.map((file) => ({
+      id: crypto.randomUUID(),
+      file,
+      originalUrl: trackUrl(URL.createObjectURL(file)),
+      status: "pending",
+    }));
+
+    setImages((current) => [...current, ...newItems]);
+    setSelectedId((current) => current ?? newItems[0].id);
+    setCopied(false);
   }, []);
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
+  function handleDrop(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
     setIsDragging(false);
-  }, []);
+    if (event.dataTransfer.files.length > 0) addFiles(event.dataTransfer.files);
+  }
 
-  const compressAll = async () => {
-    const opts: CompressOptions = {
+  function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setIsDragging(true);
+  }
+
+  function handleDragLeave(event: React.DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setIsDragging(false);
+  }
+
+  async function compressAll() {
+    if (!images.length || validationError || isProcessing) return;
+
+    const options: CompressOptions = {
       quality,
       format,
-      maxWidth: maxWidth ? parseInt(maxWidth) : undefined,
-      maxHeight: maxHeight ? parseInt(maxHeight) : undefined,
+      maxWidth: parseLimit(maxWidth),
+      maxHeight: parseLimit(maxHeight),
     };
 
-    for (const img of images) {
-      if (img.status === "done") continue;
+    setIsProcessing(true);
+    setCopied(false);
+    setMessage("");
 
-      setImages((prev) =>
-        prev.map((i) =>
-          i.id === img.id ? { ...i, status: "compressing" } : i
+    for (const image of images) {
+      setImages((current) =>
+        current.map((item) =>
+          item.id === image.id
+            ? { ...item, status: "compressing", error: undefined }
+            : item
         )
       );
 
       try {
-        const result = await compressImage(img.file, opts);
-        setImages((prev) =>
-          prev.map((i) =>
-            i.id === img.id ? { ...i, status: "done", result } : i
-          )
+        const result = await compressImage(image.file, options);
+        trackUrl(result.url);
+        setImages((current) =>
+          current.map((item) => {
+            if (item.id !== image.id) return item;
+            if (item.result) revokeUrl(item.result.url);
+            return { ...item, status: "done", result };
+          })
         );
-      } catch (err) {
-        setImages((prev) =>
-          prev.map((i) =>
-            i.id === img.id
+      } catch (error) {
+        setImages((current) =>
+          current.map((item) =>
+            item.id === image.id
               ? {
-                  ...i,
+                  ...item,
                   status: "error",
-                  error: err instanceof Error ? err.message : "Unknown error",
+                  result: undefined,
+                  error: error instanceof Error ? error.message : "Compression failed",
                 }
-              : i
+              : item
           )
         );
       }
     }
-  };
 
-  const downloadOne = (item: ImageItem) => {
+    setIsProcessing(false);
+  }
+
+  function downloadOne(item: ImageItem) {
     if (!item.result) return;
-    const a = document.createElement("a");
-    a.href = item.result.url;
-    a.download = item.result.fileName;
-    a.click();
-  };
+    const anchor = document.createElement("a");
+    anchor.href = item.result.url;
+    anchor.download = item.result.fileName;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+  }
 
-  const downloadAll = () => {
-    images.forEach((img) => {
-      if (img.result) downloadOne(img);
+  function downloadAll() {
+    doneImages.forEach(downloadOne);
+  }
+
+  async function copySummary() {
+    const summary = buildSummary(images);
+    if (!summary) return;
+    await navigator.clipboard.writeText(summary);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
+
+  function removeImage(id: string) {
+    setImages((current) => {
+      const target = current.find((image) => image.id === id);
+      revokeUrl(target?.originalUrl);
+      revokeUrl(target?.result?.url);
+      const next = current.filter((image) => image.id !== id);
+      setSelectedId((currentSelected) => (currentSelected === id ? next[0]?.id ?? null : currentSelected));
+      return next;
     });
-  };
+  }
 
-  const removeImage = (id: string) => {
-    setImages((prev) => {
-      const updated = prev.filter((i) => i.id !== id);
-      if (selectedId === id) {
-        setSelectedId(updated.length > 0 ? updated[0].id : null);
-      }
-      return updated;
-    });
-  };
-
-  const clearAll = () => {
-    images.forEach((img) => {
-      URL.revokeObjectURL(img.originalUrl);
-      if (img.result) URL.revokeObjectURL(img.result.url);
+  function clearAll() {
+    images.forEach((image) => {
+      revokeUrl(image.originalUrl);
+      revokeUrl(image.result?.url);
     });
     setImages([]);
     setSelectedId(null);
-  };
-
-  const selected = images.find((i) => i.id === selectedId);
-  const doneCount = images.filter((i) => i.status === "done").length;
-  const totalReduction =
-    doneCount > 0
-      ? images
-          .filter((i) => i.result)
-          .reduce((sum, i) => sum + (i.result!.originalSize - i.result!.compressedSize), 0)
-      : 0;
+    setMessage("");
+    setCopied(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6">
-      {/* Upload Zone */}
-      <div
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onClick={() => fileInputRef.current?.click()}
-        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-12 text-center cursor-pointer transition-all ${
-          isDragging
-            ? "border-blue-500 bg-blue-50"
-            : "border-gray-300 hover:border-blue-400 hover:bg-gray-50"
-        }`}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          multiple
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files) addFiles(e.target.files);
-            e.target.value = "";
-          }}
-        />
-        <div className="flex flex-col items-center gap-3">
-          <svg
-            className="w-12 h-12 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.55fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onClick={() => fileInputRef.current?.click()}
+            className={`flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-5 py-8 text-center transition ${
+              isDragging
+                ? "border-emerald-500 bg-emerald-50"
+                : "border-slate-300 bg-slate-50 hover:border-slate-500 hover:bg-white"
+            }`}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              className="sr-only"
+              onChange={(event) => {
+                if (event.target.files) addFiles(event.target.files);
+                event.target.value = "";
+              }}
             />
-          </svg>
-          <p className="text-base sm:text-lg font-medium text-gray-700">
-            Drop images here or click to browse
-          </p>
-          <p className="text-xs sm:text-sm text-gray-500">
-            Supports JPEG, PNG, WebP — multiple files allowed
-          </p>
-        </div>
-      </div>
+            <div className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white">画像を選択</div>
+            <p className="mt-4 text-lg font-semibold text-slate-950">JPEG / PNG / WebP をここにドロップ</p>
+            <p className="mt-2 max-w-md text-sm leading-6 text-slate-500">
+              画像はブラウザ上で圧縮され、外部に送信されません。複数ファイルをまとめて処理できます。
+            </p>
+          </div>
 
-      {/* Controls */}
-      {images.length > 0 && (
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Quality Slider */}
+          {message && <p className="mt-3 text-sm text-amber-700">{message}</p>}
+
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {PRESETS.map((preset) => (
+              <button
+                key={preset.label}
+                type="button"
+                onClick={() => applyPreset(preset)}
+                className="rounded-xl border border-slate-200 p-4 text-left hover:border-slate-400 hover:bg-slate-50"
+              >
+                <span className="text-sm font-semibold text-slate-950">{preset.label}</span>
+                <span className="mt-1 block text-xs leading-5 text-slate-500">サンプル設定: {preset.description}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label htmlFor="image-quality" className="text-sm font-semibold text-slate-800">
                 Quality: {quality}%
               </label>
               <input
+                id="image-quality"
                 type="range"
                 min={1}
                 max={100}
                 value={quality}
-                onChange={(e) => setQuality(parseInt(e.target.value))}
-                className="w-full accent-blue-600"
+                onChange={(event) => updateQuality(Number(event.target.value))}
+                className="mt-3 w-full accent-slate-950"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-0.5">
-                <span>Smaller</span>
-                <span>Higher</span>
+              <div className="mt-1 flex justify-between text-xs text-slate-500">
+                <span>軽量</span>
+                <span>高画質</span>
               </div>
             </div>
 
-            {/* Format Selector */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Output Format
-              </label>
-              <select
-                value={format}
-                onChange={(e) =>
-                  setFormat(e.target.value as CompressOptions["format"])
-                }
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="image/webp">WebP</option>
-                <option value="image/jpeg">JPEG</option>
-                <option value="image/png">PNG</option>
-              </select>
-            </div>
-
-            {/* Max Width */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Max Width (px)
-              </label>
-              <input
-                type="number"
-                value={maxWidth}
-                onChange={(e) => setMaxWidth(e.target.value)}
-                placeholder="No limit"
-                min={1}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-
-            {/* Max Height */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Max Height (px)
-              </label>
-              <input
-                type="number"
-                value={maxHeight}
-                onChange={(e) => setMaxHeight(e.target.value)}
-                placeholder="No limit"
-                min={1}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={compressAll}
-              className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
-            >
-              Compress All ({images.length})
-            </button>
-            {doneCount > 0 && (
-              <button
-                onClick={downloadAll}
-                className="px-6 py-2.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors"
-              >
-                Download All ({doneCount})
-              </button>
-            )}
-            <button
-              onClick={clearAll}
-              className="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors ml-auto"
-            >
-              Clear All
-            </button>
-          </div>
-
-          {/* Summary stats */}
-          {doneCount > 0 && (
-            <div className="flex gap-6 text-sm text-gray-600">
-              <span>
-                {doneCount} of {images.length} compressed
-              </span>
-              <span>Total saved: {formatBytes(totalReduction)}</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Image List + Preview */}
-      {images.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Thumbnail List */}
-          <div className="lg:col-span-1 space-y-2 max-h-[300px] sm:max-h-[600px] overflow-y-auto">
-            {images.map((img) => (
-              <div
-                key={img.id}
-                onClick={() => setSelectedId(img.id)}
-                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer border transition-all ${
-                  selectedId === img.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300 bg-white"
-                }`}
-              >
-                <img
-                  src={img.originalUrl}
-                  alt={img.file.name}
-                  className="w-14 h-14 object-cover rounded-lg flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-800 truncate">
-                    {img.file.name}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {formatBytes(img.file.size)}
-                  </p>
-                  {img.status === "compressing" && (
-                    <p className="text-xs text-blue-600">Compressing...</p>
-                  )}
-                  {img.status === "done" && img.result && (
-                    <p
-                      className={`text-xs font-medium ${
-                        img.result.reductionPercent > 0
-                          ? "text-emerald-600"
-                          : "text-orange-600"
-                      }`}
-                    >
-                      {img.result.reductionPercent > 0 ? "-" : "+"}
-                      {Math.abs(img.result.reductionPercent)}% →{" "}
-                      {formatBytes(img.result.compressedSize)}
-                    </p>
-                  )}
-                  {img.status === "error" && (
-                    <p className="text-xs text-red-600">{img.error}</p>
-                  )}
-                </div>
-                <div className="flex gap-1 flex-shrink-0">
-                  {img.result && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        downloadOne(img);
-                      }}
-                      className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
-                      title="Download"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </button>
-                  )}
+              <p className="text-sm font-semibold text-slate-800">Output format</p>
+              <div className="mt-3 grid grid-cols-3 rounded-xl bg-slate-100 p-1">
+                {(["image/webp", "image/jpeg", "image/png"] as const).map((option) => (
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      removeImage(img.id);
-                    }}
-                    className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
-                    title="Remove"
+                    key={option}
+                    type="button"
+                    onClick={() => updateFormat(option)}
+                    className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      format === option ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:text-slate-950"
+                    }`}
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    {formatFormat(option)}
                   </button>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div>
+              <label htmlFor="image-max-width" className="text-sm font-semibold text-slate-800">
+                Max width
+              </label>
+              <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 focus-within:border-slate-950">
+                <input
+                  id="image-max-width"
+                  type="text"
+                  inputMode="numeric"
+                  value={maxWidth}
+                  onChange={(event) => updateWidth(event.target.value)}
+                  placeholder="No limit"
+                  className="min-w-0 flex-1 px-3 py-2.5 text-right font-mono outline-none"
+                />
+                <span className="border-l border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-500">px</span>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="image-max-height" className="text-sm font-semibold text-slate-800">
+                Max height
+              </label>
+              <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 focus-within:border-slate-950">
+                <input
+                  id="image-max-height"
+                  type="text"
+                  inputMode="numeric"
+                  value={maxHeight}
+                  onChange={(event) => updateHeight(event.target.value)}
+                  placeholder="No limit"
+                  className="min-w-0 flex-1 px-3 py-2.5 text-right font-mono outline-none"
+                />
+                <span className="border-l border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-500">px</span>
+              </div>
+            </div>
           </div>
 
-          {/* Preview Panel */}
-          <div className="lg:col-span-2">
-            {selected && (
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 space-y-4">
-                <h3 className="font-medium text-gray-800 truncate">
-                  {selected.file.name}
-                </h3>
+          <p className={`mt-3 min-h-5 text-sm ${validationError ? "text-red-600" : "text-slate-500"}`}>
+            {validationError || "WebPはWeb向け、JPEGは写真互換、PNGは透過や線画向けです。"}
+          </p>
 
-                {/* Side by side */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                        Original
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {formatBytes(selected.file.size)}
-                      </span>
-                    </div>
-                    <div className="aspect-video bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100">
-                      <img
-                        src={selected.originalUrl}
-                        alt="Original"
-                        className="max-w-full max-h-full object-contain"
-                      />
-                    </div>
-                  </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={compressAll}
+              disabled={!images.length || Boolean(validationError) || isProcessing}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {isProcessing ? "圧縮中..." : `圧縮する (${images.length})`}
+            </button>
+            <button
+              type="button"
+              onClick={downloadAll}
+              disabled={!doneImages.length}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300"
+            >
+              まとめてダウンロード
+            </button>
+            <button
+              type="button"
+              onClick={copySummary}
+              disabled={!doneImages.length}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300"
+            >
+              {copied ? "コピー済み" : "結果をコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={clearAll}
+              disabled={!images.length}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300"
+            >
+              クリア
+            </button>
+          </div>
+        </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                        Compressed
-                      </span>
-                      {selected.result && (
-                        <span className="text-xs text-gray-500">
-                          {formatBytes(selected.result.compressedSize)}
-                        </span>
-                      )}
-                    </div>
-                    <div className="aspect-video bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center border border-gray-100">
-                      {selected.status === "compressing" && (
-                        <div className="flex flex-col items-center gap-2 text-gray-400">
-                          <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                          </svg>
-                          <span className="text-sm">Compressing...</span>
-                        </div>
-                      )}
-                      {selected.status === "done" && selected.result && (
-                        <img
-                          src={selected.result.url}
-                          alt="Compressed"
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      )}
-                      {selected.status === "pending" && (
-                        <span className="text-sm text-gray-400">
-                          Click &quot;Compress All&quot; to start
-                        </span>
-                      )}
-                      {selected.status === "error" && (
-                        <span className="text-sm text-red-500">
-                          {selected.error}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+        <aside className="p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">圧縮結果</h2>
+          <div className="mt-4 grid gap-3">
+            <Stat label="処理済み" value={`${doneImages.length} / ${images.length}`} />
+            <Stat label="削減量" value={doneImages.length ? formatSignedBytes(totalSaved) : "-"} />
+            <Stat label="削減率" value={doneImages.length ? percent(totalReduction) : "-"} />
+          </div>
+
+          <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            {!selected ? (
+              <p className="text-sm leading-6 text-slate-500">画像を追加すると、元画像と圧縮後のプレビューを比較できます。</p>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <p className="truncate text-sm font-semibold text-slate-950">{selected.file.name}</p>
+                  <p className="mt-1 text-xs text-slate-500">{formatBytes(selected.file.size)}</p>
                 </div>
-
-                {/* Size comparison bar */}
+                <Preview title="Original" src={selected.originalUrl} alt={selected.file.name} />
+                <Preview
+                  title="Compressed"
+                  src={selected.result?.url}
+                  alt={`${selected.file.name} compressed`}
+                  empty={
+                    selected.status === "compressing"
+                      ? "Compressing..."
+                      : selected.status === "error"
+                        ? selected.error ?? "Compression failed"
+                        : "圧縮後に表示されます"
+                  }
+                />
                 {selected.result && (
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">
-                        {formatBytes(selected.result.originalSize)} →{" "}
-                        {formatBytes(selected.result.compressedSize)}
-                      </span>
-                      <span
-                        className={`font-semibold ${
-                          selected.result.reductionPercent > 0
-                            ? "text-emerald-600"
-                            : "text-orange-600"
-                        }`}
-                      >
-                        {selected.result.reductionPercent > 0
-                          ? `${selected.result.reductionPercent}% smaller`
-                          : `${Math.abs(selected.result.reductionPercent)}% larger`}
+                  <div className="rounded-xl bg-white p-3 text-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="text-slate-500">Size</span>
+                      <span className="font-semibold text-slate-950">
+                        {formatBytes(selected.result.originalSize)} {"->"} {formatBytes(selected.result.compressedSize)}
                       </span>
                     </div>
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full rounded-full transition-all ${
-                          selected.result.reductionPercent > 0
-                            ? "bg-emerald-500"
-                            : "bg-orange-500"
-                        }`}
-                        style={{
-                          width: `${Math.max(
-                            5,
-                            100 - Math.abs(selected.result.reductionPercent)
-                          )}%`,
-                        }}
-                      />
+                    <div className="mt-2 flex items-center justify-between gap-3">
+                      <span className="text-slate-500">Dimensions</span>
+                      <span className="font-semibold text-slate-950">
+                        {selected.result.width} x {selected.result.height}
+                      </span>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => downloadOne(selected)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
-                      >
-                        Download
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => downloadOne(selected)}
+                      className="mt-3 w-full rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+                    >
+                      この画像をダウンロード
+                    </button>
                   </div>
                 )}
               </div>
             )}
           </div>
+        </aside>
+      </div>
+
+      {images.length > 0 && (
+        <div className="border-t border-slate-200 p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">ファイル一覧</h2>
+          <div className="mt-3 grid gap-2">
+            {images.map((image) => (
+              <div
+                key={image.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => setSelectedId(image.id)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setSelectedId(image.id);
+                  }
+                }}
+                className={`grid grid-cols-[44px_minmax(0,1fr)_auto] items-center gap-3 rounded-xl border p-3 text-left ${
+                  selectedId === image.id ? "border-slate-950 bg-slate-50" : "border-slate-200 hover:border-slate-400"
+                }`}
+              >
+                <img src={image.originalUrl} alt="" className="h-11 w-11 rounded-lg object-cover" />
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold text-slate-950">{image.file.name}</span>
+                  <span className="mt-0.5 block text-xs text-slate-500">
+                    {image.status === "done" && image.result
+                      ? `${percent(image.result.reductionPercent)} / ${formatBytes(image.result.compressedSize)}`
+                      : image.status === "compressing"
+                        ? "Compressing..."
+                        : image.status === "error"
+                          ? image.error
+                          : formatBytes(image.file.size)}
+                  </span>
+                </span>
+                <span className="flex gap-1">
+                  {image.result && (
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        downloadOne(image);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          event.stopPropagation();
+                          downloadOne(image);
+                        }
+                      }}
+                      className="rounded-md border border-slate-300 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-white"
+                    >
+                      DL
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      removeImage(image.id);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        removeImage(image.id);
+                      }
+                    }}
+                    className="rounded-md border border-slate-300 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-white"
+                  >
+                    削除
+                  </span>
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
+    </section>
+  );
+}
 
-      {/* FAQ */}
-      <section className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mt-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            {
-              q: "WebP と JPEG はどちらが良いですか？",
-              a: "同じ画質なら WebP は JPEG より 25〜35% ファイルサイズが小さくなります。ほぼすべての現代ブラウザが WebP に対応しているため、ウェブ向けには WebP を推奨します。古いシステムとの互換性が必要な場合は JPEG を選んでください。",
-            },
-            {
-              q: "圧縮してもファイルサイズが大きくなる場合があるのはなぜですか？",
-              a: "すでに最適化された JPEG を PNG に変換したり、低品質の画像を高品質設定で変換するとサイズが増えることがあります。その場合は元のフォーマットのまま品質を下げるか、WebP 形式を試してみてください。",
-            },
-            {
-              q: "アップロードした画像はサーバーに送信されますか？",
-              a: "いいえ。すべての処理はブラウザ上で完結しており、画像データはサーバーに送信されません。プライバシーを保護したまま安心してご利用いただけます。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 text-lg font-semibold text-slate-950">{value}</p>
+    </div>
+  );
+}
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "WebP と JPEG はどちらが良いですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "同じ画質なら WebP は JPEG より 25〜35% ファイルサイズが小さくなります。ほぼすべての現代ブラウザが WebP に対応しているため、ウェブ向けには WebP を推奨します。" },
-              },
-              {
-                "@type": "Question",
-                "name": "圧縮してもファイルサイズが大きくなる場合があるのはなぜですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "すでに最適化された JPEG を PNG に変換したり、低品質の画像を高品質設定で変換するとサイズが増えることがあります。その場合は元のフォーマットのまま品質を下げるか、WebP 形式を試してみてください。" },
-              },
-              {
-                "@type": "Question",
-                "name": "アップロードした画像はサーバーに送信されますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "いいえ。すべての処理はブラウザ上で完結しており、画像データはサーバーに送信されません。プライバシーを保護したまま安心してご利用いただけます。" },
-              },
-            ],
-          }),
-        }}
-      />
-
-      {/* 関連ツール */}
-      <section className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 mt-4">
-        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/image-to-base64", label: "画像 → Base64 変換", desc: "画像を Base64 データ URI に変換" },
-            { href: "/svg-to-png", label: "SVG → PNG 変換", desc: "SVG ファイルを PNG 画像に変換" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-3 transition-colors"
-            >
-              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
-              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
-            </a>
-          ))}
-        </div>
-      </section>
+function Preview({ title, src, alt, empty }: { title: string; src?: string; alt: string; empty?: string }) {
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</p>
+      </div>
+      <div className="flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white">
+        {src ? (
+          <img src={src} alt={alt} className="max-h-full max-w-full object-contain" />
+        ) : (
+          <span className="px-4 text-center text-sm text-slate-400">{empty}</span>
+        )}
+      </div>
     </div>
   );
 }
