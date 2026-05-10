@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 72.8/100
-- Priority tiers: {"B": 54, "C": 88}
+- Average quality score: 73.1/100
+- Priority tiers: {"B": 53, "C": 89}
 
 ## Highest Priority Tools
 
@@ -16,7 +16,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 63 | 62 | `hebon-romaji` | converter | Japanese Tools | reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
-| B | 58 | 57 | `url-encoder` | reference | Encoding & Decoding | faq, reset_clear, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 58 | 61 | `image-compressor` | image | Image Tools | copy, examples, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 58 | 65 | `azure-openai-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `claude-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 51 | 61 | `cdn-pricing-comparison` | comparison | SaaS Pricing | related_links, copy, examples, reset_clear, validation; penalties: any_type |
 | B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
 | B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
+| B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 
 ## Strongest Current Tools
 
@@ -72,7 +72,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | converter | 77.9 |
 | generator | 69.8 |
 | image | 71 |
-| reference | 70.3 |
+| reference | 74.2 |
 | utility | 66.8 |
 
 ## Weakest Categories
@@ -89,8 +89,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | SaaS Pricing | 67.5 | 13 |
 | Time & Date | 68 | 2 |
 | Minifier Tools | 68 | 2 |
-| Encoding & Decoding | 68.3 | 7 |
 | Developer Tools | 68.6 | 8 |
+| Design Tools | 69 | 1 |
 
 ## Next Factory Steps
 

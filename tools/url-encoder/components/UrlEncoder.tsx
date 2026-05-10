@@ -1,78 +1,85 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useMemo, useState } from "react";
 
 type Mode = "encode" | "decode";
-type EncodingType = "encodeURI" | "encodeURIComponent" | "full";
+type EncodingType = "component" | "uri" | "strict";
 
-interface ParsedUrl {
+type ParsedUrl = {
   protocol: string;
   host: string;
   path: string;
   queryParams: [string, string][];
   fragment: string;
-}
+};
 
-interface QueryParam {
-  id: string;
+type QueryParam = {
+  id: number;
   key: string;
   value: string;
-}
+};
 
-const CHAR_REFERENCE: { char: string; encoded: string; description: string }[] =
-  [
-    { char: " ", encoded: "%20", description: "Space" },
-    { char: "!", encoded: "%21", description: "Exclamation mark" },
-    { char: "#", encoded: "%23", description: "Hash" },
-    { char: "$", encoded: "%24", description: "Dollar sign" },
-    { char: "%", encoded: "%25", description: "Percent" },
-    { char: "&", encoded: "%26", description: "Ampersand" },
-    { char: "'", encoded: "%27", description: "Single quote" },
-    { char: "(", encoded: "%28", description: "Left parenthesis" },
-    { char: ")", encoded: "%29", description: "Right parenthesis" },
-    { char: "*", encoded: "%2A", description: "Asterisk" },
-    { char: "+", encoded: "%2B", description: "Plus" },
-    { char: ",", encoded: "%2C", description: "Comma" },
-    { char: "/", encoded: "%2F", description: "Forward slash" },
-    { char: ":", encoded: "%3A", description: "Colon" },
-    { char: ";", encoded: "%3B", description: "Semicolon" },
-    { char: "=", encoded: "%3D", description: "Equals" },
-    { char: "?", encoded: "%3F", description: "Question mark" },
-    { char: "@", encoded: "%40", description: "At sign" },
-    { char: "[", encoded: "%5B", description: "Left bracket" },
-    { char: "]", encoded: "%5D", description: "Right bracket" },
-    { char: "{", encoded: "%7B", description: "Left brace" },
-    { char: "}", encoded: "%7D", description: "Right brace" },
-  ];
+const EXAMPLES = [
+  {
+    label: "検索パラメータ",
+    mode: "encode" as const,
+    encodingType: "component" as const,
+    input: "東京 カフェ&ランチ",
+  },
+  {
+    label: "URL全体",
+    mode: "encode" as const,
+    encodingType: "uri" as const,
+    input: "https://example.com/search?q=東京 カフェ&sort=new",
+  },
+  {
+    label: "デコード",
+    mode: "decode" as const,
+    encodingType: "component" as const,
+    input: "%E6%9D%B1%E4%BA%AC%20%E3%82%AB%E3%83%95%E3%82%A7%26%E3%83%A9%E3%83%B3%E3%83%81",
+  },
+];
 
-function fullPercentEncode(str: string): string {
-  return Array.from(str)
+const CHAR_REFERENCE = [
+  ["空白", "%20", "URLSearchParamsでは+になる場合もあります"],
+  ["#", "%23", "フラグメント開始記号"],
+  ["%", "%25", "パーセント記号"],
+  ["&", "%26", "クエリ区切り"],
+  ["+", "%2B", "プラス記号"],
+  ["/", "%2F", "パス区切り"],
+  ["?", "%3F", "クエリ開始記号"],
+  ["=", "%3D", "キーと値の区切り"],
+  ["日本語", "%E6%97%A5...", "UTF-8バイト列で表現"],
+];
+
+function strictPercentEncode(value: string) {
+  return Array.from(value)
     .map((char) => {
-      const code = char.charCodeAt(0);
-      if (
-        (code >= 65 && code <= 90) ||
-        (code >= 97 && code <= 122) ||
-        (code >= 48 && code <= 57) ||
-        char === "-" ||
-        char === "_" ||
-        char === "." ||
-        char === "~"
-      ) {
-        return char;
-      }
-      if (code > 127) {
-        return encodeURIComponent(char);
-      }
-      return "%" + code.toString(16).toUpperCase().padStart(2, "0");
+      if (/^[A-Za-z0-9_.~-]$/.test(char)) return char;
+      return Array.from(new TextEncoder().encode(char))
+        .map((byte) => `%${byte.toString(16).toUpperCase().padStart(2, "0")}`)
+        .join("");
     })
     .join("");
 }
 
-function fullPercentDecode(str: string): string {
+function transform(input: string, mode: Mode, encodingType: EncodingType) {
+  if (!input) return { output: "", error: "" };
+
   try {
-    return decodeURIComponent(str);
-  } catch {
-    return str;
+    if (mode === "encode") {
+      if (encodingType === "uri") return { output: encodeURI(input), error: "" };
+      if (encodingType === "strict") return { output: strictPercentEncode(input), error: "" };
+      return { output: encodeURIComponent(input), error: "" };
+    }
+
+    if (encodingType === "uri") return { output: decodeURI(input), error: "" };
+    return { output: decodeURIComponent(input), error: "" };
+  } catch (error) {
+    return {
+      output: "",
+      error: error instanceof Error ? `入力エラー: ${error.message}` : "入力エラー: デコードできない文字列です。",
+    };
   }
 }
 
@@ -80,9 +87,7 @@ function parseUrl(input: string): ParsedUrl | null {
   try {
     const url = new URL(input);
     const queryParams: [string, string][] = [];
-    url.searchParams.forEach((value, key) => {
-      queryParams.push([key, value]);
-    });
+    url.searchParams.forEach((value, key) => queryParams.push([key, value]));
     return {
       protocol: url.protocol.replace(":", ""),
       host: url.host,
@@ -95,408 +100,325 @@ function parseUrl(input: string): ParsedUrl | null {
   }
 }
 
-let paramIdCounter = 0;
-function newParamId(): string {
-  return `p${++paramIdCounter}`;
+function buildQuery(params: QueryParam[]) {
+  const pairs = params.filter((param) => param.key.trim());
+  if (!pairs.length) return "";
+  return `?${pairs.map((param) => `${encodeURIComponent(param.key)}=${encodeURIComponent(param.value)}`).join("&")}`;
 }
 
-function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
+function buildCsv(parsed: ParsedUrl | null, output: string, queryOutput: string) {
+  const rows = [
+    ["section", "key", "value"],
+    ["converter", "output", output],
+    ["query_builder", "query_string", queryOutput],
+  ];
+  if (parsed) {
+    rows.push(["parsed_url", "protocol", parsed.protocol]);
+    rows.push(["parsed_url", "host", parsed.host]);
+    rows.push(["parsed_url", "path", parsed.path]);
+    rows.push(["parsed_url", "fragment", parsed.fragment]);
+    for (const [key, value] of parsed.queryParams) rows.push(["query_param", key, value]);
+  }
+  return rows.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n");
+}
 
-  const copy = useCallback(() => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
-  }, [text]);
-
-  return (
-    <button
-      onClick={copy}
-      className="px-3 py-1.5 text-xs font-medium rounded bg-panel-border hover:bg-muted/30 text-foreground transition-colors"
-      title="Copy to clipboard"
-    >
-      {copied ? "Copied!" : "Copy"}
-    </button>
-  );
+function downloadCsv(text: string) {
+  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "url-encoder.csv";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
 }
 
 export default function UrlEncoder() {
   const [mode, setMode] = useState<Mode>("encode");
-  const [encodingType, setEncodingType] =
-    useState<EncodingType>("encodeURIComponent");
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
-  const [error, setError] = useState("");
-
-  // URL Parser
-  const [urlInput, setUrlInput] = useState("");
-  const [parsedUrl, setParsedUrl] = useState<ParsedUrl | null>(null);
-
-  // Query Builder
+  const [encodingType, setEncodingType] = useState<EncodingType>("component");
+  const [input, setInput] = useState(EXAMPLES[0].input);
+  const [urlInput, setUrlInput] = useState("https://example.com/search?q=%E6%9D%B1%E4%BA%AC&sort=new#top");
   const [queryParams, setQueryParams] = useState<QueryParam[]>([
-    { id: newParamId(), key: "", value: "" },
+    { id: 1, key: "q", value: "東京 カフェ" },
+    { id: 2, key: "sort", value: "new" },
   ]);
-  const [queryOutput, setQueryOutput] = useState("");
+  const [copied, setCopied] = useState("");
 
-  // Live encode/decode
-  useEffect(() => {
-    if (!input) {
-      setOutput("");
-      setError("");
-      return;
-    }
+  const transformed = useMemo(() => transform(input, mode, encodingType), [input, mode, encodingType]);
+  const parsedUrl = useMemo(() => parseUrl(urlInput), [urlInput]);
+  const queryOutput = useMemo(() => buildQuery(queryParams), [queryParams]);
 
-    try {
-      let result: string;
-      if (mode === "encode") {
-        switch (encodingType) {
-          case "encodeURI":
-            result = encodeURI(input);
-            break;
-          case "encodeURIComponent":
-            result = encodeURIComponent(input);
-            break;
-          case "full":
-            result = fullPercentEncode(input);
-            break;
-        }
-      } else {
-        switch (encodingType) {
-          case "encodeURI":
-            result = decodeURI(input);
-            break;
-          case "encodeURIComponent":
-            result = decodeURIComponent(input);
-            break;
-          case "full":
-            result = fullPercentDecode(input);
-            break;
-        }
-      }
-      setOutput(result);
-      setError("");
-    } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "Invalid input for decoding"
-      );
-      setOutput("");
-    }
-  }, [input, mode, encodingType]);
+  function reset() {
+    setMode("encode");
+    setEncodingType("component");
+    setInput("");
+    setUrlInput("");
+    setQueryParams([{ id: 1, key: "", value: "" }]);
+    setCopied("");
+  }
 
-  // URL Parser
-  useEffect(() => {
-    if (!urlInput) {
-      setParsedUrl(null);
-      return;
-    }
-    setParsedUrl(parseUrl(urlInput));
-  }, [urlInput]);
+  async function copy(label: string, value: string) {
+    if (!value) return;
+    await navigator.clipboard.writeText(value);
+    setCopied(label);
+    window.setTimeout(() => setCopied(""), 1600);
+  }
 
-  // Query Builder
-  useEffect(() => {
-    const pairs = queryParams.filter((p) => p.key.trim());
-    if (pairs.length === 0) {
-      setQueryOutput("");
-      return;
-    }
-    const qs = pairs
-      .map(
-        (p) =>
-          `${encodeURIComponent(p.key)}=${encodeURIComponent(p.value)}`
-      )
-      .join("&");
-    setQueryOutput(`?${qs}`);
-  }, [queryParams]);
+  function addParam() {
+    const nextId = Math.max(0, ...queryParams.map((param) => param.id)) + 1;
+    setQueryParams((current) => [...current, { id: nextId, key: "", value: "" }]);
+  }
 
-  const addParam = () => {
-    setQueryParams((prev) => [
-      ...prev,
-      { id: newParamId(), key: "", value: "" },
-    ]);
-  };
+  function updateParam(id: number, field: "key" | "value", value: string) {
+    setQueryParams((current) => current.map((param) => (param.id === id ? { ...param, [field]: value } : param)));
+  }
 
-  const removeParam = (id: string) => {
-    setQueryParams((prev) => prev.filter((p) => p.id !== id));
-  };
+  function removeParam(id: number) {
+    setQueryParams((current) => (current.length === 1 ? [{ id: 1, key: "", value: "" }] : current.filter((param) => param.id !== id)));
+  }
 
-  const updateParam = (id: string, field: "key" | "value", val: string) => {
-    setQueryParams((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, [field]: val } : p))
-    );
-  };
-
-  const swapInputOutput = () => {
-    setInput(output);
+  function swap() {
+    if (!transformed.output) return;
+    setInput(transformed.output);
     setMode(mode === "encode" ? "decode" : "encode");
-  };
+    setCopied("");
+  }
 
   return (
-    <div className="space-y-8">
-      {/* Encoder/Decoder */}
-      <section>
-        {/* Controls */}
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
-          <div className="flex rounded-lg overflow-hidden border border-panel-border">
-            <button
-              onClick={() => setMode("encode")}
-              className={`px-3 sm:px-4 py-2 text-sm font-medium transition-colors ${
-                mode === "encode"
-                  ? "bg-accent text-white"
-                  : "bg-panel-bg text-muted hover:text-foreground"
-              }`}
-            >
-              Encode
-            </button>
-            <button
-              onClick={() => setMode("decode")}
-              className={`px-3 sm:px-4 py-2 text-sm font-medium transition-colors ${
-                mode === "decode"
-                  ? "bg-accent text-white"
-                  : "bg-panel-bg text-muted hover:text-foreground"
-              }`}
-            >
-              Decode
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">エンコード・デコード</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">URL全体、クエリ値、厳密なパーセントエンコードを切り替えられます。</p>
+            </div>
+            <button type="button" onClick={reset} className="w-fit rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+              クリア
             </button>
           </div>
 
-          <select
-            value={encodingType}
-            onChange={(e) =>
-              setEncodingType(e.target.value as EncodingType)
-            }
-            className="bg-panel-bg border border-panel-border text-foreground text-xs sm:text-sm rounded-lg px-2 sm:px-3 py-2 cursor-pointer"
-          >
-            <option value="encodeURIComponent">encodeURIComponent</option>
-            <option value="encodeURI">encodeURI</option>
-            <option value="full">Full percent-encoding</option>
-          </select>
-
-          <button
-            onClick={swapInputOutput}
-            className="ml-auto px-3 py-2 text-sm rounded-lg border border-panel-border bg-panel-bg text-muted hover:text-foreground transition-colors"
-            title="Swap input and output"
-          >
-            &#x21C4; Swap
-          </button>
-        </div>
-
-        {/* Two-panel layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-muted">
-                Input
-              </label>
-              {input && <CopyButton text={input} />}
-            </div>
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={
-                mode === "encode"
-                  ? "Enter text to encode..."
-                  : "Enter encoded URL to decode..."
-              }
-              className="w-full h-48 p-4 bg-panel-bg border border-panel-border rounded-lg font-mono text-sm text-foreground resize-y placeholder:text-muted/50"
-              spellCheck={false}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-muted">
-                Output
-              </label>
-              {output && <CopyButton text={output} />}
-            </div>
-            <textarea
-              value={error || output}
-              readOnly
-              className={`w-full h-48 p-4 bg-panel-bg border rounded-lg font-mono text-sm resize-y ${
-                error
-                  ? "border-red-500/50 text-red-400"
-                  : "border-panel-border text-foreground"
-              }`}
-              placeholder="Result will appear here..."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* URL Parser */}
-      <section>
-        <h2 className="text-lg font-semibold text-foreground mb-3">
-          URL Parser
-        </h2>
-        <div className="space-y-3">
-          <input
-            type="text"
-            value={urlInput}
-            onChange={(e) => setUrlInput(e.target.value)}
-            placeholder="Paste a full URL to break it down... (e.g. https://example.com/path?key=value#section)"
-            className="w-full p-3 bg-panel-bg border border-panel-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted/50"
-            spellCheck={false}
-          />
-          {parsedUrl && (
-            <div className="bg-panel-bg border border-panel-border rounded-lg p-3 sm:p-4 space-y-2 font-mono text-xs sm:text-sm overflow-x-auto">
-              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                <span className="text-muted sm:min-w-[100px] shrink-0">Protocol:</span>
-                <span className="text-accent break-all">{parsedUrl.protocol}</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                <span className="text-muted sm:min-w-[100px] shrink-0">Host:</span>
-                <span className="text-foreground break-all">{parsedUrl.host}</span>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                <span className="text-muted sm:min-w-[100px] shrink-0">Path:</span>
-                <span className="text-foreground break-all">{parsedUrl.path}</span>
-              </div>
-              {parsedUrl.queryParams.length > 0 && (
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                  <span className="text-muted sm:min-w-[100px] shrink-0">
-                    Query:
-                  </span>
-                  <div className="space-y-1">
-                    {parsedUrl.queryParams.map(
-                      ([key, value], i) => (
-                        <div key={i}>
-                          <span className="text-success">{key}</span>
-                          <span className="text-muted"> = </span>
-                          <span className="text-foreground">
-                            {value}
-                          </span>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </div>
-              )}
-              {parsedUrl.fragment && (
-                <div className="flex flex-col sm:flex-row gap-1 sm:gap-2">
-                  <span className="text-muted sm:min-w-[100px] shrink-0">
-                    Fragment:
-                  </span>
-                  <span className="text-foreground">
-                    {parsedUrl.fragment}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-          {urlInput && !parsedUrl && (
-            <p className="text-sm text-red-400">
-              Not a valid URL. Include the protocol (e.g. https://).
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* Query String Builder */}
-      <section>
-        <h2 className="text-lg font-semibold text-foreground mb-3">
-          Query String Builder
-        </h2>
-        <div className="space-y-3">
-          {queryParams.map((param) => (
-            <div key={param.id} className="flex gap-2 items-center">
-              <input
-                type="text"
-                value={param.key}
-                onChange={(e) =>
-                  updateParam(param.id, "key", e.target.value)
-                }
-                placeholder="Key"
-                className="flex-1 p-2.5 bg-panel-bg border border-panel-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted/50"
-                spellCheck={false}
-              />
-              <span className="text-muted">=</span>
-              <input
-                type="text"
-                value={param.value}
-                onChange={(e) =>
-                  updateParam(param.id, "value", e.target.value)
-                }
-                placeholder="Value"
-                className="flex-1 p-2.5 bg-panel-bg border border-panel-border rounded-lg font-mono text-sm text-foreground placeholder:text-muted/50"
-                spellCheck={false}
-              />
+          <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+            {[
+              { value: "encode" as const, label: "Encode" },
+              { value: "decode" as const, label: "Decode" },
+            ].map((item) => (
               <button
-                onClick={() => removeParam(param.id)}
-                className="p-2 text-muted hover:text-red-400 transition-colors"
-                title="Remove parameter"
+                key={item.value}
+                type="button"
+                onClick={() => {
+                  setMode(item.value);
+                  setCopied("");
+                }}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold ${mode === item.value ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
               >
-                &times;
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <label className="mt-5 grid gap-2 text-sm font-medium text-slate-700" htmlFor="url-encoding-type">
+            変換方式
+            <select
+              id="url-encoding-type"
+              value={encodingType}
+              onChange={(event) => setEncodingType(event.target.value as EncodingType)}
+              className="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-slate-900"
+            >
+              <option value="component">encodeURIComponent: クエリ値・パス断片向け</option>
+              <option value="uri">encodeURI: URL全体向け</option>
+              <option value="strict">Strict percent: 予約文字もできるだけエンコード</option>
+            </select>
+          </label>
+
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <label className="grid gap-2 text-sm font-medium text-slate-700" htmlFor="url-encoder-input">
+              入力
+              <textarea
+                id="url-encoder-input"
+                value={input}
+                onChange={(event) => {
+                  setInput(event.target.value);
+                  setCopied("");
+                }}
+                rows={9}
+                spellCheck={false}
+                className="min-h-48 resize-y rounded-2xl border border-slate-300 bg-white p-4 font-mono text-sm leading-6 outline-none focus:border-slate-900"
+                placeholder={mode === "encode" ? "東京 カフェ&ランチ" : "%E6%9D%B1%E4%BA%AC"}
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium text-slate-700" htmlFor="url-encoder-output">
+              出力
+              <textarea
+                id="url-encoder-output"
+                value={transformed.error || transformed.output}
+                readOnly
+                rows={9}
+                className={`min-h-48 resize-y rounded-2xl border bg-slate-50 p-4 font-mono text-sm leading-6 outline-none ${transformed.error ? "border-red-300 text-red-700" : "border-slate-300 text-slate-950"}`}
+                placeholder="変換結果"
+              />
+            </label>
+          </div>
+
+          <p className={`mt-3 min-h-5 text-sm ${transformed.error ? "text-red-600" : "text-slate-500"}`}>
+            {transformed.error || "入力値はブラウザ内で処理され、外部に送信されません。デコード時に壊れた%表記があると入力エラーを表示します。"}
+          </p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button type="button" onClick={() => copy("input", input)} disabled={!input} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300">
+              {copied === "input" ? "入力コピー済み" : "入力をコピー"}
+            </button>
+            <button type="button" onClick={() => copy("output", transformed.output)} disabled={!transformed.output} className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300">
+              {copied === "output" ? "出力コピー済み" : "出力をコピー"}
+            </button>
+            <button type="button" onClick={swap} disabled={!transformed.output} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300">
+              入出力を入れ替え
+            </button>
+            <button type="button" onClick={() => downloadCsv(buildCsv(parsedUrl, transformed.output, queryOutput))} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+              CSVダウンロード
+            </button>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => {
+                    setMode(example.mode);
+                    setEncodingType(example.encodingType);
+                    setInput(example.input);
+                    setCopied("");
+                  }}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+            <h2 className="text-base font-semibold text-slate-950">URL分解</h2>
+            <label className="mt-4 grid gap-2 text-sm font-medium text-slate-700" htmlFor="url-parser-input">
+              URL
+              <input
+                id="url-parser-input"
+                type="text"
+                value={urlInput}
+                onChange={(event) => setUrlInput(event.target.value)}
+                className="rounded-xl border border-slate-300 bg-white px-4 py-3 font-mono text-sm outline-none focus:border-slate-900"
+                placeholder="https://example.com/path?q=value#top"
+                spellCheck={false}
+              />
+            </label>
+            {urlInput && !parsedUrl && <p className="mt-2 text-sm text-red-600">入力エラー: https:// から始まる完全なURLを入力してください。</p>}
+            {parsedUrl && (
+              <div className="mt-4 grid gap-2 text-sm">
+                <ParsedRow label="Protocol" value={parsedUrl.protocol} />
+                <ParsedRow label="Host" value={parsedUrl.host} />
+                <ParsedRow label="Path" value={parsedUrl.path} />
+                <ParsedRow label="Fragment" value={parsedUrl.fragment || "-"} />
+                {parsedUrl.queryParams.map(([key, value]) => (
+                  <ParsedRow key={`${key}-${value}`} label={`Query: ${key}`} value={value} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="min-w-0 bg-slate-50 p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">クエリ文字列ビルダー</h2>
+          <div className="mt-4 grid gap-3">
+            {queryParams.map((param) => (
+              <div key={param.id} className="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
+                <label className="grid gap-1 text-xs font-medium text-slate-500">
+                  key
+                  <input
+                    type="text"
+                    value={param.key}
+                    onChange={(event) => updateParam(param.id, "key", event.target.value)}
+                    className="rounded-xl border border-slate-300 bg-white px-3 py-2 font-mono text-sm text-slate-950 outline-none focus:border-slate-900"
+                    spellCheck={false}
+                  />
+                </label>
+                <label className="grid gap-1 text-xs font-medium text-slate-500">
+                  value
+                  <input
+                    type="text"
+                    value={param.value}
+                    onChange={(event) => updateParam(param.id, "value", event.target.value)}
+                    className="rounded-xl border border-slate-300 bg-white px-3 py-2 font-mono text-sm text-slate-950 outline-none focus:border-slate-900"
+                    spellCheck={false}
+                  />
+                </label>
+                <button type="button" onClick={() => removeParam(param.id)} className="self-end rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 hover:bg-white">
+                  削除
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <button type="button" onClick={addParam} className="mt-3 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white">
+            行を追加
+          </button>
+
+          <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+            <div className="flex items-start justify-between gap-3">
+              <h2 className="text-sm font-semibold text-slate-950">生成結果</h2>
+              <button type="button" onClick={() => copy("query", queryOutput)} disabled={!queryOutput} className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 disabled:text-slate-300">
+                {copied === "query" ? "コピー済み" : "コピー"}
               </button>
             </div>
-          ))}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={addParam}
-              className="px-3 py-1.5 text-sm rounded-lg border border-panel-border bg-panel-bg text-muted hover:text-foreground transition-colors"
-            >
-              + Add parameter
-            </button>
+            <code className="mt-3 block min-h-12 break-all rounded-xl bg-slate-950 p-3 font-mono text-xs leading-6 text-white">
+              {queryOutput || "キーを入力するとクエリ文字列が生成されます。"}
+            </code>
           </div>
-          {queryOutput && (
-            <div className="flex items-center gap-2">
-              <code className="flex-1 p-3 bg-panel-bg border border-panel-border rounded-lg font-mono text-sm text-foreground break-all">
-                {queryOutput}
-              </code>
-              <CopyButton text={queryOutput} />
-            </div>
-          )}
-        </div>
-      </section>
 
-      {/* Character Reference Table */}
-      <section>
-        <h2 className="text-lg font-semibold text-foreground mb-3">
-          Common URL-Encoded Characters
-        </h2>
-        <div className="bg-panel-bg border border-panel-border rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-panel-border text-muted">
-                  <th className="text-left px-4 py-2.5 font-medium">
-                    Character
-                  </th>
-                  <th className="text-left px-4 py-2.5 font-medium">
-                    Encoded
-                  </th>
-                  <th className="text-left px-4 py-2.5 font-medium">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="font-mono">
-                {CHAR_REFERENCE.map((row) => (
-                  <tr
-                    key={row.encoded}
-                    className="border-b border-panel-border/50 hover:bg-panel-border/20 transition-colors"
-                  >
-                    <td className="px-4 py-2 text-accent">
-                      {row.char === " " ? "␣" : row.char}
-                    </td>
-                    <td className="px-4 py-2 text-success">
-                      {row.encoded}
-                    </td>
-                    <td className="px-4 py-2 text-muted font-sans">
-                      {row.description}
-                    </td>
+          <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-semibold text-slate-950">よく使うエンコード表</h2>
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full min-w-[360px] border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-50 text-left text-xs text-slate-500">
+                    <th className="border border-slate-200 px-3 py-2">文字</th>
+                    <th className="border border-slate-200 px-3 py-2">変換後</th>
+                    <th className="border border-slate-200 px-3 py-2">用途</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {CHAR_REFERENCE.map(([char, encoded, description]) => (
+                    <tr key={`${char}-${encoded}`} className="even:bg-slate-50">
+                      <td className="border border-slate-200 px-3 py-2 font-mono font-semibold">{char}</td>
+                      <td className="border border-slate-200 px-3 py-2 font-mono">{encoded}</td>
+                      <td className="border border-slate-200 px-3 py-2 text-xs leading-5 text-slate-600">{description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            <p className="font-semibold">使い分けの目安</p>
+            <p className="mt-1">
+              クエリ値にはencodeURIComponent、URL全体にはencodeURIを使います。`&` や `=` を値として渡したい場合は必ずクエリ値としてエンコードしてください。
+            </p>
           </div>
         </div>
-      </section>
-
-      {/* AdSense Placeholder */}
-      <div className="bg-panel-bg border border-panel-border border-dashed rounded-lg p-8 text-center">
-        <span className="text-muted text-sm">Ad Space</span>
       </div>
+    </section>
+  );
+}
+
+function ParsedRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid gap-1 rounded-xl bg-slate-50 p-3 sm:grid-cols-[120px_1fr]">
+      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
+      <span className="break-all font-mono text-sm text-slate-950">{value}</span>
     </div>
   );
 }

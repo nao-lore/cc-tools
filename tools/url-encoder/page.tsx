@@ -1,232 +1,155 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import UrlEncoder from "./components/UrlEncoder";
 
-export default function Home() {
-  return (
-    <div className="min-h-full flex flex-col">
-      <header className="border-b border-panel-border bg-panel-bg/50">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-accent font-mono font-bold text-lg">
-              %
-            </span>
-            <span className="font-semibold text-foreground">
-              url-encoder
-            </span>
-          </div>
-          <a
-            href="https://github.com/nao-lore"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted hover:text-foreground transition-colors"
-          >
-            GitHub
-          </a>
-        </div>
-      </header>
+const faq = [
+  {
+    q: "encodeURIとencodeURIComponentはどう違いますか？",
+    a: "encodeURIはURL全体向けで、https:// や ? や & などの構造を残します。encodeURIComponentはクエリ値やパス断片向けで、& や = もエンコードします。",
+  },
+  {
+    q: "クエリパラメータの値にはどれを使うべきですか？",
+    a: "検索語、ID、名前などをクエリ値として入れる時はencodeURIComponentを使います。値に & や = が含まれてもクエリ構造を壊しにくいためです。",
+  },
+  {
+    q: "URLデコードでエラーになるのはなぜですか？",
+    a: "% の後に16進数2桁がない、途中で壊れたUTF-8バイト列がある、などの文字列はdecodeURIComponentでエラーになります。",
+  },
+  {
+    q: "入力したURLや文字列は保存されますか？",
+    a: "保存されません。変換、URL分解、クエリ生成はブラウザ内で完結し、入力値を外部に送信しません。",
+  },
+];
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          URL Encoder &amp; Decoder
-        </h1>
-        <p className="text-muted mb-8">
-          Encode and decode URLs and URL components instantly in your
-          browser. Supports encodeURI, encodeURIComponent, and full
-          percent-encoding.
-        </p>
+export default function Home() {
+  const toolCount = tools.length;
+
+  return (
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-cyan-700">開発者ツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                URLエンコード・デコード
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                URL、クエリパラメータ、パス断片をパーセントエンコード・デコードします。URL分解、クエリ文字列生成、よく使うエンコード表もまとめて確認できます。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-sm leading-6 text-cyan-900 shadow-sm">
+              <div className="font-semibold">ブラウザ内で処理</div>
+              <p className="mt-2">
+                入力したURLやパラメータは外部に送信されません。APIリクエスト、UTM、リダイレクトURL、検索パラメータの確認に使えます。
+              </p>
+            </div>
+          </div>
+        </header>
 
         <UrlEncoder />
 
-        {/* SEO Content */}
-        <article className="mt-16 space-y-8 text-sm leading-relaxed text-muted max-w-3xl">
-          <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">
-              What Is URL Encoding?
-            </h2>
-            <p className="mb-3">
-              URL encoding, also known as percent-encoding, is a mechanism
-              for encoding information in a Uniform Resource Identifier
-              (URI). It replaces unsafe or reserved characters with a
-              percent sign (%) followed by two hexadecimal digits
-              representing the character&apos;s ASCII code. For example, a
-              space character becomes <code className="font-mono text-accent">%20</code>,
-              and an ampersand becomes <code className="font-mono text-accent">%26</code>.
-            </p>
-            <p className="mb-3">
-              This encoding is essential because URLs can only be sent over
-              the Internet using the ASCII character set. Characters outside
-              this set, or characters that have special meaning in URLs
-              (such as <code className="font-mono text-accent">/</code>,{" "}
-              <code className="font-mono text-accent">?</code>,{" "}
-              <code className="font-mono text-accent">&amp;</code>, and{" "}
-              <code className="font-mono text-accent">=</code>), must be
-              encoded to be safely transmitted. Without proper encoding,
-              URLs can break, parameters can be misinterpreted, and security
-              vulnerabilities like injection attacks can occur.
-            </p>
-            <p>
-              The standard for percent-encoding is defined in{" "}
-              <a
-                href="https://datatracker.ietf.org/doc/html/rfc3986"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:underline"
-              >
-                RFC 3986
-              </a>
-              . According to this specification, unreserved characters
-              (A-Z, a-z, 0-9, hyphen, underscore, period, and tilde) do not
-              need encoding. All other characters should be percent-encoded
-              when used in URL components where they are not serving their
-              reserved purpose.
-            </p>
-          </section>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="URL全体と値を分ける" body="URL全体にはencodeURI、クエリ値にはencodeURIComponentを使うのが基本です。" />
+          <InfoCard title="URL分解" body="protocol、host、path、query、fragmentを分けて表示し、複雑なURLを読みやすくします。" />
+          <InfoCard title="クエリ生成" body="key/valueを入力すると、エンコード済みのクエリ文字列を生成できます。" />
+        </section>
 
-          <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">
-              encodeURI vs encodeURIComponent: When to Use Which
-            </h2>
-            <p className="mb-3">
-              JavaScript provides two built-in functions for URL encoding,
-              and choosing the right one matters. <code className="font-mono text-accent">encodeURI()</code>{" "}
-              is designed to encode a complete URI. It does not encode
-              characters that have special meaning in a URL, such as{" "}
-              <code className="font-mono text-accent">:</code>,{" "}
-              <code className="font-mono text-accent">/</code>,{" "}
-              <code className="font-mono text-accent">?</code>,{" "}
-              <code className="font-mono text-accent">#</code>,{" "}
-              <code className="font-mono text-accent">&amp;</code>, and{" "}
-              <code className="font-mono text-accent">=</code>. Use this
-              when you have a full URL and want to encode only the unsafe
-              characters while preserving its structure.
-            </p>
-            <p className="mb-3">
-              <code className="font-mono text-accent">encodeURIComponent()</code>{" "}
-              encodes everything except unreserved characters (letters,
-              digits, <code className="font-mono text-accent">-</code>,{" "}
-              <code className="font-mono text-accent">_</code>,{" "}
-              <code className="font-mono text-accent">.</code>,{" "}
-              <code className="font-mono text-accent">~</code>). This is
-              the right choice when encoding individual URL components like
-              query parameter keys and values. If you used{" "}
-              <code className="font-mono text-accent">encodeURI()</code>{" "}
-              on a query value containing <code className="font-mono text-accent">&amp;</code>{" "}
-              or <code className="font-mono text-accent">=</code>, those
-              characters would not be encoded, potentially breaking the
-              query string structure.
-            </p>
-            <p>
-              As a rule of thumb: use{" "}
-              <code className="font-mono text-accent">encodeURIComponent()</code>{" "}
-              for encoding values that will become part of a URL (like
-              search parameters, path segments, or fragment identifiers),
-              and use{" "}
-              <code className="font-mono text-accent">encodeURI()</code>{" "}
-              only when you need to encode an entire URL string without
-              breaking its structural characters.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">
-              Full Percent-Encoding
-            </h2>
-            <p className="mb-3">
-              The full percent-encoding mode in this tool goes beyond what
-              JavaScript&apos;s built-in functions provide. While{" "}
-              <code className="font-mono text-accent">encodeURIComponent()</code>{" "}
-              leaves characters like <code className="font-mono text-accent">!</code>,{" "}
-              <code className="font-mono text-accent">&apos;</code>,{" "}
-              <code className="font-mono text-accent">(</code>,{" "}
-              <code className="font-mono text-accent">)</code>, and{" "}
-              <code className="font-mono text-accent">*</code> unencoded,
-              full percent-encoding converts every character except the
-              unreserved set (A-Z, a-z, 0-9, and{" "}
-              <code className="font-mono text-accent">- _ . ~</code>). This
-              stricter encoding is useful for APIs that require maximum
-              encoding, OAuth signature base strings, or when you need to
-              ensure absolute compatibility across all systems and parsers.
-            </p>
-            <p>
-              For most web development tasks,{" "}
-              <code className="font-mono text-accent">encodeURIComponent()</code>{" "}
-              is sufficient. Full percent-encoding is a specialized option
-              for edge cases where you need the strictest possible encoding
-              of every non-alphanumeric character in your URL components.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3">
-              URL Parsing and Query Strings
-            </h2>
-            <p className="mb-3">
-              Understanding URL structure is fundamental to web development.
-              A URL consists of several components: the protocol (http,
-              https), the host (domain name and optional port), the path,
-              query parameters (key-value pairs after the{" "}
-              <code className="font-mono text-accent">?</code>), and an
-              optional fragment (after the{" "}
-              <code className="font-mono text-accent">#</code>). The URL
-              parser in this tool lets you paste any URL and instantly see
-              each component broken down, which is invaluable for debugging
-              API calls, analyzing redirects, or understanding complex URLs
-              with many parameters.
-            </p>
-            <p>
-              The query string builder helps you construct properly encoded
-              query strings from scratch. Each key and value you add is
-              automatically encoded using{" "}
-              <code className="font-mono text-accent">encodeURIComponent()</code>,
-              ensuring that special characters in your parameters
-              don&apos;t break the URL structure. This is especially useful
-              when constructing API requests, tracking URLs, or building
-              dynamic links where multiple parameters need to be combined
-              correctly.
-            </p>
-          </section>
-        </article>
-      </main>
-
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">URL Encoder — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-              <Link href="/html-entity" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML Entity</Link>
-              <Link href="/jwt-decoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JWT Decoder</Link>
-              <Link href="/hash-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Hash Generator</Link>
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">URLエンコードの使い分け</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">encodeURI</h3>
+              <p className="mt-1">
+                URL全体を扱う時に使います。`:` `/` `?` `&` `=` など、URL構造として意味を持つ文字は残します。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">encodeURIComponent</h3>
+              <p className="mt-1">
+                クエリパラメータのkeyやvalue、パスの一部など、URLの部品を扱う時に使います。`&` や `=` も安全にエンコードします。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">Strict percent</h3>
+              <p className="mt-1">
+                英数字、ハイフン、アンダースコア、ドット、チルダ以外をできるだけ%表記にします。署名用文字列や厳格なAPI確認の補助に使えます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">デコード時の注意</h3>
+              <p className="mt-1">
+                壊れた%表記や途中で切れたUTF-8バイト列はデコードできません。エラーが出た場合は、%の後ろが16進数2桁になっているか確認してください。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/base64-tools" title="Base64変換" body="Base64のエンコード・デコード" />
+            <Related href="/html-entity" title="HTMLエンティティ" body="HTML特殊文字を変換" />
+            <Related href="/jwt-decoder" title="JWTデコード" body="JWTのヘッダーとペイロード確認" />
+            <Related href="/json-formatter" title="JSON整形" body="JSONを整形・検証" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "URL Encoder &amp; Decoder",
-  "description": "URL Encoder — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/url-encoder",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
