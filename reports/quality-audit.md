@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 69.6/100
-- Priority tiers: {"A": 3, "B": 61, "C": 78}
+- Average quality score: 70.0/100
+- Priority tiers: {"A": 2, "B": 61, "C": 79}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| A | 76 | 54 | `tsumitate-sim` | calculator | Japanese Tools | copy, examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | A | 73 | 56 | `denki-keisan` | calculator | Japanese Tools | faq, copy, validation, current_count; penalties: old_count, ad_placeholder |
 | A | 71 | 57 | `ai-tool-roi` | calculator | AI Workflow | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 69 | 54 | `favicon-generator` | image | Image Tools | faq, validation, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 55 | 58 | `gacha-cost-ceiling` | calculator | Game Tools | copy, examples, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 54 | 53 | `ad-budget-estimator` | utility | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 54 | 60 | `hash-generator` | generator | Encoding & Decoding | examples, reset_clear, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
+| B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
@@ -53,6 +53,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `menseki-keisan` | converter | Japanese Tools |
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
 | 100 | `risoku-keisan` | calculator | Japanese Tools |
+| 100 | `tsumitate-sim` | calculator | Japanese Tools |
 | 92 | `ai-output-json-validator` | utility | AI Workflow |
 | 92 | `zei-kin-henkan` | converter | Finance |
 | 89 | `prompt-chain-builder` | reference | AI Workflow |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 85 | `json-formatter` | converter | Data Format Tools |
 | 85 | `recipe-scaling` | converter | Cooking Tools |
 | 85 | `withholding-tax-calculator` | calculator | Business Tools |
-| 83 | `openrouter-pricing` | comparison | AI Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 71.0 |
+| calculator | 72.0 |
 | comparison | 71.2 |
 | converter | 73.3 |
 | generator | 69.8 |
