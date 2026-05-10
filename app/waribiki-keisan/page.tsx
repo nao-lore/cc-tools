@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/waribiki-keisan/page";
 
 export const metadata: Metadata = {
-  title: "割引計算 - パーセント・割引き・円引き",
-  description: "元の価格と割引率から割引後の価格を計算。パーセント割引、○割引き、円引きに対応。税込価格も自動計算。",
+  title: "割引計算ツール - %OFF・○割引・円引き・税込価格を計算",
+  description: "元値と割引から割引後価格、割引額、税込10%、税込8%、複数商品の合計を計算。%OFF、○割引、円引き、CSV出力に対応。",
   alternates: { canonical: "https://tools.loresync.dev/waribiki-keisan" },
 };
 

@@ -5,15 +5,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 71.5/100
-- Priority tiers: {"B": 58, "C": 84}
+- Average quality score: 71.8/100
+- Priority tiers: {"B": 57, "C": 85}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
 | B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
-| B | 66 | 60 | `waribiki-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 65 | 50 | `measuring-converter` | converter | Cooking Tools | labels, copy, reset_clear, validation, privacy; penalties: old_count, ad_placeholder |
 | B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 63 | 62 | `hebon-romaji` | converter | Japanese Tools | reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
 | B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
 | B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
+| B | 52 | 65 | `context-window-visualizer` | utility | AI Tools | related_links, labels, copy, reset_clear, validation |
 
 ## Strongest Current Tools
 
@@ -59,15 +59,15 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
 | 100 | `risoku-keisan` | calculator | Japanese Tools |
 | 100 | `tsumitate-sim` | calculator | Japanese Tools |
+| 100 | `waribiki-keisan` | calculator | Japanese Tools |
 | 92 | `ai-output-json-validator` | utility | AI Workflow |
 | 92 | `zei-kin-henkan` | converter | Finance |
-| 89 | `prompt-chain-builder` | reference | AI Workflow |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 74.5 |
+| calculator | 75.3 |
 | comparison | 75.1 |
 | converter | 73.3 |
 | generator | 69.8 |
