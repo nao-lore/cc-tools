@@ -1,147 +1,170 @@
 import Link from "next/link";
-import HashGenerator from './components/HashGenerator';
+import { tools } from "@/lib/tools-config";
+import HashGenerator from "./components/HashGenerator";
+
+const faq = [
+  {
+    q: "MD5やSHA-1は使っても大丈夫ですか？",
+    a: "MD5とSHA-1は衝突攻撃に弱いため、セキュリティ用途には推奨しません。古いシステムとの照合や非セキュリティのチェックサム確認向けです。",
+  },
+  {
+    q: "パスワード保存にこのハッシュを使えますか？",
+    a: "使わないでください。パスワード保存にはソルト付きのbcrypt、scrypt、Argon2など、専用のパスワードハッシュ方式を使うべきです。",
+  },
+  {
+    q: "ファイルはサーバーに送信されますか？",
+    a: "送信されません。テキストとファイルはブラウザ上で処理され、外部サーバーにアップロードされません。",
+  },
+  {
+    q: "大文字と小文字の違いはありますか？",
+    a: "ハッシュ値の16進表記は大文字でも小文字でも同じ値を表します。比較機能では大文字小文字を無視して判定します。",
+  },
+];
 
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <>
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
-        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-          Hash Generator
-        </h1>
-        <p className="mt-2 text-muted text-sm">
-          Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 hashes from text or
-          files. 100% client-side &mdash; nothing leaves your browser.
-        </p>
-
-        <div className="mt-8">
-          <HashGenerator />
-        </div>
-
-        {/* AdSense placeholder */}
-        <div className="my-10 flex items-center justify-center rounded-lg border border-dashed border-card-border py-8 text-xs text-muted">
-          Advertisement
-        </div>
-
-        {/* SEO Content */}
-        <article className="max-w-none mt-10 space-y-6 text-sm leading-relaxed text-muted">
-          <h2 className="text-lg font-semibold text-foreground">
-            What Is a Hash Function?
-          </h2>
-          <p>
-            A cryptographic hash function takes an arbitrary amount of data and
-            produces a fixed-size output called a <strong className="text-foreground">digest</strong> or{' '}
-            <strong className="text-foreground">hash</strong>. The same input always produces the same
-            output, but even a single-bit change in the input produces a
-            completely different hash. This one-way property makes hashes ideal
-            for verifying data integrity, storing passwords securely, and
-            generating digital signatures.
-          </p>
-
-          <h2 className="text-lg font-semibold text-foreground">
-            Supported Algorithms
-          </h2>
-          <p>
-            This tool supports five widely-used hash algorithms. <strong className="text-foreground">MD5</strong>{' '}
-            (Message Digest 5) produces a 128-bit hash. While fast, MD5 is no
-            longer considered cryptographically secure due to known collision
-            attacks; it remains useful for checksums and non-security file
-            verification. <strong className="text-foreground">SHA-1</strong> (Secure Hash Algorithm 1)
-            outputs a 160-bit digest. Like MD5, it has been deprecated for
-            security use by NIST since 2011 but is still common in legacy
-            systems.
-          </p>
-          <p>
-            The <strong className="text-foreground">SHA-2 family</strong> &mdash; SHA-256, SHA-384, and SHA-512 &mdash;
-            is the current standard recommended by NIST for security
-            applications. SHA-256 produces a 256-bit hash and is used in TLS
-            certificates, Bitcoin mining, and software distribution
-            verification. SHA-384 and SHA-512 offer larger digest sizes for
-            applications that need extra collision resistance, such as
-            government and financial systems.
-          </p>
-
-          <h2 className="text-lg font-semibold text-foreground">
-            Common Use Cases
-          </h2>
-          <p>
-            <strong className="text-foreground">File integrity verification</strong> &mdash; after downloading a
-            file, compare its hash against the one published by the author to
-            ensure the file has not been tampered with or corrupted during
-            transfer. <strong className="text-foreground">Password storage</strong> &mdash; applications store
-            hashes of passwords rather than plaintext; during login the entered
-            password is hashed and compared. <strong className="text-foreground">Digital signatures</strong>
-            {' '}&mdash; signing algorithms hash the document first, then encrypt the hash
-            with a private key.{' '}
-            <strong className="text-foreground">Deduplication and caching</strong> &mdash; content-addressable
-            storage systems use hashes to identify unique blocks of data.
-          </p>
-
-          <h2 className="text-lg font-semibold text-foreground">
-            How This Tool Works
-          </h2>
-          <p>
-            Every computation happens entirely inside your browser using the{' '}
-            <strong className="text-foreground">Web Crypto API</strong> (for SHA variants) and a pure
-            JavaScript implementation (for MD5). No data is ever sent to a
-            server. You can paste text or drag-and-drop any file to compute all
-            five hashes at once, copy individual results, toggle between
-            uppercase and lowercase output, and compare two hashes to verify
-            they match &mdash; case-insensitively.
-          </p>
-
-          <h2 className="text-lg font-semibold text-foreground">
-            Security Considerations
-          </h2>
-          <p>
-            For any security-sensitive purpose &mdash; password hashing, certificate
-            pinning, code signing &mdash; always use SHA-256 or higher. MD5 and SHA-1
-            are provided here for compatibility and non-security checksums only.
-            When hashing passwords in production, use a dedicated key derivation
-            function such as bcrypt, scrypt, or Argon2, which add salting and
-            deliberate slowness to resist brute-force attacks.
-          </p>
-        </article>
-      </main>
-
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Hash Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/password-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Password Generator</Link>
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-              <Link href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUID Generator</Link>
-              <Link href="/jwt-decoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JWT Decoder</Link>
-              <Link href="/url-encoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">URL Encoder</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← 無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-indigo-700">開発者・検証ツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Hash Generator</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                テキストやファイルから MD5、SHA-1、SHA-256、SHA-384、SHA-512 をまとめて生成します。値のコピー、TXT出力、ハッシュ比較に対応しています。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-4 text-sm leading-6 text-indigo-950 shadow-sm">
+              <div className="font-semibold">ブラウザ内処理</div>
+              <p className="mt-1">入力テキストやファイルは外部に送信されません。</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <HashGenerator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="SHA-256推奨" body="セキュリティ用途ではSHA-256以上を使い、MD5/SHA-1は互換確認に限定します。" />
+          <InfoCard title="ファイル照合" body="配布元のハッシュ値と照合し、改ざんや転送破損を確認できます。" />
+          <InfoCard title="まとめてコピー" body="すべてのアルゴリズム結果をタブ区切りでコピーできます。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">ハッシュ値の使い分け</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">SHA-256 / SHA-384 / SHA-512</h3>
+              <p className="mt-1">
+                現在の一般的な整合性確認や署名検証ではSHA-2系を使います。迷った場合はSHA-256を選ぶのが実務上わかりやすいです。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">MD5 / SHA-1</h3>
+              <p className="mt-1">
+                古いチェックサムや既存システムとの照合で使われることがありますが、衝突攻撃に弱いため新規のセキュリティ設計には使いません。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">ファイル完全性確認</h3>
+              <p className="mt-1">
+                ダウンロードしたファイルのハッシュ値を公式値と比較すると、転送中の破損や意図しない変更を検知できます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">パスワード保存には不十分</h3>
+              <p className="mt-1">
+                通常のハッシュは高速すぎるため、パスワード保存には向きません。bcrypt、scrypt、Argon2などの専用方式を使ってください。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/base64-tools" title="Base64 Tools" body="テキストやデータをBase64変換" />
+            <Related href="/password-generator" title="Password Generator" body="ランダムパスワードを生成" />
+            <Related href="/uuid-generator" title="UUID Generator" body="UUID v4を生成" />
+            <Related href="/jwt-decoder" title="JWT Decoder" body="JWTのヘッダーとペイロードを確認" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Hash Generator",
-  "description": "Hash Generator — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/hash-generator",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Hash Generator",
+            description: "テキストやファイルから MD5、SHA-1、SHA-256、SHA-384、SHA-512 を生成するブラウザ内処理の無料ツールです。",
+            url: "https://tools.loresync.dev/hash-generator",
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "All",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "JPY",
+            },
+          }),
         }}
       />
-      </>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

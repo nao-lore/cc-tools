@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 73.9/100
-- Priority tiers: {"B": 50, "C": 92}
+- Average quality score: 74.1/100
+- Priority tiers: {"B": 49, "C": 93}
 
 ## Highest Priority Tools
 
@@ -27,7 +27,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 56 | 51 | `asset-allocation` | utility | Finance | h1, related_links, labels, copy, examples; penalties: ad_placeholder |
 | B | 55 | 58 | `gacha-cost-ceiling` | calculator | Game Tools | copy, examples, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 54 | 53 | `ad-budget-estimator` | utility | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
-| B | 54 | 60 | `hash-generator` | generator | Encoding & Decoding | examples, reset_clear, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
 | B | 54 | 67 | `tax-calculator` | calculator | Japanese Tools | reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
 | B | 50 | 50 | `color-palette` | utility | Color Tools | faq, labels, examples, validation, privacy; penalties: old_count, any_type |
 | B | 50 | 67 | `svg-to-png` | image | Image Tools | copy, current_count; penalties: old_count, ad_placeholder, any_type |
+| B | 49 | 51 | `css-flexbox` | utility | CSS Tools | faq, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
@@ -54,6 +54,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `denki-keisan` | calculator | Japanese Tools |
 | 100 | `eigyoubi` | calculator | Japanese Tools |
 | 100 | `favicon-generator` | image | Image Tools |
+| 100 | `hash-generator` | generator | Encoding & Decoding |
 | 100 | `hebon-romaji` | converter | Japanese Tools |
 | 100 | `image-compressor` | image | Image Tools |
 | 100 | `loan-simulator` | calculator | Japanese Tools |
@@ -61,7 +62,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `menseki-keisan` | converter | Japanese Tools |
 | 100 | `moji-count` | utility | Japanese Tools |
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
-| 100 | `oven-temp-converter` | converter | Cooking Tools |
 
 ## Archetype Averages
 
@@ -70,7 +70,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | calculator | 75.3 |
 | comparison | 75.1 |
 | converter | 81.4 |
-| generator | 69.8 |
+| generator | 76.5 |
 | image | 77.5 |
 | reference | 74.2 |
 | utility | 66.8 |
