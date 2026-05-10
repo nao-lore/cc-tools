@@ -23,7 +23,10 @@ function createCanvas(size: number): [HTMLCanvasElement, CanvasRenderingContext2
   const canvas = document.createElement("canvas");
   canvas.width = size;
   canvas.height = size;
-  const ctx = canvas.getContext("2d")!;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error("Canvas 2D context is not available in this browser.");
+  }
   return [canvas, ctx];
 }
 
@@ -78,7 +81,7 @@ export function generateImageFavicon(size: number, options: ImageOptions): strin
 
 export function dataURLtoBlob(dataURL: string): Blob {
   const parts = dataURL.split(",");
-  const mime = parts[0].match(/:(.*?);/)![1];
+  const mime = parts[0].match(/:(.*?);/)?.[1] ?? "image/png";
   const bstr = atob(parts[1]);
   const u8arr = new Uint8Array(bstr.length);
   for (let i = 0; i < bstr.length; i++) {
@@ -98,12 +101,6 @@ export function downloadDataURL(dataURL: string, filename: string) {
 
 /** Build a minimal ICO file from PNG data URLs at 16, 32, 48 */
 export function buildIco(pngDataURLs: { size: number; dataURL: string }[]): Blob {
-  const pngBlobs = pngDataURLs.map(({ size, dataURL }) => {
-    const blob = dataURLtoBlob(dataURL);
-    return { size, blob };
-  });
-
-  // We need array buffers, so we'll build synchronously from the dataURLs
   const pngBuffers = pngDataURLs.map(({ size, dataURL }) => {
     const bstr = atob(dataURL.split(",")[1]);
     const arr = new Uint8Array(bstr.length);
@@ -156,12 +153,15 @@ export function buildIco(pngDataURLs: { size: number; dataURL: string }[]): Blob
 }
 
 export function generateMetaTags(baseUrl: string): string {
+  const root = baseUrl.trim().replace(/\/+$/, "");
+  const asset = (path: string) => `${root}${path}`;
+
   return `<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="${baseUrl}/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="${baseUrl}/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="${baseUrl}/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="${baseUrl}/favicon-48x48.png">
-<link rel="apple-touch-icon" sizes="180x180" href="${baseUrl}/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="${baseUrl}/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="${baseUrl}/android-chrome-512x512.png">`;
+<link rel="icon" type="image/x-icon" href="${asset("/favicon.ico")}">
+<link rel="icon" type="image/png" sizes="16x16" href="${asset("/favicon-16x16.png")}">
+<link rel="icon" type="image/png" sizes="32x32" href="${asset("/favicon-32x32.png")}">
+<link rel="icon" type="image/png" sizes="48x48" href="${asset("/favicon-48x48.png")}">
+<link rel="apple-touch-icon" sizes="180x180" href="${asset("/apple-touch-icon.png")}">
+<link rel="icon" type="image/png" sizes="192x192" href="${asset("/android-chrome-192x192.png")}">
+<link rel="icon" type="image/png" sizes="512x512" href="${asset("/android-chrome-512x512.png")}">`;
 }

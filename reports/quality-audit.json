@@ -1,17 +1,17 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 70.6,
+    "averageQualityScore": 70.9,
     "priorityTierCounts": {
-      "B": 61,
-      "C": 81
+      "B": 60,
+      "C": 82
     },
     "averageByArchetype": {
       "calculator": 73.7,
       "comparison": 71.2,
       "converter": 73.3,
       "generator": 69.8,
-      "image": 63.3,
+      "image": 71,
       "reference": 70.3,
       "utility": 65.7
     },
@@ -47,11 +47,6 @@
         "toolCount": 8
       },
       {
-        "category": "Image Tools",
-        "averageQualityScore": 63,
-        "toolCount": 5
-      },
-      {
         "category": "Cooking Tools",
         "averageQualityScore": 63,
         "toolCount": 3
@@ -73,6 +68,11 @@
       },
       {
         "category": "Time & Date",
+        "averageQualityScore": 68,
+        "toolCount": 2
+      },
+      {
+        "category": "Minifier Tools",
         "averageQualityScore": 68,
         "toolCount": 2
       }
@@ -193,52 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "favicon-generator",
-      "name": "Favicon Generator",
-      "description": "Generate favicons from text, emoji, or images",
-      "market": "EN",
-      "category": "Image Tools",
-      "archetype": "image",
-      "qualityScore": 54,
-      "priorityScore": 69,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "faq",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 9,
-        "buttonCount": 7,
-        "inputCount": 10,
-        "internalLinkCount": 6,
-        "componentCount": 0,
-        "hasOpenGraphImage": true,
-        "sourceLines": 767
-      }
-    },
     {
       "slug": "base-stores-fee",
       "name": "BASE / STORES 手数料比較",
@@ -6183,6 +6137,47 @@
         "componentCount": 3,
         "hasOpenGraphImage": true,
         "sourceLines": 1231
+      }
+    },
+    {
+      "slug": "favicon-generator",
+      "name": "Favicon Generator",
+      "description": "Generate favicons from text, emoji, or images",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 9,
+        "inputCount": 8,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 888
       }
     },
     {
