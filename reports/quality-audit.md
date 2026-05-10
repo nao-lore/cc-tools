@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 71.3/100
-- Priority tiers: {"B": 59, "C": 83}
+- Average quality score: 71.5/100
+- Priority tiers: {"B": 58, "C": 84}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 66 | 60 | `loan-simulator` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 66 | 60 | `waribiki-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 65 | 50 | `measuring-converter` | converter | Cooking Tools | labels, copy, reset_clear, validation, privacy; penalties: old_count, ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
 | B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
+| B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
 
 ## Strongest Current Tools
 
@@ -54,6 +54,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `denki-keisan` | calculator | Japanese Tools |
 | 100 | `eigyoubi` | calculator | Japanese Tools |
 | 100 | `favicon-generator` | image | Image Tools |
+| 100 | `loan-simulator` | calculator | Japanese Tools |
 | 100 | `menseki-keisan` | converter | Japanese Tools |
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
 | 100 | `risoku-keisan` | calculator | Japanese Tools |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 92 | `ai-output-json-validator` | utility | AI Workflow |
 | 92 | `zei-kin-henkan` | converter | Finance |
 | 89 | `prompt-chain-builder` | reference | AI Workflow |
-| 85 | `html-to-markdown` | converter | Data Format Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 73.7 |
+| calculator | 74.5 |
 | comparison | 75.1 |
 | converter | 73.3 |
 | generator | 69.8 |

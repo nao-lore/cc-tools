@@ -1,532 +1,426 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
 type RepaymentType = "equal-installment" | "equal-principal";
 
-interface LoanInputs {
-  principal: string;
-  annualRate: string;
-  years: string;
-  bonusAmount: string;
-  repaymentType: RepaymentType;
-}
-
-interface MonthlyResult {
-  monthlyPayment: number;
-  totalPayment: number;
-  totalInterest: number;
-  repaymentRatio: number | null;
-}
-
-interface YearlyRow {
+type YearlyRow = {
   year: number;
   startBalance: number;
   principalPaid: number;
   interestPaid: number;
+  bonusPaid: number;
+  totalPaid: number;
   endBalance: number;
+};
+
+type Simulation = {
+  monthlyPaymentLabel: string;
+  monthlyPayment: number;
+  firstPayment: number;
+  finalPayment: number;
+  totalPayment: number;
+  totalInterest: number;
+  payoffMonths: number;
+  yearlyRows: YearlyRow[];
+};
+
+const PRESETS = [
+  { label: "住宅 3,000万円", principal: "3000", rate: "1.2", years: "35", income: "600" },
+  { label: "車 250万円", principal: "250", rate: "3.5", years: "5", income: "450" },
+  { label: "教育 500万円", principal: "500", rate: "2.0", years: "10", income: "700" },
+  { label: "短期 100万円", principal: "100", rate: "8.0", years: "3", income: "400" },
+];
+
+function parseManYen(value: string) {
+  const parsed = Number.parseFloat(value.replace(/,/g, ""));
+  return Number.isFinite(parsed) ? Math.max(0, parsed) * 10_000 : 0;
 }
 
-function formatCurrency(n: number): string {
-  return Math.round(n).toLocaleString("ja-JP");
+function parseNumber(value: string) {
+  const parsed = Number.parseFloat(value.replace(/,/g, ""));
+  return Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
 }
 
-function calcEqualInstallment(
-  principal: number,
-  annualRate: number,
-  months: number,
-  bonusMonthlyExtra: number
-): MonthlyResult & { yearlyRows: YearlyRow[] } {
-  const r = annualRate / 100 / 12;
-  let monthlyPayment: number;
-
-  if (r === 0) {
-    monthlyPayment = principal / months;
-  } else {
-    monthlyPayment =
-      (principal * r * Math.pow(1 + r, months)) /
-      (Math.pow(1 + r, months) - 1);
-  }
-
-  // Build yearly amortization table
-  let balance = principal;
-  const yearlyRows: YearlyRow[] = [];
-  const totalYears = months / 12;
-
-  for (let y = 1; y <= totalYears; y++) {
-    const startBalance = balance;
-    let principalPaid = 0;
-    let interestPaid = 0;
-
-    for (let m = 1; m <= 12; m++) {
-      const interest = balance * r;
-      const principal_m = monthlyPayment - interest;
-      interestPaid += interest;
-      principalPaid += principal_m;
-      balance -= principal_m;
-      // Apply bonus repayment twice a year (month 6 and 12)
-      if ((m === 6 || m === 12) && bonusMonthlyExtra > 0) {
-        balance -= bonusMonthlyExtra;
-        principalPaid += bonusMonthlyExtra;
-      }
-      if (balance < 0) balance = 0;
-    }
-
-    yearlyRows.push({
-      year: y,
-      startBalance,
-      principalPaid,
-      interestPaid,
-      endBalance: Math.max(0, balance),
-    });
-
-    if (balance <= 0) break;
-  }
-
-  const totalBonus = bonusMonthlyExtra * 2 * totalYears;
-  const totalPayment =
-    monthlyPayment * months + totalBonus;
-  const totalInterest = totalPayment - principal;
-
-  return {
-    monthlyPayment,
-    totalPayment,
-    totalInterest,
-    repaymentRatio: null,
-    yearlyRows,
-  };
+function yen(value: number) {
+  return Math.round(value).toLocaleString("ja-JP");
 }
 
-function calcEqualPrincipal(
-  principal: number,
-  annualRate: number,
-  months: number,
-  bonusMonthlyExtra: number
-): MonthlyResult & { yearlyRows: YearlyRow[] } {
-  const r = annualRate / 100 / 12;
-  const monthlyPrincipal = principal / months;
-  const firstMonthPayment = monthlyPrincipal + principal * r;
-
-  // Build yearly amortization table
-  let balance = principal;
-  const yearlyRows: YearlyRow[] = [];
-  const totalYears = months / 12;
-  let totalPayment = 0;
-
-  for (let y = 1; y <= totalYears; y++) {
-    const startBalance = balance;
-    let principalPaid = 0;
-    let interestPaid = 0;
-
-    for (let m = 1; m <= 12; m++) {
-      const interest = balance * r;
-      interestPaid += interest;
-      principalPaid += monthlyPrincipal;
-      totalPayment += monthlyPrincipal + interest;
-      balance -= monthlyPrincipal;
-      if ((m === 6 || m === 12) && bonusMonthlyExtra > 0) {
-        balance -= bonusMonthlyExtra;
-        principalPaid += bonusMonthlyExtra;
-        totalPayment += bonusMonthlyExtra;
-      }
-      if (balance < 0) balance = 0;
-    }
-
-    yearlyRows.push({
-      year: y,
-      startBalance,
-      principalPaid,
-      interestPaid,
-      endBalance: Math.max(0, balance),
-    });
-
-    if (balance <= 0) break;
-  }
-
-  const totalInterest = totalPayment - principal;
-
-  return {
-    monthlyPayment: firstMonthPayment,
-    totalPayment,
-    totalInterest,
-    repaymentRatio: null,
-    yearlyRows,
-  };
+function pct(value: number) {
+  return `${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 }
 
-function ResultCard({
-  label,
-  value,
-  sub,
-  highlight,
+function monthsToLabel(months: number) {
+  const years = Math.floor(months / 12);
+  const rest = months % 12;
+  if (years === 0) return `${rest}か月`;
+  if (rest === 0) return `${years}年`;
+  return `${years}年${rest}か月`;
+}
+
+function calcScheduledPayment(principal: number, annualRate: number, months: number) {
+  const monthlyRate = annualRate / 100 / 12;
+  if (monthlyRate === 0) return principal / months;
+  const factor = Math.pow(1 + monthlyRate, months);
+  return (principal * monthlyRate * factor) / (factor - 1);
+}
+
+function simulateLoan({
+  principal,
+  annualRate,
+  years,
+  bonusAmount,
+  type,
 }: {
-  label: string;
-  value: string;
-  sub?: string;
-  highlight?: boolean;
-}) {
-  return (
-    <div
-      className={`rounded-xl p-4 ${highlight ? "bg-primary/10 border border-primary/30" : "bg-accent border border-border"}`}
-    >
-      <p className="text-xs text-muted mb-1">{label}</p>
-      <p
-        className={`text-xl font-bold font-mono ${highlight ? "text-primary" : "text-foreground"}`}
-      >
-        {value}
-      </p>
-      {sub && <p className="text-xs text-muted mt-1">{sub}</p>}
-    </div>
-  );
+  principal: number;
+  annualRate: number;
+  years: number;
+  bonusAmount: number;
+  type: RepaymentType;
+}): Simulation {
+  const months = years * 12;
+  const monthlyRate = annualRate / 100 / 12;
+  const scheduledInstallment = calcScheduledPayment(principal, annualRate, months);
+  const scheduledPrincipal = principal / months;
+  let balance = principal;
+  let totalPayment = 0;
+  let totalInterest = 0;
+  let payoffMonths = 0;
+  let firstPayment = 0;
+  let finalPayment = 0;
+  const yearlyRows: YearlyRow[] = [];
+  let currentYear: YearlyRow | null = null;
+
+  for (let month = 1; month <= months && balance > 0.5; month++) {
+    if ((month - 1) % 12 === 0) {
+      currentYear = {
+        year: Math.ceil(month / 12),
+        startBalance: balance,
+        principalPaid: 0,
+        interestPaid: 0,
+        bonusPaid: 0,
+        totalPaid: 0,
+        endBalance: balance,
+      };
+      yearlyRows.push(currentYear);
+    }
+
+    const interest = balance * monthlyRate;
+    let principalPaid = type === "equal-installment" ? scheduledInstallment - interest : scheduledPrincipal;
+    principalPaid = Math.max(0, Math.min(principalPaid, balance));
+    balance -= principalPaid;
+
+    const bonusPaid = month % 6 === 0 ? Math.min(bonusAmount, balance) : 0;
+    balance -= bonusPaid;
+
+    const monthlyPaid = interest + principalPaid + bonusPaid;
+    totalPayment += monthlyPaid;
+    totalInterest += interest;
+    payoffMonths = month;
+    finalPayment = monthlyPaid;
+    if (month === 1) firstPayment = monthlyPaid;
+
+    if (currentYear) {
+      currentYear.principalPaid += principalPaid + bonusPaid;
+      currentYear.interestPaid += interest;
+      currentYear.bonusPaid += bonusPaid;
+      currentYear.totalPaid += monthlyPaid;
+      currentYear.endBalance = Math.max(0, balance);
+    }
+  }
+
+  const monthlyPayment = type === "equal-installment" ? scheduledInstallment : firstPayment;
+  const monthlyPaymentLabel = type === "equal-installment" ? "毎月返済額" : "初回返済額";
+
+  return {
+    monthlyPaymentLabel,
+    monthlyPayment,
+    firstPayment,
+    finalPayment,
+    totalPayment,
+    totalInterest,
+    payoffMonths,
+    yearlyRows,
+  };
+}
+
+function buildCsv(rows: YearlyRow[]) {
+  const data = [
+    ["year", "start_balance_yen", "principal_paid_yen", "interest_paid_yen", "bonus_paid_yen", "total_paid_yen", "end_balance_yen"],
+    ...rows.map((row) => [
+      String(row.year),
+      String(Math.round(row.startBalance)),
+      String(Math.round(row.principalPaid)),
+      String(Math.round(row.interestPaid)),
+      String(Math.round(row.bonusPaid)),
+      String(Math.round(row.totalPaid)),
+      String(Math.round(row.endBalance)),
+    ]),
+  ];
+  return data.map((row) => row.join(",")).join("\n");
+}
+
+function downloadCsv(rows: YearlyRow[]) {
+  const blob = new Blob([buildCsv(rows)], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "loan-simulation.csv";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
 }
 
 export default function LoanSimulator() {
-  const [inputs, setInputs] = useState<LoanInputs>({
-    principal: "",
-    annualRate: "",
-    years: "",
-    bonusAmount: "",
-    repaymentType: "equal-installment",
-  });
-  const [annualIncome, setAnnualIncome] = useState("");
+  const [principal, setPrincipal] = useState("3000");
+  const [annualRate, setAnnualRate] = useState("1.2");
+  const [years, setYears] = useState("35");
+  const [bonusAmount, setBonusAmount] = useState("0");
+  const [annualIncome, setAnnualIncome] = useState("600");
+  const [repaymentType, setRepaymentType] = useState<RepaymentType>("equal-installment");
+  const [copied, setCopied] = useState(false);
 
-  const set = (key: keyof LoanInputs, value: string) =>
-    setInputs((prev) => ({ ...prev, [key]: value }));
-
-  const numericInput = (value: string) => value.replace(/[^0-9.]/g, "");
-
-  const parsed = useMemo(() => {
-    const principal = parseFloat(inputs.principal.replace(/,/g, "")) * 10000;
-    const annualRate = parseFloat(inputs.annualRate);
-    const years = parseInt(inputs.years);
-    const bonusAmount = parseFloat(inputs.bonusAmount || "0") * 10000;
-    return { principal, annualRate, years, bonusAmount };
-  }, [inputs]);
-
-  const isValid = useMemo(() => {
-    return (
-      !isNaN(parsed.principal) &&
-      parsed.principal > 0 &&
-      !isNaN(parsed.annualRate) &&
-      parsed.annualRate >= 0 &&
-      !isNaN(parsed.years) &&
-      parsed.years > 0 &&
-      parsed.years <= 50
-    );
-  }, [parsed]);
+  const principalYen = parseManYen(principal);
+  const rateNum = parseNumber(annualRate);
+  const yearsNum = Math.round(parseNumber(years));
+  const bonusYen = parseManYen(bonusAmount);
+  const incomeYen = parseManYen(annualIncome);
+  const error =
+    principalYen <= 0
+      ? "借入金額を入力してください。"
+      : yearsNum <= 0 || yearsNum > 50
+        ? "返済期間は1〜50年で入力してください。"
+        : rateNum < 0 || rateNum > 30
+          ? "金利は0〜30%の範囲で入力してください。"
+          : "";
 
   const result = useMemo(() => {
-    if (!isValid) return null;
-    const months = parsed.years * 12;
-    const bonusMonthlyExtra = parsed.bonusAmount / 2;
+    if (error) return null;
+    return simulateLoan({
+      principal: principalYen,
+      annualRate: rateNum,
+      years: yearsNum,
+      bonusAmount: bonusYen,
+      type: repaymentType,
+    });
+  }, [bonusYen, error, principalYen, rateNum, repaymentType, yearsNum]);
 
-    if (inputs.repaymentType === "equal-installment") {
-      return calcEqualInstallment(
-        parsed.principal,
-        parsed.annualRate,
-        months,
-        bonusMonthlyExtra
-      );
-    } else {
-      return calcEqualPrincipal(
-        parsed.principal,
-        parsed.annualRate,
-        months,
-        bonusMonthlyExtra
-      );
-    }
-  }, [isValid, parsed, inputs.repaymentType]);
+  const repaymentRatio = result && incomeYen > 0 ? ((result.monthlyPayment * 12 + bonusYen * 2) / incomeYen) * 100 : null;
+  const ratioTone = repaymentRatio === null ? "text-slate-500" : repaymentRatio <= 25 ? "text-emerald-700" : repaymentRatio <= 35 ? "text-amber-700" : "text-red-700";
 
-  const repaymentRatio = useMemo(() => {
-    if (!result || !annualIncome) return null;
-    const income = parseFloat(annualIncome.replace(/,/g, "")) * 10000;
-    if (isNaN(income) || income <= 0) return null;
-    const annualPayment = result.monthlyPayment * 12 + parsed.bonusAmount;
-    return (annualPayment / income) * 100;
-  }, [result, annualIncome, parsed.bonusAmount]);
+  function applyPreset(preset: (typeof PRESETS)[number]) {
+    setPrincipal(preset.principal);
+    setAnnualRate(preset.rate);
+    setYears(preset.years);
+    setAnnualIncome(preset.income);
+    setBonusAmount("0");
+    setCopied(false);
+  }
+
+  function reset() {
+    setPrincipal("3000");
+    setAnnualRate("1.2");
+    setYears("35");
+    setBonusAmount("0");
+    setAnnualIncome("600");
+    setRepaymentType("equal-installment");
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!result) return;
+    const lines = [
+      `返済方式: ${repaymentType === "equal-installment" ? "元利均等返済" : "元金均等返済"}`,
+      `借入金額: ${yen(principalYen)}円`,
+      `年利: ${annualRate}%`,
+      `${result.monthlyPaymentLabel}: ${yen(result.monthlyPayment)}円`,
+      `総返済額: ${yen(result.totalPayment)}円`,
+      `利息総額: ${yen(result.totalInterest)}円`,
+      `完済目安: ${monthsToLabel(result.payoffMonths)}`,
+    ];
+    await navigator.clipboard.writeText(lines.join("\n"));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-5">
-      {/* Repayment Type Toggle */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <p className="text-xs text-muted mb-3 font-medium">返済方式</p>
-        <div className="flex rounded-lg border border-border overflow-hidden">
-          <button
-            onClick={() => set("repaymentType", "equal-installment")}
-            className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
-              inputs.repaymentType === "equal-installment"
-                ? "bg-primary text-white"
-                : "bg-accent text-muted hover:text-foreground"
-            }`}
-          >
-            元利均等返済
-          </button>
-          <button
-            onClick={() => set("repaymentType", "equal-principal")}
-            className={`flex-1 py-2.5 text-sm font-medium transition-colors ${
-              inputs.repaymentType === "equal-principal"
-                ? "bg-primary text-white"
-                : "bg-accent text-muted hover:text-foreground"
-            }`}
-          >
-            元金均等返済
-          </button>
-        </div>
-        <p className="text-xs text-muted mt-2">
-          {inputs.repaymentType === "equal-installment"
-            ? "毎月の返済額が一定。住宅ローンで最も一般的な方式です。"
-            : "毎月の元金返済額が一定。初期は返済額が多いが、総利息は少なくなります。"}
-        </p>
-      </div>
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">借入条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">金額は万円単位。入力値はブラウザ内で計算され、外部に送信されません。</p>
+            </div>
+            <button type="button" onClick={reset} className="w-fit rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+              クリア
+            </button>
+          </div>
 
-      {/* Inputs */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
-        <h2 className="font-bold text-base">借入条件の入力</h2>
+          <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+            {[
+              { value: "equal-installment" as const, label: "元利均等" },
+              { value: "equal-principal" as const, label: "元金均等" },
+            ].map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => setRepaymentType(item.value)}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold ${
+                  repaymentType === item.value ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:text-slate-800"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs text-muted mb-1">
-              借入金額（万円）<span className="text-danger ml-1">*</span>
-            </label>
-            <input
-              type="text"
-              inputMode="decimal"
-              placeholder="例: 3000"
-              value={inputs.principal}
-              onChange={(e) => set("principal", numericInput(e.target.value))}
-              className="w-full px-3 py-2.5 border border-border rounded-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-            />
-            <p className="text-xs text-muted mt-1 text-right">
-              {inputs.principal
-                ? `= ${parseFloat(inputs.principal).toLocaleString("ja-JP")} 万円`
-                : ""}
+          <div className="mt-5 grid gap-4">
+            <NumberInput id="loan-principal" label="借入金額" value={principal} onChange={setPrincipal} suffix="万円" step="100" />
+            <NumberInput id="loan-rate" label="金利（年利）" value={annualRate} onChange={setAnnualRate} suffix="%" step="0.1" />
+            <NumberInput id="loan-years" label="返済期間" value={years} onChange={setYears} suffix="年" step="1" />
+            <NumberInput id="loan-bonus" label="ボーナス月の追加返済" value={bonusAmount} onChange={setBonusAmount} suffix="万円/回" step="10" note="6月・12月に追加で元金返済する前提です。" />
+            <NumberInput id="loan-income" label="年収（返済比率用）" value={annualIncome} onChange={setAnnualIncome} suffix="万円" step="50" />
+
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {PRESETS.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => applyPreset(preset)}
+                    className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <p className={`min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+              {error || "概算シミュレーションです。実際の審査、保証料、団信、手数料、金利優遇、繰上返済手数料は金融機関ごとに異なります。"}
             </p>
           </div>
-
-          <div>
-            <label className="block text-xs text-muted mb-1">
-              金利（年利 %）<span className="text-danger ml-1">*</span>
-            </label>
-            <input
-              type="text"
-              inputMode="decimal"
-              placeholder="例: 1.5"
-              value={inputs.annualRate}
-              onChange={(e) => set("annualRate", numericInput(e.target.value))}
-              className="w-full px-3 py-2.5 border border-border rounded-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs text-muted mb-1">
-              返済期間（年）<span className="text-danger ml-1">*</span>
-            </label>
-            <input
-              type="text"
-              inputMode="numeric"
-              placeholder="例: 35"
-              value={inputs.years}
-              onChange={(e) =>
-                set("years", e.target.value.replace(/[^0-9]/g, ""))
-              }
-              className="w-full px-3 py-2.5 border border-border rounded-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs text-muted mb-1">
-              ボーナス返済額（万円/回）
-              <span className="text-xs text-muted ml-1">任意</span>
-            </label>
-            <input
-              type="text"
-              inputMode="decimal"
-              placeholder="例: 20（年2回）"
-              value={inputs.bonusAmount}
-              onChange={(e) => set("bonusAmount", numericInput(e.target.value))}
-              className="w-full px-3 py-2.5 border border-border rounded-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-            />
-          </div>
         </div>
 
-        {/* Annual Income for repayment ratio */}
-        <div className="border-t border-border pt-4">
-          <label className="block text-xs text-muted mb-1">
-            年収（万円）
-            <span className="text-xs text-muted ml-1">返済比率の計算に使用</span>
-          </label>
-          <input
-            type="text"
-            inputMode="decimal"
-            placeholder="例: 600"
-            value={annualIncome}
-            onChange={(e) =>
-              setAnnualIncome(numericInput(e.target.value))
-            }
-            className="w-full sm:w-1/2 px-3 py-2.5 border border-border rounded-lg text-right font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-          />
+        <div className="min-w-0 p-5 sm:p-6">
+          {!result ? (
+            <div className="flex min-h-96 items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 text-center">
+              <div>
+                <p className="text-sm font-semibold text-slate-700">入力を確認してください</p>
+                <p className="mt-1 text-sm text-slate-500">条件を入れると返済額と残高推移が表示されます。</p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid gap-5">
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 text-indigo-950">
+                <p className="text-sm font-medium opacity-80">{result.monthlyPaymentLabel}</p>
+                <div className="mt-1 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <p className="font-mono text-4xl font-bold">{yen(result.monthlyPayment)}円</p>
+                  <p className="text-sm font-semibold">{monthsToLabel(result.payoffMonths)}で完済</p>
+                </div>
+                <p className="mt-2 text-sm opacity-80">
+                  {repaymentType === "equal-installment" ? "毎月返済額が一定になる方式です。" : "元金返済が一定で、返済が進むほど月額が下がる方式です。"}
+                </p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <ResultCard label="総返済額" value={`${yen(result.totalPayment)}円`} note={`借入額との差額 ${yen(result.totalInterest)}円`} />
+                <ResultCard label="利息総額" value={`${yen(result.totalInterest)}円`} note={`借入額比 ${pct((result.totalInterest / principalYen) * 100)}`} />
+                <ResultCard label="最終月の返済" value={`${yen(result.finalPayment)}円`} note="ボーナス追加返済で短縮される場合があります" />
+                <ResultCard label="返済比率" value={repaymentRatio === null ? "-" : pct(repaymentRatio)} note="年収に対する年間返済額の概算" tone={ratioTone} />
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button type="button" onClick={copyResult} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                  {copied ? "コピー済み" : "結果をコピー"}
+                </button>
+                <button type="button" onClick={() => downloadCsv(result.yearlyRows)} className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+                  CSVダウンロード
+                </button>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-5">
+                <h2 className="text-base font-semibold text-slate-950">年次残高推移</h2>
+                <div className="mt-4 overflow-x-auto">
+                  <table className="w-full min-w-[560px] border-collapse text-sm">
+                    <thead>
+                      <tr className="bg-slate-50 text-left text-xs text-slate-500">
+                        <th className="border border-slate-200 px-3 py-2">年</th>
+                        <th className="border border-slate-200 px-3 py-2">期首残高</th>
+                        <th className="border border-slate-200 px-3 py-2">元金返済</th>
+                        <th className="border border-slate-200 px-3 py-2">利息</th>
+                        <th className="border border-slate-200 px-3 py-2">期末残高</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {result.yearlyRows.slice(0, 12).map((row) => (
+                        <tr key={row.year} className="even:bg-slate-50">
+                          <td className="whitespace-nowrap border border-slate-200 px-3 py-2 font-semibold">{row.year}年目</td>
+                          <td className="whitespace-nowrap border border-slate-200 px-3 py-2 text-right">{yen(row.startBalance)}円</td>
+                          <td className="whitespace-nowrap border border-slate-200 px-3 py-2 text-right">{yen(row.principalPaid)}円</td>
+                          <td className="whitespace-nowrap border border-slate-200 px-3 py-2 text-right">{yen(row.interestPaid)}円</td>
+                          <td className="whitespace-nowrap border border-slate-200 px-3 py-2 text-right">{yen(row.endBalance)}円</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="mt-2 text-xs text-slate-500">表は先頭12年分を表示しています。全期間分はCSVで確認できます。</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+    </section>
+  );
+}
 
-      {/* Results */}
-      {result && (
-        <>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <ResultCard
-              label={
-                inputs.repaymentType === "equal-installment"
-                  ? "毎月の返済額"
-                  : "初月の返済額"
-              }
-              value={`¥${formatCurrency(result.monthlyPayment)}`}
-              highlight
-            />
-            <ResultCard
-              label="総返済額"
-              value={`¥${formatCurrency(result.totalPayment)}`}
-            />
-            <ResultCard
-              label="利息総額"
-              value={`¥${formatCurrency(result.totalInterest)}`}
-              sub={`借入額の ${((result.totalInterest / parsed.principal) * 100).toFixed(1)}%`}
-            />
-            <ResultCard
-              label="返済比率"
-              value={
-                repaymentRatio !== null
-                  ? `${repaymentRatio.toFixed(1)}%`
-                  : "—"
-              }
-              sub={
-                repaymentRatio !== null
-                  ? repaymentRatio <= 25
-                    ? "安全圏（〜25%）"
-                    : repaymentRatio <= 35
-                    ? "注意（〜35%）"
-                    : "要注意（35%超）"
-                  : "年収を入力してください"
-              }
-              highlight={repaymentRatio !== null && repaymentRatio > 35}
-            />
-          </div>
+function NumberInput({
+  id,
+  label,
+  value,
+  onChange,
+  suffix,
+  step,
+  note,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  suffix: string;
+  step: string;
+  note?: string;
+}) {
+  return (
+    <label className="grid gap-2 text-sm font-medium text-slate-700" htmlFor={id}>
+      {label}
+      <div className="flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+        <input
+          id={id}
+          type="number"
+          min="0"
+          step={step}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+        />
+        <span className="flex min-w-16 items-center justify-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">{suffix}</span>
+      </div>
+      {note && <span className="text-xs font-normal text-slate-500">{note}</span>}
+    </label>
+  );
+}
 
-          {/* Yearly Table */}
-          <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-            <h3 className="font-bold text-base mb-4">返済シミュレーション表（年次）</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left text-xs text-muted pb-2 pr-3">年</th>
-                    <th className="text-right text-xs text-muted pb-2 px-3">期首残高</th>
-                    <th className="text-right text-xs text-muted pb-2 px-3">元金返済</th>
-                    <th className="text-right text-xs text-muted pb-2 px-3">利息</th>
-                    <th className="text-right text-xs text-muted pb-2 pl-3">期末残高</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {result.yearlyRows.map((row) => (
-                    <tr key={row.year} className="hover:bg-accent/50 transition-colors">
-                      <td className="py-2 pr-3 font-medium text-foreground">{row.year}年目</td>
-                      <td className="py-2 px-3 text-right font-mono text-muted">
-                        ¥{formatCurrency(row.startBalance)}
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono text-foreground">
-                        ¥{formatCurrency(row.principalPaid)}
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono text-primary">
-                        ¥{formatCurrency(row.interestPaid)}
-                      </td>
-                      <td className="py-2 pl-3 text-right font-mono text-muted">
-                        ¥{formatCurrency(row.endBalance)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </>
-      )}
-
-      {!isValid && (inputs.principal || inputs.annualRate || inputs.years) && (
-        <p className="text-sm text-muted text-center py-2">
-          借入金額・金利・返済期間を正しく入力してください
-        </p>
-      )}
-
-      {/* FAQ */}
-      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h2 className="font-bold text-base mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            {
-              q: "元利均等返済と元金均等返済はどちらが得ですか？",
-              a: "総返済額は元金均等返済の方が少なくなります。ただし元金均等は返済初期の月額が高く、審査上の返済比率も不利になる場合があります。資金に余裕がある方には元金均等、毎月の負担を一定にしたい方には元利均等が向いています。",
-            },
-            {
-              q: "返済比率の目安はどのくらいですか？",
-              a: "一般的に年収の 25% 以内が安全圏とされています。住宅ローン審査では多くの金融機関が 35% 以内を基準としています。このシミュレーターでは年収を入力すると返済比率を自動計算します。",
-            },
-            {
-              q: "ボーナス返済を設定するメリットは？",
-              a: "月々の返済負担を抑えながら、ボーナス時に多く返済できます。ただしボーナスが減額・不支給になるリスクもあります。安定した収入が見込める場合のみ設定することをお勧めします。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-border pb-3 last:border-0 last:pb-0">
-              <p className="text-foreground font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-muted text-xs leading-relaxed">{faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "元利均等返済と元金均等返済はどちらが得ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "総返済額は元金均等返済の方が少なくなります。ただし元金均等は返済初期の月額が高く、審査上の返済比率も不利になる場合があります。" },
-              },
-              {
-                "@type": "Question",
-                "name": "返済比率の目安はどのくらいですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "一般的に年収の 25% 以内が安全圏とされています。住宅ローン審査では多くの金融機関が 35% 以内を基準としています。" },
-              },
-              {
-                "@type": "Question",
-                "name": "ボーナス返済を設定するメリットは？",
-                "acceptedAnswer": { "@type": "Answer", "text": "月々の返済負担を抑えながら、ボーナス時に多く返済できます。ただしボーナスが減額・不支給になるリスクもあります。安定した収入が見込める場合のみ設定することをお勧めします。" },
-              },
-            ],
-          }),
-        }}
-      />
-
-      {/* 関連ツール */}
-      <section className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h2 className="font-bold text-base mb-4">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/risoku-keisan", label: "利息計算機", desc: "元本・金利・期間から利息を計算" },
-            { href: "/tsumitate-sim", label: "積立シミュレーター", desc: "毎月の積立で将来の資産をシミュレーション" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block bg-accent border border-border rounded-xl p-3 hover:border-primary transition-colors"
-            >
-              <p className="text-foreground font-bold text-sm">{link.label}</p>
-              <p className="text-muted text-xs mt-0.5">{link.desc}</p>
-            </a>
-          ))}
-        </div>
-      </section>
+function ResultCard({ label, value, note, tone = "text-slate-950" }: { label: string; value: string; note: string; tone?: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className={`mt-1 text-lg font-bold ${tone}`}>{value}</p>
+      <p className="mt-1 text-xs leading-5 text-slate-500">{note}</p>
     </div>
   );
 }
