@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 74.7/100
-- Priority tiers: {"B": 47, "C": 95}
+- Average quality score: 75.0/100
+- Priority tiers: {"B": 46, "C": 96}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
 | B | 58 | 65 | `azure-openai-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 49 | 51 | `css-flexbox` | utility | CSS Tools | faq, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
 | B | 49 | 64 | `regex-tester` | utility | Developer Tools | copy, examples, privacy, current_count; penalties: old_count, any_type |
 | B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
+| B | 48 | 71 | `fine-tuning-cost` | calculator | AI Tools | related_links, copy, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -67,7 +67,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 76.8 |
+| calculator | 77.6 |
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |
