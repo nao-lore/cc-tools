@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 73.1/100
-- Priority tiers: {"B": 53, "C": 89}
+- Average quality score: 73.3/100
+- Priority tiers: {"B": 52, "C": 90}
 
 ## Highest Priority Tools
 
@@ -14,7 +14,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | --- | ---: | ---: | --- | --- | --- | --- |
 | B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
-| B | 63 | 62 | `hebon-romaji` | converter | Japanese Tools | reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
 | B | 58 | 61 | `image-compressor` | image | Image Tools | copy, examples, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 58 | 65 | `azure-openai-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
 | B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
+| B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -54,6 +54,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `denki-keisan` | calculator | Japanese Tools |
 | 100 | `eigyoubi` | calculator | Japanese Tools |
 | 100 | `favicon-generator` | image | Image Tools |
+| 100 | `hebon-romaji` | converter | Japanese Tools |
 | 100 | `loan-simulator` | calculator | Japanese Tools |
 | 100 | `measuring-converter` | converter | Cooking Tools |
 | 100 | `menseki-keisan` | converter | Japanese Tools |
@@ -61,7 +62,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
 | 100 | `oven-temp-converter` | converter | Cooking Tools |
 | 100 | `risoku-keisan` | calculator | Japanese Tools |
-| 100 | `tsumitate-sim` | calculator | Japanese Tools |
 
 ## Archetype Averages
 
@@ -69,7 +69,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | --- | ---: |
 | calculator | 75.3 |
 | comparison | 75.1 |
-| converter | 77.9 |
+| converter | 79.7 |
 | generator | 69.8 |
 | image | 71 |
 | reference | 74.2 |

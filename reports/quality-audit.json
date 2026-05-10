@@ -1,15 +1,15 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 73.1,
+    "averageQualityScore": 73.3,
     "priorityTierCounts": {
-      "B": 53,
-      "C": 89
+      "B": 52,
+      "C": 90
     },
     "averageByArchetype": {
       "calculator": 75.3,
       "comparison": 75.1,
-      "converter": 77.9,
+      "converter": 79.7,
       "generator": 69.8,
       "image": 71,
       "reference": 74.2,
@@ -281,51 +281,6 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 439
-      }
-    },
-    {
-      "slug": "hebon-romaji",
-      "name": "ヘボン式ローマ字変換",
-      "description": "ひらがな・カタカナを外務省基準のヘボン式ローマ字に変換",
-      "market": "JP",
-      "category": "Japanese Tools",
-      "archetype": "converter",
-      "qualityScore": 62,
-      "priorityScore": 63,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "reset_clear",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder"
-      ],
-      "signals": {
-        "h2Count": 4,
-        "buttonCount": 4,
-        "inputCount": 1,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 423
       }
     },
     {
@@ -5904,6 +5859,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 888
+      }
+    },
+    {
+      "slug": "hebon-romaji",
+      "name": "ヘボン式ローマ字変換",
+      "description": "ひらがな・カタカナを外務省基準のヘボン式ローマ字に変換",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 6,
+        "inputCount": 1,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 518
       }
     },
     {
