@@ -1,55 +1,56 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
-function countBytes(str: string, encoding: "utf8" | "shiftjis"): number {
-  if (encoding === "utf8") {
-    return new TextEncoder().encode(str).length;
-  }
-  // Shift_JIS approximation: ASCII = 1 byte, fullwidth/kanji/kana = 2 bytes
-  let bytes = 0;
-  for (const char of str) {
-    const code = char.codePointAt(0) ?? 0;
-    if (code < 0x80) {
-      bytes += 1;
-    } else {
-      bytes += 2;
-    }
-  }
-  return bytes;
-}
-
-interface Stats {
+type Stats = {
   charsWithSpaces: number;
   charsWithoutSpaces: number;
   words: number;
   lines: number;
   paragraphs: number;
   bytesUtf8: number;
-  bytesShiftJis: number;
+  bytesShiftJisApprox: number;
   fullwidth: number;
   halfwidth: number;
   hiragana: number;
   katakana: number;
   kanji: number;
   alphanumeric: number;
+  punctuation: number;
+};
+
+const SAMPLES = [
+  {
+    label: "SNS投稿",
+    text: "新しい文字数カウントツールを公開しました。スペースあり・なし、UTF-8バイト数、文字種別までブラウザ内で確認できます。",
+  },
+  {
+    label: "メタ説明",
+    text: "日本語テキストの文字数、行数、段落数、UTF-8バイト数、ひらがな・カタカナ・漢字の内訳を無料でカウントできます。",
+  },
+  {
+    label: "混在テキスト",
+    text: "AI tools 2026: 価格・文字数・CSV出力をまとめて確認。全角ＡＢＣと半角ABC、カタカナとｶﾀｶﾅも判定します。",
+  },
+];
+
+function countBytes(text: string, encoding: "utf8" | "shiftjis") {
+  if (encoding === "utf8") return new TextEncoder().encode(text).length;
+
+  let bytes = 0;
+  for (const char of text) {
+    const code = char.codePointAt(0) ?? 0;
+    bytes += code < 0x80 ? 1 : 2;
+  }
+  return bytes;
 }
 
 function computeStats(text: string): Stats {
-  const charsWithSpaces = [...text].length;
-  const charsWithoutSpaces = [...text].filter((c) => !/\s/.test(c)).length;
-
+  const chars = [...text];
   const trimmed = text.trim();
-  const words = trimmed === "" ? 0 : trimmed.split(/\s+/).length;
   const lines = text === "" ? 0 : text.split("\n").length;
-
-  let paragraphs = 0;
-  if (trimmed !== "") {
-    paragraphs = trimmed.split(/\n\s*\n+/).filter((p) => p.trim() !== "").length;
-  }
-
-  const bytesUtf8 = countBytes(text, "utf8");
-  const bytesShiftJis = countBytes(text, "shiftjis");
+  const paragraphs = trimmed === "" ? 0 : trimmed.split(/\n\s*\n+/).filter((line) => line.trim() !== "").length;
 
   let fullwidth = 0;
   let halfwidth = 0;
@@ -57,8 +58,9 @@ function computeStats(text: string): Stats {
   let katakana = 0;
   let kanji = 0;
   let alphanumeric = 0;
+  let punctuation = 0;
 
-  for (const char of text) {
+  for (const char of chars) {
     const code = char.codePointAt(0) ?? 0;
 
     if (/[\u3041-\u3096]/.test(char)) {
@@ -68,222 +70,261 @@ function computeStats(text: string): Stats {
       katakana++;
       fullwidth++;
     } else if (/[\uFF66-\uFF9F]/.test(char)) {
-      // halfwidth katakana
       katakana++;
       halfwidth++;
-    } else if (
-      /[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]/.test(char)
-    ) {
+    } else if (/[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]/.test(char)) {
       kanji++;
       fullwidth++;
     } else if (/[A-Za-z0-9]/.test(char)) {
       alphanumeric++;
       halfwidth++;
     } else if (/[\uFF01-\uFF5E]/.test(char)) {
-      // fullwidth ASCII variants
       fullwidth++;
-    } else if (code >= 0x20 && code < 0x7F) {
+      punctuation++;
+    } else if (/[、。！？,.!?;:()[\]{}"'「」『』・]/.test(char)) {
+      punctuation++;
+      if (code < 0x80) halfwidth++;
+      else fullwidth++;
+    } else if (code >= 0x20 && code < 0x7f) {
       halfwidth++;
-    } else if (code > 0x7F) {
+    } else if (code > 0x7f) {
       fullwidth++;
     }
   }
 
   return {
-    charsWithSpaces,
-    charsWithoutSpaces,
-    words,
+    charsWithSpaces: chars.length,
+    charsWithoutSpaces: chars.filter((char) => !/\s/.test(char)).length,
+    words: trimmed === "" ? 0 : trimmed.split(/\s+/).length,
     lines,
     paragraphs,
-    bytesUtf8,
-    bytesShiftJis,
+    bytesUtf8: countBytes(text, "utf8"),
+    bytesShiftJisApprox: countBytes(text, "shiftjis"),
     fullwidth,
     halfwidth,
     hiragana,
     katakana,
     kanji,
     alphanumeric,
+    punctuation,
   };
 }
 
-interface StatCardProps {
-  label: string;
-  value: number;
-  highlight?: boolean;
+function format(value: number) {
+  return value.toLocaleString("ja-JP");
 }
 
-function StatCard({ label, value, highlight }: StatCardProps) {
+function buildStatsText(stats: Stats) {
+  return [
+    `文字数（スペースあり）: ${format(stats.charsWithSpaces)}`,
+    `文字数（スペースなし）: ${format(stats.charsWithoutSpaces)}`,
+    `空白区切り語数: ${format(stats.words)}`,
+    `行数: ${format(stats.lines)}`,
+    `段落数: ${format(stats.paragraphs)}`,
+    `UTF-8バイト数: ${format(stats.bytesUtf8)}`,
+    `Shift_JIS概算バイト数: ${format(stats.bytesShiftJisApprox)}`,
+    `ひらがな: ${format(stats.hiragana)}`,
+    `カタカナ: ${format(stats.katakana)}`,
+    `漢字: ${format(stats.kanji)}`,
+  ].join("\n");
+}
+
+function buildCsv(stats: Stats) {
+  const rows = [
+    ["metric", "value"],
+    ["chars_with_spaces", String(stats.charsWithSpaces)],
+    ["chars_without_spaces", String(stats.charsWithoutSpaces)],
+    ["whitespace_words", String(stats.words)],
+    ["lines", String(stats.lines)],
+    ["paragraphs", String(stats.paragraphs)],
+    ["utf8_bytes", String(stats.bytesUtf8)],
+    ["shiftjis_bytes_approx", String(stats.bytesShiftJisApprox)],
+    ["fullwidth", String(stats.fullwidth)],
+    ["halfwidth", String(stats.halfwidth)],
+    ["hiragana", String(stats.hiragana)],
+    ["katakana", String(stats.katakana)],
+    ["kanji", String(stats.kanji)],
+    ["alphanumeric", String(stats.alphanumeric)],
+    ["punctuation", String(stats.punctuation)],
+  ];
+  return rows.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n");
+}
+
+function downloadCsv(text: string) {
+  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "moji-count.csv";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
+export function MojiCounter() {
+  const [text, setText] = useState(SAMPLES[0].text);
+  const [copied, setCopied] = useState<"text" | "stats" | "">("");
+
+  const stats = useMemo(() => computeStats(text), [text]);
+  const validationError = text.length > 100_000 ? "入力エラー: 10万文字を超えています。ブラウザが重くなる場合は分割してください。" : "";
+
+  async function copyText() {
+    if (!text) return;
+    await navigator.clipboard.writeText(text);
+    setCopied("text");
+    window.setTimeout(() => setCopied(""), 1600);
+  }
+
+  async function copyStats() {
+    await navigator.clipboard.writeText(buildStatsText(stats));
+    setCopied("stats");
+    window.setTimeout(() => setCopied(""), 1600);
+  }
+
   return (
-    <div
-      className={`rounded-lg p-4 flex flex-col items-center justify-center gap-1 ${
-        highlight
-          ? "bg-[var(--color-primary)] text-white"
-          : "bg-gray-50 border border-gray-200"
-      }`}
-    >
-      <span
-        className={`text-2xl font-bold tabular-nums ${
-          highlight ? "text-white" : "text-gray-800"
-        }`}
-      >
-        {value.toLocaleString()}
-      </span>
-      <span
-        className={`text-xs text-center leading-tight ${
-          highlight ? "text-white/80" : "text-gray-500"
-        }`}
-      >
-        {label}
-      </span>
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">テキスト入力</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">入力値はブラウザ内で処理され、外部に送信されません。</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setText("");
+                setCopied("");
+              }}
+              className="w-fit rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              クリア
+            </button>
+          </div>
+
+          <label className="mt-5 grid gap-2 text-sm font-medium text-slate-700" htmlFor="moji-count-input">
+            カウントする文章
+            <textarea
+              id="moji-count-input"
+              value={text}
+              onChange={(event) => {
+                setText(event.target.value);
+                setCopied("");
+              }}
+              spellCheck={false}
+              rows={14}
+              className="w-full resize-y rounded-2xl border border-slate-300 bg-white p-4 text-sm leading-7 text-slate-950 outline-none focus:border-slate-900"
+              placeholder="ここにテキストを入力してください"
+            />
+          </label>
+
+          <p className={`mt-3 min-h-5 text-sm ${validationError ? "text-red-600" : "text-slate-500"}`}>
+            {validationError || "スペースあり・なし、文字種別、UTF-8バイト数、Shift_JIS概算バイト数を同時に確認できます。"}
+          </p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button type="button" onClick={copyText} disabled={!text} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:text-slate-300">
+              {copied === "text" ? "本文コピー済み" : "本文をコピー"}
+            </button>
+            <button type="button" onClick={copyStats} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+              {copied === "stats" ? "結果コピー済み" : "結果をコピー"}
+            </button>
+            <button type="button" onClick={() => downloadCsv(buildCsv(stats))} className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+              CSVダウンロード
+            </button>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
+                <button
+                  key={sample.label}
+                  type="button"
+                  onClick={() => {
+                    setText(sample.text);
+                    setCopied("");
+                  }}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {sample.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="min-w-0 bg-slate-50 p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">カウント結果</h2>
+          <div className="mt-4 grid gap-3">
+            <StatCard label="文字数（スペースあり）" value={stats.charsWithSpaces} strong />
+            <StatCard label="文字数（スペースなし）" value={stats.charsWithoutSpaces} />
+            <StatCard label="空白区切り語数" value={stats.words} />
+            <StatCard label="行数" value={stats.lines} />
+            <StatCard label="段落数" value={stats.paragraphs} />
+            <StatCard label="UTF-8バイト数" value={stats.bytesUtf8} />
+            <StatCard label="Shift_JIS概算バイト数" value={stats.bytesShiftJisApprox} />
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-semibold text-slate-950">文字種別</h2>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <MiniStat label="全角" value={stats.fullwidth} />
+              <MiniStat label="半角" value={stats.halfwidth} />
+              <MiniStat label="ひらがな" value={stats.hiragana} />
+              <MiniStat label="カタカナ" value={stats.katakana} />
+              <MiniStat label="漢字" value={stats.kanji} />
+              <MiniStat label="英数字" value={stats.alphanumeric} />
+              <MiniStat label="記号" value={stats.punctuation} />
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            <p className="font-semibold">日本語の単語数について</p>
+            <p className="mt-1">
+              日本語は英語のようにスペースで単語が分かれないため、このツールの単語数は空白区切りの目安です。厳密な形態素解析ではありません。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-slate-200 p-5 sm:p-6">
+        <h2 className="text-base font-semibold text-slate-950">関連ツール</h2>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Related href="/zenkaku-hankaku" title="全角・半角変換" body="文字幅を一括変換" />
+          <Related href="/furigana" title="ふりがな変換" body="漢字にふりがなを付ける" />
+          <Related href="/markdown-preview" title="Markdownプレビュー" body="文章を見ながら整える" />
+          <Related href="/text-diff" title="テキスト差分" body="変更前後の違いを比較" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatCard({ label, value, strong = false }: { label: string; value: number; strong?: boolean }) {
+  return (
+    <div className={`rounded-xl border p-4 ${strong ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-950"}`}>
+      <p className={`text-xs font-medium uppercase tracking-wide ${strong ? "text-white/70" : "text-slate-500"}`}>{label}</p>
+      <p className="mt-1 font-mono text-2xl font-bold">{format(value)}</p>
     </div>
   );
 }
 
-export function MojiCounter() {
-  const [text, setText] = useState("");
-
-  const stats = computeStats(text);
-
-  const handleClear = useCallback(() => {
-    setText("");
-  }, []);
-
-  const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(text).catch(() => {});
-  }, [text]);
-
+function MiniStat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="space-y-6">
-      {/* Textarea */}
-      <div className="relative">
-        <textarea
-          className="w-full h-48 p-4 border border-gray-300 rounded-lg text-sm leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent font-sans"
-          placeholder="ここにテキストを入力してください..."
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          spellCheck={false}
-        />
-        <div className="flex justify-end gap-2 mt-2">
-          <button
-            onClick={handleCopy}
-            disabled={text === ""}
-            className="text-xs px-3 py-1.5 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            コピー
-          </button>
-          <button
-            onClick={handleClear}
-            disabled={text === ""}
-            className="text-xs px-3 py-1.5 rounded border border-red-200 text-red-500 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-          >
-            クリア
-          </button>
-        </div>
-      </div>
-
-      {/* Primary stats */}
-      <div>
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-          基本カウント
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          <StatCard label="文字数（スペースあり）" value={stats.charsWithSpaces} highlight />
-          <StatCard label="文字数（スペースなし）" value={stats.charsWithoutSpaces} />
-          <StatCard label="単語数" value={stats.words} />
-          <StatCard label="行数" value={stats.lines} />
-          <StatCard label="段落数" value={stats.paragraphs} />
-          <StatCard label="バイト数（UTF-8）" value={stats.bytesUtf8} />
-          <StatCard label="バイト数（Shift_JIS）" value={stats.bytesShiftJis} />
-        </div>
-      </div>
-
-      {/* Character type breakdown */}
-      <div>
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-          文字種別
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          <StatCard label="全角文字数" value={stats.fullwidth} />
-          <StatCard label="半角文字数" value={stats.halfwidth} />
-          <StatCard label="ひらがな数" value={stats.hiragana} />
-          <StatCard label="カタカナ数" value={stats.katakana} />
-          <StatCard label="漢字数" value={stats.kanji} />
-          <StatCard label="英数字数" value={stats.alphanumeric} />
-        </div>
-      </div>
-
-      {/* FAQ */}
-      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            {
-              q: "文字数カウントは何に役立ちますか？",
-              a: "X（旧Twitter）の投稿は全角1文字＝2文字換算で140字、LINEスタンプの説明文・メルマガ件名・SEOメタディスクリプションなど、プラットフォームごとに文字数制限があります。このツールでスペースあり・なしの両方を即座に確認できます。",
-            },
-            {
-              q: "全角と半角の違いは何ですか？",
-              a: "全角文字（ひらがな・カタカナ・漢字・全角英数字）は1文字で2バイトを占め、視覚的に半角の2倍の幅を持ちます。半角文字（英数字・半角記号・半角カタカナ）は1文字1バイトです。SNS や一部フォームでは全角と半角を別々にカウントするため、両方の数値を把握しておくと安心です。",
-            },
-            {
-              q: "UTF-8 と Shift_JIS のバイト数はなぜ違うのですか？",
-              a: "UTF-8 では日本語1文字が3バイト、Shift_JIS では2バイトになります。そのため同じテキストでも Shift_JIS の方がバイト数が少なくなります。メールシステムや古い Web フォームでは Shift_JIS のバイト上限が設定されていることがあるため、両方のバイト数を確認できるようにしています。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "文字数カウントは何に役立ちますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "X（旧Twitter）の投稿は全角1文字＝2文字換算で140字、LINEスタンプの説明文・メルマガ件名・SEOメタディスクリプションなど、プラットフォームごとに文字数制限があります。このツールでスペースあり・なしの両方を即座に確認できます。" },
-              },
-              {
-                "@type": "Question",
-                "name": "全角と半角の違いは何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "全角文字（ひらがな・カタカナ・漢字・全角英数字）は1文字で2バイトを占め、視覚的に半角の2倍の幅を持ちます。半角文字（英数字・半角記号・半角カタカナ）は1文字1バイトです。SNS や一部フォームでは全角と半角を別々にカウントするため、両方の数値を把握しておくと安心です。" },
-              },
-              {
-                "@type": "Question",
-                "name": "UTF-8 と Shift_JIS のバイト数はなぜ違うのですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "UTF-8 では日本語1文字が3バイト、Shift_JIS では2バイトになります。そのため同じテキストでも Shift_JIS の方がバイト数が少なくなります。メールシステムや古い Web フォームでは Shift_JIS のバイト上限が設定されていることがあるため、両方のバイト数を確認できるようにしています。" },
-              },
-            ],
-          }),
-        }}
-      />
-
-      {/* 関連ツール */}
-      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
-        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/zenkaku-hankaku", label: "全角・半角変換", desc: "全角↔半角を一括変換するツール" },
-            { href: "/markdown-preview", label: "Markdown プレビュー", desc: "Markdown をリアルタイムでプレビュー" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
-            >
-              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
-              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
-            </a>
-          ))}
-        </div>
-      </section>
+    <div className="rounded-xl bg-slate-50 p-3">
+      <p className="text-xs text-slate-500">{label}</p>
+      <p className="mt-1 font-mono text-lg font-bold text-slate-950">{format(value)}</p>
     </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

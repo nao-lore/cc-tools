@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 72.5/100
-- Priority tiers: {"B": 55, "C": 87}
+- Average quality score: 72.8/100
+- Priority tiers: {"B": 54, "C": 88}
 
 ## Highest Priority Tools
 
@@ -15,7 +15,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 63 | 62 | `hebon-romaji` | converter | Japanese Tools | reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
-| B | 60 | 60 | `moji-count` | utility | Japanese Tools | labels, examples, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
 | B | 58 | 57 | `url-encoder` | reference | Encoding & Decoding | faq, reset_clear, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 58 | 61 | `image-compressor` | image | Image Tools | copy, examples, current_count; penalties: old_count, ad_placeholder, any_type |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 52 | 65 | `context-window-visualizer` | utility | AI Tools | related_links, labels, copy, reset_clear, validation |
 | B | 51 | 61 | `cdn-pricing-comparison` | comparison | SaaS Pricing | related_links, copy, examples, reset_clear, validation; penalties: any_type |
 | B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
+| B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -57,11 +57,11 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `loan-simulator` | calculator | Japanese Tools |
 | 100 | `measuring-converter` | converter | Cooking Tools |
 | 100 | `menseki-keisan` | converter | Japanese Tools |
+| 100 | `moji-count` | utility | Japanese Tools |
 | 100 | `nissuu-keisan` | calculator | Japanese Tools |
 | 100 | `oven-temp-converter` | converter | Cooking Tools |
 | 100 | `risoku-keisan` | calculator | Japanese Tools |
 | 100 | `tsumitate-sim` | calculator | Japanese Tools |
-| 100 | `waribiki-keisan` | calculator | Japanese Tools |
 
 ## Archetype Averages
 
@@ -73,7 +73,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | generator | 69.8 |
 | image | 71 |
 | reference | 70.3 |
-| utility | 65.7 |
+| utility | 66.8 |
 
 ## Weakest Categories
 
