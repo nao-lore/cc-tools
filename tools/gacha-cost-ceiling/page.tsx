@@ -1,161 +1,170 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import GachaCostCeiling from "./components/GachaCostCeiling";
 
+const faq = [
+  {
+    q: "天井コストと期待値は何が違いますか？",
+    a: "天井コストは最悪ケースで天井まで引いた場合のコストです。期待値は排出率から見た平均的な目安で、実際の結果は大きく上下します。",
+  },
+  {
+    q: "ゲームごとのソフト天井やすり抜け保証は反映していますか？",
+    a: "反映していません。このツールは排出率と天井回数を使った単純モデルです。特殊仕様がある場合は、ゲーム内の最新表記を見て入力値を調整してください。",
+  },
+  {
+    q: "円換算はどう使いますか？",
+    a: "1ゲーム内通貨あたりの円換算レートを入力すると、天井コストや目標数の最大コストを円で表示できます。無料配布分や割引パックは別途差し引いてください。",
+  },
+  {
+    q: "この結果を課金判断に使っていいですか？",
+    a: "あくまで上限と期待値の目安です。確率は短期的に大きく偏るため、予算上限を決めたうえで無理のない範囲で判断してください。",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f0a1a] via-[#1a1030] to-[#0d0d2b]">
-      {/* Header */}
-      <header className="border-b border-white/8" style={{ background: "rgba(255,255,255,0.03)" }}>
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-white">
-            ガチャ 天井コスト計算ツール
-          </h1>
-          <p className="text-sm text-violet-100 mt-1">
-            天井・排出率・1回コストから期待値と最大コストを計算 — 原神・スターレイル対応
-          </p>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <GachaCostCeiling />
-
-          {/* AdSense Placeholder */}
-          <div className="mt-8 border border-dashed border-border rounded-xl p-8 text-center text-muted text-sm bg-card">
-            <p>広告スペース</p>
-          </div>
-
-          {/* SEO Content */}
-          <section className="mt-10 space-y-6 text-sm leading-relaxed text-muted">
-            <h2 className="text-lg font-bold text-foreground">使い方ガイド</h2>
-            <ol className="space-y-3 list-decimal list-inside">
-              <li>
-                <span className="font-medium text-foreground">ゲームを選択する</span>
-                — 原神・スターレイルなどのプリセットを選ぶと天井・排出率・コストが自動入力されます。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">設定を確認・調整する</span>
-                — 天井回数・排出率・1回あたりのコストを必要に応じて変更できます。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">目標数と現在の累積回数を入力する</span>
-                — 何体取得したいか、今何連しているかを入力すると残りコストも計算されます。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">結果を確認する</span>
-                — 天井コスト（確定）・期待コスト・天井までの残り回数が表示されます。
-              </li>
-            </ol>
-
-            <h2 className="text-lg font-bold text-foreground mt-8">よくある質問（FAQ）</h2>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-foreground">Q. 天井コストと期待コストの違いは何ですか？</p>
-                <p className="mt-1">A. 天井コストは「最悪のケース」で天井まで引き切った場合のコストです。期待コストは確率計算に基づく平均的なコストで、天井コストより少なくなります。運が良ければ期待コスト以下で引けることもあります。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. 原神の天井は何回ですか？</p>
-                <p className="mt-1">A. 原神のキャラクターガチャは90連が天井（ハード天井）で、★5が確定します。また50連ごとにソフト天井があり、74連以降は排出率が徐々に上がる仕組みです。このツールのシンプルモデルはソフト天井を考慮していないため、実際の期待値とは若干異なります。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. 課金額の目安を知りたい</p>
-                <p className="mt-1">A. ゲーム内通貨のレートを「1通貨あたり（円）」欄に入力すると、円換算の金額が表示されます。例えば原神で160石＝1回で、石のレートを設定することで天井までの課金額が計算できます。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. 複数キャラを狙う場合の計算方法は？</p>
-                <p className="mt-1">A. 「目標キャラ数」に取得したい体数を入力してください。複数体の合計コスト（最大・期待値）が計算されます。なお確率はキャラごとに独立しているため、1体の期待コスト×体数で計算されます。</p>
-              </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← 無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-rose-700">ゲーム・確率ツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">ガチャ 天井コスト計算</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                天井回数、排出率、1回コストから、天井までの最大コスト、期待値、現在の累積からの残り回数を計算します。設定例を選んでから自由に調整できます。
+              </p>
             </div>
-
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  mainEntity: [
-                    {
-                      "@type": "Question",
-                      name: "天井コストと期待コストの違いは何ですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "天井コストは最悪のケースで天井まで引き切ったコスト、期待コストは確率計算に基づく平均的なコストです。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "原神の天井は何回ですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "原神のキャラクターガチャは90連が天井（ハード天井）で★5が確定します。74連以降は排出率が徐々に上がるソフト天井もあります。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "複数キャラを狙う場合の計算方法は？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "目標キャラ数に取得したい体数を入力すると複数体の合計コストが計算されます。",
-                      },
-                    },
-                  ],
-                }),
-              }}
-            />
-
-            <h2 className="text-lg font-bold text-foreground mt-8">関連ツール</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link href="/waribiki-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">割引計算</Link>
-              <Link href="/loan-simulator" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">ローン計算</Link>
-            </div>
-
-            <div className="mt-6 bg-card border border-border rounded-xl p-5 text-center space-y-2">
-              <p className="font-bold text-foreground">課金前に必ずシミュレーション</p>
-              <p className="text-xs text-muted">天井コストを把握してから計画的にガチャを回しましょう。天井まで引いた場合の最大コストを事前確認。</p>
-            </div>
-          </section>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">ガチャ 天井コスト計算ツール — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/waribiki-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">割引計算</Link>
-              <Link href="/loan-simulator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">ローン計算</Link>
-              <Link href="/risoku-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">利息計算</Link>
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950 shadow-sm">
+              <div className="font-semibold">課金前の上限確認</div>
+              <p className="mt-1">このツールは支出を勧めるものではなく、上限把握用の計算ツールです。</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">60+ Free Tools →</Link>
+        </header>
+
+        <GachaCostCeiling />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="最大コスト" body="天井まで引いた場合の上限コストを確認できます。" />
+          <InfoCard title="期待値" body="単純な確率モデルで平均的な必要回数を見積もります。" />
+          <InfoCard title="残り回数" body="現在の累積回数から、天井までの残りを計算します。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">計算モデルの前提</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">単純な天井モデル</h3>
+              <p className="mt-1">
+                排出率が一定で、天井回数に到達したら取得できるものとして計算します。実際のゲームにある段階的な排出率上昇は含めていません。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">最大コストと期待値は別物</h3>
+              <p className="mt-1">
+                最大コストは予算上限の確認に向いています。期待値は平均的な目安ですが、個別の結果は大きくぶれる可能性があります。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">ゲーム内表記を優先</h3>
+              <p className="mt-1">
+                排出率、天井、交換ポイント、保証条件、無料配布分はゲームごとに異なります。最終的にはゲーム内の最新説明を確認してください。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">予算上限を先に決める</h3>
+              <p className="mt-1">
+                確率計算は支出判断の補助にすぎません。ガチャを回す前に、最大でいくらまで使うかを先に決めておくのが実用的です。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/gacha-probability" title="ガチャ確率計算" body="指定回数で当たる確率を計算" />
+            <Related href="/waribiki-keisan" title="割引計算" body="パック購入時の割引率を確認" />
+            <Related href="/risoku-keisan" title="利息計算" body="積立や利息の増え方を計算" />
+            <Related href="/subscription-lifetime" title="サブスク累計" body="月額課金の長期コストを確認" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "ガチャ 天井コスト計算ツール",
-  "description": "ガチャ 天井コスト計算ツール — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/gacha-cost-ceiling",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "ガチャ 天井コスト計算",
+            description: "天井回数、排出率、1回コストからガチャの最大コスト、期待値、残り回数を計算する無料ツールです。",
+            url: "https://tools.loresync.dev/gacha-cost-ceiling",
+            applicationCategory: "UtilityApplication",
+            operatingSystem: "All",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "JPY",
+            },
+          }),
         }}
       />
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
