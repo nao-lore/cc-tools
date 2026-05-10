@@ -1,14 +1,13 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 70.3,
+    "averageQualityScore": 70.6,
     "priorityTierCounts": {
-      "A": 1,
       "B": 61,
-      "C": 80
+      "C": 81
     },
     "averageByArchetype": {
-      "calculator": 72.8,
+      "calculator": 73.7,
       "comparison": 71.2,
       "converter": 73.3,
       "generator": 69.8,
@@ -194,50 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "ai-tool-roi",
-      "name": "AIツール導入 ROI計算",
-      "description": "月額コスト vs 時短効果 × 時給で投資回収期間を算出",
-      "market": "JP",
-      "category": "AI Workflow",
-      "archetype": "calculator",
-      "qualityScore": 57,
-      "priorityScore": 71,
-      "priorityTier": "A",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "labels",
-        "download_export",
-        "privacy",
-        "responsive",
-        "accessible_buttons",
-        "current_count"
-      ],
-      "missing": [
-        "h1",
-        "related_links",
-        "copy",
-        "examples",
-        "reset_clear",
-        "validation"
-      ],
-      "penalties": [
-        "ad_placeholder"
-      ],
-      "signals": {
-        "h2Count": 1,
-        "buttonCount": 2,
-        "inputCount": 2,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 452
-      }
-    },
     {
       "slug": "favicon-generator",
       "name": "Favicon Generator",
@@ -6023,6 +5978,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 629
+      }
+    },
+    {
+      "slug": "ai-tool-roi",
+      "name": "AIツール導入 ROI計算",
+      "description": "月額コスト vs 時短効果 × 時給で投資回収期間を算出",
+      "market": "JP",
+      "category": "AI Workflow",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 7,
+        "inputCount": 2,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 730
       }
     },
     {

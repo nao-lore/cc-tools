@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 70.3/100
-- Priority tiers: {"A": 1, "B": 61, "C": 80}
+- Average quality score: 70.6/100
+- Priority tiers: {"B": 61, "C": 81}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| A | 71 | 57 | `ai-tool-roi` | calculator | AI Workflow | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 69 | 54 | `favicon-generator` | image | Image Tools | faq, validation, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 66 | 49 | `base-stores-fee` | comparison | EC | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 66 | 60 | `loan-simulator` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
@@ -42,11 +41,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 54 | 60 | `hash-generator` | generator | Encoding & Decoding | examples, reset_clear, privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
 | B | 54 | 67 | `tax-calculator` | calculator | Japanese Tools | reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
+| B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 
 ## Strongest Current Tools
 
 | Quality | Slug | Type | Category |
 | ---: | --- | --- | --- |
+| 100 | `ai-tool-roi` | calculator | AI Workflow |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
 | 100 | `denki-keisan` | calculator | Japanese Tools |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 85 | `html-to-markdown` | converter | Data Format Tools |
 | 85 | `invoice-qualified-checker` | utility | Business Tools |
 | 85 | `json-formatter` | converter | Data Format Tools |
-| 85 | `recipe-scaling` | converter | Cooking Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 72.8 |
+| calculator | 73.7 |
 | comparison | 71.2 |
 | converter | 73.3 |
 | generator | 69.8 |
