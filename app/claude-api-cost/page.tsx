@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/claude-api-cost/page";
 
 export const metadata: Metadata = {
-  title: "Claude API 料金計算 — Opus / Sonnet / Haiku コストシミュレーター",
-  description: "Claude API（Opus 4 / Sonnet 4 / Haiku 3.5）の料金をトークン数・リクエスト数から計算。月額コストシミュレーション、バッチAPI割引対応。無料・登録不要。",
+  title: "Claude API 料金計算 - Opus 4.7・Sonnet 4.6・Haiku 4.5の月額概算",
+  description: "Claude APIの料金を、通常入力、Prompt caching、出力、Batch API、Web search、為替レートから日本円で概算します。",
   alternates: { canonical: "https://tools.loresync.dev/claude-api-cost" },
 };
 
