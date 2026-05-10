@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 75.3/100
-- Priority tiers: {"B": 45, "C": 97}
+- Average quality score: 75.5/100
+- Priority tiers: {"B": 44, "C": 98}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
 | B | 58 | 65 | `azure-openai-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `claude-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `dalle-pricing` | image | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `fine-tuning-cost` | calculator | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `ideco-tax-saving` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
+| B | 48 | 71 | `kaji-anbun` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -53,6 +53,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
 | 100 | `denki-keisan` | calculator | Japanese Tools |
 | 100 | `eigyoubi` | calculator | Japanese Tools |
+| 100 | `elevenlabs-pricing` | calculator | AI Tools |
 | 100 | `favicon-generator` | image | Image Tools |
 | 100 | `gacha-cost-ceiling` | calculator | Game Tools |
 | 100 | `hash-generator` | generator | Encoding & Decoding |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `jigyou-keihi-bunrui` | utility | Tax Tools |
 | 100 | `loan-simulator` | calculator | Japanese Tools |
 | 100 | `measuring-converter` | converter | Cooking Tools |
-| 100 | `menseki-keisan` | converter | Japanese Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 77.6 |
+| calculator | 78.4 |
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |

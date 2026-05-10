@@ -1,585 +1,390 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
-// --- 料金定数 ---
-const PLANS = [
-  {
-    id: "free",
-    name: "Free",
-    basePrice: 0,
-    includedChars: 10_000,
-    overageRate: null as number | null,
-    color: "gray",
-    description: "個人利用・試用",
-  },
-  {
-    id: "starter",
-    name: "Starter",
-    basePrice: 5,
-    includedChars: 30_000,
-    overageRate: 0.30,
-    color: "violet",
-    description: "趣味・小規模",
-  },
-  {
-    id: "creator",
-    name: "Creator",
-    basePrice: 22,
-    includedChars: 100_000,
-    overageRate: 0.30,
-    color: "purple",
-    description: "コンテンツ制作",
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    basePrice: 99,
-    includedChars: 500_000,
-    overageRate: 0.30,
-    color: "fuchsia",
-    description: "プロ・ビジネス",
-  },
-  {
-    id: "scale",
-    name: "Scale",
-    basePrice: 330,
-    includedChars: 2_000_000,
-    overageRate: 0.30,
-    color: "pink",
-    description: "大規模・API連携",
-  },
-] as const;
-
-type PlanId = (typeof PLANS)[number]["id"];
-
-// 用途別文字数目安
-const USE_CASES = [
-  { id: "narration", label: "ナレーション（5分動画）", chars: 4_500, icon: "🎙" },
-  { id: "podcast", label: "ポッドキャスト（30分）", chars: 27_000, icon: "🎧" },
-  { id: "article", label: "記事読み上げ（2,000字）", chars: 2_000, icon: "📄" },
-  { id: "app_small", label: "アプリ音声（小規模・月間）", chars: 50_000, icon: "📱" },
-  { id: "app_medium", label: "アプリ音声（中規模・月間）", chars: 300_000, icon: "🚀" },
-  { id: "app_large", label: "アプリ音声（大規模・月間）", chars: 1_500_000, icon: "⚡" },
-] as const;
-
-// --- ユーティリティ ---
-function fmtUSD(n: number): string {
-  if (n === 0) return "$0.00";
-  if (n < 0.01) return `$${n.toFixed(4)}`;
-  if (n < 1) return `$${n.toFixed(3)}`;
-  return `$${n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-}
-
-function fmtJPY(n: number): string {
-  if (n < 1) return `${n.toFixed(2)}円`;
-  return `${Math.round(n).toLocaleString("ja-JP")}円`;
-}
-
-function fmtChars(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M文字`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K文字`;
-  return `${n.toLocaleString()}文字`;
-}
-
-function calcCost(chars: number, plan: (typeof PLANS)[number]): number {
-  const overage = Math.max(0, chars - plan.includedChars);
-  const overageCost = plan.overageRate !== null ? (overage / 1_000) * plan.overageRate : 0;
-  return plan.basePrice + overageCost;
-}
-
-function costPerChar(chars: number, plan: (typeof PLANS)[number]): number {
-  if (chars === 0) return 0;
-  return calcCost(chars, plan) / chars;
-}
-
-// プランカラー定義
-const PLAN_COLORS: Record<string, { bg: string; border: string; ring: string; text: string; badge: string }> = {
-  gray: {
-    bg: "bg-gray-800/60",
-    border: "border-gray-600",
-    ring: "ring-gray-500",
-    text: "text-gray-300",
-    badge: "bg-gray-700 text-gray-200",
-  },
-  violet: {
-    bg: "bg-violet-900/60",
-    border: "border-violet-500",
-    ring: "ring-violet-400",
-    text: "text-violet-300",
-    badge: "bg-violet-800 text-violet-200",
-  },
-  purple: {
-    bg: "bg-purple-900/60",
-    border: "border-purple-500",
-    ring: "ring-purple-400",
-    text: "text-purple-300",
-    badge: "bg-purple-800 text-purple-200",
-  },
-  fuchsia: {
-    bg: "bg-fuchsia-900/60",
-    border: "border-fuchsia-500",
-    ring: "ring-fuchsia-400",
-    text: "text-fuchsia-300",
-    badge: "bg-fuchsia-800 text-fuchsia-200",
-  },
-  pink: {
-    bg: "bg-pink-900/60",
-    border: "border-pink-500",
-    ring: "ring-pink-400",
-    text: "text-pink-300",
-    badge: "bg-pink-800 text-pink-200",
-  },
+type Product = {
+  id: string;
+  label: string;
+  family: string;
+  unit: "characters" | "hours" | "minutes" | "generations";
+  unitLabel: string;
+  price: number;
+  priceLabel: string;
+  description: string;
+  note: string;
 };
 
-// --- 最適プラン判定 ---
-function findOptimalPlan(chars: number): (typeof PLANS)[number] {
-  // コストが最小のプランを返す（Free は超過不可なので枠内のみ）
-  let best: (typeof PLANS)[number] = PLANS[0];
-  let bestCost = Infinity;
+const PRODUCTS: Product[] = [
+  {
+    id: "tts-flash",
+    label: "Flash / Turbo TTS",
+    family: "Text to Speech",
+    unit: "characters",
+    unitLabel: "文字",
+    price: 0.05,
+    priceLabel: "$0.05 / 1K characters",
+    description: "低遅延の音声合成。アプリ内音声やリアルタイム寄りの読み上げ向け。",
+    note: "Flash/Turbo系はヘルプ上、self-serveでは1文字=0.5 creditsの扱いです。",
+  },
+  {
+    id: "tts-multilingual",
+    label: "Multilingual v2 / v3 TTS",
+    family: "Text to Speech",
+    unit: "characters",
+    unitLabel: "文字",
+    price: 0.1,
+    priceLabel: "$0.10 / 1K characters",
+    description: "高品質な多言語音声合成。ナレーション、教材、長文読み上げ向け。",
+    note: "Multilingual系は文字数ベースで見積もるのが分かりやすいです。",
+  },
+  {
+    id: "scribe",
+    label: "Scribe v1 / v2",
+    family: "Speech to Text",
+    unit: "hours",
+    unitLabel: "時間",
+    price: 0.22,
+    priceLabel: "$0.22 / hour",
+    description: "音声・動画の文字起こし。録音済みファイルの一括処理向け。",
+    note: "Entity detectionやkeyterm promptingは追加単価があるため別途確認してください。",
+  },
+  {
+    id: "scribe-realtime",
+    label: "Scribe v2 Realtime",
+    family: "Speech to Text",
+    unit: "hours",
+    unitLabel: "時間",
+    price: 0.39,
+    priceLabel: "$0.39 / hour",
+    description: "リアルタイム文字起こし。低遅延の会話・配信・通話向け。",
+    note: "リアルタイム処理は利用時間で見積もります。",
+  },
+  {
+    id: "music",
+    label: "Music Generation",
+    family: "Audio Generation",
+    unit: "minutes",
+    unitLabel: "分",
+    price: 0.3,
+    priceLabel: "$0.30 / minute",
+    description: "テキストから音楽を生成。BGMや短い楽曲案の作成向け。",
+    note: "商用利用や長さ制限はプラン条件も確認してください。",
+  },
+  {
+    id: "voice-isolator",
+    label: "Voice Isolator",
+    family: "Audio Processing",
+    unit: "minutes",
+    unitLabel: "分",
+    price: 0.12,
+    priceLabel: "$0.12 / minute",
+    description: "ノイズや残響を減らして音声を分離する処理。",
+    note: "入力ファイルの長さで見積もります。",
+  },
+  {
+    id: "voice-changer",
+    label: "Voice Changer",
+    family: "Audio Processing",
+    unit: "minutes",
+    unitLabel: "分",
+    price: 0.12,
+    priceLabel: "$0.12 / minute",
+    description: "音声の特徴を変換する処理。",
+    note: "入力音声の分数に比例して見積もります。",
+  },
+  {
+    id: "sound-effects",
+    label: "Sound Effects",
+    family: "Audio Generation",
+    unit: "generations",
+    unitLabel: "回",
+    price: 0.12,
+    priceLabel: "$0.12 / generation",
+    description: "テキストから効果音を生成。",
+    note: "生成回数で見積もります。",
+  },
+  {
+    id: "dubbing",
+    label: "Dubbing v1",
+    family: "Dubbing",
+    unit: "minutes",
+    unitLabel: "分",
+    price: 0.33,
+    priceLabel: "$0.33 / minute",
+    description: "音声・動画の自動吹き替え。",
+    note: "ウォーターマーク有りの分単価です。条件により単価が変わる場合があります。",
+  },
+];
 
-  for (const plan of PLANS) {
-    if (plan.overageRate === null && chars > plan.includedChars) continue; // Free枠超過は不可
-    const cost = calcCost(chars, plan);
-    if (cost < bestCost) {
-      bestCost = cost;
-      best = plan;
-    }
-  }
-  return best;
+const SAMPLES = [
+  { label: "5分動画ナレーション", productId: "tts-multilingual", quantity: "4500" },
+  { label: "月100万文字アプリ音声", productId: "tts-flash", quantity: "1000000" },
+  { label: "会議10時間の文字起こし", productId: "scribe", quantity: "10" },
+  { label: "動画30分の吹き替え", productId: "dubbing", quantity: "30" },
+];
+
+function fmtUSD(value: number) {
+  if (value < 0.01) return `$${value.toFixed(4)}`;
+  return `$${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-// --- メインコンポーネント ---
-export default function ElevenLabsPricing() {
-  const [monthlyChars, setMonthlyChars] = useState(50_000);
-  const [exchangeRate, setExchangeRate] = useState(150);
-  const [selectedPlanId, setSelectedPlanId] = useState<PlanId>("creator");
+function fmtJPY(value: number) {
+  return `${Math.round(value).toLocaleString("ja-JP")}円`;
+}
 
-  const selectedPlan = PLANS.find((p) => p.id === selectedPlanId) ?? PLANS[2];
-  const optimalPlan = useMemo(() => findOptimalPlan(monthlyChars), [monthlyChars]);
+function fmtNumber(value: number) {
+  return value.toLocaleString("ja-JP");
+}
+
+function sanitizeNumber(value: string) {
+  return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1").slice(0, 12);
+}
+
+function calculateCost(product: Product, quantity: number) {
+  if (product.unit === "characters") return (quantity / 1000) * product.price;
+  return quantity * product.price;
+}
+
+function creditEstimate(product: Product, quantity: number) {
+  if (product.id === "tts-flash") return quantity * 0.5;
+  if (product.id === "tts-multilingual") return quantity;
+  return null;
+}
+
+function buildCopyText(product: Product, quantity: number, totalUSD: number, exchangeRate: number) {
+  return [
+    `ElevenLabs API cost estimate`,
+    `Product: ${product.label}`,
+    `Usage: ${fmtNumber(quantity)} ${product.unitLabel}`,
+    `Unit price: ${product.priceLabel}`,
+    `Estimated cost: ${fmtUSD(totalUSD)} / ${fmtJPY(totalUSD * exchangeRate)}`,
+    product.note,
+  ].join("\n");
+}
+
+export default function ElevenLabsPricing() {
+  const [productId, setProductId] = useState("tts-multilingual");
+  const [quantity, setQuantity] = useState("100000");
+  const [exchangeRate, setExchangeRate] = useState("155");
+  const [copied, setCopied] = useState(false);
+
+  const product = PRODUCTS.find((item) => item.id === productId) ?? PRODUCTS[0];
+  const quantityNumber = Number.parseFloat(quantity) || 0;
+  const exchangeRateNumber = Number.parseFloat(exchangeRate) || 0;
+  const error = !quantity || quantityNumber <= 0 ? "利用量を入力してください。" : exchangeRateNumber <= 0 ? "為替レートを入力してください。" : "";
 
   const result = useMemo(() => {
-    const plan = selectedPlan;
-    const overageChars = Math.max(0, monthlyChars - plan.includedChars);
-    const overageCost =
-      plan.overageRate !== null ? (overageChars / 1_000) * plan.overageRate : 0;
-    const totalUSD = plan.basePrice + overageCost;
-    const perCharUSD = costPerChar(monthlyChars, plan);
-    const usageRatio = plan.includedChars > 0 ? Math.min(monthlyChars / plan.includedChars, 1) : 0;
+    const totalUSD = calculateCost(product, quantityNumber);
+    const totalJPY = totalUSD * exchangeRateNumber;
+    const credits = creditEstimate(product, quantityNumber);
+    return {
+      totalUSD,
+      totalJPY,
+      credits,
+      perThousandUSD: product.unit === "characters" ? product.price : null,
+    };
+  }, [exchangeRateNumber, product, quantityNumber]);
 
-    return { overageChars, overageCost, totalUSD, perCharUSD, usageRatio };
-  }, [monthlyChars, selectedPlan]);
+  function reset() {
+    setProductId("tts-multilingual");
+    setQuantity("100000");
+    setExchangeRate("155");
+    setCopied(false);
+  }
 
-  // 全プランのコスト比較
-  const allPlanCosts = useMemo(() =>
-    PLANS.map((p) => ({
-      ...p,
-      cost: p.overageRate === null && monthlyChars > p.includedChars ? null : calcCost(monthlyChars, p),
-    })),
-    [monthlyChars]
-  );
+  function applySample(sample: (typeof SAMPLES)[number]) {
+    setProductId(sample.productId);
+    setQuantity(sample.quantity);
+    setCopied(false);
+  }
 
-  const accentColors = PLAN_COLORS[selectedPlan.color] ?? PLAN_COLORS.violet;
+  async function copyResult() {
+    if (error) return;
+    await navigator.clipboard.writeText(buildCopyText(product, quantityNumber, result.totalUSD, exchangeRateNumber));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-6">
-      {/* ===== 月間文字数入力 ===== */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6">
-        <h2 className="text-lg font-semibold text-white mb-1">月間使用文字数</h2>
-        <p className="text-xs text-violet-300 mb-5">1文字 ≈ 英数字1文字・日本語1文字（どちらも同じカウント）</p>
-
-        <div className="flex items-center gap-3 mb-4">
-          <input
-            type="range"
-            min={0}
-            max={3_000_000}
-            step={5_000}
-            value={Math.min(monthlyChars, 3_000_000)}
-            onChange={(e) => setMonthlyChars(Number(e.target.value))}
-            className="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer accent-violet-400"
-          />
-          <div className="flex items-center gap-1 shrink-0">
-            <input
-              type="number"
-              min={0}
-              step={1000}
-              value={monthlyChars}
-              onChange={(e) => {
-                const v = Number(e.target.value);
-                if (!isNaN(v) && v >= 0) setMonthlyChars(v);
-              }}
-              className="w-32 px-2 py-1 text-right bg-white/10 border border-white/30 rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-400"
-            />
-            <span className="text-sm text-violet-300 whitespace-nowrap">文字</span>
-          </div>
-        </div>
-
-        {/* 用途別プリセット */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {USE_CASES.map((uc) => (
-            <button
-              key={uc.id}
-              onClick={() => setMonthlyChars(uc.chars)}
-              className={`p-2.5 rounded-xl border text-left transition-all ${
-                monthlyChars === uc.chars
-                  ? "bg-violet-600/50 border-violet-400 ring-1 ring-violet-400"
-                  : "bg-white/5 border-white/15 hover:border-violet-400/50 hover:bg-white/10"
-              }`}
-            >
-              <div className="text-base mb-0.5">{uc.icon}</div>
-              <div className="text-xs font-medium text-white leading-tight">{uc.label}</div>
-              <div className="text-xs text-violet-300 mt-0.5">{fmtChars(uc.chars)}</div>
-            </button>
-          ))}
-        </div>
-
-        {/* 最適プランバナー */}
-        {optimalPlan.id !== selectedPlanId && (
-          <div className="mt-4 p-3 bg-amber-500/20 border border-amber-400/50 rounded-xl flex items-center justify-between gap-3">
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.85fr)_minmax(380px,0.7fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <span className="text-amber-300 text-xs font-medium">最安プランは </span>
-              <span className="text-white text-sm font-bold">{optimalPlan.name}</span>
-              <span className="text-amber-300 text-xs font-medium">
-                {" "}（{optimalPlan.basePrice === 0 ? "無料" : fmtUSD(calcCost(monthlyChars, optimalPlan))}）
-              </span>
+              <h2 className="text-base font-semibold text-slate-950">API使用量</h2>
+              <p className="mt-1 text-sm text-slate-500">公式API単価を使って、文字数・時間・分数・生成回数から概算します。</p>
             </div>
             <button
-              onClick={() => setSelectedPlanId(optimalPlan.id)}
-              className="shrink-0 text-xs font-medium text-amber-300 bg-amber-500/20 hover:bg-amber-500/30 px-3 py-1.5 rounded-lg border border-amber-400/40 transition-colors"
+              type="button"
+              onClick={reset}
+              className="w-fit whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
-              切り替える
+              リセット
             </button>
           </div>
-        )}
-      </div>
 
-      {/* ===== プラン選択 ===== */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">プランを選択</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {PLANS.map((p) => {
-            const selected = selectedPlanId === p.id;
-            const cost = p.overageRate === null && monthlyChars > p.includedChars ? null : calcCost(monthlyChars, p);
-            const colors = PLAN_COLORS[p.color];
-            const isOptimal = optimalPlan.id === p.id;
-            return (
-              <button
-                key={p.id}
-                onClick={() => setSelectedPlanId(p.id)}
-                className={`relative p-4 rounded-xl border text-left transition-all ${
-                  selected
-                    ? `${colors.bg} ${colors.border} ring-2 ${colors.ring}`
-                    : "bg-white/5 border-white/15 hover:border-white/30 hover:bg-white/10"
-                }`}
+          <div className="mt-5 grid gap-4">
+            <div>
+              <label htmlFor="eleven-product" className="text-sm font-semibold text-slate-800">
+                プロダクト
+              </label>
+              <select
+                id="eleven-product"
+                value={productId}
+                onChange={(event) => {
+                  setProductId(event.target.value);
+                  setCopied(false);
+                }}
+                className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm outline-none focus:border-slate-950"
               >
-                {isOptimal && (
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
-                    最安
-                  </div>
-                )}
-                <div className={`font-bold text-base ${selected ? colors.text : "text-white"}`}>{p.name}</div>
-                <div className="text-xl font-bold text-white mt-1">
-                  {p.basePrice === 0 ? "無料" : `$${p.basePrice}`}
-                  {p.basePrice > 0 && <span className="text-xs font-normal text-white/60">/月</span>}
-                </div>
-                <div className="text-xs text-white/50 mt-1">{fmtChars(p.includedChars)}/月</div>
-                {cost !== null ? (
-                  <div className={`text-xs font-semibold mt-2 ${selected ? colors.text : "text-violet-300"}`}>
-                    この使用量: {cost === 0 ? "無料" : fmtUSD(cost)}
-                  </div>
-                ) : (
-                  <div className="text-xs text-red-400 mt-2">枠超過・不可</div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ===== 計算結果 ===== */}
-      <div className={`rounded-2xl border p-6 ${accentColors.bg} ${accentColors.border}`}>
-        <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-semibold text-white">月額試算結果</h2>
-          <span className={`text-xs font-medium px-3 py-1 rounded-full ${accentColors.badge}`}>
-            {selectedPlan.name} プラン
-          </span>
-        </div>
-
-        {/* 合計 */}
-        <div className="mb-6">
-          <div className="text-xs text-white/50 mb-1">月額合計（税別・USD）</div>
-          <div className="flex items-baseline gap-3 flex-wrap">
-            <span className="text-4xl font-bold text-white">
-              {result.totalUSD === 0 ? "無料" : fmtUSD(result.totalUSD)}
-            </span>
-            {result.totalUSD > 0 && (
-              <span className="text-xl text-white/70">{fmtJPY(result.totalUSD * exchangeRate)}</span>
-            )}
-          </div>
-        </div>
-
-        {/* 内訳 */}
-        <div className="bg-black/20 rounded-xl p-4 space-y-2 text-sm mb-4">
-          <div className="font-medium text-white/80 mb-2">料金内訳</div>
-
-          <div className="flex justify-between text-white/70">
-            <span>プラン基本料金（{selectedPlan.name}）</span>
-            <span className="font-medium text-white">
-              {selectedPlan.basePrice === 0 ? "無料" : fmtUSD(selectedPlan.basePrice)}
-            </span>
-          </div>
-
-          <div className="flex justify-between text-white/70">
-            <span>含まれる文字数</span>
-            <span className="font-medium text-white">{fmtChars(selectedPlan.includedChars)}/月</span>
-          </div>
-
-          <div className="flex justify-between text-white/70">
-            <span>使用文字数</span>
-            <span className="font-medium text-white">{fmtChars(monthlyChars)}</span>
-          </div>
-
-          {/* 使用量バー */}
-          <div className="pt-1 pb-1">
-            <div className="flex justify-between text-xs text-white/50 mb-1">
-              <span>使用率</span>
-              <span>{monthlyChars > selectedPlan.includedChars ? "超過" : `${Math.round(result.usageRatio * 100)}%`}</span>
+                {PRODUCTS.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.family} - {item.label}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all ${
-                  monthlyChars > selectedPlan.includedChars
-                    ? "bg-red-400"
-                    : result.usageRatio > 0.8
-                    ? "bg-amber-400"
-                    : "bg-violet-400"
-                }`}
-                style={{ width: `${Math.min(result.usageRatio * 100, 100)}%` }}
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <NumberField
+                label={`利用量（${product.unitLabel}）`}
+                value={quantity}
+                onChange={(value) => setQuantity(sanitizeNumber(value))}
+                suffix={product.unitLabel}
+                placeholder={product.unit === "characters" ? "100000" : "10"}
+              />
+              <NumberField
+                label="為替レート"
+                value={exchangeRate}
+                onChange={(value) => setExchangeRate(sanitizeNumber(value))}
+                suffix="円/USD"
+                placeholder="155"
               />
             </div>
           </div>
 
-          {result.overageChars > 0 && (
-            <div className="flex justify-between text-red-400">
-              <span>
-                超過分（{fmtChars(result.overageChars)} × $0.30/1K文字）
-              </span>
-              <span className="font-medium">{fmtUSD(result.overageCost)}</span>
-            </div>
-          )}
+          <p className={`mt-3 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || "料金は税抜き・公開単価ベースの概算です。入力値はブラウザ上で計算され、外部に送信されません。"}
+          </p>
 
-          {result.overageChars === 0 && (
-            <div className="text-violet-400 text-xs pt-1">枠内に収まっています</div>
-          )}
-
-          <div className="border-t border-white/10 pt-2 mt-1 flex justify-between font-semibold text-white">
-            <span>月額合計</span>
-            <span>{result.totalUSD === 0 ? "無料" : fmtUSD(result.totalUSD)}</span>
-          </div>
-        </div>
-
-        {/* 1文字あたりのコスト */}
-        <div className="bg-black/20 rounded-xl p-4 flex items-center justify-between">
-          <div>
-            <div className="text-xs text-white/50 mb-0.5">1文字あたりのコスト</div>
-            <div className="text-xl font-bold text-white">
-              {monthlyChars === 0 ? "—" : `$${result.perCharUSD.toFixed(6)}`}
-            </div>
-            {monthlyChars > 0 && (
-              <div className="text-xs text-white/50 mt-0.5">
-                ≈ {(result.perCharUSD * exchangeRate * 1000).toFixed(4)}円/1,000文字
-              </div>
-            )}
-          </div>
-          <div className="text-right">
-            <div className="text-xs text-white/50 mb-0.5">1,000文字あたり</div>
-            <div className="text-xl font-bold text-white">
-              {monthlyChars === 0 ? "—" : fmtUSD(result.perCharUSD * 1_000)}
-            </div>
-          </div>
-        </div>
-
-        {/* 為替換算 */}
-        <div className="flex items-center gap-3 mt-4">
-          <span className="text-sm text-white/50 whitespace-nowrap">1 USD =</span>
-          <input
-            type="number"
-            min={50}
-            max={300}
-            step={1}
-            value={exchangeRate}
-            onChange={(e) => {
-              const v = Number(e.target.value);
-              if (!isNaN(v) && v > 0) setExchangeRate(v);
-            }}
-            className="w-24 px-2 py-1 text-right bg-black/30 border border-white/20 rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-400"
-          />
-          <span className="text-sm text-white/50">円</span>
-          {result.totalUSD > 0 && (
-            <span className="text-sm text-white font-medium ml-auto">
-              ≈ {fmtJPY(result.totalUSD * exchangeRate)}/月
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* ===== プラン比較テーブル ===== */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">プラン別コスト比較</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-white/10">
-                <th className="text-left py-2 pr-4 text-xs text-white/50 font-medium">プラン</th>
-                <th className="text-right py-2 pr-4 text-xs text-white/50 font-medium">月額</th>
-                <th className="text-right py-2 pr-4 text-xs text-white/50 font-medium">含む文字数</th>
-                <th className="text-right py-2 pr-4 text-xs text-white/50 font-medium">この使用量の費用</th>
-                <th className="text-right py-2 text-xs text-white/50 font-medium">1K文字単価</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allPlanCosts.map((p) => {
-                const isSelected = p.id === selectedPlanId;
-                const isOptimalRow = p.id === optimalPlan.id;
-                const perK = p.cost !== null && monthlyChars > 0 ? (p.cost / monthlyChars) * 1_000 : null;
-                const colors = PLAN_COLORS[p.color];
-                return (
-                  <tr
-                    key={p.id}
-                    onClick={() => p.cost !== null && setSelectedPlanId(p.id)}
-                    className={`border-b border-white/5 cursor-pointer transition-colors ${
-                      isSelected ? `${colors.bg}` : "hover:bg-white/5"
-                    } ${p.cost === null ? "opacity-40 cursor-not-allowed" : ""}`}
-                  >
-                    <td className="py-2.5 pr-4">
-                      <div className="flex items-center gap-2">
-                        <span className={`font-medium ${isSelected ? colors.text : "text-white"}`}>{p.name}</span>
-                        {isOptimalRow && (
-                          <span className="text-xs bg-amber-500/80 text-white px-1.5 py-0.5 rounded-full">最安</span>
-                        )}
-                        {isSelected && !isOptimalRow && (
-                          <span className={`text-xs px-1.5 py-0.5 rounded-full ${colors.badge}`}>選択中</span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-2.5 pr-4 text-right text-white/70">
-                      {p.basePrice === 0 ? "無料" : `$${p.basePrice}/月`}
-                    </td>
-                    <td className="py-2.5 pr-4 text-right text-white/70">
-                      {fmtChars(p.includedChars)}
-                    </td>
-                    <td className="py-2.5 pr-4 text-right font-semibold text-white">
-                      {p.cost === null
-                        ? "—（枠超過）"
-                        : p.cost === 0
-                        ? "無料"
-                        : fmtUSD(p.cost)}
-                    </td>
-                    <td className="py-2.5 text-right text-white/60 text-xs">
-                      {perK !== null && monthlyChars > 0
-                        ? `$${perK.toFixed(4)}`
-                        : "—"}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <p className="text-xs text-white/30 mt-3">
-          テーブルの行をクリックするとプランが切り替わります。超過料金は $0.30/1,000文字（全有料プラン共通）。
-        </p>
-      </div>
-
-      {/* ===== 用途別文字数ガイド ===== */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">用途別・月間文字数の目安</h2>
-        <div className="space-y-3">
-          {USE_CASES.map((uc) => {
-            const optimal = findOptimalPlan(uc.chars);
-            const cost = calcCost(uc.chars, optimal);
-            const ratio = uc.chars / 3_000_000;
-            return (
-              <div key={uc.id} className="flex items-center gap-4">
-                <div className="text-xl w-8 shrink-0">{uc.icon}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-white font-medium truncate">{uc.label}</span>
-                    <span className="text-xs text-violet-300 shrink-0 ml-2">{fmtChars(uc.chars)}</span>
-                  </div>
-                  <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-violet-500 to-purple-500 rounded-full"
-                      style={{ width: `${Math.min(ratio * 100, 100)}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="text-right shrink-0 w-28">
-                  <div className="text-xs text-white/50">最安: {optimal.name}</div>
-                  <div className="text-sm font-semibold text-white">{cost === 0 ? "無料" : fmtUSD(cost)}</div>
-                </div>
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
                 <button
-                  onClick={() => {
-                    setMonthlyChars(uc.chars);
-                    setSelectedPlanId(optimal.id);
-                  }}
-                  className="shrink-0 text-xs text-violet-300 hover:text-white bg-violet-600/30 hover:bg-violet-600/50 px-2.5 py-1.5 rounded-lg border border-violet-500/30 transition-colors"
+                  key={sample.label}
+                  type="button"
+                  onClick={() => applySample(sample)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-950 hover:bg-slate-50"
                 >
-                  試算
+                  {sample.label}
                 </button>
-              
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">このElevenLabs 料金試算ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">ElevenLabsの音声合成料金を文字数・プラン別に計算。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
-        </div>
-      </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "このElevenLabs 料金試算ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "ElevenLabsの音声合成料金を文字数・プラン別に計算。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      </div>
-            );
-          })}
-        </div>
-      </div>
+              ))}
+            </div>
+          </div>
 
-      {/* ===== 注記 ===== */}
-      <p className="text-xs text-white/30 text-center pb-4">
-        料金は変更される場合があります。最新の料金は{" "}
-        <span className="underline">elevenlabs.io/pricing</span> でご確認ください。
-        超過料金 $0.30/1,000文字は全有料プラン共通。Freeプランは超過不可（月10,000文字まで）。
-      </p>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "ElevenLabs 料金試算",
-  "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
-  "url": "https://tools.loresync.dev/elevenlabs-pricing",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
-        }}
-      />
+          <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-950">{product.label}</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600">{product.description}</p>
+            <div className="mt-3 flex flex-wrap gap-2 text-xs">
+              <span className="rounded-full bg-white px-3 py-1 font-semibold text-slate-700">{product.priceLabel}</span>
+              <span className="rounded-full bg-white px-3 py-1 text-slate-600">{product.family}</span>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-slate-500">{product.note}</p>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={copyResult}
+              disabled={Boolean(error)}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {copied ? "コピーしました" : "結果をコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              入力をクリア
+            </button>
+          </div>
+        </div>
+
+        <aside className="p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">見積もり</h2>
+          {error ? (
+            <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">入力値を確認してください。</div>
+          ) : (
+            <div className="mt-4 space-y-4">
+              <div className="rounded-2xl border border-indigo-200 bg-indigo-50 p-5 text-indigo-950">
+                <p className="text-sm font-medium opacity-80">推定月額</p>
+                <p className="mt-1 font-mono text-4xl font-bold">{fmtUSD(result.totalUSD)}</p>
+                <p className="mt-2 text-sm">約 {fmtJPY(result.totalJPY)} / 1 USD = {exchangeRateNumber}円</p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Metric label="利用量" value={`${fmtNumber(quantityNumber)} ${product.unitLabel}`} />
+                <Metric label="単価" value={product.priceLabel} />
+                <Metric label="USD" value={fmtUSD(result.totalUSD)} />
+                <Metric label="JPY換算" value={fmtJPY(result.totalJPY)} />
+              </div>
+              {result.credits !== null && (
+                <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                  <p className="text-sm font-semibold text-slate-800">クレジット目安</p>
+                  <p className="mt-1 font-mono text-2xl font-bold text-slate-950">{fmtNumber(result.credits)} credits</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-500">
+                    Flash/Turboはself-serveで1文字=0.5 credits、Multilingual系は1文字=1 creditとして概算しています。
+                  </p>
+                </div>
+              )}
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+                プラン同梱枠、超過課金、税金、Voice Libraryのカスタムレート、追加機能オプションは実際の請求で変わる場合があります。
+              </div>
+            </div>
+          )}
+        </aside>
       </div>
+    </section>
+  );
+}
+
+function NumberField({
+  label,
+  value,
+  onChange,
+  suffix,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  suffix: string;
+  placeholder: string;
+}) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-slate-800">{label}</span>
+      <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-950">
+        <input
+          type="text"
+          inputMode="decimal"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="min-w-0 flex-1 px-3 py-3 text-right font-mono outline-none"
+        />
+        <span className="border-l border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-500">{suffix}</span>
+      </div>
+    </label>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 break-words font-mono text-lg font-semibold text-slate-950">{value}</p>
+    </div>
   );
 }

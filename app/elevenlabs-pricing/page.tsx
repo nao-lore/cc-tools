@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/elevenlabs-pricing/page";
 
 export const metadata: Metadata = {
-  title: "ElevenLabs 料金計算 — 音声合成の文字数別コストシミュレーター",
-  description: "ElevenLabs（AI音声合成）の料金を文字数から即計算。Free/Starter/Creator/Pro/Scaleプランの比較、月間使用量シミュレーション付き。",
+  title: "ElevenLabs API 料金計算 - TTS・STT・音声処理コストを概算",
+  description: "ElevenLabsのText to Speech、Speech to Text、Music、Voice Isolator、DubbingなどのAPI利用料金を文字数・時間・分数・生成回数から概算。USD/JPY換算とcredits目安付き。",
   alternates: { canonical: "https://tools.loresync.dev/elevenlabs-pricing" },
 };
 

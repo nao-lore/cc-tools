@@ -1,13 +1,13 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 75.3,
+    "averageQualityScore": 75.5,
     "priorityTierCounts": {
-      "B": 45,
-      "C": 97
+      "B": 44,
+      "C": 98
     },
     "averageByArchetype": {
-      "calculator": 77.6,
+      "calculator": 78.4,
       "comparison": 75.1,
       "converter": 81.4,
       "generator": 76.5,
@@ -193,48 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "elevenlabs-pricing",
-      "name": "ElevenLabs 料金試算",
-      "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
-      "market": "JP",
-      "category": "AI Tools",
-      "archetype": "calculator",
-      "qualityScore": 64,
-      "priorityScore": 59,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "download_export",
-        "reset_clear",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "related_links",
-        "labels",
-        "copy",
-        "examples",
-        "validation",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 6,
-        "buttonCount": 4,
-        "inputCount": 3,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 622
-      }
-    },
     {
       "slug": "azure-openai-cost",
       "name": "Azure OpenAI 料金計算",
@@ -5501,6 +5459,47 @@
         "componentCount": 3,
         "hasOpenGraphImage": true,
         "sourceLines": 1231
+      }
+    },
+    {
+      "slug": "elevenlabs-pricing",
+      "name": "ElevenLabs 料金試算",
+      "description": "ElevenLabsの音声合成料金を文字数・プラン別に計算",
+      "market": "JP",
+      "category": "AI Tools",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 615
       }
     },
     {
