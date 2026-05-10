@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 70.9/100
-- Priority tiers: {"B": 60, "C": 82}
+- Average quality score: 71.3/100
+- Priority tiers: {"B": 59, "C": 83}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 66 | 49 | `base-stores-fee` | comparison | EC | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 66 | 60 | `loan-simulator` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 66 | 60 | `tedori-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 66 | 60 | `waribiki-keisan` | calculator | Japanese Tools | copy, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
@@ -42,12 +41,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 54 | 67 | `tax-calculator` | calculator | Japanese Tools | reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
+| B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
 
 ## Strongest Current Tools
 
 | Quality | Slug | Type | Category |
 | ---: | --- | --- | --- |
 | 100 | `ai-tool-roi` | calculator | AI Workflow |
+| 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
 | 100 | `denki-keisan` | calculator | Japanese Tools |
@@ -61,14 +62,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 92 | `zei-kin-henkan` | converter | Finance |
 | 89 | `prompt-chain-builder` | reference | AI Workflow |
 | 85 | `html-to-markdown` | converter | Data Format Tools |
-| 85 | `invoice-qualified-checker` | utility | Business Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
 | calculator | 73.7 |
-| comparison | 71.2 |
+| comparison | 75.1 |
 | converter | 73.3 |
 | generator | 69.8 |
 | image | 71 |
@@ -79,7 +79,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 | Category | Average quality | Tools |
 | --- | ---: | ---: |
-| EC | 49 | 1 |
 | Business | 53 | 1 |
 | Color Tools | 55.5 | 2 |
 | Home | 60 | 1 |
@@ -91,6 +90,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | SaaS Pricing | 67.5 | 13 |
 | Time & Date | 68 | 2 |
 | Minifier Tools | 68 | 2 |
+| Encoding & Decoding | 68.3 | 7 |
 
 ## Next Factory Steps
 
