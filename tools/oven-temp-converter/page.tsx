@@ -1,161 +1,157 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import OvenTempConverter from "./components/OvenTempConverter";
 
+const faq = [
+  {
+    q: "華氏350°Fは摂氏何度ですか？",
+    a: "華氏350°Fは約177°Cです。家庭用オーブンでは180°C設定に丸めて使われることが多い温度です。",
+  },
+  {
+    q: "ガスマーク4は何度ですか？",
+    a: "ガスマーク4は約180°C、約350°Fの目安です。英国系レシピの中温としてよく使われます。",
+  },
+  {
+    q: "ファン付きオーブンでは何度下げればいいですか？",
+    a: "一般的にはレシピ指定より20°Cほど低くする目安があります。ただし機種差が大きいため、焼き色や火通りを見ながら調整してください。",
+  },
+  {
+    q: "海外レシピの温度はそのまま設定して大丈夫ですか？",
+    a: "大型オーブンやガスオーブン前提のレシピは、日本の家庭用オーブンと焼き上がりが変わることがあります。変換後の温度を基準に、時間と焼き色で調整してください。",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f0a1a] via-[#1a1030] to-[#0d0d2b]">
-      {/* Header */}
-      <header className="border-b border-white/8" style={{ background: "rgba(255,255,255,0.03)" }}>
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-white">
-            オーブン温度換算ツール
-          </h1>
-          <p className="text-sm text-violet-100 mt-1">
-            摂氏・華氏・ガスマーク を相互変換 — お菓子・料理レシピの温度確認に
-          </p>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <OvenTempConverter />
-
-          {/* AdSense Placeholder */}
-          <div className="mt-8 border border-dashed border-border rounded-xl p-8 text-center text-muted text-sm bg-card">
-            <p>広告スペース</p>
-          </div>
-
-          {/* SEO Content */}
-          <section className="mt-10 space-y-6 text-sm leading-relaxed text-muted">
-            <h2 className="text-lg font-bold text-foreground">使い方ガイド</h2>
-            <ol className="space-y-3 list-decimal list-inside">
-              <li>
-                <span className="font-medium text-foreground">変換元の単位を選ぶ</span>
-                — 摂氏（°C）・華氏（°F）・ガスマークのいずれかを選択します。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">温度を入力する</span>
-                — 数値を入力すると他の2単位へ自動変換されます。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">温度帯を確認する</span>
-                — 低温・中温・中高温・高温の区分と調理用途の目安が表示されます。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">プリセットを活用する</span>
-                — クッキー・ケーキ・パンなどよく使われる温度をワンタップで入力できます。
-              </li>
-            </ol>
-
-            <h2 className="text-lg font-bold text-foreground mt-8">よくある質問（FAQ）</h2>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-foreground">Q. 華氏350°Fは摂氏何度ですか？</p>
-                <p className="mt-1">A. 華氏350°F は摂氏約177°C（≒180°C）です。スポンジケーキやクッキーなど多くのお菓子レシピで使われる標準的な温度です。計算式は °C = (°F − 32) × 5 ÷ 9 です。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. ガスマークとは何ですか？</p>
-                <p className="mt-1">A. ガスマーク（Gas Mark）はイギリスのガスオーブン向けの温度表記で、1〜9の数字で温度を示します。主に英語圏のレシピで使用されます。ガスマーク4が約180°C、ガスマーク6が約200°Cに相当します。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. レシピの温度より少し低めに設定したほうがいいですか？</p>
-                <p className="mt-1">A. オーブンによって実際の庫内温度が異なります。コンベクション（ファン付き）オーブンは熱が均一に回るため、レシピより10〜20°C低めに設定するのが一般的です。オーブン用温度計で実際の温度を確認することをおすすめします。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. アメリカのレシピで「375°F」と書いてあります。日本のオーブンで何度に設定すればいいですか？</p>
-                <p className="mt-1">A. 375°F は約190°Cです。このツールで華氏を入力すれば摂氏に変換できます。アメリカのレシピは大型ガスオーブン前提のことが多いため、日本の家庭用オーブンでは同じ温度でも焼き加減が異なる場合があります。</p>
-              </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-orange-700">料理・レシピツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                <span className="block sm:inline">オーブン温度換算</span>
+                {" "}
+                <span className="block sm:inline">ツール</span>
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                摂氏、華氏、ガスマークを相互変換します。海外レシピの350°F、375°F、Gas Mark 4などを、日本の家庭用オーブンで使いやすい温度に確認できます。
+              </p>
             </div>
-
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  mainEntity: [
-                    {
-                      "@type": "Question",
-                      name: "華氏350°Fは摂氏何度ですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "華氏350°Fは摂氏約177°C（≒180°C）です。多くのお菓子レシピで使われる標準的な温度です。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "ガスマークとは何ですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "ガスマークはイギリスのガスオーブン向けの温度表記で、1〜9の数字で温度を示します。ガスマーク4が約180°C、ガスマーク6が約200°Cです。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "アメリカのレシピで375°Fは日本のオーブンで何度に設定すればいいですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "375°Fは約190°Cです。このツールで華氏を入力すれば摂氏に自動変換できます。",
-                      },
-                    },
-                  ],
-                }),
-              }}
-            />
-
-            <h2 className="text-lg font-bold text-foreground mt-8">関連ツール</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">計量スプーン・カップ換算</Link>
-              <Link href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">カロリー計算</Link>
-            </div>
-
-            <div className="mt-6 bg-card border border-border rounded-xl p-5 text-center space-y-2">
-              <p className="font-bold text-foreground">海外レシピを日本語で再現するなら</p>
-              <p className="text-xs text-muted">温度・分量の単位変換をまとめて確認。英語レシピも怖くない。</p>
-            </div>
-          </section>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">オーブン温度換算ツール — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/measuring-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">計量スプーン換算</Link>
-              <Link href="/calorie-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">カロリー計算</Link>
-              <Link href="/bmi-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">BMI計算</Link>
+            <div className="rounded-2xl border border-orange-200 bg-orange-50 p-4 text-sm leading-6 text-orange-900 shadow-sm">
+              <div className="font-semibold">焼き加減は機種差があります</div>
+              <p className="mt-2">
+                変換値は温度設定の目安です。家庭用オーブンは庫内温度がずれることがあるため、予熱、焼き色、中心温度、焼き時間もあわせて調整してください。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">60+ Free Tools →</Link>
+        </header>
+
+        <OvenTempConverter />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="摂氏・華氏変換" body="°C = (°F - 32) × 5 ÷ 9、°F = °C × 9 ÷ 5 + 32 で計算します。" />
+          <InfoCard title="ガスマーク対応" body="英国系レシピで使われる Gas Mark 1〜9 を、摂氏・華氏の目安に換算します。" />
+          <InfoCard title="ファン付き目安" body="コンベクションやファン付きオーブン向けに、20°C下げた目安も表示します。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">オーブン温度換算の使い方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">華氏から摂氏へ</h3>
+              <p className="mt-1">
+                アメリカ系レシピの350°Fは約177°C、375°Fは約191°Cです。家庭用オーブンでは180°Cや190°Cに丸めて設定することが多いです。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">ガスマークの読み替え</h3>
+              <p className="mt-1">
+                Gas Mark 4は約180°C、Gas Mark 6は約200°Cの目安です。英国系レシピを日本のオーブン設定に直す時に使えます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">ファン付きオーブン</h3>
+              <p className="mt-1">
+                ファン付きオーブンは熱が回りやすいため、レシピ温度から20°C程度下げる目安を併記しています。最終的には焼き色と火通りを確認してください。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">焼き時間は自動換算しない</h3>
+              <p className="mt-1">
+                温度を変えると焼き時間も変わりますが、生地量、型、庫内サイズ、予熱状態で差が大きいため、このツールでは温度換算だけに絞っています。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/measuring-converter" title="計量スプーン換算" body="大さじ・小さじ・グラムを換算" />
+            <Related href="/recipe-scaling" title="レシピ分量調整" body="人数に合わせて材料を倍率計算" />
+            <Related href="/calorie-keisan" title="カロリー計算" body="食事と運動の目安を確認" />
+            <Related href="/bmi-keisan" title="BMI計算" body="標準体重と普通体重範囲を計算" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "オーブン温度換算ツール",
-  "description": "オーブン温度換算ツール — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/oven-temp-converter",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
