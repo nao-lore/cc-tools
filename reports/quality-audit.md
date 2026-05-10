@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 75.9/100
-- Priority tiers: {"B": 42, "C": 100}
+- Average quality score: 76.1/100
+- Priority tiers: {"B": 41, "C": 101}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 58 | 65 | `dalle-pricing` | image | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `gemini-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `sho-kigyo-kyosai` | calculator | Tax Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `whisper-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 48 | 71 | `kaji-anbun` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 47 | 53 | `css-box-shadow` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 47 | 65 | `uuid-generator` | generator | Developer Tools | reset_clear, validation, privacy, current_count; penalties: old_count, any_type |
+| B | 46 | 54 | `ascii-art` | utility | Text & String Tools | labels, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
@@ -71,7 +71,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |
-| image | 77.5 |
+| image | 82.2 |
 | reference | 74.2 |
 | utility | 68.1 |
 
