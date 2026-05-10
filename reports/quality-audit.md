@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 75.0/100
-- Priority tiers: {"B": 46, "C": 96}
+- Average quality score: 75.3/100
+- Priority tiers: {"B": 45, "C": 97}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 64 | 57 | `jigyou-keihi-bunrui` | utility | Tax Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 59 | 64 | `elevenlabs-pricing` | calculator | AI Tools | related_links, labels, copy, examples, validation |
 | B | 58 | 65 | `azure-openai-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `claude-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 49 | 64 | `regex-tester` | utility | Developer Tools | copy, examples, privacy, current_count; penalties: old_count, any_type |
 | B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `fine-tuning-cost` | calculator | AI Tools | related_links, copy, reset_clear, validation, current_count |
+| B | 48 | 71 | `ideco-tax-saving` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -58,10 +58,10 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `hash-generator` | generator | Encoding & Decoding |
 | 100 | `hebon-romaji` | converter | Japanese Tools |
 | 100 | `image-compressor` | image | Image Tools |
+| 100 | `jigyou-keihi-bunrui` | utility | Tax Tools |
 | 100 | `loan-simulator` | calculator | Japanese Tools |
 | 100 | `measuring-converter` | converter | Cooking Tools |
 | 100 | `menseki-keisan` | converter | Japanese Tools |
-| 100 | `moji-count` | utility | Japanese Tools |
 
 ## Archetype Averages
 
@@ -73,7 +73,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | generator | 76.5 |
 | image | 77.5 |
 | reference | 74.2 |
-| utility | 66.8 |
+| utility | 68.1 |
 
 ## Weakest Categories
 

@@ -1,232 +1,326 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-interface Category {
-  label: string;
+type AccountCategory = {
   account: string;
   description: string;
   examples: string[];
-  color: string;
-}
+  keywords: string[];
+  caution: string;
+  tone: string;
+};
 
-const categories: Category[] = [
+type Candidate = AccountCategory & {
+  score: number;
+  matchedKeywords: string[];
+};
+
+const CATEGORIES: AccountCategory[] = [
   {
-    label: "旅費交通費",
     account: "旅費交通費",
-    description: "業務上の移動・宿泊にかかる費用",
-    examples: ["電車・バス代", "タクシー代", "新幹線・航空券", "ホテル代", "高速道路料金"],
-    color: "bg-blue-50 border-blue-200 text-blue-800",
+    description: "業務上の移動、出張、宿泊に関する費用。",
+    examples: ["電車代", "バス代", "タクシー代", "新幹線", "航空券", "ホテル", "駐車場", "高速料金"],
+    keywords: ["電車", "バス", "タクシー", "新幹線", "飛行機", "航空", "ホテル", "宿泊", "出張", "駐車", "高速", "交通"],
+    caution: "私用移動が混ざる場合は、事業利用分だけに分けて記録します。",
+    tone: "border-sky-200 bg-sky-50 text-sky-900",
   },
   {
-    label: "通信費",
     account: "通信費",
-    description: "業務に使う通信・インターネット費用",
-    examples: ["スマホ料金（業務分）", "インターネット料金", "切手・郵便料金", "宅配便"],
-    color: "bg-green-50 border-green-200 text-green-800",
+    description: "電話、インターネット、郵送、配送など通信・連絡に関する費用。",
+    examples: ["スマホ料金", "インターネット回線", "切手", "郵便", "宅配便", "クラウド電話"],
+    keywords: ["スマホ", "携帯", "電話", "インターネット", "ネット", "wifi", "郵便", "切手", "宅配", "配送", "サーバー"],
+    caution: "私用兼用のスマホや回線は、使用実態に合わせた家事按分の根拠を残します。",
+    tone: "border-emerald-200 bg-emerald-50 text-emerald-900",
   },
   {
-    label: "接待交際費",
-    account: "接待交際費",
-    description: "取引先・顧客との飲食・贈答",
-    examples: ["取引先との会食", "手土産・贈答品", "慶弔費", "ゴルフ接待"],
-    color: "bg-orange-50 border-orange-200 text-orange-800",
-  },
-  {
-    label: "会議費",
     account: "会議費",
-    description: "社内外の会議・打ち合わせ費用",
-    examples: ["会議室レンタル", "打ち合わせ時の飲食（5,000円/人以下）", "コワーキング利用料"],
-    color: "bg-purple-50 border-purple-200 text-purple-800",
+    description: "打ち合わせ、会議室、会議に伴う軽い飲食などの費用。",
+    examples: ["会議室利用", "打ち合わせ", "コワーキング", "オンライン会議ツール", "会議用飲み物"],
+    keywords: ["会議", "打ち合わせ", "ミーティング", "会議室", "コワーキング", "商談", "zoom", "オンライン会議"],
+    caution: "取引先の接待性が強い飲食は接待交際費候補としても確認します。",
+    tone: "border-violet-200 bg-violet-50 text-violet-900",
   },
   {
-    label: "消耗品費",
+    account: "接待交際費",
+    description: "取引先や顧客との関係維持、接待、贈答に関する費用。",
+    examples: ["取引先との会食", "手土産", "贈答品", "お中元", "お歳暮", "慶弔費"],
+    keywords: ["会食", "飲食", "接待", "取引先", "手土産", "贈答", "お中元", "お歳暮", "慶弔", "ゴルフ"],
+    caution: "相手先、目的、参加者、金額をメモしておくと説明しやすくなります。",
+    tone: "border-orange-200 bg-orange-50 text-orange-900",
+  },
+  {
     account: "消耗品費",
-    description: "1年以内に使い切る備品・用品",
-    examples: ["文房具", "コピー用紙", "プリンタインク", "10万円未満のPC・周辺機器"],
-    color: "bg-yellow-50 border-yellow-200 text-yellow-800",
+    description: "文房具、事務用品、短期間で使う備品や小額備品の費用。",
+    examples: ["文房具", "コピー用紙", "プリンタインク", "マウス", "キーボード", "小型備品"],
+    keywords: ["文房具", "コピー", "用紙", "プリンタ", "インク", "マウス", "キーボード", "備品", "消耗品", "amazon"],
+    caution: "パソコンや高額機材は、金額・使用期間・資産計上の要否を別途確認します。",
+    tone: "border-amber-200 bg-amber-50 text-amber-900",
   },
   {
-    label: "広告宣伝費",
     account: "広告宣伝費",
-    description: "宣伝・マーケティング活動の費用",
-    examples: ["Web広告（Google・SNS）", "チラシ・名刺印刷", "サイト制作費", "SEO費用"],
-    color: "bg-pink-50 border-pink-200 text-pink-800",
+    description: "集客、広告、販促、認知拡大のための費用。",
+    examples: ["Google広告", "SNS広告", "チラシ", "名刺", "LP制作", "SEO施策"],
+    keywords: ["広告", "宣伝", "販促", "google広告", "sns広告", "チラシ", "名刺", "lp", "seo", "マーケティング"],
+    caution: "サイト制作など成果物が資産性を持つ場合は、処理方法を確認します。",
+    tone: "border-pink-200 bg-pink-50 text-pink-900",
   },
   {
-    label: "外注費",
     account: "外注費",
-    description: "業務を外部に委託した費用",
-    examples: ["フリーランスへの発注", "デザイン委託", "システム開発委託", "翻訳・ライティング"],
-    color: "bg-teal-50 border-teal-200 text-teal-800",
+    description: "業務の一部を外部の個人・法人へ委託した費用。",
+    examples: ["デザイン委託", "システム開発", "ライティング", "翻訳", "動画編集", "業務委託"],
+    keywords: ["外注", "委託", "業務委託", "デザイン", "開発", "翻訳", "ライティング", "動画編集", "制作", "フリーランス"],
+    caution: "源泉徴収が必要な報酬に該当するか、請求書と契約内容を確認します。",
+    tone: "border-teal-200 bg-teal-50 text-teal-900",
   },
   {
-    label: "地代家賃",
     account: "地代家賃",
-    description: "事務所・店舗の賃料",
-    examples: ["事務所家賃", "倉庫レンタル", "自宅兼事務所の家賃（按分分）"],
-    color: "bg-red-50 border-red-200 text-red-800",
+    description: "事務所、店舗、倉庫、作業場所などの賃料。",
+    examples: ["事務所家賃", "店舗家賃", "倉庫", "レンタルオフィス", "自宅兼事務所"],
+    keywords: ["家賃", "賃料", "事務所", "店舗", "倉庫", "レンタルオフィス", "シェアオフィス", "自宅"],
+    caution: "自宅兼事務所は床面積や使用時間など、合理的な按分根拠が必要です。",
+    tone: "border-red-200 bg-red-50 text-red-900",
   },
   {
-    label: "新聞図書費",
     account: "新聞図書費",
-    description: "業務に関する書籍・情報収集費用",
-    examples: ["技術書・専門書", "業界誌・新聞", "オンライン学習サービス", "セミナー参加費"],
-    color: "bg-indigo-50 border-indigo-200 text-indigo-800",
+    description: "業務に必要な書籍、新聞、業界誌、情報収集に関する費用。",
+    examples: ["専門書", "技術書", "新聞", "業界誌", "有料メディア", "学習教材"],
+    keywords: ["本", "書籍", "新聞", "雑誌", "専門書", "技術書", "教材", "学習", "有料記事", "メディア"],
+    caution: "業務との関連性が分かるよう、購入目的をメモしておくと安全です。",
+    tone: "border-indigo-200 bg-indigo-50 text-indigo-900",
   },
   {
-    label: "水道光熱費",
     account: "水道光熱費",
-    description: "事業で使う水道・電気・ガス",
-    examples: ["電気代（事業分）", "ガス代（事業分）", "水道代（事業分）"],
-    color: "bg-cyan-50 border-cyan-200 text-cyan-800",
+    description: "事業で使う電気、ガス、水道などの費用。",
+    examples: ["電気代", "ガス代", "水道代", "作業場の光熱費"],
+    keywords: ["電気", "ガス", "水道", "光熱", "電力", "エアコン"],
+    caution: "自宅兼用の場合は、使用時間や面積などで事業分を按分します。",
+    tone: "border-cyan-200 bg-cyan-50 text-cyan-900",
+  },
+  {
+    account: "支払手数料",
+    description: "決済手数料、振込手数料、プラットフォーム利用料などの費用。",
+    examples: ["銀行振込手数料", "カード決済手数料", "販売サイト手数料", "Stripe手数料"],
+    keywords: ["手数料", "振込", "決済", "stripe", "paypal", "販売手数料", "プラットフォーム"],
+    caution: "売上から差し引かれる手数料も、明細で金額を確認して記録します。",
+    tone: "border-slate-200 bg-slate-50 text-slate-900",
+  },
+  {
+    account: "租税公課",
+    description: "事業に関係する税金や公的な負担金。",
+    examples: ["印紙税", "固定資産税の事業分", "登録手数料", "事業税"],
+    keywords: ["印紙", "税金", "固定資産税", "登録", "公課", "証紙", "事業税"],
+    caution: "所得税や住民税など、事業主個人にかかる税金は経費にならないものがあります。",
+    tone: "border-lime-200 bg-lime-50 text-lime-900",
   },
 ];
 
-const keywords: Record<string, string> = {
-  電車: "旅費交通費",
-  バス: "旅費交通費",
-  タクシー: "旅費交通費",
-  新幹線: "旅費交通費",
-  飛行機: "旅費交通費",
-  航空: "旅費交通費",
-  ホテル: "旅費交通費",
-  宿泊: "旅費交通費",
-  高速: "旅費交通費",
-  駐車: "旅費交通費",
-  スマホ: "通信費",
-  携帯: "通信費",
-  インターネット: "通信費",
-  ネット: "通信費",
-  郵便: "通信費",
-  切手: "通信費",
-  宅配: "通信費",
-  配送: "通信費",
-  会食: "接待交際費",
-  飲食: "接待交際費",
-  ランチ: "接待交際費",
-  ディナー: "接待交際費",
-  手土産: "接待交際費",
-  贈答: "接待交際費",
-  お中元: "接待交際費",
-  お歳暮: "接待交際費",
-  会議: "会議費",
-  打ち合わせ: "会議費",
-  ミーティング: "会議費",
-  コワーキング: "会議費",
-  文房具: "消耗品費",
-  コピー: "消耗品費",
-  印刷: "消耗品費",
-  プリンタ: "消耗品費",
-  パソコン: "消耗品費",
-  PC: "消耗品費",
-  マウス: "消耗品費",
-  キーボード: "消耗品費",
-  広告: "広告宣伝費",
-  宣伝: "広告宣伝費",
-  SEO: "広告宣伝費",
-  チラシ: "広告宣伝費",
-  名刺: "広告宣伝費",
-  ホームページ: "広告宣伝費",
-  外注: "外注費",
-  委託: "外注費",
-  フリーランス: "外注費",
-  デザイン: "外注費",
-  開発: "外注費",
-  翻訳: "外注費",
-  家賃: "地代家賃",
-  賃料: "地代家賃",
-  事務所: "地代家賃",
-  倉庫: "地代家賃",
-  書籍: "新聞図書費",
-  本: "新聞図書費",
-  セミナー: "新聞図書費",
-  研修: "新聞図書費",
-  学習: "新聞図書費",
-  電気: "水道光熱費",
-  ガス: "水道光熱費",
-  水道: "水道光熱費",
-};
+const SAMPLES = ["タクシー代", "自宅兼事務所の家賃", "取引先との会食", "Amazonでマウスを購入", "スマホ料金の事業分"];
+
+function normalize(text: string) {
+  return text.toLowerCase().replace(/\s+/g, "");
+}
+
+function getCandidates(query: string): Candidate[] {
+  const normalized = normalize(query);
+  if (!normalized) return [];
+
+  return CATEGORIES.map((category) => {
+    const matchedKeywords = category.keywords.filter((keyword) => normalized.includes(normalize(keyword)));
+    return {
+      ...category,
+      matchedKeywords,
+      score: matchedKeywords.length,
+    };
+  })
+    .filter((candidate) => candidate.score > 0)
+    .sort((a, b) => b.score - a.score || a.account.localeCompare(b.account, "ja"))
+    .slice(0, 3);
+}
+
+function getFlags(query: string) {
+  const normalized = normalize(query);
+  const flags = [];
+  if (/(自宅|家賃|電気|ガス|水道|スマホ|携帯|インターネット|ネット)/.test(normalized)) {
+    flags.push("私用兼用の可能性があります。家事按分の割合と根拠をメモしてください。");
+  }
+  if (/(pc|パソコン|カメラ|機材|設備|高額|10万|30万)/.test(normalized)) {
+    flags.push("高額な備品は消耗品費ではなく固定資産や減価償却になる可能性があります。金額と使用期間を確認してください。");
+  }
+  if (/(報酬|原稿|デザイン|講演|士業|業務委託|外注)/.test(normalized)) {
+    flags.push("外注報酬は源泉徴収や支払調書の対象になる場合があります。請求内容を確認してください。");
+  }
+  return flags;
+}
+
+function buildCopyText(query: string, candidates: Candidate[], flags: string[]) {
+  return [
+    `経費内容: ${query}`,
+    ...candidates.map((candidate, index) => `${index + 1}. ${candidate.account} - ${candidate.description}（一致: ${candidate.matchedKeywords.join(", ")}）`),
+    ...(flags.length ? ["注意点:", ...flags.map((flag) => `- ${flag}`)] : []),
+    "最終判断は帳簿・領収書・業務実態に合わせて確認してください。",
+  ].join("\n");
+}
 
 export default function KeihiBunrui() {
-  const [query, setQuery] = useState("");
-  const [result, setResult] = useState<Category | null>(null);
-  const [searched, setSearched] = useState(false);
+  const [query, setQuery] = useState("タクシー代");
+  const [copied, setCopied] = useState(false);
+  const candidates = useMemo(() => getCandidates(query), [query]);
+  const flags = useMemo(() => getFlags(query), [query]);
+  const hasInput = query.trim().length > 0;
 
-  const handleSearch = () => {
-    if (!query.trim()) return;
-    setSearched(true);
-    const matched = Object.entries(keywords).find(([kw]) =>
-      query.includes(kw)
-    );
-    if (matched) {
-      const cat = categories.find((c) => c.account === matched[1]);
-      setResult(cat || null);
-    } else {
-      setResult(null);
-    }
-  };
+  function reset() {
+    setQuery("");
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!hasInput) return;
+    await navigator.clipboard.writeText(buildCopyText(query, candidates, flags));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-5">
-      {/* Search */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h2 className="font-bold text-base mb-3">経費の内容を入力して勘定科目を判別</h2>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="例: タクシー代、会食費、書籍代..."
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.85fr)_minmax(380px,0.7fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">経費内容</h2>
+              <p className="mt-1 text-sm text-slate-500">領収書や明細の内容をそのまま入力すると、近い勘定科目候補を表示します。</p>
+            </div>
+            <button
+              type="button"
+              onClick={reset}
+              className="w-fit whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              リセット
+            </button>
+          </div>
+
+          <label htmlFor="keihi-query" className="mt-5 block text-sm font-semibold text-slate-800">
+            内容・用途
+          </label>
+          <textarea
+            id="keihi-query"
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setSearched(false); setResult(null); }}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="flex-1 px-3 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent text-foreground"
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setCopied(false);
+            }}
+            placeholder="例: 取引先との打ち合わせで使ったカフェ代"
+            rows={4}
+            className="mt-2 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm leading-6 outline-none focus:border-slate-950"
           />
-          <button
-            onClick={handleSearch}
-            className="px-5 py-2.5 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
-          >
-            判別
-          </button>
+
+          <p className={`mt-3 min-h-5 text-sm ${hasInput ? "text-slate-500" : "text-red-600"}`}>
+            {hasInput ? "入力内容を検証し、キーワード一致による候補を表示します。入力値はブラウザ上で処理され、外部に送信されません。" : "経費の内容を入力してください。"}
+          </p>
+
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
+                <button
+                  key={sample}
+                  type="button"
+                  onClick={() => {
+                    setQuery(sample);
+                    setCopied(false);
+                  }}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-950 hover:bg-slate-50"
+                >
+                  {sample}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={copyResult}
+              disabled={!hasInput}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {copied ? "コピーしました" : "候補をコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              入力をクリア
+            </button>
+          </div>
         </div>
-        <p className="text-xs text-muted mt-2">キーワードで勘定科目を候補表示します。最終判断は税理士等にご確認ください。</p>
+
+        <aside className="p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">候補</h2>
+          {!hasInput ? (
+            <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">内容を入力してください。</div>
+          ) : candidates.length === 0 ? (
+            <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+              一致する候補がありません。用途、相手先、購入物をもう少し具体的に入力するか、下の勘定科目一覧から近いものを確認してください。
+            </div>
+          ) : (
+            <div className="mt-4 space-y-3">
+              {candidates.map((candidate, index) => (
+                <div key={candidate.account} className={`rounded-2xl border p-4 ${candidate.tone}`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold opacity-70">候補 {index + 1}</p>
+                      <p className="mt-1 text-2xl font-bold">{candidate.account}</p>
+                    </div>
+                    <span className="rounded-full bg-white/70 px-3 py-1 text-xs font-semibold">一致 {candidate.score}</span>
+                  </div>
+                  <p className="mt-2 text-sm leading-6">{candidate.description}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {candidate.matchedKeywords.map((keyword) => (
+                      <span key={keyword} className="rounded-full bg-white/70 px-2 py-1 text-xs">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-3 rounded-xl bg-white/70 p-3 text-xs leading-5">{candidate.caution}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {flags.length > 0 && (
+            <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+              <p className="text-sm font-semibold text-amber-950">確認ポイント</p>
+              <ul className="mt-2 space-y-2 text-sm leading-6 text-amber-900">
+                {flags.map((flag) => (
+                  <li key={flag}>・{flag}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </aside>
       </div>
 
-      {/* Result */}
-      {searched && (
-        <div className={`border rounded-xl p-5 ${result ? result.color : "bg-card border-border"}`}>
-          {result ? (
-            <>
-              <p className="text-xs font-medium opacity-70 mb-1">勘定科目</p>
-              <p className="text-2xl font-bold mb-2">{result.account}</p>
-              <p className="text-sm mb-3">{result.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {result.examples.map((ex) => (
-                  <span key={ex} className="text-xs px-2 py-1 bg-white/60 rounded-full border border-current/20">{ex}</span>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="text-muted text-sm">該当する勘定科目が見つかりませんでした。下の一覧から近い科目を選んでください。</p>
-          )}
-        </div>
-      )}
-
-      {/* All categories */}
-      <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-        <h2 className="font-bold text-base mb-4">主要勘定科目一覧</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {categories.map((cat) => (
+      <div className="border-t border-slate-200 p-5 sm:p-6">
+        <h2 className="text-base font-semibold text-slate-950">主要勘定科目一覧</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {CATEGORIES.map((category) => (
             <button
-              key={cat.account}
-              onClick={() => { setResult(cat); setSearched(true); setQuery(cat.label); }}
-              className={`text-left border rounded-lg p-3 transition-all hover:shadow-sm ${cat.color}`}
+              key={category.account}
+              type="button"
+              onClick={() => {
+                setQuery(category.examples[0]);
+                setCopied(false);
+              }}
+              className={`rounded-xl border p-3 text-left transition hover:shadow-sm ${category.tone}`}
             >
-              <p className="font-bold text-sm">{cat.account}</p>
-              <p className="text-xs opacity-80 mt-0.5">{cat.description}</p>
+              <p className="font-semibold">{category.account}</p>
+              <p className="mt-1 text-xs leading-5 opacity-80">{category.description}</p>
             </button>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

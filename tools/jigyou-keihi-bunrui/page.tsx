@@ -1,171 +1,202 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import KeihiBunrui from "./components/KeihiBunrui";
 
+const faq = [
+  {
+    q: "このツールだけで勘定科目を確定していいですか？",
+    a: "いいえ。候補表示ツールです。最終的な勘定科目は、実際の用途、領収書、契約内容、継続的な処理方針、税理士や税務署の案内に合わせて判断してください。",
+  },
+  {
+    q: "自宅兼事務所の費用はどう考えますか？",
+    a: "家賃、電気代、通信費など私用と事業用が混ざる費用は、事業に直接必要な部分を合理的に按分します。床面積、使用時間、通信量など根拠を残すことが重要です。",
+  },
+  {
+    q: "同じ支出でも違う科目になることがありますか？",
+    a: "あります。例えば飲食代でも、会議目的なら会議費、取引先接待なら接待交際費、従業員向けなら福利厚生費など、目的と相手先で変わります。",
+  },
+  {
+    q: "入力した経費内容は保存されますか？",
+    a: "保存されません。判定はブラウザ上で完結し、入力した経費内容を外部に送信しません。",
+  },
+];
+
+const sources = [
+  {
+    label: "国税庁: 個人で事業を行っている方の記帳・帳簿等の保存",
+    href: "https://www.nta.go.jp/taxes/shiraberu/shinkoku/kojin_jigyo/index.htm",
+  },
+  {
+    label: "国税庁: 記帳や帳簿等保存・青色申告",
+    href: "https://www.nta.go.jp/publication/pamph/koho/kurashi/html/01_2.htm",
+  },
+  {
+    label: "国税庁: 家事関連費",
+    href: "https://www.nta.go.jp/law/tsutatsu/kihon/shotoku/07/01.htm",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
-            経費 勘定科目 判別ツール
-          </h1>
-          <p className="text-sm text-muted mt-1">
-            経費の内容から勘定科目を即座に判別 — 個人事業主・フリーランス向け
-          </p>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <KeihiBunrui />
-
-          {/* AdSense Placeholder */}
-          <div className="mt-8 border border-dashed border-border rounded-xl p-8 text-center text-muted text-sm bg-card">
-            <p>広告スペース</p>
-          </div>
-
-          {/* 使い方ガイド */}
-          <section className="mt-10 space-y-6 text-sm leading-relaxed text-muted">
-            <h2 className="text-lg font-bold text-foreground">使い方ガイド</h2>
-            <ol className="space-y-3 list-decimal list-inside">
-              <li>
-                <span className="font-medium text-foreground">経費の内容を入力する</span>
-                — 「タクシー代」「Amazonで本を購入」など購入内容をそのまま入力してください。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">「判別」ボタンを押す</span>
-                — キーワードに基づいて最も近い勘定科目を提案します。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">一覧から確認する</span>
-                — 候補が出ない場合は下の勘定科目一覧から近いものを選び、具体例と比較してください。
-              </li>
-              <li>
-                <span className="font-medium text-foreground">最終判断は専門家に確認</span>
-                — 判断が難しい経費は税理士や国税庁のWebサイトで確認することをおすすめします。
-              </li>
-            </ol>
-
-            {/* FAQ */}
-            <h2 className="text-lg font-bold text-foreground mt-8">よくある質問（FAQ）</h2>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-foreground">Q. 打ち合わせの飲食代は「会議費」と「接待交際費」どちらですか？</p>
-                <p className="mt-1">A. 目安として、1人あたり5,000円以下の社内・少人数打ち合わせは「会議費」、取引先を招いた飲食や金額が大きい場合は「接待交際費」に仕分けるのが一般的です。ただし厳密な基準は税理士にご確認ください。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. 自宅兼事務所の家賃はどう処理しますか？</p>
-                <p className="mt-1">A. 「地代家賃」として計上できますが、事業に使用している部分（床面積比率など）のみが経費になります。按分計算が必要で、按分割合の根拠を記録しておくことが重要です。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. スマホ代は全額経費にできますか？</p>
-                <p className="mt-1">A. 業務専用端末であれば全額「通信費」として計上可能です。プライベートと兼用の場合は業務使用割合を按分する必要があります。一般的に50〜80%が業務分として認められるケースが多いです。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. Amazonで購入した消耗品はどの勘定科目ですか？</p>
-                <p className="mt-1">A. 文房具・プリンク・事務用品など業務で1年以内に消費するものは「消耗品費」です。10万円未満のパソコンや周辺機器も消耗品費として一括計上できます（青色申告の場合は30万円未満まで特例あり）。</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Q. 勘定科目を間違えて申告した場合どうなりますか？</p>
-                <p className="mt-1">A. 経費の合計金額が正しければ税額への影響は原則ありません。ただし、経費にできないものを経費計上すると税務調査で指摘される可能性があります。不安な場合は修正申告を検討してください。</p>
-              </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-amber-700">個人事業主・経理ツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">経費 勘定科目 候補ツール</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                領収書や明細の内容から、旅費交通費、通信費、会議費、接待交際費、消耗品費などの勘定科目候補を表示します。
+              </p>
             </div>
-
-            {/* JSON-LD */}
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "FAQPage",
-                  mainEntity: [
-                    {
-                      "@type": "Question",
-                      name: "打ち合わせの飲食代は会議費と接待交際費どちらですか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "1人あたり5,000円以下の少人数打ち合わせは会議費、取引先を招いた飲食や金額が大きい場合は接待交際費が一般的です。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "自宅兼事務所の家賃はどう処理しますか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "地代家賃として計上できますが、事業使用部分のみ按分して経費にします。",
-                      },
-                    },
-                    {
-                      "@type": "Question",
-                      name: "スマホ代は全額経費にできますか？",
-                      acceptedAnswer: {
-                        "@type": "Answer",
-                        text: "業務専用端末なら全額通信費として計上できます。プライベート兼用の場合は業務使用割合を按分する必要があります。",
-                      },
-                    },
-                  ],
-                }),
-              }}
-            />
-
-            {/* 関連ツール */}
-            <h2 className="text-lg font-bold text-foreground mt-8">関連ツール</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">源泉徴収税計算</Link>
-              <Link href="/tedori-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">手取り計算</Link>
-              <Link href="/loan-simulator" className="text-xs text-blue-600 hover:text-blue-800 px-3 py-1.5 bg-blue-50 rounded-lg border border-blue-200">ローン返済シミュレーター</Link>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-6 bg-card border border-border rounded-xl p-5 text-center space-y-2">
-              <p className="font-bold text-foreground">確定申告の準備に</p>
-              <p className="text-xs text-muted">経費を正しく仕分けて、漏れのない節税を。判断が難しい経費は税理士にご相談ください。</p>
-            </div>
-          </section>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">経費 勘定科目 判別ツール — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">源泉徴収税計算</Link>
-              <Link href="/tedori-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">手取り計算</Link>
-              <Link href="/loan-simulator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">ローン計算</Link>
-              <Link href="/risoku-keisan" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">利息計算</Link>
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900 shadow-sm">
+              <div className="font-semibold">断定ではなく候補表示</div>
+              <p className="mt-2">
+                税務判断を自動確定せず、用途・相手先・按分根拠を確認するための補助ツールとして設計しています。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">60+ Free Tools →</Link>
+        </header>
+
+        <KeihiBunrui />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="候補を複数表示" body="キーワードが複数の科目に当たる場合、近い候補を最大3つ表示します。" />
+          <InfoCard title="注意点を同時表示" body="家事按分、高額備品、源泉徴収など、確認すべきポイントを併記します。" />
+          <InfoCard title="メモにコピー" body="候補と注意点をコピーして、会計ソフトの摘要やメモ作成に使えます。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">勘定科目を選ぶときの考え方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">用途を先に見る</h3>
+              <p className="mt-1">
+                同じ支出でも目的で科目が変わります。カフェ代なら、作業場所、会議、接待のどれに近いかを確認します。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">継続して同じ処理にする</h3>
+              <p className="mt-1">
+                同じ性質の支出は、毎月・毎年で処理がぶれないようにします。迷った場合はメモを残して後から確認できるようにします。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">家事按分の根拠</h3>
+              <p className="mt-1">
+                自宅、スマホ、電気代など私用と事業用が混ざる支出は、事業に直接必要だった部分を説明できるように按分根拠を残します。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">帳簿・領収書の保存</h3>
+              <p className="mt-1">
+                収入金額や必要経費を記載した帳簿、請求書、領収書などは整理して保存します。保存期間や要件は申告区分で変わります。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">参考にした公式情報</h2>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2">
+            {sources.map((source) => (
+              <a
+                key={source.href}
+                href={source.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl border border-slate-200 p-3 text-sm font-medium text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+              >
+                {source.label}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/tedori-keisan" title="手取り計算" body="年収から手取りを概算" />
+            <Related href="/withholding-tax-calculator" title="源泉徴収税" body="報酬の源泉税を計算" />
+            <Related href="/consumption-tax-choice" title="消費税判定" body="課税方式の検討メモ" />
+            <Related href="/gyomu-itaku-hikaku" title="業務委託比較" body="会社員との収入差を確認" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "経費 勘定科目 判別ツール",
-  "description": "経費 勘定科目 判別ツール — Free online tool. No signup required.",
-  "url": "https://tools.loresync.dev/jigyou-keihi-bunrui",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "経費 勘定科目 候補ツール",
+              description: "経費内容から個人事業主向けの勘定科目候補と確認ポイントを表示します。",
+              url: "https://tools.loresync.dev/jigyou-keihi-bunrui",
+              applicationCategory: "FinanceApplication",
+              operatingSystem: "All",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "JPY",
+              },
+              inLanguage: "ja",
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faq.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.a,
+                },
+              })),
+            },
+          ]),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
