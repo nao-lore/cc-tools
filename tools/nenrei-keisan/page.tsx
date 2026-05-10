@@ -1,104 +1,170 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import AgeCalculator from "./components/AgeCalculator";
 
+const faq = [
+  {
+    q: "満年齢と数え年は何が違いますか？",
+    a: "満年齢は生まれた日を0歳として、誕生日を迎えるたびに1歳増える数え方です。数え年は生まれた年を1歳として、年が変わるたびに1歳増える伝統的な数え方です。",
+  },
+  {
+    q: "2月29日生まれはどう扱いますか？",
+    a: "このツールでは、うるう年ではない年の誕生日判定を2月28日として扱います。書類や制度上の扱いは提出先のルールを確認してください。",
+  },
+  {
+    q: "干支と星座も同時に確認できますか？",
+    a: "確認できます。干支は生まれ年、星座は生まれた月日から判定します。",
+  },
+  {
+    q: "入力した生年月日は保存されますか？",
+    a: "保存されません。計算はブラウザ上で完結し、入力した生年月日を外部に送信しません。",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header */}
-      <header className="border-b border-gray-200 bg-white">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            年齢計算ツール
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            生年月日から満年齢・干支・星座・次の誕生日まで一括計算
-          </p>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          {/* Calculator */}
-          <AgeCalculator />
-
-          {/* AdSense Placeholder */}
-          <div className="mt-8 border border-dashed border-gray-300 rounded-xl p-8 text-center text-gray-400 text-sm bg-white">
-            <p>広告スペース</p>
-          </div>
-
-          {/* SEO Content */}
-          <section className="mt-10 space-y-6 text-sm leading-relaxed text-gray-600">
-            <h2 className="text-lg font-bold text-gray-800">年齢計算とは</h2>
-            <p>
-              年齢計算ツールは、生年月日を入力するだけで満年齢・数え年・干支・星座・生まれてから何日経過したか・次の誕生日まで何日かを瞬時に計算します。手帳やカレンダーを見ながら計算する手間なく、正確な情報を素早く確認できます。
-            </p>
-
-            <h2 className="text-lg font-bold text-gray-800">満年齢と数え年の違い</h2>
-            <p>
-              満年齢とは、生まれた日を0歳とし、誕生日を迎えるたびに1歳加算する現代日本で一般的な数え方です。一方、数え年とは生まれた年を1歳とし、以降は元旦（1月1日）ごとに1歳加算する伝統的な数え方です。お正月や厄年・還暦などの行事では数え年が使われることが多く、満年齢と1〜2歳の差が生じる場合があります。
-            </p>
-
-            <h2 className="text-lg font-bold text-gray-800">干支（えと）について</h2>
-            <p>
-              干支（十二支）は子・丑・寅・卯・辰・巳・午・未・申・酉・戌・亥の12種類で、12年を1周期として繰り返します。生まれ年によって干支が決まり、日本では年賀状や占い、厄年の計算などに広く使われています。本ツールでは生年から自動的に干支を判定します。
-            </p>
-
-            <h2 className="text-lg font-bold text-gray-800">星座の算出方法</h2>
-            <p>
-              西洋占星術の星座（12星座）は、誕生日の月日によって決まります。牡羊座（3/21〜4/19）から魚座（2/19〜3/20）まで12種類あり、生まれた月日を入力するだけで自動的に表示されます。星座は誕生日占いや相性診断などに広く活用されています。
-            </p>
-
-            <h2 className="text-lg font-bold text-gray-800">このツールの使い方</h2>
-            <p>
-              年・月・日のセレクトボックスから生年月日を選択し、「計算する」ボタンを押すだけです。満年齢・数え年・干支・星座・経過日数・次の誕生日までの日数が一度に表示されます。登録不要・完全無料でお使いいただけます。
-            </p>
-          </section>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center mt-12">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">
-            nenrei-keisan — 年齢計算ツール。登録不要・無料。
-          </p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/eigyoubi" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">営業日計算</Link>
-              <Link href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">和暦変換</Link>
-              <Link href="/tax-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">源泉徴収税計算</Link>
-              <Link href="/zenkaku-hankaku" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">全角半角変換</Link>
-              <Link href="/furigana" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">ふりがな変換</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            無料オンラインツール集
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-sky-700">日本語生活ツール</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">年齢計算ツール</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                生年月日から満年齢、数え年、干支、星座、生まれてからの日数、次の誕生日までの日数をまとめて計算します。
+              </p>
+            </div>
+            <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-900 shadow-sm">
+              <div className="font-semibold">今日時点で自動計算</div>
+              <p className="mt-2">
+                誕生日を迎えているか、2月29日生まれを平年でどう扱うかも含めて計算します。入力値は外部に送信されません。
+              </p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <AgeCalculator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="満年齢" body="今日時点で誕生日を迎えているかを見て、現在の年齢を計算します。" />
+          <InfoCard title="数え年" body="生まれた年を1歳として数える伝統的な年齢を表示します。" />
+          <InfoCard title="誕生日までの日数" body="次の誕生日の日付と、そこまでの残り日数を確認できます。" />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">年齢計算の使い方</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">満年齢の計算</h3>
+              <p className="mt-1">
+                現在年から生年を引き、今年の誕生日をまだ迎えていなければ1を引きます。日本の一般的な年齢表記で使われる数え方です。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">数え年の計算</h3>
+              <p className="mt-1">
+                生まれた年を1歳として、現在年との差に1を足します。厄年、長寿祝い、年中行事の確認で使われることがあります。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">うるう日の扱い</h3>
+              <p className="mt-1">
+                2月29日生まれの場合、平年の誕生日判定は2月28日として扱います。制度や書類で厳密な扱いが必要な場合は提出先のルールを優先してください。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">干支と星座</h3>
+              <p className="mt-1">
+                干支は生まれ年の十二支、星座は誕生日の月日から判定します。年賀状、プロフィール、占いの確認にも使えます。
+              </p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">関連ツール</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/eigyoubi" title="営業日計算" body="営業日・休業日を数える" />
+            <Related href="/wareki-converter" title="和暦変換" body="西暦と和暦を変換" />
+            <Related href="/nissuu-keisan" title="日数計算" body="日付間の日数を計算" />
+            <Related href="/bmi-keisan" title="BMI計算" body="身長と体重から健康目安を確認" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools は {toolCount} 個以上の無料オンラインツールを公開しています。
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "年齢計算ツール",
-  "description": "生年月日から満年齢・干支・星座・次の誕生日まで一括計算",
-  "url": "https://tools.loresync.dev/nenrei-keisan",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "年齢計算ツール",
+              description: "生年月日から満年齢、数え年、干支、星座、生まれてからの日数を計算します。",
+              url: "https://tools.loresync.dev/nenrei-keisan",
+              applicationCategory: "UtilityApplication",
+              operatingSystem: "All",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "JPY",
+              },
+              inLanguage: "ja",
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: faq.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: item.a,
+                },
+              })),
+            },
+          ]),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 74.4/100
-- Priority tiers: {"B": 48, "C": 94}
+- Average quality score: 74.7/100
+- Priority tiers: {"B": 47, "C": 95}
 
 ## Highest Priority Tools
 
@@ -19,7 +19,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 58 | 65 | `claude-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `dalle-pricing` | image | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `gemini-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
-| B | 58 | 65 | `nenrei-keisan` | calculator | Japanese Tools | copy, examples, current_count; penalties: old_count, ad_placeholder |
 | B | 58 | 65 | `sho-kigyo-kyosai` | calculator | Tax Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `whisper-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
 | B | 57 | 56 | `kenpei-yoseki` | calculator | Life Tools | copy, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 50 | 67 | `svg-to-png` | image | Image Tools | copy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 49 | 51 | `css-flexbox` | utility | CSS Tools | faq, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
 | B | 49 | 64 | `regex-tester` | utility | Developer Tools | copy, examples, privacy, current_count; penalties: old_count, any_type |
+| B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -67,7 +67,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 76.1 |
+| calculator | 76.8 |
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |

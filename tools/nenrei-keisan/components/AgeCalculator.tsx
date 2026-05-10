@@ -1,297 +1,269 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useMemo, useState } from "react";
 
-interface AgeResult {
-  満年齢: number;
-  数え年: number;
-  干支: string;
-  星座: string;
-  生まれてから日数: number;
-  次の誕生日まで: number;
-  次の誕生日: string;
+type AgeResult = {
+  fullAge: number;
+  traditionalAge: number;
+  zodiac: string;
+  constellation: string;
+  livedDays: number;
+  nextBirthdayDate: Date;
+  daysUntilBirthday: number;
+};
+
+const ZODIAC = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
+
+const SAMPLES = [
+  { label: "1990/4/1", year: "1990", month: "4", day: "1" },
+  { label: "2000/1/1", year: "2000", month: "1", day: "1" },
+  { label: "うるう日", year: "2000", month: "2", day: "29" },
+];
+
+function todayAtMidnight() {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }
 
-const 干支リスト = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
-
-function get干支(year: number): string {
-  // 1900年は庚子(ねずみ)年。干支は12年周期。
-  return 干支リスト[((year - 1900) % 12 + 12) % 12];
+function isLeapYear(year: number) {
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
 }
 
-function get星座(month: number, day: number): string {
-  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "牡羊座 ♈";
-  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "牡牛座 ♉";
-  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "双子座 ♊";
-  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "蟹座 ♋";
-  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "獅子座 ♌";
-  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "乙女座 ♍";
-  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "天秤座 ♎";
-  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "蠍座 ♏";
-  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "射手座 ♐";
-  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "山羊座 ♑";
-  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "水瓶座 ♒";
-  return "魚座 ♓";
+function daysInMonth(year: number, month: number) {
+  return new Date(year, month, 0).getDate();
 }
 
-function calculateAge(birthDate: Date, today: Date): AgeResult {
-  const birthYear = birthDate.getFullYear();
-  const birthMonth = birthDate.getMonth() + 1;
-  const birthDay = birthDate.getDate();
-  const todayYear = today.getFullYear();
-  const todayMonth = today.getMonth() + 1;
-  const todayDay = today.getDate();
+function birthdayInYear(year: number, month: number, day: number) {
+  if (month === 2 && day === 29 && !isLeapYear(year)) {
+    return new Date(year, 1, 28);
+  }
+  return new Date(year, month - 1, day);
+}
 
-  // 満年齢
-  let age = todayYear - birthYear;
-  if (todayMonth < birthMonth || (todayMonth === birthMonth && todayDay < birthDay)) {
-    age--;
+function getZodiac(year: number) {
+  return ZODIAC[((year - 1900) % 12 + 12) % 12];
+}
+
+function getConstellation(month: number, day: number) {
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "牡羊座";
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "牡牛座";
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "双子座";
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "蟹座";
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "獅子座";
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "乙女座";
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "天秤座";
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "蠍座";
+  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "射手座";
+  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "山羊座";
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "水瓶座";
+  return "魚座";
+}
+
+function formatDate(date: Date) {
+  return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
+
+function calculateAge(year: number, month: number, day: number, today: Date): AgeResult {
+  const birthDate = new Date(year, month - 1, day);
+  let birthdayThisYear = birthdayInYear(today.getFullYear(), month, day);
+  let fullAge = today.getFullYear() - year;
+
+  if (today < birthdayThisYear) {
+    fullAge -= 1;
   }
 
-  // 数え年（生まれた年を1歳とし、元旦に1歳加算）
-  const 数え年 = todayYear - birthYear + 1;
-
-  // 干支
-  const 干支 = get干支(birthYear);
-
-  // 星座
-  const 星座 = get星座(birthMonth, birthDay);
-
-  // 生まれてから何日
-  const msPerDay = 1000 * 60 * 60 * 24;
-  const 生まれてから日数 = Math.floor((today.getTime() - birthDate.getTime()) / msPerDay);
-
-  // 次の誕生日
-  let nextBirthday = new Date(todayYear, birthMonth - 1, birthDay);
-  if (nextBirthday <= today) {
-    nextBirthday = new Date(todayYear + 1, birthMonth - 1, birthDay);
+  if (birthdayThisYear <= today) {
+    birthdayThisYear = birthdayInYear(today.getFullYear() + 1, month, day);
   }
-  const 次の誕生日まで = Math.ceil((nextBirthday.getTime() - today.getTime()) / msPerDay);
-  const 次の誕生日 = `${nextBirthday.getFullYear()}年${nextBirthday.getMonth() + 1}月${nextBirthday.getDate()}日`;
 
-  return { 満年齢: age, 数え年, 干支, 星座, 生まれてから日数, 次の誕生日まで, 次の誕生日 };
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const livedDays = Math.floor((today.getTime() - birthDate.getTime()) / msPerDay);
+  const daysUntilBirthday = Math.ceil((birthdayThisYear.getTime() - today.getTime()) / msPerDay);
+
+  return {
+    fullAge,
+    traditionalAge: today.getFullYear() - year + 1,
+    zodiac: getZodiac(year),
+    constellation: getConstellation(month, day),
+    livedDays,
+    nextBirthdayDate: birthdayThisYear,
+    daysUntilBirthday,
+  };
+}
+
+function buildCopyText(result: AgeResult, year: string, month: string, day: string) {
+  return [
+    `生年月日: ${year}年${month}月${day}日`,
+    `満年齢: ${result.fullAge}歳`,
+    `数え年: ${result.traditionalAge}歳`,
+    `干支: ${result.zodiac}`,
+    `星座: ${result.constellation}`,
+    `生まれてから: ${result.livedDays.toLocaleString("ja-JP")}日`,
+    `次の誕生日: ${formatDate(result.nextBirthdayDate)}（あと${result.daysUntilBirthday}日）`,
+  ].join("\n");
 }
 
 export default function AgeCalculator() {
-  const today = new Date();
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [result, setResult] = useState<AgeResult | null>(null);
-  const [error, setError] = useState("");
-
+  const today = useMemo(() => todayAtMidnight(), []);
   const currentYear = today.getFullYear();
-  const years = Array.from({ length: currentYear - 1899 }, (_, i) => currentYear - i);
-  const months = Array.from({ length: 12 }, (_, i) => i + 1);
-  const daysInMonth = year && month ? new Date(Number(year), Number(month), 0).getDate() : 31;
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
+  const [year, setYear] = useState("1990");
+  const [month, setMonth] = useState("4");
+  const [day, setDay] = useState("1");
+  const [copied, setCopied] = useState(false);
 
-  const handleCalculate = useCallback(() => {
-    setError("");
-    if (!year || !month || !day) {
-      setError("生年月日をすべて選択してください。");
-      return;
-    }
-    const birthDate = new Date(Number(year), Number(month) - 1, Number(day));
-    if (birthDate > today) {
-      setError("生年月日は今日以前の日付を選択してください。");
-      return;
-    }
-    setResult(calculateAge(birthDate, today));
-  }, [year, month, day]);
+  const yearNumber = Number.parseInt(year, 10);
+  const monthNumber = Number.parseInt(month, 10);
+  const dayNumber = Number.parseInt(day, 10);
+  const maxDay = Number.isFinite(yearNumber) && Number.isFinite(monthNumber) ? daysInMonth(yearNumber, monthNumber) : 31;
 
-  const handleReset = () => {
+  const error = useMemo(() => {
+    if (!year || !month || !day) return "生年月日をすべて入力してください。";
+    if (yearNumber < 1900 || yearNumber > currentYear) return `年は1900〜${currentYear}の範囲で入力してください。`;
+    if (monthNumber < 1 || monthNumber > 12) return "月は1〜12の範囲で入力してください。";
+    if (dayNumber < 1 || dayNumber > maxDay) return `${yearNumber}年${monthNumber}月は${maxDay}日までです。`;
+    const birthDate = new Date(yearNumber, monthNumber - 1, dayNumber);
+    if (birthDate > today) return "未来の日付は指定できません。";
+    return "";
+  }, [currentYear, day, dayNumber, maxDay, month, monthNumber, today, year, yearNumber]);
+
+  const result = useMemo(() => {
+    if (error) return null;
+    return calculateAge(yearNumber, monthNumber, dayNumber, today);
+  }, [dayNumber, error, monthNumber, today, yearNumber]);
+
+  function updateYear(value: string) {
+    setYear(value.replace(/[^\d]/g, "").slice(0, 4));
+    setCopied(false);
+  }
+
+  function updateMonth(value: string) {
+    setMonth(value.replace(/[^\d]/g, "").slice(0, 2));
+    setCopied(false);
+  }
+
+  function updateDay(value: string) {
+    setDay(value.replace(/[^\d]/g, "").slice(0, 2));
+    setCopied(false);
+  }
+
+  function applySample(sample: (typeof SAMPLES)[number]) {
+    setYear(sample.year);
+    setMonth(sample.month);
+    setDay(sample.day);
+    setCopied(false);
+  }
+
+  function reset() {
     setYear("");
     setMonth("");
     setDay("");
-    setResult(null);
-    setError("");
-  };
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!result) return;
+    await navigator.clipboard.writeText(buildCopyText(result, year, month, day));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-      {/* Input Section */}
-      <div className="p-6 md:p-8">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5">生年月日を入力</h2>
+    <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,0.85fr)_minmax(360px,0.65fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <h2 className="text-base font-semibold text-slate-950">生年月日</h2>
+          <p className="mt-1 text-sm text-slate-500">満年齢、数え年、干支、星座、次の誕生日までの日数を計算します。</p>
 
-        <div className="flex flex-wrap gap-3 mb-6">
-          {/* Year */}
-          <div className="flex-1 min-w-[110px]">
-            <label className="block text-xs text-gray-500 mb-1 font-medium">年</label>
-            <select
-              value={year}
-              onChange={(e) => { setYear(e.target.value); setDay(""); setResult(null); }}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"
-            >
-              <option value="">年を選択</option>
-              {years.map((y) => (
-                <option key={y} value={y}>{y}年</option>
-              ))}
-            </select>
+          <div className="mt-5 grid grid-cols-3 gap-3">
+            <NumberField label="年" value={year} onChange={updateYear} suffix="年" placeholder="1990" />
+            <NumberField label="月" value={month} onChange={updateMonth} suffix="月" placeholder="4" />
+            <NumberField label="日" value={day} onChange={updateDay} suffix="日" placeholder="1" />
           </div>
 
-          {/* Month */}
-          <div className="flex-1 min-w-[90px]">
-            <label className="block text-xs text-gray-500 mb-1 font-medium">月</label>
-            <select
-              value={month}
-              onChange={(e) => { setMonth(e.target.value); setDay(""); setResult(null); }}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"
-            >
-              <option value="">月を選択</option>
-              {months.map((m) => (
-                <option key={m} value={m}>{m}月</option>
+          <p className={`mt-3 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || `今日（${formatDate(today)}）時点で計算します。2月29日生まれは平年では2月28日を次の誕生日として扱います。`}
+          </p>
+
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
+                <button
+                  key={sample.label}
+                  type="button"
+                  onClick={() => applySample(sample)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-950 hover:bg-slate-50"
+                >
+                  {sample.label}
+                </button>
               ))}
-            </select>
+            </div>
           </div>
 
-          {/* Day */}
-          <div className="flex-1 min-w-[90px]">
-            <label className="block text-xs text-gray-500 mb-1 font-medium">日</label>
-            <select
-              value={day}
-              onChange={(e) => { setDay(e.target.value); setResult(null); }}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:bg-white transition"
-            >
-              <option value="">日を選択</option>
-              {days.map((d) => (
-                <option key={d} value={d}>{d}日</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {error && (
-          <p className="text-sm text-red-500 mb-4">{error}</p>
-        )}
-
-        <div className="flex gap-3">
-          <button
-            onClick={handleCalculate}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 rounded-xl transition text-sm"
-          >
-            計算する
-          </button>
-          {result && (
+          <div className="mt-5 flex flex-wrap gap-2">
             <button
-              onClick={handleReset}
-              className="px-5 bg-gray-100 hover:bg-gray-200 text-gray-600 font-medium py-3 rounded-xl transition text-sm"
+              type="button"
+              onClick={copyResult}
+              disabled={!result}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300"
+            >
+              {copied ? "コピーしました" : "結果をコピー"}
+            </button>
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
             >
               リセット
             </button>
-          )}
-        </div>
-      </div>
-
-      {/* Results Section */}
-      {result && (
-        <div className="border-t border-gray-100 bg-gray-50 p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-gray-800 mb-5">計算結果</h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <ResultCard
-              label="満年齢"
-              value={`${result.満年齢}歳`}
-              sub="現在の年齢"
-              color="blue"
-            />
-            <ResultCard
-              label="数え年"
-              value={`${result.数え年}歳`}
-              sub="伝統的な年齢"
-              color="indigo"
-            />
-            <ResultCard
-              label="干支（えと）"
-              value={result.干支}
-              sub={`${year}年生まれ`}
-              color="green"
-            />
-            <ResultCard
-              label="星座"
-              value={result.星座}
-              sub={`${month}月${day}日生まれ`}
-              color="purple"
-            />
-            <ResultCard
-              label="生まれてから"
-              value={`${result.生まれてから日数.toLocaleString()}日`}
-              sub="経過日数"
-              color="orange"
-            />
-            <ResultCard
-              label="次の誕生日まで"
-              value={`あと${result.次の誕生日まで}日`}
-              sub={result.次の誕生日}
-              color="pink"
-            />
           </div>
         </div>
-      )}
 
-      {/* FAQ */}
-      <div className="border-t border-gray-100 px-6 md:px-8 py-8">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "満年齢と数え年の違いは何ですか？", a: "満年齢は誕生日を迎えるごとに1歳増える現在の公式な年齢です。数え年は生まれた年を1歳として元旦に1歳加算される伝統的な数え方で、満年齢より1〜2歳上になります。" },
-            { q: "うるう年（2月29日）生まれの誕生日はどう計算されますか？", a: "うるう年以外の年は2月28日が誕生日として扱われます。本ツールでは、うるう年でない年の2月29日は自動的に2月28日として計算します。" },
-            { q: "干支の計算はどのように行われていますか？", a: "干支は12年周期で巡ります。1900年を子（ねずみ）年として基準とし、生まれた年から算出しています。例えば2024年は辰（たつ）年です。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
-              <p className="text-sm text-gray-600">A. {a}</p>
+        <aside className="p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">計算結果</h2>
+          {!result ? (
+            <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">入力値を確認してください。</div>
+          ) : (
+            <div className="mt-4 grid gap-3">
+              <ResultCard label="満年齢" value={`${result.fullAge}歳`} note="誕生日を迎えるごとに加算" strong />
+              <ResultCard label="数え年" value={`${result.traditionalAge}歳`} note="生まれた年を1歳として計算" />
+              <ResultCard label="干支" value={result.zodiac} note={`${year}年生まれ`} />
+              <ResultCard label="星座" value={result.constellation} note={`${month}月${day}日生まれ`} />
+              <ResultCard label="生まれてから" value={`${result.livedDays.toLocaleString("ja-JP")}日`} note="日付差で計算" />
+              <ResultCard label="次の誕生日まで" value={`あと${result.daysUntilBirthday}日`} note={formatDate(result.nextBirthdayDate)} />
             </div>
-          ))}
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "満年齢と数え年の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "満年齢は誕生日を迎えるごとに1歳増える現在の公式な年齢です。数え年は生まれた年を1歳として元旦に1歳加算される伝統的な数え方で、満年齢より1〜2歳上になります。" } },
-              { "@type": "Question", "name": "うるう年（2月29日）生まれの誕生日はどう計算されますか？", "acceptedAnswer": { "@type": "Answer", "text": "うるう年以外の年は2月28日が誕生日として扱われます。" } },
-              { "@type": "Question", "name": "干支の計算はどのように行われていますか？", "acceptedAnswer": { "@type": "Answer", "text": "干支は12年周期で巡ります。1900年を子年として基準とし、生まれた年から算出しています。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t border-gray-100">
-          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</Link>
-            <Link href="/wareki-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">和暦・西暦変換</Link>
-          </div>
-        </div>
+          )}
+        </aside>
       </div>
-    </div>
+    </section>
   );
 }
 
-interface ResultCardProps {
-  label: string;
-  value: string;
-  sub: string;
-  color: "blue" | "indigo" | "green" | "purple" | "orange" | "pink";
+function NumberField({ label, value, onChange, suffix, placeholder }: { label: string; value: string; onChange: (value: string) => void; suffix: string; placeholder: string }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-slate-800">{label}</span>
+      <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-950">
+        <input
+          type="text"
+          inputMode="numeric"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="min-w-0 flex-1 px-3 py-2.5 text-right font-mono outline-none"
+        />
+        <span className="border-l border-slate-200 bg-slate-50 px-2 py-2.5 text-sm text-slate-500">{suffix}</span>
+      </div>
+    </label>
+  );
 }
 
-const colorMap: Record<ResultCardProps["color"], { bg: string; text: string; label: string }> = {
-  blue:   { bg: "bg-blue-50",   text: "text-blue-700",   label: "text-blue-500" },
-  indigo: { bg: "bg-indigo-50", text: "text-indigo-700", label: "text-indigo-500" },
-  green:  { bg: "bg-green-50",  text: "text-green-700",  label: "text-green-500" },
-  purple: { bg: "bg-purple-50", text: "text-purple-700", label: "text-purple-500" },
-  orange: { bg: "bg-orange-50", text: "text-orange-700", label: "text-orange-500" },
-  pink:   { bg: "bg-pink-50",   text: "text-pink-700",   label: "text-pink-500" },
-};
-
-function ResultCard({ label, value, sub, color }: ResultCardProps) {
-  const c = colorMap[color];
+function ResultCard({ label, value, note, strong = false }: { label: string; value: string; note: string; strong?: boolean }) {
   return (
-    <div className={`${c.bg} rounded-xl p-4`}>
-      <p className={`text-xs font-medium ${c.label} mb-1`}>{label}</p>
-      <p className={`text-xl font-bold ${c.text} leading-tight`}>{value}</p>
-      <p className="text-xs text-gray-400 mt-1">{sub}</p>
+    <div className={`rounded-xl border p-4 ${strong ? "border-sky-200 bg-sky-50" : "border-slate-200 bg-white"}`}>
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className={`mt-1 font-semibold text-slate-950 ${strong ? "text-3xl" : "text-lg"}`}>{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{note}</p>
     </div>
   );
 }
