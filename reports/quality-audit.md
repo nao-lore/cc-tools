@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 73.3/100
-- Priority tiers: {"B": 52, "C": 90}
+- Average quality score: 73.6/100
+- Priority tiers: {"B": 51, "C": 91}
 
 ## Highest Priority Tools
 
@@ -23,7 +23,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 58 | 65 | `nenrei-keisan` | calculator | Japanese Tools | copy, examples, current_count; penalties: old_count, ad_placeholder |
 | B | 58 | 65 | `sho-kigyo-kyosai` | calculator | Tax Tools | related_links, copy, examples, reset_clear, validation |
 | B | 58 | 65 | `whisper-api-cost` | calculator | AI Tools | related_links, copy, examples, reset_clear, validation |
-| B | 58 | 65 | `zenkaku-hankaku` | converter | Japanese Tools | examples, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 57 | 56 | `kenpei-yoseki` | calculator | Life Tools | copy, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 57 | 62 | `bank-code-lookup` | reference | Japanese Tools | h1, related_links, labels, reset_clear, validation |
 | B | 56 | 51 | `asset-allocation` | utility | Finance | h1, related_links, labels, copy, examples; penalties: ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
+| B | 50 | 50 | `color-palette` | utility | Color Tools | faq, labels, examples, validation, privacy; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
@@ -69,7 +69,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | --- | ---: |
 | calculator | 75.3 |
 | comparison | 75.1 |
-| converter | 79.7 |
+| converter | 81.4 |
 | generator | 69.8 |
 | image | 71 |
 | reference | 74.2 |

@@ -1,15 +1,75 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useCallback } from "react";
+import { useMemo, useState } from "react";
 import { convert, type ConversionOptions } from "../lib/converter";
 
+type Direction = "toHalf" | "toFull";
+
+const SAMPLES = [
+  {
+    label: "住所・電話",
+    text: "東京都渋谷区１－２－３　ＴＥＬ：０３－１２３４－５６７８",
+  },
+  {
+    label: "半角カナ",
+    text: "ﾄｳｷｮｳﾄ ｼﾌﾞﾔｸ ｶﾌﾞｼｷｶﾞｲｼｬ",
+  },
+  {
+    label: "商品名",
+    text: "Ａｐｐｌｅ　Ｗａｔｃｈ（４４ｍｍ）　カラー：ブラック",
+  },
+];
+
+const OPTION_ITEMS: { key: keyof ConversionOptions; label: string; description: string }[] = [
+  { key: "katakana", label: "カタカナ", description: "ア/ｱ、ガ/ｶﾞ など" },
+  { key: "alphanumeric", label: "英数字", description: "ＡＢＣ１２３/ABC123" },
+  { key: "symbol", label: "記号", description: "！？，（）/!?,()" },
+  { key: "space", label: "スペース", description: "全角空白/半角空白" },
+];
+
+function countMatches(text: string) {
+  return {
+    fullwidth: [...text].filter((char) => /[^\u0000-\u00ff]/.test(char)).length,
+    halfwidth: [...text].filter((char) => /[\u0020-\u007e\uff61-\uff9f]/.test(char)).length,
+    fullwidthAlnum: (text.match(/[Ａ-Ｚａ-ｚ０-９]/g) ?? []).length,
+    halfwidthKana: (text.match(/[\uff61-\uff9f]/g) ?? []).length,
+    fullwidthSpaces: (text.match(/\u3000/g) ?? []).length,
+    halfwidthSpaces: (text.match(/ /g) ?? []).length,
+  };
+}
+
+function buildCsv(input: string, output: string, direction: Direction, options: ConversionOptions) {
+  const rows = [
+    ["field", "value"],
+    ["direction", direction],
+    ["katakana", String(options.katakana)],
+    ["alphanumeric", String(options.alphanumeric)],
+    ["symbol", String(options.symbol)],
+    ["space", String(options.space)],
+    ["input", input],
+    ["output", output],
+  ];
+  return rows.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n");
+}
+
+function downloadCsv(text: string) {
+  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "zenkaku-hankaku.csv";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
 export default function Converter() {
-  const [input, setInput] = useState("");
-  const [output, setOutput] = useState("");
-  const [direction, setDirection] = useState<"toHalf" | "toFull">("toHalf");
-  const [autoConvert, setAutoConvert] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [input, setInput] = useState(SAMPLES[0].text);
+  const [direction, setDirection] = useState<Direction>("toHalf");
+  const [autoConvert, setAutoConvert] = useState(true);
+  const [manualOutput, setManualOutput] = useState("");
+  const [copied, setCopied] = useState("");
   const [options, setOptions] = useState<ConversionOptions>({
     katakana: true,
     alphanumeric: true,
@@ -17,244 +77,207 @@ export default function Converter() {
     space: true,
   });
 
-  const doConvert = useCallback(
-    (text: string, dir: "toHalf" | "toFull", opts: ConversionOptions) => {
-      setOutput(convert(text, dir, opts));
-    },
-    []
-  );
+  const computedOutput = useMemo(() => convert(input, direction, options), [direction, input, options]);
+  const effectiveOutput = autoConvert ? computedOutput : manualOutput;
+  const inputStats = useMemo(() => countMatches(input), [input]);
+  const outputStats = useMemo(() => countMatches(effectiveOutput), [effectiveOutput]);
+  const validationError = input.length > 100_000 ? "入力エラー: 10万文字を超えています。ブラウザが重い場合は分割してください。" : "";
 
-  const handleInputChange = (value: string) => {
-    setInput(value);
-    if (autoConvert) {
-      doConvert(value, direction, options);
-    }
-  };
+  function toggleOption(key: keyof ConversionOptions) {
+    setOptions((current) => ({ ...current, [key]: !current[key] }));
+    if (!autoConvert) setManualOutput("");
+    setCopied("");
+  }
 
-  const handleOptionChange = (key: keyof ConversionOptions) => {
-    const newOptions = { ...options, [key]: !options[key] };
-    setOptions(newOptions);
-    if (autoConvert && input) {
-      doConvert(input, direction, newOptions);
-    }
-  };
+  function manualConvert() {
+    setManualOutput(computedOutput);
+    setCopied("");
+  }
 
-  const handleDirectionChange = (dir: "toHalf" | "toFull") => {
-    setDirection(dir);
-    if (autoConvert && input) {
-      doConvert(input, dir, options);
-    }
-  };
-
-  const handleAutoConvertChange = (checked: boolean) => {
-    setAutoConvert(checked);
-    if (checked && input) {
-      doConvert(input, direction, options);
-    }
-  };
-
-  const handleConvert = () => {
-    doConvert(input, direction, options);
-  };
-
-  const handleCopy = async () => {
-    if (!output) return;
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Fallback
-      const textarea = document.createElement("textarea");
-      textarea.value = output;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleClear = () => {
+  function reset() {
     setInput("");
-    setOutput("");
-  };
+    setDirection("toHalf");
+    setAutoConvert(true);
+    setManualOutput("");
+    setOptions({ katakana: true, alphanumeric: true, symbol: true, space: true });
+    setCopied("");
+  }
 
-  const optionItems: { key: keyof ConversionOptions; label: string }[] = [
-    { key: "katakana", label: "カタカナ" },
-    { key: "alphanumeric", label: "英数字" },
-    { key: "symbol", label: "記号" },
-    { key: "space", label: "スペース" },
-  ];
+  async function copy(label: string, value: string) {
+    if (!value) return;
+    await navigator.clipboard.writeText(value);
+    setCopied(label);
+    window.setTimeout(() => setCopied(""), 1600);
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Direction Toggle */}
-      <div className="flex justify-center">
-        <div className="inline-flex rounded-lg border border-border overflow-hidden">
-          <button
-            onClick={() => handleDirectionChange("toHalf")}
-            className={`px-5 py-2.5 text-sm font-medium transition-colors ${
-              direction === "toHalf"
-                ? "bg-primary text-white"
-                : "bg-card text-foreground hover:bg-accent"
-            }`}
-          >
-            全角 → 半角
-          </button>
-          <button
-            onClick={() => handleDirectionChange("toFull")}
-            className={`px-5 py-2.5 text-sm font-medium transition-colors ${
-              direction === "toFull"
-                ? "bg-primary text-white"
-                : "bg-card text-foreground hover:bg-accent"
-            }`}
-          >
-            半角 → 全角
-          </button>
-        </div>
-      </div>
-
-      {/* Conversion Options */}
-      <div className="flex flex-wrap justify-center gap-4">
-        {optionItems.map(({ key, label }) => (
-          <label
-            key={key}
-            className="flex items-center gap-2 cursor-pointer select-none"
-          >
-            <input
-              type="checkbox"
-              checked={options[key]}
-              onChange={() => handleOptionChange(key)}
-              className="w-4 h-4 rounded border-border text-primary focus:ring-primary accent-[var(--primary)]"
-            />
-            <span className="text-sm">{label}</span>
-          </label>
-        ))}
-      </div>
-
-      {/* Input Area */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <label className="text-sm font-medium text-muted">
-            変換前テキスト
-          </label>
-          <span className="text-xs text-muted">
-            {input.length} 文字
-          </span>
-        </div>
-        <textarea
-          value={input}
-          onChange={(e) => handleInputChange(e.target.value)}
-          placeholder="ここにテキストを入力またはペーストしてください..."
-          rows={6}
-          className="w-full rounded-lg border border-border bg-card p-4 text-base resize-y focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors placeholder:text-muted/50"
-        />
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <button
-          onClick={handleConvert}
-          disabled={!input}
-          className="px-8 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary-hover disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-        >
-          変換する
-        </button>
-        <button
-          onClick={handleClear}
-          className="px-6 py-3 border border-border rounded-lg text-sm hover:bg-accent transition-colors"
-        >
-          クリア
-        </button>
-        <label className="flex items-center gap-2 cursor-pointer select-none ml-2">
-          <input
-            type="checkbox"
-            checked={autoConvert}
-            onChange={(e) => handleAutoConvertChange(e.target.checked)}
-            className="w-4 h-4 rounded border-border text-primary focus:ring-primary accent-[var(--primary)]"
-          />
-          <span className="text-sm text-muted">自動変換</span>
-        </label>
-      </div>
-
-      {/* Output Area */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <label className="text-sm font-medium text-muted">
-            変換後テキスト
-          </label>
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-muted">
-              {output.length} 文字
-            </span>
-            <button
-              onClick={handleCopy}
-              disabled={!output}
-              className="inline-flex items-center gap-1.5 px-3 py-1 text-xs border border-border rounded-md hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              {copied ? (
-                <>
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                  コピー済み
-                </>
-              ) : (
-                <>
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                  </svg>
-                  コピー
-                </>
-              )}
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">テキスト変換</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">全角・半角を文字種ごとに切り替えて変換します。</p>
+            </div>
+            <button type="button" onClick={reset} className="w-fit rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50">
+              クリア
             </button>
           </div>
-        </div>
-        <textarea
-          value={output}
-          readOnly
-          placeholder="変換結果がここに表示されます"
-          rows={6}
-          className="w-full rounded-lg border border-border bg-accent/50 p-4 text-base resize-y focus:outline-none placeholder:text-muted/50"
-        />
-      </div>
 
-      {/* FAQ */}
-      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "全角と半角の違いは何ですか？", a: "半角文字は1バイト（英数字・記号など）、全角文字は2バイト（漢字・ひらがな・全角英数など）の幅を持ちます。フォントによっては見た目の幅が2倍になります。フォームへの入力制限やデータ処理で変換が必要になることがあります。" },
-            { q: "全角カタカナと半角カタカナはどう使い分けますか？", a: "現代のWebやシステムでは通常全角カタカナが使われます。半角カタカナは古いシステム（JIS規格）との互換性のために使われることがありますが、文字化けの原因になる場合もあるため、新しいシステムでは全角を推奨します。" },
-            { q: "スペースも変換されますか？", a: "はい。「スペース」のオプションを有効にすると、全角スペース（　）と半角スペース（ ）も変換されます。変換したくない要素はオプションで個別にオフにできます。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
-              <p className="text-sm text-gray-600">A. {a}</p>
+          <div className="mt-5 grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1">
+            {[
+              { value: "toHalf" as const, label: "全角 → 半角" },
+              { value: "toFull" as const, label: "半角 → 全角" },
+            ].map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => {
+                  setDirection(item.value);
+                  if (!autoConvert) setManualOutput("");
+                  setCopied("");
+                }}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold ${direction === item.value ? "bg-white text-slate-950 shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-5 grid gap-2 sm:grid-cols-2">
+            {OPTION_ITEMS.map((item) => (
+              <label key={item.key} className={`rounded-xl border p-3 ${options[item.key] ? "border-slate-950 bg-slate-950 text-white" : "border-slate-200 bg-white text-slate-700"}`}>
+                <span className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    checked={options[item.key]}
+                    onChange={() => toggleOption(item.key)}
+                    className="mt-1 h-4 w-4 rounded border-slate-300"
+                  />
+                  <span>
+                    <span className="block text-sm font-semibold">{item.label}</span>
+                    <span className={`block text-xs leading-5 ${options[item.key] ? "text-white/70" : "text-slate-500"}`}>{item.description}</span>
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+
+          <label className="mt-5 grid gap-2 text-sm font-medium text-slate-700" htmlFor="zenkaku-hankaku-input">
+            変換前テキスト
+            <textarea
+              id="zenkaku-hankaku-input"
+              value={input}
+                onChange={(event) => {
+                  setInput(event.target.value);
+                  if (!autoConvert) setManualOutput("");
+                  setCopied("");
+                }}
+              rows={8}
+              className="resize-y rounded-2xl border border-slate-300 bg-white p-4 text-sm leading-7 outline-none focus:border-slate-900"
+              placeholder="ここにテキストを入力またはペーストしてください"
+              spellCheck={false}
+            />
+          </label>
+
+          <p className={`mt-3 min-h-5 text-sm ${validationError ? "text-red-600" : "text-slate-500"}`}>
+            {validationError || "入力値はブラウザ内で処理され、外部に送信されません。住所、氏名、CSV前処理、フォーム入力用の文字幅調整に使えます。"}
+          </p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input
+                type="checkbox"
+                checked={autoConvert}
+                onChange={(event) => {
+                  setAutoConvert(event.target.checked);
+                  if (event.target.checked) setManualOutput("");
+                  setCopied("");
+                }}
+                className="h-4 w-4 rounded border-slate-300"
+              />
+              自動変換
+            </label>
+            {!autoConvert && (
+              <button type="button" onClick={manualConvert} className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+                変換する
+              </button>
+            )}
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
+                <button
+                  key={sample.label}
+                  type="button"
+                  onClick={() => {
+                    setInput(sample.text);
+                    setCopied("");
+                  }}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {sample.label}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "全角と半角の違いは何ですか？", "acceptedAnswer": { "@type": "Answer", "text": "半角文字は1バイト（英数字・記号など）、全角文字は2バイト（漢字・ひらがな・全角英数など）の幅を持ちます。" } },
-              { "@type": "Question", "name": "全角カタカナと半角カタカナはどう使い分けますか？", "acceptedAnswer": { "@type": "Answer", "text": "現代のWebでは通常全角カタカナが使われます。半角カタカナは古いシステムとの互換性のためですが、文字化けの原因になる場合もあります。" } },
-              { "@type": "Question", "name": "スペースも変換されますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。スペースのオプションを有効にすると全角スペースと半角スペースも変換されます。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t border-gray-100">
-          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/word-counter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">文字数カウンター</Link>
-            <Link href="/text-diff" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">テキスト差分ツール</Link>
           </div>
         </div>
+
+        <div className="min-w-0 bg-slate-50 p-5 sm:p-6">
+          <h2 className="text-base font-semibold text-slate-950">変換結果</h2>
+          <textarea
+            value={effectiveOutput}
+            readOnly
+            rows={8}
+            className="mt-4 w-full resize-y rounded-2xl border border-slate-300 bg-white p-4 text-sm leading-7 text-slate-950 outline-none"
+            placeholder="変換結果がここに表示されます"
+          />
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button type="button" onClick={() => copy("output", effectiveOutput)} disabled={!effectiveOutput} className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300">
+              {copied === "output" ? "コピー済み" : "結果をコピー"}
+            </button>
+            <button type="button" onClick={() => copy("input", input)} disabled={!input} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white disabled:cursor-not-allowed disabled:text-slate-300">
+              入力をコピー
+            </button>
+            <button type="button" onClick={() => downloadCsv(buildCsv(input, effectiveOutput, direction, options))} className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-white">
+              CSVダウンロード
+            </button>
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-semibold text-slate-950">文字幅の変化</h2>
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <StatBlock title="入力" stats={inputStats} />
+              <StatBlock title="出力" stats={outputStats} />
+            </div>
+          </div>
+
+          <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            <p className="font-semibold">変換の注意</p>
+            <p className="mt-1">
+              半角カタカナは古いシステムや一部フォームで使われますが、文字化けの原因になる場合があります。提出先の指定がない場合は全角カタカナが無難です。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatBlock({ title, stats }: { title: string; stats: ReturnType<typeof countMatches> }) {
+  return (
+    <div className="rounded-xl bg-slate-50 p-3">
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{title}</p>
+      <div className="mt-2 grid gap-1 text-xs text-slate-600">
+        <span>全角: <b className="text-slate-950">{stats.fullwidth.toLocaleString()}</b></span>
+        <span>半角: <b className="text-slate-950">{stats.halfwidth.toLocaleString()}</b></span>
+        <span>全角英数: <b className="text-slate-950">{stats.fullwidthAlnum.toLocaleString()}</b></span>
+        <span>半角カナ: <b className="text-slate-950">{stats.halfwidthKana.toLocaleString()}</b></span>
+        <span>全角空白: <b className="text-slate-950">{stats.fullwidthSpaces.toLocaleString()}</b></span>
+        <span>半角空白: <b className="text-slate-950">{stats.halfwidthSpaces.toLocaleString()}</b></span>
       </div>
     </div>
   );
