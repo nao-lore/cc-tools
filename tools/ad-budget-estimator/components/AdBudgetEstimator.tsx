@@ -1,557 +1,354 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
-type Mode = "forward" | "budget" | "cpa";
+type Mode = "reverse" | "budget" | "roas";
 
-function formatJPY(n: number): string {
-  return Math.round(n).toLocaleString("ja-JP");
+const EXAMPLES = [
+  { label: "B2Bリード", cv: "40", cpa: "12000", cvr: "2", ctr: "1.2", budget: "480000", cpc: "240", aov: "200000", closeRate: "15" },
+  { label: "EC販売", cv: "300", cpa: "1800", cvr: "3.5", ctr: "1.8", budget: "540000", cpc: "63", aov: "8000", closeRate: "100" },
+  { label: "資料請求", cv: "120", cpa: "5000", cvr: "2.5", ctr: "1", budget: "600000", cpc: "125", aov: "50000", closeRate: "10" },
+];
+
+function parseNumber(value: string) {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function formatNum(n: number, digits = 1): string {
-  return n.toLocaleString("ja-JP", {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  });
+function cleanNumericInput(value: string) {
+  return value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1");
 }
 
-function formatBig(n: number): string {
-  if (n >= 10000) return `${formatNum(n / 10000, 1)}万`;
-  return Math.round(n).toLocaleString("ja-JP");
+function formatYen(value: number) {
+  return `¥${Math.round(value).toLocaleString("ja-JP")}`;
 }
 
-interface InputFieldProps {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder?: string;
-  suffix?: string;
-  step?: string;
+function formatCount(value: number) {
+  if (value >= 10000) return `${(value / 10000).toFixed(1)}万`;
+  return Math.round(value).toLocaleString("ja-JP");
 }
 
-function InputField({ label, value, onChange, placeholder, suffix, step = "1" }: InputFieldProps) {
-  return (
-    <div>
-      <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
-      <div className="flex items-center gap-2">
-        <input
-          type="number"
-          min="0"
-          step={step}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
-        {suffix && (
-          <span className="text-xs text-gray-500 whitespace-nowrap">{suffix}</span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-interface FunnelBarProps {
-  label: string;
-  value: number;
-  format: (n: number) => string;
-  unit: string;
-  color: string;
-  pct: number;
-}
-
-function FunnelBar({ label, value, format, unit, color, pct }: FunnelBarProps) {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="w-24 text-right text-xs text-gray-500 shrink-0">{label}</div>
-      <div className="flex-1 bg-gray-100 rounded-full h-6 overflow-hidden">
-        <div
-          className={`h-full rounded-full flex items-center pl-3 text-xs font-semibold text-white transition-all duration-300 ${color}`}
-          style={{ width: `${Math.max(pct, 4)}%` }}
-        />
-      </div>
-      <div className="w-32 text-xs font-bold text-gray-700 shrink-0">
-        {isFinite(value) && value >= 0 ? `${format(value)}${unit}` : "—"}
-      </div>
-    </div>
-  );
-}
-
-interface ResultCardProps {
-  label: string;
-  value: string;
-  sub?: string;
-  highlight?: "green" | "blue" | "orange" | "default";
-}
-
-function ResultCard({ label, value, sub, highlight = "default" }: ResultCardProps) {
-  const colors: Record<string, string> = {
-    green: "bg-green-50 border-green-200",
-    blue: "bg-blue-50 border-blue-200",
-    orange: "bg-orange-50 border-orange-200",
-    default: "bg-gray-50 border-gray-200",
-  };
-  const textColors: Record<string, string> = {
-    green: "text-green-700",
-    blue: "text-blue-700",
-    orange: "text-orange-700",
-    default: "text-gray-800",
-  };
-  return (
-    <div className={`rounded-xl border px-4 py-3 ${colors[highlight]}`}>
-      <p className="text-xs text-gray-500 mb-1">{label}</p>
-      <p className={`text-xl font-bold ${textColors[highlight]}`}>{value}</p>
-      {sub && <p className="text-[10px] text-gray-400 mt-0.5">{sub}</p>}
-    </div>
-  );
+function formatPct(value: number) {
+  return `${value.toFixed(1)}%`;
 }
 
 export default function AdBudgetEstimator() {
-  const [mode, setMode] = useState<Mode>("forward");
-
-  // Forward mode inputs
+  const [mode, setMode] = useState<Mode>("reverse");
   const [targetCv, setTargetCv] = useState("100");
   const [targetCpa, setTargetCpa] = useState("5000");
   const [cvr, setCvr] = useState("2");
   const [ctr, setCtr] = useState("1");
-
-  // Reverse: budget → CV
   const [budget, setBudget] = useState("500000");
   const [cpc, setCpc] = useState("250");
-  const [rCvr, setRCvr] = useState("2");
+  const [avgOrderValue, setAvgOrderValue] = useState("20000");
+  const [closeRate, setCloseRate] = useState("100");
+  const [copied, setCopied] = useState(false);
 
-  // Reverse: CPA → budget
-  const [cCv, setCCv] = useState("100");
-  const [cCpa, setCCpa] = useState("5000");
-  const [cCvr, setCCvr] = useState("2");
-  const [cCtr, setCCtr] = useState("1");
+  const result = useMemo(() => {
+    const cv = parseNumber(targetCv);
+    const cpa = parseNumber(targetCpa);
+    const cvrRate = parseNumber(cvr) / 100;
+    const ctrRate = parseNumber(ctr) / 100;
+    const budgetValue = parseNumber(budget);
+    const cpcValue = parseNumber(cpc);
+    const aov = parseNumber(avgOrderValue);
+    const close = parseNumber(closeRate) / 100;
 
-  const forwardResult = useMemo(() => {
-    const cv = parseFloat(targetCv);
-    const cpa = parseFloat(targetCpa);
-    const cvrPct = parseFloat(cvr) / 100;
-    const ctrPct = parseFloat(ctr) / 100;
+    if (mode === "reverse") {
+      if ([cv, cpa, cvrRate, ctrRate].some((value) => value <= 0)) return null;
+      const clicks = cv / cvrRate;
+      const impressions = clicks / ctrRate;
+      const allowedCpc = cpa * cvrRate;
+      const requiredBudget = cv * cpa;
+      return { cv, clicks, impressions, cpa, cpc: allowedCpc, budget: requiredBudget, revenue: cv * aov * close };
+    }
 
-    if ([cv, cpa, cvrPct, ctrPct].some((v) => isNaN(v) || v <= 0)) return null;
+    if (mode === "budget") {
+      if ([budgetValue, cpcValue, cvrRate, ctrRate].some((value) => value <= 0)) return null;
+      const clicks = budgetValue / cpcValue;
+      const cvFromBudget = clicks * cvrRate;
+      const impressions = clicks / ctrRate;
+      const cpaFromBudget = budgetValue / cvFromBudget;
+      return { cv: cvFromBudget, clicks, impressions, cpa: cpaFromBudget, cpc: cpcValue, budget: budgetValue, revenue: cvFromBudget * aov * close };
+    }
 
-    const clicks = cv / cvrPct;
-    const imp = clicks / ctrPct;
-    const calcCpc = cpa * cvrPct;
-    const totalBudget = clicks * calcCpc;
+    if ([budgetValue, cpcValue, cvrRate, ctrRate, aov, close].some((value) => value <= 0)) return null;
+    const clicks = budgetValue / cpcValue;
+    const cvFromBudget = clicks * cvrRate;
+    const impressions = clicks / ctrRate;
+    const revenue = cvFromBudget * aov * close;
+    const roas = budgetValue > 0 ? (revenue / budgetValue) * 100 : 0;
+    const cpaFromBudget = budgetValue / cvFromBudget;
+    return { cv: cvFromBudget, clicks, impressions, cpa: cpaFromBudget, cpc: cpcValue, budget: budgetValue, revenue, roas };
+  }, [avgOrderValue, budget, closeRate, cpc, ctr, cvr, mode, targetCpa, targetCv]);
 
-    return { cv, clicks, imp, calcCpc, totalBudget };
-  }, [targetCv, targetCpa, cvr, ctr]);
+  const error = useMemo(() => {
+    if (!result) return "0より大きい数値を入力してください。";
+    if (parseNumber(cvr) > 100) return "CVRは100%以下で入力してください。";
+    if (parseNumber(ctr) > 100) return "CTRは100%以下で入力してください。";
+    if (parseNumber(closeRate) > 100) return "成約率は100%以下で入力してください。";
+    return "";
+  }, [closeRate, ctr, cvr, result]);
 
-  const budgetResult = useMemo(() => {
-    const b = parseFloat(budget);
-    const c = parseFloat(cpc);
-    const cvrPct = parseFloat(rCvr) / 100;
+  function update(setter: (value: string) => void, value: string) {
+    setter(cleanNumericInput(value));
+    setCopied(false);
+  }
 
-    if ([b, c, cvrPct].some((v) => isNaN(v) || v <= 0)) return null;
+  function applyExample(example: (typeof EXAMPLES)[number]) {
+    setTargetCv(example.cv);
+    setTargetCpa(example.cpa);
+    setCvr(example.cvr);
+    setCtr(example.ctr);
+    setBudget(example.budget);
+    setCpc(example.cpc);
+    setAvgOrderValue(example.aov);
+    setCloseRate(example.closeRate);
+    setCopied(false);
+  }
 
-    const clicks = b / c;
-    const cv = clicks * cvrPct;
-    const cpa = b / cv;
+  function reset() {
+    setMode("reverse");
+    setTargetCv("100");
+    setTargetCpa("5000");
+    setCvr("2");
+    setCtr("1");
+    setBudget("500000");
+    setCpc("250");
+    setAvgOrderValue("20000");
+    setCloseRate("100");
+    setCopied(false);
+  }
 
-    return { clicks, cv, cpa };
-  }, [budget, cpc, rCvr]);
-
-  const cpaResult = useMemo(() => {
-    const cv = parseFloat(cCv);
-    const cpa = parseFloat(cCpa);
-    const cvrPct = parseFloat(cCvr) / 100;
-    const ctrPct = parseFloat(cCtr) / 100;
-
-    if ([cv, cpa, cvrPct, ctrPct].some((v) => isNaN(v) || v <= 0)) return null;
-
-    const clicks = cv / cvrPct;
-    const imp = clicks / ctrPct;
-    const calcCpc = cpa * cvrPct;
-    const totalBudget = clicks * calcCpc;
-
-    return { clicks, imp, calcCpc, totalBudget };
-  }, [cCv, cCpa, cCvr, cCtr]);
-
-  const TABS: { key: Mode; label: string }[] = [
-    { key: "forward", label: "予算を逆算" },
-    { key: "budget", label: "予算→CV数" },
-    { key: "cpa", label: "CPA→予算" },
-  ];
+  async function copyResult() {
+    if (!result) return;
+    const lines = [
+      `広告予算: ${formatYen(result.budget)}`,
+      `CV: ${formatCount(result.cv)}件`,
+      `CPA: ${formatYen(result.cpa)}`,
+      `クリック: ${formatCount(result.clicks)}回`,
+      `インプレッション: ${formatCount(result.impressions)}imp`,
+      `CPC: ${formatYen(result.cpc)}`,
+      "※概算。媒体最適化、学習期間、計測ずれ、税抜/税込、手数料は別途確認。",
+    ];
+    if (mode === "roas") {
+      lines.splice(6, 0, `売上目安: ${formatYen(result.revenue)}`);
+    }
+    await navigator.clipboard.writeText(lines.join("\n"));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-5">
-      {/* Mode tabs */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm px-6 py-5 space-y-5">
-        <div className="flex gap-2 flex-wrap">
-          {TABS.map((t) => (
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">広告条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                CV、CPA、CVR、CTR、CPCから広告予算とファネル規模を概算します。
+              </p>
+            </div>
             <button
-              key={t.key}
-              onClick={() => setMode(t.key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                mode === t.key
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
+              type="button"
+              onClick={reset}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
-              {t.label}
+              クリア
             </button>
-          ))}
+          </div>
+
+          <div className="mt-5 grid grid-cols-3 gap-2 rounded-xl border border-slate-200 bg-slate-50 p-1">
+            {[
+              { key: "reverse", label: "予算逆算" },
+              { key: "budget", label: "予算からCV" },
+              { key: "roas", label: "ROAS" },
+            ].map((item) => (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => setMode(item.key as Mode)}
+                className={`rounded-lg px-2 py-2 text-sm font-semibold ${
+                  mode === item.key ? "bg-slate-950 text-white shadow-sm" : "text-slate-600 hover:bg-white"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            {mode === "reverse" && (
+              <>
+                <NumberInput id="target-cv" label="目標CV数" value={targetCv} unit="件" onChange={(value) => update(setTargetCv, value)} />
+                <NumberInput id="target-cpa" label="目標CPA" value={targetCpa} unit="円" onChange={(value) => update(setTargetCpa, value)} />
+              </>
+            )}
+
+            {(mode === "budget" || mode === "roas") && (
+              <>
+                <NumberInput id="ad-budget" label="広告予算" value={budget} unit="円" onChange={(value) => update(setBudget, value)} />
+                <NumberInput id="ad-cpc" label="CPC" value={cpc} unit="円" onChange={(value) => update(setCpc, value)} />
+              </>
+            )}
+
+            <NumberInput id="ad-cvr" label="CVR" value={cvr} unit="%" onChange={(value) => update(setCvr, value)} />
+            <NumberInput id="ad-ctr" label="CTR" value={ctr} unit="%" onChange={(value) => update(setCtr, value)} />
+
+            {mode === "roas" && (
+              <>
+                <NumberInput id="avg-order-value" label="平均売上単価" value={avgOrderValue} unit="円" onChange={(value) => update(setAvgOrderValue, value)} />
+                <NumberInput id="close-rate" label="成約率" value={closeRate} unit="%" onChange={(value) => update(setCloseRate, value)} />
+              </>
+            )}
+          </div>
+
+          <p className={`mt-3 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || "計算はブラウザ上で完結し、入力値は外部に送信されません。"}
+          </p>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => applyExample(example)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            媒体の学習期間、入札戦略、重複計測、税抜/税込、制作費、LP改善費、代理店手数料は含みません。実績値でこまめに更新してください。
+          </div>
         </div>
 
-        {/* Forward mode: CV数・CPA・CVR・CTR → 予算 */}
-        {mode === "forward" && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <InputField
-                label="目標CV数"
-                value={targetCv}
-                onChange={setTargetCv}
-                placeholder="100"
-                suffix="件"
-              />
-              <InputField
-                label="目標CPA"
-                value={targetCpa}
-                onChange={setTargetCpa}
-                placeholder="5000"
-                suffix="円"
-              />
-              <InputField
-                label="CVR"
-                value={cvr}
-                onChange={setCvr}
-                placeholder="2"
-                suffix="%"
-                step="0.1"
-              />
-              <InputField
-                label="CTR"
-                value={ctr}
-                onChange={setCtr}
-                placeholder="1"
-                suffix="%"
-                step="0.1"
-              />
-            </div>
-
-            {forwardResult ? (
-              <>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <ResultCard
-                    label="必要クリック数"
-                    value={`${formatBig(forwardResult.clicks)}回`}
-                    sub={`CV${formatNum(forwardResult.cv, 0)}件 ÷ CVR${cvr}%`}
-                    highlight="blue"
-                  />
-                  <ResultCard
-                    label="必要インプレッション"
-                    value={`${formatBig(forwardResult.imp)}imp`}
-                    sub={`クリック数 ÷ CTR${ctr}%`}
-                    highlight="blue"
-                  />
-                  <ResultCard
-                    label="目安CPC"
-                    value={`¥${formatJPY(forwardResult.calcCpc)}`}
-                    sub={`CPA × CVR`}
-                    highlight="orange"
-                  />
-                  <ResultCard
-                    label="必要予算"
-                    value={`¥${formatJPY(forwardResult.totalBudget)}`}
-                    sub={`クリック数 × CPC`}
-                    highlight="green"
-                  />
-                </div>
-
-                {/* Funnel */}
-                <div className="bg-gray-50 rounded-xl border border-gray-200 px-5 py-4 space-y-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    広告ファネル
-                  </p>
-                  <FunnelBar
-                    label="インプレッション"
-                    value={forwardResult.imp}
-                    format={formatBig}
-                    unit="imp"
-                    color="bg-purple-400"
-                    pct={100}
-                  />
-                  <FunnelBar
-                    label="クリック"
-                    value={forwardResult.clicks}
-                    format={formatBig}
-                    unit="回"
-                    color="bg-blue-500"
-                    pct={(forwardResult.clicks / forwardResult.imp) * 100 * 10}
-                  />
-                  <FunnelBar
-                    label="CV"
-                    value={forwardResult.cv}
-                    format={(n) => String(Math.round(n))}
-                    unit="件"
-                    color="bg-green-500"
-                    pct={(forwardResult.cv / forwardResult.imp) * 100 * 100}
-                  />
-                </div>
-              </>
-            ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 px-5 py-6 text-center text-sm text-gray-400">
-                有効な値を入力してください
+        <div className="p-5 sm:p-6">
+          {!result ? (
+            <div className="flex min-h-[420px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 text-center">
+              <div>
+                <p className="text-sm font-semibold text-slate-800">入力値を確認してください</p>
+                <p className="mt-1 text-sm text-slate-500">0より大きい数値を入れると結果が表示されます。</p>
               </div>
-            )}
-
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 space-y-1.5 text-sm text-gray-600">
-              <p className="font-semibold text-gray-700 text-xs uppercase tracking-wide">計算式</p>
-              <p>必要クリック数 = 目標CV数 ÷ CVR</p>
-              <p>必要インプレッション = クリック数 ÷ CTR</p>
-              <p>目安CPC = 目標CPA × CVR</p>
-              <p>必要予算 = クリック数 × CPC</p>
             </div>
-          </>
-        )}
-
-        {/* Budget → CV mode */}
-        {mode === "budget" && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              <InputField
-                label="広告予算"
-                value={budget}
-                onChange={setBudget}
-                placeholder="500000"
-                suffix="円"
-              />
-              <InputField
-                label="CPC（クリック単価）"
-                value={cpc}
-                onChange={setCpc}
-                placeholder="250"
-                suffix="円"
-              />
-              <InputField
-                label="CVR"
-                value={rCvr}
-                onChange={setRCvr}
-                placeholder="2"
-                suffix="%"
-                step="0.1"
-              />
-            </div>
-
-            {budgetResult ? (
-              <>
-                <div className="grid grid-cols-3 gap-3">
-                  <ResultCard
-                    label="獲得クリック数"
-                    value={`${formatBig(budgetResult.clicks)}回`}
-                    sub={`予算 ÷ CPC`}
-                    highlight="blue"
-                  />
-                  <ResultCard
-                    label="獲得CV数"
-                    value={`${Math.round(budgetResult.cv)}件`}
-                    sub={`クリック × CVR`}
-                    highlight="green"
-                  />
-                  <ResultCard
-                    label="実績CPA"
-                    value={`¥${formatJPY(budgetResult.cpa)}`}
-                    sub={`予算 ÷ CV数`}
-                    highlight="orange"
-                  />
-                </div>
-
-                <div className="bg-gray-50 rounded-xl border border-gray-200 px-5 py-4 space-y-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    広告ファネル
-                  </p>
-                  <FunnelBar
-                    label="クリック"
-                    value={budgetResult.clicks}
-                    format={formatBig}
-                    unit="回"
-                    color="bg-blue-500"
-                    pct={100}
-                  />
-                  <FunnelBar
-                    label="CV"
-                    value={budgetResult.cv}
-                    format={(n) => String(Math.round(n))}
-                    unit="件"
-                    color="bg-green-500"
-                    pct={parseFloat(rCvr)}
-                  />
-                </div>
-              </>
-            ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 px-5 py-6 text-center text-sm text-gray-400">
-                有効な値を入力してください
+          ) : (
+            <div className="space-y-5">
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                <p className="text-sm font-semibold text-emerald-800">広告予算</p>
+                <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-emerald-950">
+                  {formatYen(result.budget)}
+                </p>
+                <p className="mt-2 text-sm text-emerald-800">
+                  CPAとCV目標、または予算入力から算出した概算です。
+                </p>
               </div>
-            )}
 
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 space-y-1.5 text-sm text-gray-600">
-              <p className="font-semibold text-gray-700 text-xs uppercase tracking-wide">計算式</p>
-              <p>獲得クリック数 = 予算 ÷ CPC</p>
-              <p>獲得CV数 = クリック数 × CVR</p>
-              <p>実績CPA = 予算 ÷ CV数</p>
-            </div>
-          </>
-        )}
-
-        {/* CPA → budget mode */}
-        {mode === "cpa" && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <InputField
-                label="目標CV数"
-                value={cCv}
-                onChange={setCCv}
-                placeholder="100"
-                suffix="件"
-              />
-              <InputField
-                label="目標CPA"
-                value={cCpa}
-                onChange={setCCpa}
-                placeholder="5000"
-                suffix="円"
-              />
-              <InputField
-                label="CVR"
-                value={cCvr}
-                onChange={setCCvr}
-                placeholder="2"
-                suffix="%"
-                step="0.1"
-              />
-              <InputField
-                label="CTR"
-                value={cCtr}
-                onChange={setCCtr}
-                placeholder="1"
-                suffix="%"
-                step="0.1"
-              />
-            </div>
-
-            {cpaResult ? (
-              <>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  <ResultCard
-                    label="必要クリック数"
-                    value={`${formatBig(cpaResult.clicks)}回`}
-                    highlight="blue"
-                  />
-                  <ResultCard
-                    label="必要インプレッション"
-                    value={`${formatBig(cpaResult.imp)}imp`}
-                    highlight="blue"
-                  />
-                  <ResultCard
-                    label="許容CPC上限"
-                    value={`¥${formatJPY(cpaResult.calcCpc)}`}
-                    sub="この単価以内に抑える"
-                    highlight="orange"
-                  />
-                  <ResultCard
-                    label="必要予算"
-                    value={`¥${formatJPY(cpaResult.totalBudget)}`}
-                    highlight="green"
-                  />
-                </div>
-
-                <div className="bg-gray-50 rounded-xl border border-gray-200 px-5 py-4 space-y-3">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    広告ファネル
-                  </p>
-                  <FunnelBar
-                    label="インプレッション"
-                    value={cpaResult.imp}
-                    format={formatBig}
-                    unit="imp"
-                    color="bg-purple-400"
-                    pct={100}
-                  />
-                  <FunnelBar
-                    label="クリック"
-                    value={cpaResult.clicks}
-                    format={formatBig}
-                    unit="回"
-                    color="bg-blue-500"
-                    pct={(cpaResult.clicks / cpaResult.imp) * 100 * 10}
-                  />
-                  <FunnelBar
-                    label="CV"
-                    value={parseFloat(cCv)}
-                    format={(n) => String(Math.round(n))}
-                    unit="件"
-                    color="bg-green-500"
-                    pct={(parseFloat(cCv) / cpaResult.imp) * 100 * 100}
-                  />
-                </div>
-              </>
-            ) : (
-              <div className="rounded-xl border border-dashed border-gray-300 px-5 py-6 text-center text-sm text-gray-400">
-                有効な値を入力してください
+              <div className="grid gap-3 sm:grid-cols-2">
+                <SummaryCard label="CV数" value={`${formatCount(result.cv)}件`} note="想定コンバージョン数" />
+                <SummaryCard label="CPA" value={formatYen(result.cpa)} note="広告費 ÷ CV" />
+                <SummaryCard label="クリック" value={`${formatCount(result.clicks)}回`} note="CV ÷ CVR" />
+                <SummaryCard label="インプレッション" value={`${formatCount(result.impressions)}imp`} note="クリック ÷ CTR" />
+                <SummaryCard label="CPC" value={formatYen(result.cpc)} note="クリック単価" />
+                {mode === "roas" && (
+                  <SummaryCard label="売上目安" value={formatYen(result.revenue)} note="平均売上単価と成約率から概算" />
+                )}
+                {typeof result.roas === "number" && (
+                  <SummaryCard label="ROAS" value={formatPct(result.roas)} note="売上 ÷ 広告費" />
+                )}
               </div>
-            )}
 
-            <div className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 space-y-1.5 text-sm text-gray-600">
-              <p className="font-semibold text-gray-700 text-xs uppercase tracking-wide">計算式</p>
-              <p>必要クリック数 = 目標CV数 ÷ CVR</p>
-              <p>必要インプレッション = クリック数 ÷ CTR</p>
-              <p>許容CPC上限 = 目標CPA × CVR</p>
-              <p>必要予算 = クリック数 × CPC上限</p>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <h2 className="text-sm font-semibold text-slate-950">ファネル</h2>
+                <div className="mt-4 space-y-3">
+                  <FunnelRow label="インプレッション" value={`${formatCount(result.impressions)}imp`} width={100} tone="bg-violet-500" />
+                  <FunnelRow label="クリック" value={`${formatCount(result.clicks)}回`} width={Math.min(100, Math.max(8, (result.clicks / result.impressions) * 1000))} tone="bg-sky-500" />
+                  <FunnelRow label="CV" value={`${formatCount(result.cv)}件`} width={Math.min(100, Math.max(8, (result.cv / result.clicks) * 100))} tone="bg-emerald-500" />
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={copyResult}
+                  className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                >
+                  {copied ? "コピーしました" : "結果をコピー"}
+                </button>
+                <button
+                  type="button"
+                  onClick={reset}
+                  className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  入力をクリア
+                </button>
+              </div>
             </div>
-          </>
-        )}
-      </div>
-
-      {/* Ad placeholder */}
-      <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-xs text-gray-300">
-        広告スペース
-      </div>
-    
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">この広告予算逆算ツールツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">目標CV数・CPA・CTRから必要インプレッション・予算を逆算。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
+          )}
         </div>
-      </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この広告予算逆算ツールツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "目標CV数・CPA・CTRから必要インプレッション・予算を逆算。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "広告予算逆算ツール",
-  "description": "目標CV数・CPA・CTRから必要インプレッション・予算を逆算",
-  "url": "https://tools.loresync.dev/ad-budget-estimator",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
-        }}
-      />
       </div>
+    </section>
+  );
+}
+
+function NumberInput({
+  id,
+  label,
+  value,
+  unit,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  unit: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+        />
+        <span className="flex min-w-14 items-center justify-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">
+          {unit}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function SummaryCard({ label, value, note }: { label: string; value: string; note: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 font-mono text-xl font-semibold text-slate-950">{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{note}</p>
+    </div>
+  );
+}
+
+function FunnelRow({ label, value, width, tone }: { label: string; value: string; width: number; tone: string }) {
+  return (
+    <div className="grid grid-cols-[92px_1fr_110px] items-center gap-3">
+      <div className="text-right text-xs text-slate-500">{label}</div>
+      <div className="h-4 overflow-hidden rounded-full bg-slate-200">
+        <div className={`h-full rounded-full ${tone}`} style={{ width: `${width}%` }} />
+      </div>
+      <div className="text-xs font-semibold text-slate-700">{value}</div>
+    </div>
   );
 }
