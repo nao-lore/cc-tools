@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 79.2/100
-- Priority tiers: {"B": 29, "C": 113}
+- Average quality score: 79.5/100
+- Priority tiers: {"B": 28, "C": 114}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
 | B | 52 | 65 | `context-window-visualizer` | utility | AI Tools | related_links, labels, copy, reset_clear, validation |
 | B | 51 | 61 | `cdn-pricing-comparison` | comparison | SaaS Pricing | related_links, copy, examples, reset_clear, validation; penalties: any_type |
 | B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 45 | 65 | `github-actions-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `video-bitrate` | calculator | Creator Tools | related_links, copy, examples, validation, privacy |
 | C | 44 | 56 | `border-radius` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, any_type |
+| C | 44 | 56 | `word-counter` | utility | Text & String Tools | labels, examples, validation, current_count; penalties: old_count, ad_placeholder, any_type |
 
 ## Strongest Current Tools
 
@@ -54,6 +54,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
+| 100 | `chmod-calculator` | calculator | Developer Tools |
 | 100 | `denki-keisan` | calculator | Japanese Tools |
 | 100 | `eigyoubi` | calculator | Japanese Tools |
 | 100 | `elevenlabs-pricing` | calculator | AI Tools |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `gacha-cost-ceiling` | calculator | Game Tools |
 | 100 | `hash-generator` | generator | Encoding & Decoding |
 | 100 | `hebon-romaji` | converter | Japanese Tools |
-| 100 | `image-compressor` | image | Image Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 83.5 |
+| calculator | 84.2 |
 | comparison | 78.2 |
 | converter | 81.4 |
 | generator | 83 |
@@ -90,7 +90,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Labor Tools | 69.5 | 4 |
 | SaaS Pricing | 70.6 | 13 |
 | EC Tools | 72.4 | 5 |
-| Developer Tools | 73.5 | 8 |
+| Data Format Tools | 76.3 | 6 |
 
 ## Next Factory Steps
 
