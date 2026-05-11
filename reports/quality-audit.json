@@ -1,14 +1,14 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 79.0,
+    "averageQualityScore": 79.2,
     "priorityTierCounts": {
-      "B": 30,
-      "C": 112
+      "B": 29,
+      "C": 113
     },
     "averageByArchetype": {
       "calculator": 83.5,
-      "comparison": 75.1,
+      "comparison": 78.2,
       "converter": 81.4,
       "generator": 83,
       "image": 88.2,
@@ -42,11 +42,6 @@
         "toolCount": 1
       },
       {
-        "category": "SaaS Pricing",
-        "averageQualityScore": 67.5,
-        "toolCount": 13
-      },
-      {
         "category": "Time & Date",
         "averageQualityScore": 68,
         "toolCount": 2
@@ -65,6 +60,11 @@
         "category": "Labor Tools",
         "averageQualityScore": 69.5,
         "toolCount": 4
+      },
+      {
+        "category": "SaaS Pricing",
+        "averageQualityScore": 70.6,
+        "toolCount": 13
       },
       {
         "category": "EC Tools",
@@ -193,48 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "neon-planetscale-comparison",
-      "name": "Neon / PlanetScale / Turso 比較",
-      "description": "モダンサーバーレスDB 3社の料金・機能・レイテンシを横断比較",
-      "market": "JP",
-      "category": "SaaS Pricing",
-      "archetype": "comparison",
-      "qualityScore": 60,
-      "priorityScore": 52,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "download_export",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "related_links",
-        "labels",
-        "copy",
-        "examples",
-        "reset_clear",
-        "validation",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 2,
-        "buttonCount": 2,
-        "inputCount": 1,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 697
-      }
-    },
     {
       "slug": "chmod-calculator",
       "name": "Chmod Calculator",
@@ -5805,6 +5763,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 475
+      }
+    },
+    {
+      "slug": "neon-planetscale-comparison",
+      "name": "Neon / PlanetScale / Turso 比較",
+      "description": "モダンサーバーレスDB 3社の料金・機能・レイテンシを横断比較",
+      "market": "JP",
+      "category": "SaaS Pricing",
+      "archetype": "comparison",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 8,
+        "buttonCount": 6,
+        "inputCount": 1,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 692
       }
     },
     {

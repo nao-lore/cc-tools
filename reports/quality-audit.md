@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 79.0/100
-- Priority tiers: {"B": 30, "C": 112}
+- Average quality score: 79.2/100
+- Priority tiers: {"B": 29, "C": 113}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
 | B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
 | B | 52 | 65 | `context-window-visualizer` | utility | AI Tools | related_links, labels, copy, reset_clear, validation |
 | B | 51 | 61 | `cdn-pricing-comparison` | comparison | SaaS Pricing | related_links, copy, examples, reset_clear, validation; penalties: any_type |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 45 | 65 | `cloudflare-workers-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `github-actions-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `video-bitrate` | calculator | Creator Tools | related_links, copy, examples, validation, privacy |
+| C | 44 | 56 | `border-radius` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
@@ -68,7 +68,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Type | Average quality |
 | --- | ---: |
 | calculator | 83.5 |
-| comparison | 75.1 |
+| comparison | 78.2 |
 | converter | 81.4 |
 | generator | 83 |
 | image | 88.2 |
@@ -84,11 +84,11 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | CSS Tools | 62 | 8 |
 | Creator Tools | 67 | 2 |
 | Music | 67 | 1 |
-| SaaS Pricing | 67.5 | 13 |
 | Time & Date | 68 | 2 |
 | Minifier Tools | 68 | 2 |
 | Design Tools | 69 | 1 |
 | Labor Tools | 69.5 | 4 |
+| SaaS Pricing | 70.6 | 13 |
 | EC Tools | 72.4 | 5 |
 | Developer Tools | 73.5 | 8 |
 
