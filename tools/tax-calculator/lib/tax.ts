@@ -9,7 +9,7 @@ export interface TaxEntry {
   id: string;
   label: string;
   amount: string; // 入力値は文字列で管理
-  taxMode: "inclusive" | "exclusive"; // 税込 / 税抜
+  taxMode: "exclusive" | "inclusive-separated" | "inclusive-gross";
 }
 
 export interface TaxResult {
@@ -19,6 +19,8 @@ export interface TaxResult {
   consumptionTax: number;
   /** 報酬額（税込） */
   grossAmount: number;
+  /** 源泉徴収の対象額 */
+  withholdingBase: number;
   /** 源泉徴収税額（税抜報酬に対して計算） */
   withholdingTax: number;
   /** 差引支払額（税込報酬 - 源泉徴収税） */
@@ -46,26 +48,36 @@ export function calculateEntry(entry: TaxEntry): TaxResult {
   let netAmount: number;
   let consumptionTax: number;
   let grossAmount: number;
+  let withholdingBase: number;
 
-  if (entry.taxMode === "inclusive") {
-    // 税込入力 → 税抜を逆算
+  if (entry.taxMode === "inclusive-separated") {
+    // 税込入力。請求書等で報酬額と消費税額が明確に区分されている前提。
     grossAmount = rawAmount;
     netAmount = Math.round(rawAmount / (1 + CONSUMPTION_TAX_RATE));
     consumptionTax = grossAmount - netAmount;
+    withholdingBase = netAmount;
+  } else if (entry.taxMode === "inclusive-gross") {
+    // 税込総額のみで消費税額が明確に区分されていない前提。
+    grossAmount = rawAmount;
+    netAmount = Math.round(rawAmount / (1 + CONSUMPTION_TAX_RATE));
+    consumptionTax = grossAmount - netAmount;
+    withholdingBase = grossAmount;
   } else {
-    // 税抜入力
+    // 税抜入力。請求書等で消費税額を明確に区分する前提。
     netAmount = rawAmount;
     consumptionTax = Math.round(rawAmount * CONSUMPTION_TAX_RATE);
     grossAmount = netAmount + consumptionTax;
+    withholdingBase = netAmount;
   }
 
-  const withholdingTax = calculateWithholding(netAmount);
+  const withholdingTax = calculateWithholding(withholdingBase);
   const takeHome = grossAmount - withholdingTax;
 
   return {
     netAmount,
     consumptionTax,
     grossAmount,
+    withholdingBase,
     withholdingTax,
     takeHome,
   };
@@ -89,6 +101,7 @@ export function generateInvoiceText(
     lines.push(`  報酬額（税抜）: ¥${formatCurrency(e.result.netAmount)}`);
     lines.push(`  消費税（10%）: ¥${formatCurrency(e.result.consumptionTax)}`);
     lines.push(`  報酬額（税込）: ¥${formatCurrency(e.result.grossAmount)}`);
+    lines.push(`  源泉徴収対象額: ¥${formatCurrency(e.result.withholdingBase)}`);
     lines.push(
       `  源泉徴収税額: ¥${formatCurrency(e.result.withholdingTax)}`
     );
@@ -101,6 +114,7 @@ export function generateInvoiceText(
     lines.push(`  報酬額（税抜）: ¥${formatCurrency(totals.netAmount)}`);
     lines.push(`  消費税（10%）: ¥${formatCurrency(totals.consumptionTax)}`);
     lines.push(`  報酬額（税込）: ¥${formatCurrency(totals.grossAmount)}`);
+    lines.push(`  源泉徴収対象額: ¥${formatCurrency(totals.withholdingBase)}`);
     lines.push(
       `  源泉徴収税額: ¥${formatCurrency(totals.withholdingTax)}`
     );

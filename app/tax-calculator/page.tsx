@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/tax-calculator/page";
 
 export const metadata: Metadata = {
-  title: "源泉徴収税計算ツール - フリーランス報酬の税額シミュレーション",
-  description: "フリーランス・個人事業主向けの源泉徴収税額を自動計算。報酬額を入力するだけで、源泉徴収税額・手取り額を即座にシミュレーション。複数件の一括計算や年間合計表示にも対応。消費税の税込・税抜切替も可能です。",
+  title: "源泉徴収税計算ツール - 報酬・消費税・差引支払額を計算",
+  description: "フリーランス報酬の源泉徴収税額、消費税、税込報酬、差引支払額を計算。100万円超、税抜入力、税込入力、税込総額のみの扱いに対応。",
   alternates: { canonical: "https://tools.loresync.dev/tax-calculator" },
 };
 

@@ -1,303 +1,353 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
-  TaxEntry,
-  TaxResult,
   calculateEntry,
   formatCurrency,
   generateInvoiceText,
+  type TaxEntry,
+  type TaxResult,
 } from "../lib/tax";
 
-function newEntry(): TaxEntry {
+type TaxMode = TaxEntry["taxMode"];
+
+const TAX_MODE_LABELS: Record<TaxMode, string> = {
+  exclusive: "税抜入力・消費税を区分",
+  "inclusive-separated": "税込入力・消費税を区分",
+  "inclusive-gross": "税込総額・区分なし",
+};
+
+const EXAMPLES = [
+  { label: "デザイン制作", amount: "120000", taxMode: "exclusive" as TaxMode },
+  { label: "記事執筆", amount: "55000", taxMode: "inclusive-separated" as TaxMode },
+  { label: "講演料", amount: "1500000", taxMode: "exclusive" as TaxMode },
+];
+
+const INITIAL_ENTRY: TaxEntry = {
+  id: "tax-entry-initial",
+  label: "デザイン制作",
+  amount: "100000",
+  taxMode: "exclusive",
+};
+
+function createEntry(overrides: Partial<TaxEntry> = {}): TaxEntry {
   return {
     id: crypto.randomUUID(),
     label: "",
     amount: "",
     taxMode: "exclusive",
+    ...overrides,
   };
 }
 
-function ResultRow({
-  label,
-  value,
-  highlight,
-  large,
-}: {
-  label: string;
-  value: string;
-  highlight?: boolean;
-  large?: boolean;
-}) {
-  return (
-    <div
-      className={`flex justify-between items-center py-2 ${large ? "text-lg font-bold" : ""} ${highlight ? "text-primary" : ""}`}
-    >
-      <span className="text-muted text-sm">{label}</span>
-      <span className={highlight ? "text-primary" : ""}>{value}</span>
-    </div>
-  );
+function cleanAmount(value: string) {
+  return value.replace(/[^0-9]/g, "");
 }
 
-function EntryCard({
-  entry,
-  index,
-  canRemove,
-  onChange,
-  onRemove,
-  result,
-}: {
-  entry: TaxEntry;
-  index: number;
-  canRemove: boolean;
-  onChange: (id: string, updates: Partial<TaxEntry>) => void;
-  onRemove: (id: string) => void;
-  result: TaxResult;
-}) {
-  return (
-    <div className="bg-card border border-border rounded-xl p-5 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <span className="shrink-0 w-7 h-7 rounded-full bg-primary text-white text-sm flex items-center justify-center font-bold">
-            {index + 1}
-          </span>
-          <input
-            type="text"
-            placeholder={`項目名（例: デザイン制作費）`}
-            value={entry.label}
-            onChange={(e) => onChange(entry.id, { label: e.target.value })}
-            className="flex-1 min-w-0 text-sm border-b border-border bg-transparent py-1 focus:outline-none focus:border-primary transition-colors"
-          />
-        </div>
-        {canRemove && (
-          <button
-            onClick={() => onRemove(entry.id)}
-            className="ml-3 text-muted hover:text-danger transition-colors text-lg leading-none"
-            aria-label="項目を削除"
-          >
-            ×
-          </button>
-        )}
-      </div>
+function yen(value: number) {
+  return `¥${formatCurrency(value)}`;
+}
 
-      <div className="flex flex-col sm:flex-row gap-3 mb-4">
-        <div className="flex-1">
-          <label className="block text-xs text-muted mb-1">報酬額（円）</label>
-          <input
-            type="text"
-            inputMode="numeric"
-            placeholder="0"
-            value={entry.amount}
-            onChange={(e) => {
-              const v = e.target.value.replace(/[^0-9]/g, "");
-              onChange(entry.id, { amount: v });
-            }}
-            className="w-full px-3 py-2.5 border border-border rounded-lg text-right text-lg font-mono focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all bg-accent"
-          />
-        </div>
-        <div className="sm:w-40">
-          <label className="block text-xs text-muted mb-1">消費税の扱い</label>
-          <select
-            value={entry.taxMode}
-            onChange={(e) =>
-              onChange(entry.id, {
-                taxMode: e.target.value as "inclusive" | "exclusive",
-              })
-            }
-            className="w-full px-3 py-2.5 border border-border rounded-lg bg-accent focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-          >
-            <option value="exclusive">税抜</option>
-            <option value="inclusive">税込</option>
-          </select>
-        </div>
-      </div>
-
-      {parseFloat(entry.amount) > 0 && (
-        <div className="bg-accent rounded-lg p-4 divide-y divide-border">
-          <ResultRow
-            label="報酬額（税抜）"
-            value={`¥${formatCurrency(result.netAmount)}`}
-          />
-          <ResultRow
-            label="消費税（10%）"
-            value={`¥${formatCurrency(result.consumptionTax)}`}
-          />
-          <ResultRow
-            label="報酬額（税込）"
-            value={`¥${formatCurrency(result.grossAmount)}`}
-          />
-          <ResultRow
-            label="源泉徴収税額"
-            value={`¥${formatCurrency(result.withholdingTax)}`}
-            highlight
-          />
-          <ResultRow
-            label="差引支払額（手取り）"
-            value={`¥${formatCurrency(result.takeHome)}`}
-            large
-          />
-        </div>
-      )}
-    </div>
-  );
+function getEntryError(entry: TaxEntry) {
+  if (!entry.amount) return "";
+  const amount = Number.parseInt(entry.amount, 10);
+  if (!Number.isFinite(amount) || amount <= 0) return "報酬額は1円以上で入力してください。";
+  if (amount > 99_999_999) return "報酬額は99,999,999円以下を目安に入力してください。";
+  return "";
 }
 
 export default function TaxCalculator() {
-  const [entries, setEntries] = useState<TaxEntry[]>([newEntry()]);
+  const [entries, setEntries] = useState<TaxEntry[]>([INITIAL_ENTRY]);
   const [copied, setCopied] = useState(false);
 
-  const handleChange = useCallback(
-    (id: string, updates: Partial<TaxEntry>) => {
-      setEntries((prev) =>
-        prev.map((e) => (e.id === id ? { ...e, ...updates } : e))
-      );
-    },
-    []
-  );
-
-  const handleRemove = useCallback((id: string) => {
-    setEntries((prev) => prev.filter((e) => e.id !== id));
-  }, []);
-
-  const handleAdd = useCallback(() => {
-    setEntries((prev) => [...prev, newEntry()]);
-  }, []);
-
-  const results = useMemo(
-    () => entries.map((e) => calculateEntry(e)),
-    [entries]
-  );
-
+  const results = useMemo(() => entries.map((entry) => calculateEntry(entry)), [entries]);
   const totals = useMemo<TaxResult>(() => {
     return results.reduce(
-      (acc, r) => ({
-        netAmount: acc.netAmount + r.netAmount,
-        consumptionTax: acc.consumptionTax + r.consumptionTax,
-        grossAmount: acc.grossAmount + r.grossAmount,
-        withholdingTax: acc.withholdingTax + r.withholdingTax,
-        takeHome: acc.takeHome + r.takeHome,
+      (acc, result) => ({
+        netAmount: acc.netAmount + result.netAmount,
+        consumptionTax: acc.consumptionTax + result.consumptionTax,
+        grossAmount: acc.grossAmount + result.grossAmount,
+        withholdingBase: acc.withholdingBase + result.withholdingBase,
+        withholdingTax: acc.withholdingTax + result.withholdingTax,
+        takeHome: acc.takeHome + result.takeHome,
       }),
       {
         netAmount: 0,
         consumptionTax: 0,
         grossAmount: 0,
+        withholdingBase: 0,
         withholdingTax: 0,
         takeHome: 0,
       }
     );
   }, [results]);
 
-  const hasAnyAmount = results.some((r) => r.netAmount > 0);
+  const errors = useMemo(() => entries.map((entry) => getEntryError(entry)), [entries]);
+  const hasAmount = results.some((result) => result.grossAmount > 0);
+  const hasError = errors.some(Boolean);
 
-  const handleCopy = useCallback(async () => {
+  const updateEntry = useCallback((id: string, updates: Partial<TaxEntry>) => {
+    setEntries((current) => current.map((entry) => (entry.id === id ? { ...entry, ...updates } : entry)));
+    setCopied(false);
+  }, []);
+
+  const removeEntry = useCallback((id: string) => {
+    setEntries((current) => (current.length > 1 ? current.filter((entry) => entry.id !== id) : current));
+    setCopied(false);
+  }, []);
+
+  function addEntry() {
+    setEntries((current) => [...current, createEntry()]);
+    setCopied(false);
+  }
+
+  function reset() {
+    setEntries([{ ...INITIAL_ENTRY }]);
+    setCopied(false);
+  }
+
+  function applyExample(example: (typeof EXAMPLES)[number]) {
+    setEntries([createEntry(example)]);
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!hasAmount || hasError) return;
     const validEntries = entries
-      .map((e, i) => ({ label: e.label, result: results[i] }))
-      .filter((e) => e.result.netAmount > 0);
-    const text = generateInvoiceText(validEntries, totals);
-    await navigator.clipboard.writeText(text);
+      .map((entry, index) => ({ label: entry.label, result: results[index] }))
+      .filter((entry) => entry.result.grossAmount > 0);
+    await navigator.clipboard.writeText(generateInvoiceText(validEntries, totals));
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }, [entries, results, totals]);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
 
   return (
-    <div className="space-y-4">
-      {entries.map((entry, i) => (
-        <EntryCard
-          key={entry.id}
-          entry={entry}
-          index={i}
-          canRemove={entries.length > 1}
-          onChange={handleChange}
-          onRemove={handleRemove}
-          result={results[i]}
-        />
-      ))}
-
-      <button
-        onClick={handleAdd}
-        className="w-full py-3 border-2 border-dashed border-border rounded-xl text-muted hover:border-primary hover:text-primary transition-colors text-sm font-medium"
-      >
-        ＋ 項目を追加
-      </button>
-
-      {hasAnyAmount && entries.length > 1 && (
-        <div className="bg-card border-2 border-primary/20 rounded-xl p-5 shadow-sm">
-          <h3 className="font-bold text-base mb-3 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary inline-block" />
-            年間合計
-          </h3>
-          <div className="divide-y divide-border">
-            <ResultRow
-              label="報酬額合計（税抜）"
-              value={`¥${formatCurrency(totals.netAmount)}`}
-            />
-            <ResultRow
-              label="消費税合計"
-              value={`¥${formatCurrency(totals.consumptionTax)}`}
-            />
-            <ResultRow
-              label="報酬額合計（税込）"
-              value={`¥${formatCurrency(totals.grossAmount)}`}
-            />
-            <ResultRow
-              label="源泉徴収税額合計"
-              value={`¥${formatCurrency(totals.withholdingTax)}`}
-              highlight
-            />
-            <ResultRow
-              label="差引支払額合計（手取り）"
-              value={`¥${formatCurrency(totals.takeHome)}`}
-              large
-            />
-          </div>
-        </div>
-      )}
-
-      {hasAnyAmount && (
-        <button
-          onClick={handleCopy}
-          className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-colors text-sm"
-        >
-          {copied ? "✓ コピーしました" : "請求書用テキストをコピー"}
-        </button>
-      )}
-
-      {/* FAQ */}
-      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "税込価格と税抜価格の計算方法は？", a: "税抜価格に消費税率を掛けて税額を計算します。税込価格から税抜価格を求める場合は「税込価格 ÷ (1 + 税率)」で計算します。日本の消費税率は標準10%、軽減税率は8%です。" },
-            { q: "軽減税率8%が適用される商品は？", a: "飲食料品（酒類・外食を除く）と定期購読の新聞が対象です。テイクアウトは8%、イートインは10%となります。" },
-            { q: "インボイス制度に対応した計算はできますか？", a: "本ツールでは消費税の基本的な計算に対応しています。インボイス制度では適格請求書に税率ごとの消費税額を記載する必要があります。税額は1円未満を切り捨て・切り上げ・四捨五入で処理します。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
-              <p className="text-sm text-gray-600">A. {a}</p>
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">報酬明細</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                報酬・料金の源泉徴収税額、消費税、差引支払額を複数行で計算します。
+              </p>
             </div>
-          ))}
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "税込価格と税抜価格の計算方法は？", "acceptedAnswer": { "@type": "Answer", "text": "税抜価格に消費税率を掛けて税額を計算します。日本の消費税率は標準10%、軽減税率は8%です。" } },
-              { "@type": "Question", "name": "軽減税率8%が適用される商品は？", "acceptedAnswer": { "@type": "Answer", "text": "飲食料品（酒類・外食を除く）と定期購読の新聞が対象です。テイクアウトは8%、イートインは10%となります。" } },
-              { "@type": "Question", "name": "インボイス制度に対応した計算はできますか？", "acceptedAnswer": { "@type": "Answer", "text": "本ツールでは消費税の基本的な計算に対応しています。インボイス制度では適格請求書に税率ごとの消費税額を記載する必要があります。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t border-gray-100">
-          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/waribiki-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">割引計算ツール</Link>
-            <Link href="/tedori-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">手取り計算ツール</Link>
+            <button
+              type="button"
+              onClick={reset}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              クリア
+            </button>
           </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {EXAMPLES.map((example) => (
+                <button
+                  key={example.label}
+                  type="button"
+                  onClick={() => applyExample(example)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {example.label} <span className="text-slate-400">{yen(Number.parseInt(example.amount, 10))}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5 space-y-4">
+            {entries.map((entry, index) => (
+              <EntryForm
+                key={entry.id}
+                entry={entry}
+                index={index}
+                result={results[index]}
+                error={errors[index]}
+                canRemove={entries.length > 1}
+                onChange={updateEntry}
+                onRemove={removeEntry}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={addEntry}
+            className="mt-4 w-full rounded-xl border-2 border-dashed border-slate-300 py-3 text-sm font-semibold text-slate-600 hover:border-slate-900 hover:text-slate-950"
+          >
+            項目を追加
+          </button>
+
+          <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            対象報酬かどうか、消費税を明確に区分できているかで源泉徴収対象額が変わります。迷う場合は国税庁の案内や税理士に確認してください。
+          </div>
+        </div>
+
+        <aside className="p-5 sm:p-6">
+          <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+            <p className="text-sm font-semibold text-emerald-800">差引支払額</p>
+            <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-emerald-950">
+              {yen(totals.takeHome)}
+            </p>
+            <p className="mt-2 text-sm leading-6 text-emerald-800">
+              税込報酬合計から源泉徴収税額を差し引いた概算です。
+            </p>
+          </div>
+
+          <div className="mt-4 grid gap-3">
+            <SummaryCard label="報酬額（税抜）" value={yen(totals.netAmount)} note="消費税抜きの報酬合計" />
+            <SummaryCard label="消費税（10%）" value={yen(totals.consumptionTax)} note="標準税率10%で概算" />
+            <SummaryCard label="報酬額（税込）" value={yen(totals.grossAmount)} note="支払総額" />
+            <SummaryCard label="源泉徴収対象額" value={yen(totals.withholdingBase)} note="税区分により税抜または税込" />
+            <SummaryCard label="源泉徴収税額" value={yen(totals.withholdingTax)} note="10.21% / 20.42%" />
+          </div>
+
+          <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <h2 className="text-sm font-semibold text-slate-950">計算式</h2>
+            <div className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+              <p>100万円以下: A × 10.21%</p>
+              <p>100万円超: (A - 100万円) × 20.42% + 102,100円</p>
+              <p>端数: 1円未満切り捨て</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={copyResult}
+            disabled={!hasAmount || hasError}
+            className="mt-5 w-full rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {copied ? "コピーしました" : "請求書用テキストをコピー"}
+          </button>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function EntryForm({
+  entry,
+  index,
+  result,
+  error,
+  canRemove,
+  onChange,
+  onRemove,
+}: {
+  entry: TaxEntry;
+  index: number;
+  result: TaxResult;
+  error: string;
+  canRemove: boolean;
+  onChange: (id: string, updates: Partial<TaxEntry>) => void;
+  onRemove: (id: string) => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-950 text-sm font-bold text-white">
+            {index + 1}
+          </span>
+          <div className="min-w-0 flex-1">
+            <label htmlFor={`tax-label-${entry.id}`} className="sr-only">
+              項目名
+            </label>
+            <input
+              id={`tax-label-${entry.id}`}
+              type="text"
+              value={entry.label}
+              onChange={(event) => onChange(entry.id, { label: event.target.value })}
+              placeholder="項目名（例: デザイン制作費）"
+              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-slate-900"
+            />
+          </div>
+        </div>
+        {canRemove && (
+          <button
+            type="button"
+            onClick={() => onRemove(entry.id)}
+            className="rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm font-semibold text-slate-600 hover:bg-white"
+            aria-label="項目を削除"
+          >
+            削除
+          </button>
+        )}
+      </div>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,1fr)_220px]">
+        <div>
+          <label htmlFor={`tax-amount-${entry.id}`} className="text-sm font-medium text-slate-700">
+            報酬額
+          </label>
+          <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+            <input
+              id={`tax-amount-${entry.id}`}
+              type="text"
+              inputMode="numeric"
+              value={entry.amount}
+              onChange={(event) => onChange(entry.id, { amount: cleanAmount(event.target.value) })}
+              className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+              aria-describedby={`tax-error-${entry.id}`}
+              placeholder="100000"
+            />
+            <span className="flex min-w-14 items-center justify-center border-l border-slate-200 bg-white px-3 text-sm text-slate-500">
+              円
+            </span>
+          </div>
+        </div>
+        <div>
+          <label htmlFor={`tax-mode-${entry.id}`} className="text-sm font-medium text-slate-700">
+            消費税と源泉対象
+          </label>
+          <select
+            id={`tax-mode-${entry.id}`}
+            value={entry.taxMode}
+            onChange={(event) => onChange(entry.id, { taxMode: event.target.value as TaxMode })}
+            className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-3 py-3 text-sm outline-none focus:border-slate-900"
+          >
+            {Object.entries(TAX_MODE_LABELS).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
+
+      <p id={`tax-error-${entry.id}`} className={`mt-2 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+        {error || TAX_MODE_LABELS[entry.taxMode]}
+      </p>
+
+      {result.grossAmount > 0 && !error && (
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <MiniResult label="税抜報酬" value={yen(result.netAmount)} />
+          <MiniResult label="税込報酬" value={yen(result.grossAmount)} />
+          <MiniResult label="源泉対象額" value={yen(result.withholdingBase)} />
+          <MiniResult label="差引支払額" value={yen(result.takeHome)} strong />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SummaryCard({ label, value, note }: { label: string; value: string; note: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
+      <p className="mt-1 font-mono text-xl font-semibold text-slate-950">{value}</p>
+      <p className="mt-1 text-xs text-slate-500">{note}</p>
+    </div>
+  );
+}
+
+function MiniResult({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2">
+      <p className="text-xs text-slate-500">{label}</p>
+      <p className={`mt-0.5 font-mono text-sm ${strong ? "font-bold text-emerald-700" : "font-semibold text-slate-900"}`}>{value}</p>
     </div>
   );
 }
