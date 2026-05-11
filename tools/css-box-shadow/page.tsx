@@ -1,134 +1,123 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import BoxShadowGenerator from "./components/BoxShadowGenerator";
 
+const faq = [
+  {
+    q: "Can I create multiple box-shadow layers?",
+    a: "Yes. Add layers, tune each offset, blur, spread, color, opacity, and inset setting, then copy one CSS declaration.",
+  },
+  {
+    q: "What are good examples to start with?",
+    a: "Use subtle card shadows for dashboards, dropdown shadows for menus, glow shadows for focus states, and inset shadows for pressed controls.",
+  },
+  {
+    q: "Does the tool validate values?",
+    a: "Numeric controls are clamped to practical ranges and color inputs require valid HEX values.",
+  },
+  {
+    q: "Are settings uploaded?",
+    a: "No. Preview, validation, and copy actions run locally in your browser.",
+  },
+];
+
 export default function Page() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            CSS Box Shadow Generator
-          </h1>
-          <p className="mt-1 text-sm sm:text-base text-gray-500">
-            Create beautiful box shadows visually with live preview
-          </p>
-        </div>
-      </header>
-
-      <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
-          <BoxShadowGenerator />
-        </div>
-
-        {/* AdSense placeholder */}
-        <div className="max-w-7xl mx-auto px-4 pb-6">
-          <div className="w-full h-[90px] bg-gray-100 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-gray-400 text-sm">
-            Advertisement
-          </div>
-        </div>
-
-        {/* SEO Content */}
-        <section className="max-w-7xl mx-auto px-4 pb-12">
-          <div className="prose prose-gray max-w-none">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Understanding CSS Box Shadow
-            </h2>
-            <p className="text-gray-600 mb-4">
-              The CSS <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">box-shadow</code> property
-              adds shadow effects around an element&apos;s frame. It is one of the most widely used CSS properties for
-              creating depth, elevation, and visual hierarchy in modern web design. The property accepts multiple
-              comma-separated shadows, which are applied front-to-back with the first shadow on top.
-            </p>
-
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              Box-Shadow Syntax
-            </h3>
-            <p className="text-gray-600 mb-4">
-              The full syntax is: <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">box-shadow:
-              [inset] &lt;offset-x&gt; &lt;offset-y&gt; [blur-radius] [spread-radius] &lt;color&gt;</code>.
-              The horizontal offset (offset-x) shifts the shadow left or right. The vertical offset (offset-y) shifts
-              it up or down. Blur radius controls how soft the shadow appears — a value of 0 creates a hard edge.
-              Spread radius expands or contracts the shadow size. Adding the <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">inset</code> keyword
-              makes the shadow appear inside the element instead of outside.
-            </p>
-
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              Multiple Shadows for Realistic Effects
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Professional designers often layer multiple shadows to create realistic depth. A common technique combines
-              a tight, dark shadow close to the element with a larger, softer shadow further away. This mimics how light
-              and shadows work in the real world. Our generator lets you add multiple shadow layers and reorder them to
-              achieve exactly the look you want. Each layer can have its own offset, blur, spread, color, and opacity settings.
-            </p>
-
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              Performance Tips
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Box shadows are rendered by the browser&apos;s compositor and can impact performance, especially on mobile
-              devices. To keep your pages fast, avoid applying large blur-radius values to many elements simultaneously.
-              Prefer <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">filter: drop-shadow()</code> for
-              non-rectangular shapes. When animating shadows, use <code className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono">will-change: box-shadow</code> or
-              animate opacity on a pseudo-element instead to avoid layout thrashing. Using CSS custom properties for your
-              shadow values makes it easy to switch between themes or adjust shadows across your entire design system
-              with a single change.
-            </p>
-
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              How to Use This Generator
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Use the sliders and number inputs to adjust each shadow parameter and see the result instantly in the live
-              preview panel. Click &quot;Add Shadow&quot; to layer multiple shadows for complex effects. Try the built-in
-              presets for quick starting points — from subtle card elevations to dramatic drop shadows. When you are
-              happy with the result, click &quot;Copy CSS&quot; to copy the complete box-shadow declaration to your
-              clipboard, ready to paste into your stylesheet. You can also change the preview background color to test
-              how your shadow looks against different surfaces.
-            </p>
-          </div>
-        </section>
-      </main>
-
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">CSS Box Shadow Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient</Link>
-              <Link href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius</Link>
-              <Link href="/css-flexbox" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Flexbox</Link>
-              <Link href="/css-animation" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Animation</Link>
-              <Link href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-violet-700">CSS design tool</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                CSS Box Shadow Generator
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Create layered box-shadow CSS with live preview, presets, color and opacity controls, inset mode, copy output, and practical validation ranges.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">Local preview</div>
+              <p className="mt-2">Shadow settings stay in the browser and are not sent to a server.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <BoxShadowGenerator />
+
+        <section className="mt-10 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Examples" body="Use presets for cards, buttons, dropdowns, floating panels, glows, and inset controls." />
+          <InfoCard title="Layered shadows" body="Combine multiple layers for softer, more realistic depth." />
+          <InfoCard title="Copy-ready CSS" body="The output includes the complete box-shadow declaration." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/border-radius" title="Border Radius" body="Tune rounded corners visually." />
+            <Related href="/css-gradient" title="CSS Gradient" body="Build gradient backgrounds." />
+            <Related href="/css-flexbox" title="CSS Flexbox" body="Preview flex layouts." />
+            <Related href="/color-palette" title="Color Palette" body="Generate accessible color sets." />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "CSS Box Shadow Generator",
-  "description": "Create beautiful box shadows visually with live preview",
-  "url": "https://tools.loresync.dev/css-box-shadow",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

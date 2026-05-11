@@ -48,6 +48,7 @@ export default function RegexTester() {
     s: false,
     u: false,
   });
+  const [copied, setCopied] = useState<"pattern" | "matches" | null>(null);
 
   const flagString = useMemo(() => {
     return Object.entries(flags)
@@ -143,6 +144,22 @@ export default function RegexTester() {
     []
   );
 
+  const matchSummary = useMemo(() => {
+    if (!matches.length) return "No matches";
+    return matches
+      .map((m, index) => {
+        const groups = m.groups.length ? ` groups=[${m.groups.map((g) => g ?? "").join(", ")}]` : "";
+        return `#${index + 1} index=${m.index} match="${m.match}"${groups}`;
+      })
+      .join("\n");
+  }, [matches]);
+
+  const copyText = useCallback(async (text: string, key: "pattern" | "matches") => {
+    await navigator.clipboard.writeText(text);
+    setCopied(key);
+    window.setTimeout(() => setCopied(null), 1500);
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Pattern Input */}
@@ -190,6 +207,25 @@ export default function RegexTester() {
             {error}
           </div>
         )}
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => copyText(`/${pattern}/${flagString}`, "pattern")}
+            disabled={!pattern}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {copied === "pattern" ? "Copied pattern" : "Copy pattern"}
+          </button>
+          <button
+            type="button"
+            onClick={() => copyText(matchSummary, "matches")}
+            disabled={!pattern}
+            className="rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {copied === "matches" ? "Copied matches" : "Copy matches"}
+          </button>
+        </div>
       </div>
 
       {/* Common Patterns */}

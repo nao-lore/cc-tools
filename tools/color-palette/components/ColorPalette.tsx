@@ -25,6 +25,14 @@ type HarmonyMode =
 
 type ExportFormat = "css" | "hex" | "tailwind" | "json";
 
+const INITIAL_SWATCHES: ColorSwatch[] = [
+  { hsl: { h: 222, s: 84, l: 56 }, locked: false },
+  { hsl: { h: 188, s: 74, l: 44 }, locked: false },
+  { hsl: { h: 38, s: 92, l: 55 }, locked: false },
+  { hsl: { h: 346, s: 77, l: 56 }, locked: false },
+  { hsl: { h: 262, s: 71, l: 60 }, locked: false },
+];
+
 // ─── Color Utilities ─────────────────────────────────────────────────────────
 
 function hslToHex(h: number, s: number, l: number): string {
@@ -221,7 +229,7 @@ function CheckIcon() {
 
 export default function ColorPalette() {
   const [swatches, setSwatches] = useState<ColorSwatch[]>(() =>
-    Array.from({ length: 5 }, () => ({ hsl: randomHSL(), locked: false }))
+    INITIAL_SWATCHES.map((swatch) => ({ ...swatch, hsl: { ...swatch.hsl } }))
   );
   const [harmonyMode, setHarmonyMode] = useState<HarmonyMode>("random");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -325,6 +333,7 @@ export default function ColorPalette() {
       <div className="flex flex-wrap items-center gap-3 justify-center">
         <button
           onClick={generate}
+          aria-label="Generate a new color palette"
           className="px-5 py-2.5 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors text-sm cursor-pointer"
         >
           Generate
@@ -332,7 +341,11 @@ export default function ColorPalette() {
             Space
           </span>
         </button>
+        <label htmlFor="color-harmony-mode" className="sr-only">
+          Color harmony mode
+        </label>
         <select
+          id="color-harmony-mode"
           value={harmonyMode}
           onChange={(e) => setHarmonyMode(e.target.value as HarmonyMode)}
           className="px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-white text-gray-700 cursor-pointer hover:border-gray-400 transition-colors"
@@ -367,6 +380,7 @@ export default function ColorPalette() {
                   toggleLock(index);
                 }}
                 className="absolute top-3 left-1/2 -translate-x-1/2 p-1.5 rounded-full transition-colors cursor-pointer"
+                aria-label={swatch.locked ? `Unlock color ${index + 1}` : `Lock color ${index + 1}`}
                 style={{
                   color: textColor,
                   backgroundColor: swatch.locked
@@ -385,6 +399,7 @@ export default function ColorPalette() {
                   setSelectedIndex(isSelected ? null : index);
                 }}
                 className="absolute top-10 left-1/2 -translate-x-1/2 p-1.5 rounded-full transition-colors cursor-pointer text-xs font-medium"
+                aria-label={`Adjust color ${index + 1}`}
                 style={{ color: textColor }}
                 title="Adjust color"
               >
@@ -408,14 +423,14 @@ export default function ColorPalette() {
               )}
 
               {/* Color info */}
-              <div className="p-3 space-y-0.5 text-center" style={{ color: textColor }}>
-                <div className="font-mono text-sm font-bold uppercase tracking-wide">
+              <div className="space-y-0.5 p-2 text-center sm:p-3" style={{ color: textColor }}>
+                <div className="font-mono text-[10px] font-bold uppercase tracking-wide sm:text-sm">
                   {hex}
                 </div>
-                <div className="font-mono text-[10px] opacity-70">
+                <div className="hidden font-mono text-[10px] opacity-70 sm:block">
                   rgb({rgb[0]}, {rgb[1]}, {rgb[2]})
                 </div>
-                <div className="font-mono text-[10px] opacity-70">
+                <div className="hidden font-mono text-[10px] opacity-70 sm:block">
                   hsl({Math.round(swatch.hsl.h)}, {Math.round(swatch.hsl.s)}%,{" "}
                   {Math.round(swatch.hsl.l)}%)
                 </div>

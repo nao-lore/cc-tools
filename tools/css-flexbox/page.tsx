@@ -1,161 +1,123 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import FlexboxGenerator from "./components/FlexboxGenerator";
 
+const faq = [
+  {
+    q: "What is this Flexbox generator for?",
+    a: "It helps you test container and child flex properties visually, then copy the generated CSS.",
+  },
+  {
+    q: "Can I reset the layout?",
+    a: "Yes. Use the reset control in the editor to return to the default row layout with three children.",
+  },
+  {
+    q: "Is the generated CSS validated?",
+    a: "The tool constrains numeric controls and shows the final CSS immediately. Review custom flex-basis values before production use.",
+  },
+  {
+    q: "Is my layout data uploaded?",
+    a: "No. Preview, validation, and copy actions run locally in your browser.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            CSS Flexbox Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Build CSS Flexbox layouts visually. Adjust container and child
-            properties, see a live preview, and copy the generated CSS.
-          </p>
-        </div>
-
-        {/* Flexbox Generator Tool */}
-        <FlexboxGenerator />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is CSS Flexbox?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            CSS Flexible Box Layout, commonly known as Flexbox, is a CSS layout
-            module designed for arranging items in one-dimensional rows or
-            columns. It provides powerful alignment and distribution capabilities
-            that simplify responsive design. Flexbox is supported in all modern
-            browsers and is the go-to layout method for navigation bars, card
-            grids, centering content, and building complex UI components.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Key Flexbox Properties
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            Flexbox works by defining a <strong>flex container</strong> and its{" "}
-            <strong>flex items</strong>. The container controls the overall
-            layout direction and alignment, while each item can override its own
-            sizing and positioning.
-          </p>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>flex-direction</strong> — Sets the main axis: row, column,
-              row-reverse, or column-reverse.
-            </li>
-            <li>
-              <strong>justify-content</strong> — Aligns items along the main
-              axis (e.g., center, space-between, space-around).
-            </li>
-            <li>
-              <strong>align-items</strong> — Aligns items along the cross axis
-              (e.g., stretch, center, flex-start).
-            </li>
-            <li>
-              <strong>flex-wrap</strong> — Controls whether items wrap to new
-              lines when the container overflows.
-            </li>
-            <li>
-              <strong>gap</strong> — Adds consistent spacing between flex items
-              without margins.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Flexbox Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Adjust container properties</strong> using the controls on
-              the left: direction, justify-content, align-items, wrap, and gap.
-            </li>
-            <li>
-              <strong>Add or remove child items</strong> using the buttons. You
-              can have up to 10 items.
-            </li>
-            <li>
-              <strong>Click a child item</strong> in the preview to edit its
-              individual properties: flex-grow, flex-shrink, flex-basis, order,
-              and align-self.
-            </li>
-            <li>
-              <strong>See the live CSS output</strong> update in real time as you
-              change any property.
-            </li>
-            <li>
-              <strong>Copy the CSS</strong> with one click and paste it into your
-              stylesheet.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Flexbox Patterns
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Centering an element</strong> — Set justify-content and
-              align-items both to center on the container.
-            </li>
-            <li>
-              <strong>Equal-width columns</strong> — Give each child flex-grow: 1
-              and flex-basis: 0.
-            </li>
-            <li>
-              <strong>Sticky footer</strong> — Use flex-direction: column on a
-              full-height container with flex-grow: 1 on the main content area.
-            </li>
-            <li>
-              <strong>Navigation bar</strong> — Use flex-direction: row with
-              justify-content: space-between for logo and links.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">css-flexbox — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid</Link>
-              <Link href="/css-animation" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Animation</Link>
-              <Link href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Convert</Link>
-              <Link href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius</Link>
-              <Link href="/css-box-shadow" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Box Shadow</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-indigo-700">CSS layout tool</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                CSS Flexbox Generator
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Build flex layouts visually. Adjust direction, alignment, wrapping, gap, and child properties, then copy clean CSS for your stylesheet.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">Private by default</div>
+              <p className="mt-2">The editor runs in your browser and does not send layout settings to a server.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</Link>
+        </header>
+
+        <FlexboxGenerator />
+
+        <section className="mt-10 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Examples" body="Create nav bars, centered panels, wrapping chips, equal columns, and sticky footer patterns." />
+          <InfoCard title="Child controls" body="Tune grow, shrink, basis, order, and align-self per item from the live preview." />
+          <InfoCard title="Copy output" body="The CSS panel updates as you edit so the final declaration is ready to paste." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/css-grid" title="CSS Grid" body="Build two-dimensional grid layouts." />
+            <Related href="/css-box-shadow" title="Box Shadow" body="Create layered elevation styles." />
+            <Related href="/border-radius" title="Border Radius" body="Tune rounded corners visually." />
+            <Related href="/tailwindconvert" title="Tailwind Convert" body="Convert CSS snippets to Tailwind classes." />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "CSS Flexbox Generator",
-  "description": "Build CSS Flexbox layouts visually. Adjust container and child\n            properties, see a live preview, and copy the generated CSS.",
-  "url": "https://tools.loresync.dev/css-flexbox",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

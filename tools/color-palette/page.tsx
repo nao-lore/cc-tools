@@ -1,156 +1,138 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import ColorPalette from "./components/ColorPalette";
 
+const faq = [
+  {
+    q: "How do I choose a color harmony mode?",
+    a: "Use complementary for contrast, analogous for calm UI themes, triadic for balanced variety, and monochromatic for single-brand systems.",
+  },
+  {
+    q: "Can I export the palette?",
+    a: "Yes. Copy CSS variables, a HEX array, Tailwind config, or JSON from the export panel.",
+  },
+  {
+    q: "Does this tool send my colors to a server?",
+    a: "No. Generation, editing, contrast checks that validate color pairs, and copy actions run locally in your browser.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Color Palette Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Generate beautiful color palettes instantly. Press spacebar or click
-            Generate to create new combinations. Lock colors you love and explore
-            harmony modes.
-          </p>
-        </div>
-
-        {/* Color Palette Tool */}
-        <ColorPalette />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a Color Palette Generator?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A color palette generator helps designers and developers create
-            harmonious color combinations for websites, apps, and graphic design
-            projects. Instead of manually picking colors, you can generate
-            palettes based on color theory principles like complementary,
-            analogous, and triadic relationships.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Color Harmony Modes
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            This tool supports five color harmony modes based on the color wheel:
-          </p>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Complementary</strong> — Colors opposite each other on the
-              color wheel, creating high contrast and vibrant combinations.
-            </li>
-            <li>
-              <strong>Analogous</strong> — Colors adjacent on the color wheel,
-              producing harmonious and pleasing schemes.
-            </li>
-            <li>
-              <strong>Triadic</strong> — Three colors evenly spaced on the color
-              wheel, offering balanced yet colorful palettes.
-            </li>
-            <li>
-              <strong>Split-Complementary</strong> — A base color plus the two
-              colors adjacent to its complement, offering contrast with less
-              tension.
-            </li>
-            <li>
-              <strong>Monochromatic</strong> — Variations of a single hue with
-              different saturation and lightness values.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Tool
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Generate</strong> a new palette by pressing the spacebar or
-              clicking the Generate button.
-            </li>
-            <li>
-              <strong>Lock colors</strong> you want to keep by clicking the lock
-              icon on any swatch.
-            </li>
-            <li>
-              <strong>Adjust colors</strong> by clicking a swatch to open HSL
-              sliders for fine-tuning.
-            </li>
-            <li>
-              <strong>Choose a harmony mode</strong> to generate palettes based
-              on color theory relationships.
-            </li>
-            <li>
-              <strong>Export</strong> your palette as CSS variables, a HEX array,
-              Tailwind config, or JSON.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            WCAG Contrast Checking
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            The built-in contrast checker evaluates adjacent colors against WCAG
-            accessibility guidelines. It shows whether color pairs pass AA
-            (minimum 4.5:1 ratio for normal text) or AAA (enhanced 7:1 ratio)
-            standards, helping you build accessible designs.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Export Formats
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Export your palette in the format that fits your workflow. CSS custom
-            properties work great for web projects, HEX arrays are universal,
-            Tailwind config integrates directly with Tailwind CSS projects, and
-            JSON is perfect for design tokens or programmatic use.
-          </p>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Color Palette Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/color-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Converter</Link>
-              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient Generator</Link>
-              <Link href="/css-animation" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Animation Generator</Link>
-              <Link href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Converter</Link>
-              <Link href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius Generator</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-sky-700">Design tool</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Color Palette Generator
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Generate accessible color palettes, lock favorite swatches, tune HSL values, check WCAG contrast, and copy design tokens for CSS, Tailwind, or JSON.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">Local workflow</div>
+              <p className="mt-2">All palette generation and contrast checks validate colors in your browser. Colors are not uploaded.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <ColorPalette />
+
+        <section className="mt-10 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Examples" body="Try brand palettes, dashboard accent sets, or theme tokens for a design system." />
+          <InfoCard title="Contrast validation" body="Adjacent swatches show AA/AAA contrast checks so text colors are easier to review." />
+          <InfoCard title="Copy-ready exports" body="Use CSS variables, HEX arrays, Tailwind config, or JSON without manual formatting." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/color-converter" title="Color Converter" body="Convert HEX, RGB, HSL, and CSS colors." />
+            <Related href="/css-gradient" title="CSS Gradient" body="Build linear and radial gradients." />
+            <Related href="/css-box-shadow" title="Box Shadow" body="Create layered shadow tokens." />
+            <Related href="/border-radius" title="Border Radius" body="Tune rounded shapes visually." />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Color Palette Generator",
-  "description": "Generate beautiful color palettes instantly. Press spacebar or click\n            Generate to create new combinations. Lock colors you love and explore\n            harmony modes.",
-  "url": "https://tools.loresync.dev/color-palette",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Color Palette Generator",
+            description: "Generate accessible color palettes and export CSS, Tailwind, HEX, or JSON tokens.",
+            url: "https://tools.loresync.dev/color-palette",
+            applicationCategory: "DesignApplication",
+            operatingSystem: "All",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "JPY",
+            },
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

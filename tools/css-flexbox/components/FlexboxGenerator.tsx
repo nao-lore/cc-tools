@@ -19,6 +19,14 @@ const WRAP_OPTIONS = ["nowrap", "wrap", "wrap-reverse"] as const;
 
 let nextId = 4;
 
+function defaultChildren(): ChildItem[] {
+  return [
+    { id: 1, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
+    { id: 2, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
+    { id: 3, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
+  ];
+}
+
 function createChild(): ChildItem {
   return {
     id: nextId++,
@@ -36,13 +44,21 @@ export default function FlexboxGenerator() {
   const [alignItems, setAlignItems] = useState<string>("stretch");
   const [flexWrap, setFlexWrap] = useState<string>("nowrap");
   const [gap, setGap] = useState<number>(8);
-  const [children, setChildren] = useState<ChildItem[]>([
-    { id: 1, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
-    { id: 2, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
-    { id: 3, flexGrow: 0, flexShrink: 1, flexBasis: "auto", order: 0, alignSelf: "auto" },
-  ]);
+  const [children, setChildren] = useState<ChildItem[]>(defaultChildren);
   const [selectedChild, setSelectedChild] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+
+  const reset = useCallback(() => {
+    nextId = 4;
+    setFlexDirection("row");
+    setJustifyContent("flex-start");
+    setAlignItems("stretch");
+    setFlexWrap("nowrap");
+    setGap(8);
+    setChildren(defaultChildren());
+    setSelectedChild(null);
+    setCopied(false);
+  }, []);
 
   const addChild = useCallback(() => {
     if (children.length >= 10) return;
@@ -114,9 +130,18 @@ export default function FlexboxGenerator() {
       <div className="space-y-6">
         {/* Container Controls */}
         <div className="border border-gray-200 rounded-lg p-4">
-          <h2 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
-            Container
-          </h2>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-900">
+              Container
+            </h2>
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-md border border-gray-300 px-2 py-1 text-xs font-medium text-gray-600 hover:bg-gray-50"
+            >
+              Reset
+            </button>
+          </div>
 
           <div className="space-y-3">
             <ControlSelect

@@ -5,8 +5,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 80.5/100
-- Priority tiers: {"B": 24, "C": 118}
+- Average quality score: 82.1/100
+- Priority tiers: {"B": 20, "C": 122}
 
 ## Highest Priority Tools
 
@@ -14,15 +14,11 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | --- | ---: | ---: | --- | --- | --- | --- |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
-| B | 50 | 50 | `color-palette` | utility | Color Tools | faq, labels, examples, validation, privacy; penalties: old_count, any_type |
 | B | 50 | 67 | `svg-to-png` | image | Image Tools | copy, current_count; penalties: old_count, ad_placeholder, any_type |
-| B | 49 | 51 | `css-flexbox` | utility | CSS Tools | faq, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
-| B | 49 | 64 | `regex-tester` | utility | Developer Tools | copy, examples, privacy, current_count; penalties: old_count, any_type |
 | B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `fine-tuning-cost` | calculator | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `ideco-tax-saving` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `kaji-anbun` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
-| B | 47 | 53 | `css-box-shadow` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 47 | 65 | `uuid-generator` | generator | Developer Tools | reset_clear, validation, privacy, current_count; penalties: old_count, any_type |
 | B | 46 | 54 | `ascii-art` | utility | Text & String Tools | labels, examples, reset_clear, validation, privacy; penalties: old_count, any_type |
 | B | 46 | 69 | `qr-generator` | image | Image Tools | copy, privacy, current_count; penalties: old_count, any_type |
@@ -36,12 +32,16 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 45 | 65 | `cloudflare-workers-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `github-actions-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `video-bitrate` | calculator | Creator Tools | related_links, copy, examples, validation, privacy |
-| C | 44 | 56 | `border-radius` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, any_type |
 | C | 44 | 56 | `word-counter` | utility | Text & String Tools | labels, examples, validation, current_count; penalties: old_count, ad_placeholder, any_type |
 | C | 44 | 62 | `timezone-converter` | converter | Time & Date | copy, validation, privacy, current_count; penalties: old_count, any_type |
 | C | 42 | 68 | `takuhaibin-hikaku` | comparison | EC Tools | copy, examples, reset_clear, validation, accessible_buttons |
 | C | 42 | 69 | `ascii-flowchart` | reference | Developer Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | C | 42 | 72 | `binary-converter` | converter | Encoding & Decoding | reset_clear, privacy, current_count; penalties: old_count, any_type |
+| C | 42 | 72 | `rag-cost-estimator` | utility | AI Tools | copy, examples, reset_clear, validation, current_count |
+| C | 41 | 75 | `wareki-converter` | converter | Japanese Tools | labels, reset_clear, privacy, current_count; penalties: ad_placeholder |
+| C | 40 | 60 | `css-grid` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count |
+| C | 40 | 60 | `markdown-preview` | utility | Text & String Tools | labels, reset_clear, validation, privacy, current_count; penalties: old_count, any_type |
+| C | 40 | 65 | `gcp-pricing` | utility | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 
 ## Strongest Current Tools
 
@@ -54,14 +54,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `asset-allocation` | utility | Finance |
 | 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
+| 100 | `border-radius` | utility | CSS Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
 | 100 | `cdn-pricing-comparison` | comparison | SaaS Pricing |
 | 100 | `chmod-calculator` | calculator | Developer Tools |
+| 100 | `color-palette` | utility | Color Tools |
 | 100 | `context-window-visualizer` | utility | AI Tools |
-| 100 | `denki-keisan` | calculator | Japanese Tools |
-| 100 | `eigyoubi` | calculator | Japanese Tools |
-| 100 | `elevenlabs-pricing` | calculator | AI Tools |
-| 100 | `favicon-generator` | image | Image Tools |
+| 100 | `css-box-shadow` | utility | CSS Tools |
+| 100 | `css-flexbox` | utility | CSS Tools |
 
 ## Archetype Averages
 
@@ -73,15 +73,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | generator | 83 |
 | image | 88.2 |
 | reference | 77 |
-| utility | 71.8 |
+| utility | 78.3 |
 
 ## Weakest Categories
 
 | Category | Average quality | Tools |
 | --- | ---: | ---: |
-| Color Tools | 55.5 | 2 |
 | Text & String Tools | 60.5 | 6 |
-| CSS Tools | 62 | 8 |
 | Creator Tools | 67 | 2 |
 | Music | 67 | 1 |
 | Time & Date | 68 | 2 |
@@ -91,6 +89,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | SaaS Pricing | 73.6 | 13 |
 | Data Format Tools | 76.3 | 6 |
 | SEO Tools | 77.7 | 3 |
+| Tax Tools | 78.3 | 9 |
+| Labor Tools | 79.2 | 4 |
 
 ## Next Factory Steps
 

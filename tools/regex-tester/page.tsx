@@ -1,143 +1,123 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import RegexTester from "./components/RegexTester";
 
+const faq = [
+  {
+    q: "Which regex engine does this use?",
+    a: "It uses JavaScript RegExp in the browser, so behavior matches modern JavaScript regular expressions.",
+  },
+  {
+    q: "Can I test replacements?",
+    a: "Yes. Enter a replacement string and use JavaScript replacement tokens such as $1 and $2 for capture groups.",
+  },
+  {
+    q: "Can I copy the output?",
+    a: "Yes. The tester includes copy actions for the current pattern and match summary.",
+  },
+  {
+    q: "Is my text uploaded?",
+    a: "No. Pattern validation, matching, replacement, and copy actions run locally in your browser.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Regex Tester
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Test and debug regular expressions in real time. See matches
-            highlighted instantly, inspect capture groups, and test replacements.
-          </p>
-        </div>
-
-        {/* Regex Tester Tool */}
-        <RegexTester />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a Regular Expression?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A regular expression (regex) is a sequence of characters that defines
-            a search pattern. Regular expressions are used in programming,
-            text editors, and command-line tools to find, match, and manipulate
-            text. They are supported in virtually every programming language
-            including JavaScript, Python, Java, Go, Ruby, and PHP.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Regex Tester
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Enter your regular expression pattern in the pattern field at the top.
-            Toggle flags like global (g), case-insensitive (i), multiline (m),
-            dotAll (s), and unicode (u) using the checkboxes. Type or paste your
-            test string in the textarea below. Matches are highlighted in real
-            time as you type. The results panel shows each match with its index
-            position and any captured groups. Use the replace field to test
-            substitutions.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Regex Patterns
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Some frequently used patterns include email validation
-            (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{"{2,}"}</code>),
-            URL matching, phone number extraction, IP address validation, and
-            date format detection. This tool includes a quick-select menu with
-            these common patterns so you can start testing immediately without
-            writing the regex from scratch.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Regex Flags Explained
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>g (global)</strong> — Find all matches, not just the first
-              one.
-            </li>
-            <li>
-              <strong>i (case-insensitive)</strong> — Match letters regardless of
-              case.
-            </li>
-            <li>
-              <strong>m (multiline)</strong> — Make ^ and $ match the start and
-              end of each line.
-            </li>
-            <li>
-              <strong>s (dotAll)</strong> — Make the dot (.) match newline
-              characters as well.
-            </li>
-            <li>
-              <strong>u (unicode)</strong> — Enable full Unicode matching.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Regex Tester — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/cron-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Cron Generator</Link>
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
-              <Link href="/sql-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SQL Formatter</Link>
-              <Link href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUID Generator</Link>
-              <Link href="/chmod-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Chmod Calculator</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">Developer tool</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Regex Tester
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Test JavaScript regular expressions with live highlights, capture groups, replacement preview, quick examples, validation errors, and copy-ready output.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm leading-6 text-slate-600 shadow-sm">
+              <div className="font-semibold text-slate-950">Runs locally</div>
+              <p className="mt-2">Your pattern and sample text stay in the browser. Nothing is uploaded for matching.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <RegexTester />
+
+        <section className="mt-10 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Examples" body="Start from email, URL, phone, IPv4, or ISO date presets." />
+          <InfoCard title="Capture groups" body="Inspect group values and match indexes for each result." />
+          <InfoCard title="Replace preview" body="Test substitutions before using a pattern in production code." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">よくある質問</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/text-diff" title="Text Diff" body="Compare two text snippets." />
+            <Related href="/word-counter" title="Word Counter" body="Count words, chars, and lines." />
+            <Related href="/json-formatter" title="JSON Formatter" body="Format and validate JSON." />
+            <Related href="/sql-formatter" title="SQL Formatter" body="Format SQL queries." />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
       </div>
-    
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Regex Tester",
-  "description": "Test and debug regular expressions in real time. See matches\n            highlighted instantly, inspect capture groups, and test replacements.",
-  "url": "https://tools.loresync.dev/regex-tester",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: item.a,
+              },
+            })),
+          }),
         }}
       />
-      </div>
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
