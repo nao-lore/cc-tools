@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 77.9/100
-- Priority tiers: {"B": 34, "C": 108}
+- Average quality score: 78.2/100
+- Priority tiers: {"B": 33, "C": 109}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
 | B | 54 | 67 | `tax-calculator` | calculator | Japanese Tools | reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 46 | 72 | `embedding-cost-calculator` | calculator | AI Tools | copy, examples, reset_clear, validation, current_count |
 | B | 46 | 72 | `iryouhi-koujo` | calculator | Tax Tools | copy, reset_clear, validation, responsive, current_count |
 | B | 46 | 72 | `teigaku-genzei` | calculator | Tax Tools | copy, examples, reset_clear, validation, current_count |
+| B | 45 | 61 | `color-converter` | converter | Color Tools | faq, reset_clear, privacy; penalties: old_count, ad_placeholder, any_type |
 
 ## Strongest Current Tools
 
@@ -71,7 +71,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |
-| image | 82.2 |
+| image | 88.2 |
 | reference | 77 |
 | utility | 70.8 |
 

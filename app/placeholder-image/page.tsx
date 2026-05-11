@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/placeholder-image/page";
 
 export const metadata: Metadata = {
-  title: "Placeholder Image Generator - Create Placeholder Images | placeholder-image",
-  description: "Free online placeholder image generator. Create custom placeholder images with configurable dimensions, colors, text, and formats. Download as PNG, JPEG, or WebP.",
+  title: "Placeholder Image Generator - Custom PNG, JPEG, and WebP placeholders",
+  description: "Create exact-size placeholder images locally with custom dimensions, colors, text, rounded corners, PNG/JPEG/WebP download, data URI copy, and img tag export.",
   alternates: { canonical: "https://tools.loresync.dev/placeholder-image" },
 };
 
