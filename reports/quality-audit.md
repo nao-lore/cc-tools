@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 80.3/100
-- Priority tiers: {"B": 25, "C": 117}
+- Average quality score: 80.5/100
+- Priority tiers: {"B": 24, "C": 118}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
 | B | 50 | 50 | `color-palette` | utility | Color Tools | faq, labels, examples, validation, privacy; penalties: old_count, any_type |
@@ -42,12 +41,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | C | 44 | 62 | `timezone-converter` | converter | Time & Date | copy, validation, privacy, current_count; penalties: old_count, any_type |
 | C | 42 | 68 | `takuhaibin-hikaku` | comparison | EC Tools | copy, examples, reset_clear, validation, accessible_buttons |
 | C | 42 | 69 | `ascii-flowchart` | reference | Developer Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
+| C | 42 | 72 | `binary-converter` | converter | Encoding & Decoding | reset_clear, privacy, current_count; penalties: old_count, any_type |
 
 ## Strongest Current Tools
 
 | Quality | Slug | Type | Category |
 | ---: | --- | --- | --- |
 | 100 | `ad-budget-estimator` | utility | Business |
+| 100 | `ai-cost-calculator` | calculator | AI Tools |
 | 100 | `ai-tool-roi` | calculator | AI Workflow |
 | 100 | `aircon-capacity` | calculator | Home |
 | 100 | `asset-allocation` | utility | Finance |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `eigyoubi` | calculator | Japanese Tools |
 | 100 | `elevenlabs-pricing` | calculator | AI Tools |
 | 100 | `favicon-generator` | image | Image Tools |
-| 100 | `gacha-cost-ceiling` | calculator | Game Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 85.0 |
+| calculator | 85.6 |
 | comparison | 81.2 |
 | converter | 81.4 |
 | generator | 83 |
