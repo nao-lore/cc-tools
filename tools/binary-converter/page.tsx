@@ -1,180 +1,101 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import {
+  Faq,
+  InfoCard,
+  InfoSection,
+  JsonLd,
+  RelatedSection,
+  ToolHeader,
+  type FaqItem,
+} from "@/components/ToolPageSections";
 import BinaryConverter from "./components/BinaryConverter";
 
+const faq: FaqItem[] = [
+  {
+    q: "Which number bases are supported?",
+    a: "The converter supports binary, decimal, hexadecimal, octal, ASCII text, and two's complement display for negative integers.",
+  },
+  {
+    q: "Does the conversion happen locally?",
+    a: "Yes. Values are converted in your browser and are not sent to a server.",
+  },
+  {
+    q: "What is two's complement?",
+    a: "Two's complement is the standard binary representation for signed integers. It makes addition and subtraction work consistently for negative values.",
+  },
+  {
+    q: "Can I use this for programming and debugging?",
+    a: "Yes. It is useful for bit masks, color values, file permissions, protocol debugging, and checking base conversions while coding.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader
+          eyebrow="Developer conversion tools"
+          title="Binary Converter"
+          description="Convert between binary, decimal, hexadecimal, octal, ASCII, and signed integer representations with instant validation."
+          noteTitle="Client-side conversion"
+          note="The calculator runs in your browser and keeps entered values local to the page."
+          tone="slate"
+        />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Binary Converter
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert between binary, decimal, hexadecimal, and octal in
-            real-time. Type in any field and all others update instantly.
-          </p>
-        </div>
-
-        {/* Converter Tool */}
         <BinaryConverter />
 
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a Number Base?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A number base (or radix) determines how many unique digits are used
-            to represent numbers. The most common bases in computing are binary
-            (base 2), octal (base 8), decimal (base 10), and hexadecimal (base
-            16). Each base has specific use cases in programming, networking,
-            and digital electronics.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Binary (Base 2)
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Binary uses only two digits: 0 and 1. It is the fundamental
-            language of computers. Every piece of data in a computer is
-            ultimately represented as a sequence of binary digits (bits). Each
-            bit position represents a power of 2, from right to left: 1, 2, 4,
-            8, 16, 32, and so on.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Hexadecimal (Base 16)
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Hexadecimal uses digits 0-9 and letters A-F. It is commonly used in
-            programming to represent memory addresses, color codes (like
-            #FF5733), and byte values. Each hex digit maps exactly to 4 binary
-            bits, making it a compact way to write binary data.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Octal (Base 8)
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Octal uses digits 0-7. It is used in Unix/Linux file permissions
-            (like chmod 755) and some legacy computing systems. Each octal digit
-            represents exactly 3 binary bits.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Convert Between Number Bases
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Binary to Decimal:</strong> Multiply each bit by its
-              positional power of 2, then sum the results. For example,
-              1010 = 1&times;8 + 0&times;4 + 1&times;2 + 0&times;1 = 10.
-            </li>
-            <li>
-              <strong>Decimal to Binary:</strong> Repeatedly divide by 2 and
-              record the remainders from bottom to top.
-            </li>
-            <li>
-              <strong>Binary to Hex:</strong> Group binary digits in sets of 4
-              from right to left, then convert each group to its hex equivalent.
-            </li>
-            <li>
-              <strong>Binary to Octal:</strong> Group binary digits in sets of 3
-              from right to left, then convert each group.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Two&apos;s Complement
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Two&apos;s complement is the standard method for representing
-            negative numbers in binary. To find the two&apos;s complement of a
-            number, invert all the bits and add 1. For example, -5 in 8-bit
-            two&apos;s complement is 11111011. This tool automatically shows
-            two&apos;s complement representation when you enter a negative
-            number.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Use Cases
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Debugging memory addresses and register values in low-level
-              programming.
-            </li>
-            <li>
-              Understanding bit manipulation operations (AND, OR, XOR, shifts).
-            </li>
-            <li>
-              Working with network subnets and IP address calculations.
-            </li>
-            <li>
-              Converting color codes between hex and RGB values.
-            </li>
-            <li>
-              Setting Unix file permissions using octal notation.
-            </li>
-          </ul>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Base conversion" body="Move between base 2, base 8, base 10, and base 16 without manual arithmetic." />
+          <InfoCard title="Signed integers" body="Check negative values with two's complement bit patterns." />
+          <InfoCard title="ASCII helper" body="Convert text and character codes while debugging binary payloads." />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Binary Converter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/epoch-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Epoch Converter</Link>
-              <Link href="/chmod-calculator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Chmod Calculator</Link>
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-              <Link href="/color-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Converter</Link>
-              <Link href="/hash-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Hash Generator</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        <InfoSection
+          title="Number Base Reference"
+          items={[
+            [
+              "Binary",
+              "Binary uses digits 0 and 1. Each position represents a power of two, which maps directly to bits in memory and protocols.",
+            ],
+            [
+              "Hexadecimal",
+              "Hex uses digits 0-9 and A-F. One hex digit represents four bits, so it is compact for byte values and memory addresses.",
+            ],
+            [
+              "Octal",
+              "Octal uses digits 0-7 and still appears in Unix permissions, where modes such as 755 map to read, write, and execute flags.",
+            ],
+            [
+              "Validation",
+              "Invalid digits are rejected for the selected base, so decimal-only, hex-only, and binary-only inputs stay clear.",
+            ],
+          ]}
+        />
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <Faq items={faq} />
+        <RelatedSection
+          links={[
+            ["/chmod-calculator", "Chmod Calculator", "Decode Unix permissions"],
+            ["/epoch-converter", "Epoch Converter", "Convert Unix timestamps"],
+            ["/hash-generator", "Hash Generator", "Generate hashes locally"],
+            ["/base64-tools", "Base64 Tools", "Encode and decode Base64"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools includes {toolCount} free online tools.
+        </footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Binary Converter",
-  "description": "Convert between binary, decimal, hexadecimal, and octal in\n            real-time. Type in any field and all others update instantly.",
-  "url": "https://tools.loresync.dev/binary-converter",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
+
+      <JsonLd
+        faq={faq}
+        name="Binary Converter"
+        description="Convert binary, decimal, hexadecimal, octal, ASCII, and signed integer values in the browser."
+        url="https://tools.loresync.dev/binary-converter"
+        inLanguage="en"
       />
-      </div>
+    </main>
   );
 }

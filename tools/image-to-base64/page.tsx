@@ -1,198 +1,101 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import {
+  Faq,
+  InfoCard,
+  InfoSection,
+  JsonLd,
+  RelatedSection,
+  ToolHeader,
+  type FaqItem,
+} from "@/components/ToolPageSections";
 import ImageToBase64 from "./components/ImageToBase64";
 
+const faq: FaqItem[] = [
+  {
+    q: "Are uploaded images sent to a server?",
+    a: "No. The file is read by your browser with the File API, and the generated Base64 output stays on your device unless you copy it elsewhere.",
+  },
+  {
+    q: "When should I use Base64 images?",
+    a: "Use Base64 for small icons, placeholders, email snippets, or single-file demos. Larger images are usually better as normal files with caching.",
+  },
+  {
+    q: "Why is the Base64 output larger than the image file?",
+    a: "Base64 encoding adds about one third of size overhead because binary data is represented as text characters.",
+  },
+  {
+    q: "Which output format should I copy?",
+    a: "Use Data URI for HTML image sources and CSS backgrounds, raw Base64 for API payloads, and the HTML/CSS snippets for quick paste workflows.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader
+          eyebrow="Image and encoding tools"
+          title="Image to Base64 Converter"
+          description="Convert PNG, JPG, GIF, SVG, WebP, and ICO files into Base64 strings, Data URIs, CSS snippets, or HTML img tags directly in your browser."
+          noteTitle="Local file processing"
+          note="Images are read in the browser. The tool does not upload your files or generated output."
+          tone="cyan"
+        />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Image to Base64 Converter
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert images to Base64 strings instantly. Drag and drop any image
-            to get its Base64 encoding in multiple formats — Data URI, CSS, or
-            HTML.
-          </p>
-        </div>
-
-        {/* Converter Tool */}
         <ImageToBase64 />
 
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is Base64 Encoding?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Base64 is a binary-to-text encoding scheme that represents binary
-            data using a set of 64 ASCII characters. When applied to images, it
-            converts the raw binary file into a text string that can be embedded
-            directly into HTML, CSS, JSON, or any text-based format. This
-            eliminates the need for a separate image file request, which can
-            improve page load performance for small images.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Why Convert Images to Base64?
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Reduce HTTP requests</strong> — Embedding small images
-              directly in HTML or CSS eliminates extra network round trips.
-            </li>
-            <li>
-              <strong>Email templates</strong> — Many email clients block
-              external images. Inline Base64 images display without being
-              blocked.
-            </li>
-            <li>
-              <strong>Data URIs in CSS</strong> — Use Base64-encoded images as
-              CSS background images without referencing external files.
-            </li>
-            <li>
-              <strong>API payloads</strong> — Send image data as part of JSON
-              API requests without multipart form encoding.
-            </li>
-            <li>
-              <strong>Single-file applications</strong> — Bundle everything into
-              one HTML file for portability.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Supported Image Formats
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This tool supports all common web image formats: PNG, JPEG/JPG, GIF,
-            SVG, WebP, and ICO. Each format is detected automatically and the
-            correct MIME type is used in the Data URI output. SVG files can also
-            be used as inline XML, but Base64 encoding provides a universal
-            approach that works across all contexts.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Output Formats Explained
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Raw Base64</strong> — The pure Base64 string without any
-              prefix. Useful for API payloads and custom processing.
-            </li>
-            <li>
-              <strong>Data URI</strong> — The complete{" "}
-              <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">
-                data:image/type;base64,...
-              </code>{" "}
-              string. Can be used directly as an image source in HTML or CSS.
-            </li>
-            <li>
-              <strong>CSS background-image</strong> — Ready-to-paste CSS
-              property using the Data URI as a background image value.
-            </li>
-            <li>
-              <strong>HTML img tag</strong> — A complete{" "}
-              <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">
-                {"<img>"}
-              </code>{" "}
-              element with the Data URI as the src attribute.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Base64 Size Overhead
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Base64 encoding increases the data size by approximately 33%. A 10
-            KB image becomes roughly 13.3 KB when Base64-encoded. For this
-            reason, Base64 embedding is best suited for small images like icons,
-            logos, and UI elements. For larger images, traditional file references
-            with proper caching are more efficient.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Tool
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Upload an image</strong> by dragging it into the drop zone
-              or clicking to browse your files.
-            </li>
-            <li>
-              <strong>View the preview</strong> along with file details like
-              name, type, size, and dimensions.
-            </li>
-            <li>
-              <strong>Choose your output format</strong> — Raw Base64, Data URI,
-              CSS, or HTML.
-            </li>
-            <li>
-              <strong>Copy the output</strong> with one click and paste it
-              wherever you need it.
-            </li>
-            <li>
-              <strong>Reverse conversion</strong> — Paste a Base64 string to
-              preview the decoded image.
-            </li>
-          </ol>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Multiple outputs" body="Copy raw Base64, a Data URI, CSS background-image, or an HTML img tag." />
+          <InfoCard title="Preview before copying" body="Check file name, type, dimensions, and encoded size before using the output." />
+          <InfoCard title="Small asset friendly" body="Best for icons, placeholders, email snippets, and portable single-file examples." />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Image to Base64 Converter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-              <Link href="/image-compressor" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Image Compressor</Link>
-              <Link href="/svg-to-png" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SVG to PNG</Link>
-              <Link href="/favicon-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Favicon Generator</Link>
-              <Link href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        <InfoSection
+          title="Base64 Image Notes"
+          items={[
+            [
+              "Size tradeoff",
+              "Base64 normally increases payload size by about 33%. For large media, a normal image URL with cache headers is usually faster.",
+            ],
+            [
+              "Data URI usage",
+              "A Data URI includes the MIME type and Base64 content in one string, so it can be pasted into an HTML src attribute or CSS url() value.",
+            ],
+            [
+              "Privacy",
+              "The conversion runs locally with browser APIs. The file content is not submitted to cc-tools during conversion.",
+            ],
+            [
+              "Validation",
+              "If a file cannot be read as an image, the tool reports an error instead of generating a broken snippet.",
+            ],
+          ]}
+        />
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <Faq items={faq} />
+        <RelatedSection
+          links={[
+            ["/base64-tools", "Base64 Tools", "Encode and decode text or files"],
+            ["/svg-to-png", "SVG to PNG", "Rasterize SVG artwork"],
+            ["/image-compressor", "Image Compressor", "Reduce image file size"],
+            ["/favicon-generator", "Favicon Generator", "Create browser icons"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools includes {toolCount} free online tools.
+        </footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Image to Base64 Converter",
-  "description": "Convert images to Base64 strings instantly. Drag and drop any image\n            to get its Base64 encoding in multiple formats — Data URI, CSS, or\n            HTML.",
-  "url": "https://tools.loresync.dev/image-to-base64",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
+
+      <JsonLd
+        faq={faq}
+        name="Image to Base64 Converter"
+        description="Convert image files to Base64, Data URI, CSS, and HTML snippets in the browser."
+        url="https://tools.loresync.dev/image-to-base64"
+        inLanguage="en"
       />
-      </div>
+    </main>
   );
 }

@@ -78,7 +78,7 @@ export default function SeoContent() {
 
       <h2 className="text-lg font-semibold text-foreground">How This Tool Works</h2>
       <p>
-        This Base64 encoder and decoder runs entirely in your browser. No data is sent to any
+        This Base64 encoder and decoder runs entirely in your browser. No data is sent to a remote
         server — all encoding and decoding happens client-side using the browser&apos;s native{" "}
         <code className="bg-panel-bg px-1 py-0.5 rounded text-xs font-mono">btoa()</code> and{" "}
         <code className="bg-panel-bg px-1 py-0.5 rounded text-xs font-mono">atob()</code>{" "}

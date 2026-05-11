@@ -1,142 +1,101 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import {
+  Faq,
+  InfoCard,
+  InfoSection,
+  JsonLd,
+  RelatedSection,
+  ToolHeader,
+  type FaqItem,
+} from "@/components/ToolPageSections";
 import JsonToCsv from "./components/JsonToCsv";
 
+const faq: FaqItem[] = [
+  {
+    q: "Is pasted JSON uploaded?",
+    a: "No. JSON parsing, flattening, CSV generation, and downloads are handled in your browser.",
+  },
+  {
+    q: "Can nested objects be converted?",
+    a: "Yes. Nested object keys are flattened with dot notation so spreadsheet columns remain readable.",
+  },
+  {
+    q: "Which delimiters are supported?",
+    a: "The converter supports comma, tab, and semicolon delimiters, plus quoting options for spreadsheet compatibility.",
+  },
+  {
+    q: "Can CSV be converted back to JSON?",
+    a: "Yes. Switch to CSV-to-JSON mode to parse rows into JSON objects using the first row as headers.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader
+          eyebrow="Data format tools"
+          title="JSON to CSV Converter"
+          description="Paste JSON, preview the flattened table, convert it to CSV, and download or copy the result without leaving your browser."
+          noteTitle="Private data handling"
+          note="Conversion runs locally. Your JSON and CSV output are not sent to cc-tools."
+          tone="emerald"
+        />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            JSON to CSV Converter
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Paste JSON, preview the data as a table, and download CSV instantly.
-            Supports nested objects, custom delimiters, and reverse CSV-to-JSON
-            conversion.
-          </p>
-        </div>
-
-        {/* Converter Tool */}
         <JsonToCsv />
 
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Why Convert JSON to CSV?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            JSON is the standard data format for APIs, configuration files, and
-            web applications. However, many workflows still depend on
-            spreadsheets and tabular data. Converting JSON to CSV lets you open
-            API responses in Excel or Google Sheets, import data into databases,
-            or share structured information with non-technical stakeholders who
-            prefer flat files over nested structures.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How This Converter Works
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Paste a JSON array of objects into the input field and the tool
-            automatically flattens nested properties using dot notation, extracts
-            all unique keys as column headers, and generates a CSV string. You
-            can choose between comma, tab, and semicolon delimiters. Toggle
-            header inclusion or force-quote every field for maximum
-            compatibility. The table preview lets you inspect the data before
-            downloading. Everything runs in your browser with no server
-            round-trips, so your data stays private.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            CSV to JSON Reverse Conversion
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Need to go the other way? Switch to CSV-to-JSON mode and paste
-            comma-separated or tab-separated text. The first row is treated as
-            the header, and each subsequent row becomes a JSON object. This is
-            useful when you have spreadsheet data that needs to be sent to an API
-            or consumed by a JavaScript application. The output is
-            pretty-printed JSON that you can copy or download as a .json file.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Use Cases
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Export API responses to spreadsheets for analysis or reporting.
-            </li>
-            <li>
-              Prepare CSV uploads for databases, CRMs, or marketing platforms
-              from JSON source data.
-            </li>
-            <li>
-              Convert CSV exports from tools like Excel or Google Sheets into
-              JSON for use in web applications.
-            </li>
-            <li>
-              Flatten deeply nested JSON structures into a readable flat table
-              format.
-            </li>
-          </ul>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Table preview" body="Inspect generated columns and rows before copying or downloading the CSV." />
+          <InfoCard title="Nested key flattening" body="Turn nested JSON objects into spreadsheet-friendly dot notation columns." />
+          <InfoCard title="Example-ready workflow" body="Start with a small JSON array, confirm the columns, then paste the larger export." />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">JSON to CSV Converter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
-              <Link href="/yaml-to-json" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">YAML to JSON</Link>
-              <Link href="/xml-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">XML Formatter</Link>
-              <Link href="/sql-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SQL Formatter</Link>
-              <Link href="/mdtable" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Table</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        <InfoSection
+          title="Conversion Workflow"
+          items={[
+            [
+              "Valid JSON input",
+              "Use a JSON array of objects for best results. The tool reports parse errors when input is malformed.",
+            ],
+            [
+              "Column generation",
+              "Keys are collected across rows, nested fields are flattened, and missing values are left empty in the CSV.",
+            ],
+            [
+              "CSV compatibility",
+              "Choose delimiter and quote settings based on Excel, Google Sheets, database import, or regional spreadsheet preferences.",
+            ],
+            [
+              "Local downloads",
+              "Generated CSV and JSON files are created in the browser from the current output.",
+            ],
+          ]}
+        />
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <Faq items={faq} />
+        <RelatedSection
+          links={[
+            ["/json-formatter", "JSON Formatter", "Format and validate JSON"],
+            ["/yaml-to-json", "YAML to JSON", "Convert YAML data"],
+            ["/xml-formatter", "XML Formatter", "Format XML data"],
+            ["/mdtable", "Markdown Table", "Build Markdown tables"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools includes {toolCount} free online tools.
+        </footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "JSON to CSV Converter",
-  "description": "Paste JSON, preview the data as a table, and download CSV instantly.\n            Supports nested objects, custom delimiters, and reverse CSV-to-JSON\n            conversion.",
-  "url": "https://tools.loresync.dev/json-to-csv",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
+
+      <JsonLd
+        faq={faq}
+        name="JSON to CSV Converter"
+        description="Convert JSON to CSV, preview tables, download CSV, and convert CSV back to JSON locally."
+        url="https://tools.loresync.dev/json-to-csv"
+        inLanguage="en"
       />
-      </div>
+    </main>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useCallback, useRef, useEffect } from "react";
+import { tools } from "@/lib/tools-config";
 
 // ─── 型定義 ──────────────────────────────────────────────────────────────────
 type Tab = "encode" | "decode" | "file";
@@ -718,13 +719,6 @@ export default function Base64ToolsPage() {
           {activeTab === "encode" && <TextTab />}
           {activeTab === "file" && <FileTab />}
 
-          {/* 広告スペース */}
-          <div className="mt-10">
-            <div className="border border-dashed border-panel-border rounded-lg p-6 text-center text-xs text-muted/40">
-              Advertisement Space
-            </div>
-          </div>
-
           {/* 解説セクション */}
           <ExplainerSection />
         </div>
@@ -747,7 +741,7 @@ export default function Base64ToolsPage() {
             </div>
           </div>
           <div className="flex justify-center gap-3 text-xs text-muted/60">
-            <Link href="/" className="hover:text-muted">53+ 無料ツール →</Link>
+            <Link href="/" className="hover:text-muted">{tools.length}+ 無料ツール →</Link>
           </div>
         </div>
       </footer>
@@ -759,7 +753,7 @@ export default function Base64ToolsPage() {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Base64 エンコーダー / デコーダー",
-  "description": "",
+  "description": "テキスト、ファイル、Data URIをBase64へエンコードし、Base64をブラウザ上でデコードする無料ツール。",
   "url": "https://tools.loresync.dev/base64-tools",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "All",

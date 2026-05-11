@@ -1,171 +1,105 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import {
+  Faq,
+  InfoCard,
+  InfoSection,
+  JsonLd,
+  RelatedSection,
+  ToolHeader,
+  type FaqItem,
+} from "@/components/ToolPageSections";
 import HtmlEntity from "./components/HtmlEntity";
 
+const faq: FaqItem[] = [
+  {
+    q: "What are HTML entities used for?",
+    a: "HTML entities represent reserved characters such as less-than, greater-than, ampersand, quotes, and symbols in a safe text form.",
+  },
+  {
+    q: "Does the encoder send my text to a server?",
+    a: "No. Encoding and decoding runs in your browser, so pasted text stays local to the page.",
+  },
+  {
+    q: "Should I use named or numeric entities?",
+    a: "Named entities are easier to read for common symbols. Numeric and hexadecimal entities work well for broader Unicode characters.",
+  },
+  {
+    q: "Can this prevent every XSS problem?",
+    a: "No. Entity encoding helps when rendering text in HTML, but security-sensitive apps should use framework escaping and context-aware sanitization.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader
+          eyebrow="HTML and text tools"
+          title="HTML Entity Encoder / Decoder"
+          description="Encode text into HTML entities, decode entities back to readable characters, and copy common named, numeric, and hexadecimal references."
+          noteTitle="Local text conversion"
+          note="The conversion is performed in your browser. Pasted text is not uploaded."
+          tone="amber"
+        />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            HTML Entity Encoder / Decoder
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert text to HTML entities or decode entities back to readable
-            characters. Supports named, numeric, and hexadecimal entities.
-          </p>
-        </div>
-
-        {/* Tool */}
         <HtmlEntity />
 
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Are HTML Entities?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            HTML entities are special sequences used to represent characters that
-            have a reserved meaning in HTML or characters that cannot be easily
-            typed on a keyboard. For example, the less-than sign (&lt;) is
-            written as <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;lt;</code> to
-            prevent the browser from interpreting it as an HTML tag. Entities
-            start with an ampersand (&amp;) and end with a semicolon (;).
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Named vs Numeric Entities
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Named entities use a human-readable name
-            like <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;copy;</code> for
-            the copyright symbol. Numeric entities use the Unicode code point in
-            decimal (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;#169;</code>)
-            or hexadecimal (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;#xA9;</code>)
-            form. Numeric entities can represent any Unicode character, while
-            named entities are limited to a predefined set.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            When to Encode HTML Entities
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Preventing XSS attacks</strong> — Encoding user input
-              before rendering it in HTML prevents malicious script injection.
-            </li>
-            <li>
-              <strong>Displaying code snippets</strong> — When showing HTML
-              source code on a webpage, entities prevent the browser from
-              interpreting the tags.
-            </li>
-            <li>
-              <strong>Special characters in content</strong> — Characters like
-              &amp;, &lt;, &gt;, and &quot; must be encoded to display correctly
-              in HTML documents.
-            </li>
-            <li>
-              <strong>Email obfuscation</strong> — Encoding email addresses as
-              entities can help reduce spam harvesting.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Tool
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Choose a mode</strong> — Select Encode to convert text to
-              entities, or Decode to convert entities back to text.
-            </li>
-            <li>
-              <strong>Paste your text</strong> — Enter the content you want to
-              convert in the input area.
-            </li>
-            <li>
-              <strong>Configure options</strong> — Choose between named or
-              numeric entities, and whether to encode all characters or only
-              special ones.
-            </li>
-            <li>
-              <strong>Copy the result</strong> — Click the copy button to copy
-              the converted output to your clipboard.
-            </li>
-            <li>
-              <strong>Use the reference table</strong> — Browse or search common
-              HTML entities. Click any entity to copy it instantly.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common HTML Entities
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            The most frequently used HTML entities include <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;amp;</code> for
-            the ampersand, <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;lt;</code> and <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;gt;</code> for
-            angle brackets, <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;quot;</code> for
-            double quotes, and <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&amp;nbsp;</code> for
-            non-breaking spaces. Beyond these basics, HTML supports entities
-            for currency symbols, mathematical operators, arrows, Greek letters,
-            and many other special characters.
-          </p>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Encode reserved characters" body="Convert symbols such as <, >, &, quotes, and currency marks into HTML-safe text." />
+          <InfoCard title="Decode pasted entities" body="Turn named, numeric, and hexadecimal entity references back into readable characters." />
+          <InfoCard title="Example snippets" body="Try &amp;lt;div&amp;gt;, &amp;copy;, or &#169; to compare named and numeric forms." />
         </section>
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">html-entity — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/url-encoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">URL Encoder</Link>
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-              <Link href="/html-to-markdown" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML to Markdown</Link>
-              <Link href="/minify-js" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify JS</Link>
-              <Link href="/xml-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">XML Formatter</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        <InfoSection
+          title="Entity Encoding Guide"
+          items={[
+            [
+              "Reserved HTML characters",
+              "Characters such as less-than and ampersand can change markup meaning, so they should be encoded when displayed as text.",
+            ],
+            [
+              "Named entities",
+              "Readable names such as amp, lt, gt, quot, copy, and reg are convenient for common symbols.",
+            ],
+            [
+              "Numeric entities",
+              "Decimal and hexadecimal forms reference Unicode code points and are useful when no common named entity exists.",
+            ],
+            [
+              "Validation",
+              "Malformed entity text remains visible, making it easier to spot input that needs manual cleanup.",
+            ],
+            [
+              "Clear and reset",
+              "Clear the input field when you want to reset the preview and start a fresh conversion.",
+            ],
+          ]}
+        />
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <Faq items={faq} />
+        <RelatedSection
+          links={[
+            ["/html-to-markdown", "HTML to Markdown", "Convert HTML documents"],
+            ["/xml-formatter", "XML Formatter", "Format XML markup"],
+            ["/url-encoder", "URL Encoder", "Encode URL components"],
+            ["/base64-tools", "Base64 Tools", "Encode and decode Base64"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools includes {toolCount} free online tools.
+        </footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "HTML Entity Encoder / Decoder",
-  "description": "Convert text to HTML entities or decode entities back to readable\n            characters. Supports named, numeric, and hexadecimal entities.",
-  "url": "https://tools.loresync.dev/html-entity",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
+
+      <JsonLd
+        faq={faq}
+        name="HTML Entity Encoder / Decoder"
+        description="Encode and decode HTML entities locally in the browser."
+        url="https://tools.loresync.dev/html-entity"
+        inLanguage="en"
       />
-      </div>
+    </main>
   );
 }
