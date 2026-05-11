@@ -369,27 +369,7 @@ export default function MeetingCost() {
                     <div className="text-xs text-slate-600 mt-0.5">
                       時給 {fmtJPYFull(Math.round(p.hourlyRate))} × {p.count}名 × {durationMinutes}分
                     </div>
-                  
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">この会議コスト計算機ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
-        </div>
-      </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この会議コスト計算機ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      </div>
+                  </div>
                 );
               })}
             </div>
@@ -513,27 +493,6 @@ export default function MeetingCost() {
       <div className="text-xs text-slate-600 px-1 pb-4">
         ※ 年間労働時間2,080時間（52週×40時間）で時給換算。実際のコストは社会保険料・福利厚生等を含めると1.3〜1.5倍程度になります。
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "会議コスト計算機",
-  "description": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に",
-  "url": "https://tools.loresync.dev/meeting-cost",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
-        }}
-      />
-      </div>
+    </div>
   );
 }

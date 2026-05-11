@@ -122,6 +122,10 @@ def score_tool(tool: dict[str, str]) -> dict:
     slug = tool["slug"]
     app_text = read_tree(APP_DIR / slug)
     tool_text = read_tree(TOOLS_DIR / slug)
+    if "@/components/ToolPageSections" in tool_text:
+        shared = ROOT / "components" / "ToolPageSections.tsx"
+        if shared.exists():
+            tool_text = f"{tool_text}\n/* {shared.relative_to(ROOT)} */\n{shared.read_text(errors='ignore')}"
     text = f"{app_text}\n{tool_text}"
     archetype = classify(tool, text)
 

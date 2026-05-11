@@ -1,173 +1,32 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import { Faq, InfoCard, InfoSection, JsonLd, RelatedSection, ToolHeader, type FaqItem } from "@/components/ToolPageSections";
 import SqlFormatter from "./components/SqlFormatter";
 
+const faq: FaqItem[] = [
+  { q: "Is SQL sent to a server?", a: "No. Formatting, minifying, syntax highlighting, validation messages, reset, and copy actions run locally in your browser." },
+  { q: "Can I minify SQL too?", a: "Yes. Use the minify option when you need a compact single-line query for logs, examples, or embedded code." },
+  { q: "Which SQL dialects are supported?", a: "The formatter targets common SQL structure used by PostgreSQL, MySQL, SQLite, SQL Server, and similar relational databases." },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            SQL Formatter
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Format, beautify, and syntax-highlight your SQL queries online.
-            Paste your SQL, pick your options, and copy the clean result.
-          </p>
-        </div>
-
-        {/* SQL Formatter Tool */}
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader eyebrow="Developer formatter" title="SQL Formatter" description="Paste SQL, validate syntax-like structure, choose casing and indentation, reset the editor, and copy readable or minified output." tone="violet" noteTitle="Browser-only formatting" note="Queries stay local while formatting, highlighting, minifying, clearing, and copying." />
         <SqlFormatter />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is SQL Formatting?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            SQL formatting is the process of restructuring a SQL query to improve
-            readability. A well-formatted query uses consistent indentation,
-            keyword casing, and line breaks to make the logic clear at a glance.
-            This is especially important when working with complex queries
-            involving multiple joins, subqueries, or conditional expressions.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This SQL Formatter
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Paste your SQL</strong> into the input area on the left. It
-              can be a single query or multiple statements separated by
-              semicolons.
-            </li>
-            <li>
-              <strong>Choose keyword casing</strong> — UPPERCASE makes keywords
-              stand out from identifiers; lowercase blends them in for a softer
-              style.
-            </li>
-            <li>
-              <strong>Set indentation</strong> to 2 or 4 spaces depending on your
-              team&apos;s style guide.
-            </li>
-            <li>
-              <strong>Copy the result</strong> with one click and paste it into
-              your editor, documentation, or code review.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Features
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Syntax highlighting</strong> — keywords in blue, strings in
-              green, numbers in orange, and comments in gray.
-            </li>
-            <li>
-              <strong>Smart formatting</strong> — newlines before major clauses
-              (SELECT, FROM, WHERE, JOIN), indented column lists, aligned ON
-              conditions.
-            </li>
-            <li>
-              <strong>Minify</strong> — compress your SQL to a single line for
-              embedding in code or logs.
-            </li>
-            <li>
-              <strong>No dependencies</strong> — runs entirely in your browser.
-              Your SQL never leaves your machine.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Supported SQL Dialects
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This formatter handles standard SQL syntax used across most database
-            systems including PostgreSQL, MySQL, SQLite, SQL Server, and Oracle.
-            It supports common clauses like SELECT, INSERT, UPDATE, DELETE, CREATE
-            TABLE, as well as window functions (OVER, PARTITION BY), CTEs (WITH),
-            and CASE expressions. The formatting is dialect-agnostic — it focuses
-            on structure rather than vendor-specific extensions.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Tips for Clean SQL
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Use table aliases (e.g., <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">users u</code>) to keep
-              column references short.
-            </li>
-            <li>
-              Put each selected column on its own line for easier diffs in
-              version control.
-            </li>
-            <li>
-              Use CTEs (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">WITH</code>) instead of deeply nested
-              subqueries for better readability.
-            </li>
-            <li>
-              Add comments to explain complex business logic within your queries.
-            </li>
-          </ul>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Review-friendly SQL" body="Format SELECT, JOIN, WHERE, GROUP BY, and CASE blocks for code review." />
+          <InfoCard title="Minify option" body="Compress a query into one line for examples, fixtures, or log comparison." />
+          <InfoCard title="Copy output" body="Copy the formatted SQL into docs, migrations, dashboards, or tickets." />
         </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">sql-formatter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
-              <Link href="/xml-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">XML Formatter</Link>
-              <Link href="/yaml-to-json" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">YAML to JSON</Link>
-              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</Link>
-              <Link href="/minify-js" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify JS</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</Link>
-          </div>
-        </div>
-      </footer>
-
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <InfoSection title="SQL Formatting Notes" items={[["Readable diffs", "Put major clauses and selected columns on separate lines so query changes are easier to review."], ["Vendor syntax", "Dialect-specific extensions may need manual adjustment after automatic formatting."]]} />
+        <Faq items={faq} />
+        <RelatedSection links={[["/json-formatter", "JSON Formatter", "Format JSON"], ["/xml-formatter", "XML Formatter", "Format XML"], ["/yaml-to-json", "YAML to JSON", "Convert config"], ["/regex-tester", "Regex Tester", "Test patterns"]]} />
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "SQL Formatter",
-  "description": "Format, beautify, and syntax-highlight your SQL queries online.\n            Paste your SQL, pick your options, and copy the clean result.",
-  "url": "https://tools.loresync.dev/sql-formatter",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+      <JsonLd faq={faq} name="SQL Formatter" description="Format and minify SQL locally with validation, reset, syntax highlighting, and copy-ready output." url="https://tools.loresync.dev/sql-formatter" category="DeveloperApplication" />
+    </main>
   );
 }

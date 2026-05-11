@@ -1,26 +1,21 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 86.2,
+    "averageQualityScore": 88.0,
     "priorityTierCounts": {
-      "B": 17,
-      "C": 125
+      "B": 10,
+      "C": 132
     },
     "averageByArchetype": {
-      "calculator": 85.6,
+      "calculator": 86.9,
       "comparison": 81.2,
-      "converter": 85.0,
+      "converter": 89.5,
       "generator": 88.8,
-      "image": 88.2,
-      "reference": 84.4,
+      "image": 98.8,
+      "reference": 87.5,
       "utility": 89.4
     },
     "weakestCategories": [
-      {
-        "category": "Creator Tools",
-        "averageQualityScore": 67,
-        "toolCount": 2
-      },
       {
         "category": "Design Tools",
         "averageQualityScore": 69,
@@ -35,11 +30,6 @@
         "category": "SaaS Pricing",
         "averageQualityScore": 73.6,
         "toolCount": 13
-      },
-      {
-        "category": "Data Format Tools",
-        "averageQualityScore": 76.3,
-        "toolCount": 6
       },
       {
         "category": "SEO Tools",
@@ -57,14 +47,19 @@
         "toolCount": 4
       },
       {
-        "category": "Business Tools",
-        "averageQualityScore": 79.8,
-        "toolCount": 6
-      },
-      {
         "category": "Encoding & Decoding",
         "averageQualityScore": 80.1,
         "toolCount": 7
+      },
+      {
+        "category": "Creator Tools",
+        "averageQualityScore": 84.5,
+        "toolCount": 2
+      },
+      {
+        "category": "Business Tools",
+        "averageQualityScore": 85,
+        "toolCount": 6
       },
       {
         "category": "Life Tools",
@@ -75,6 +70,11 @@
         "category": "AI Tools",
         "averageQualityScore": 85.9,
         "toolCount": 16
+      },
+      {
+        "category": "Data Format Tools",
+        "averageQualityScore": 86.7,
+        "toolCount": 6
       }
     ]
   },
@@ -193,140 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "furigana",
-      "name": "ふりがな変換",
-      "description": "Add furigana readings to Japanese text",
-      "market": "JP",
-      "category": "Japanese Tools",
-      "archetype": "converter",
-      "qualityScore": 69,
-      "priorityScore": 51,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "validation",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 8,
-        "buttonCount": 5,
-        "inputCount": 1,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 1231
-      }
-    },
-    {
-      "slug": "meeting-cost",
-      "name": "会議コスト計算機",
-      "description": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に",
-      "market": "JP",
-      "category": "Business Tools",
-      "archetype": "calculator",
-      "qualityScore": 69,
-      "priorityScore": 51,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "labels",
-        "download_export",
-        "reset_clear",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "related_links",
-        "copy",
-        "examples",
-        "validation",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 7,
-        "buttonCount": 6,
-        "inputCount": 3,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 576
-      }
-    },
-    {
-      "slug": "svg-to-png",
-      "name": "SVG to PNG Converter",
-      "description": "Convert SVG files to PNG images",
-      "market": "EN",
-      "category": "Image Tools",
-      "archetype": "image",
-      "qualityScore": 67,
-      "priorityScore": 50,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "validation",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "copy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 8,
-        "buttonCount": 9,
-        "inputCount": 5,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 855
-      }
-    },
     {
       "slug": "ai-model-comparison",
       "name": "AIモデル比較",
@@ -493,140 +359,6 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 661
-      }
-    },
-    {
-      "slug": "qr-generator",
-      "name": "QR Code Generator",
-      "description": "Generate QR codes from text or URLs",
-      "market": "EN",
-      "category": "Image Tools",
-      "archetype": "image",
-      "qualityScore": 69,
-      "priorityScore": 46,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "validation",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "copy",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 6,
-        "buttonCount": 3,
-        "inputCount": 8,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 1029
-      }
-    },
-    {
-      "slug": "sql-formatter",
-      "name": "SQL Formatter",
-      "description": "Format and beautify SQL queries",
-      "market": "EN",
-      "category": "Data Format Tools",
-      "archetype": "converter",
-      "qualityScore": 69,
-      "priorityScore": 46,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 8,
-        "buttonCount": 3,
-        "inputCount": 3,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 774
-      }
-    },
-    {
-      "slug": "yaml-to-json",
-      "name": "YAML to JSON Converter",
-      "description": "Convert between YAML and JSON formats",
-      "market": "EN",
-      "category": "Data Format Tools",
-      "archetype": "converter",
-      "qualityScore": 69,
-      "priorityScore": 46,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "copy",
-        "download_export",
-        "reset_clear",
-        "validation",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "labels",
-        "examples",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count"
-      ],
-      "signals": {
-        "h2Count": 8,
-        "buttonCount": 8,
-        "inputCount": 2,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 793
       }
     },
     {
@@ -882,48 +614,6 @@
       }
     },
     {
-      "slug": "video-bitrate",
-      "name": "動画ビットレート / ファイルサイズ計算",
-      "description": "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き",
-      "market": "JP",
-      "category": "Creator Tools",
-      "archetype": "calculator",
-      "qualityScore": 65,
-      "priorityScore": 45,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "labels",
-        "download_export",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "related_links",
-        "copy",
-        "examples",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 6,
-        "buttonCount": 7,
-        "inputCount": 5,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 619
-      }
-    },
-    {
       "slug": "takuhaibin-hikaku",
       "name": "宅配便 送料比較",
       "description": "ヤマト運輸・佐川急便・日本郵便の送料をサイズ・重量・発送元/先から比較して最安を表示",
@@ -963,52 +653,6 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 672
-      }
-    },
-    {
-      "slug": "ascii-flowchart",
-      "name": "ASCII Flowchart Generator",
-      "description": "Convert a simple node-edge list into an ASCII flowchart",
-      "market": "EN",
-      "category": "Developer Tools",
-      "archetype": "reference",
-      "qualityScore": 69,
-      "priorityScore": 42,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "validation",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 6,
-        "buttonCount": 2,
-        "inputCount": 2,
-        "internalLinkCount": 3,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 651
       }
     },
     {
@@ -3914,6 +3558,47 @@
       }
     },
     {
+      "slug": "ascii-flowchart",
+      "name": "ASCII Flowchart Generator",
+      "description": "Convert a simple node-edge list into an ASCII flowchart",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "reference",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 2,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 636
+      }
+    },
+    {
       "slug": "asset-allocation",
       "name": "アセットアロケーション 可視化",
       "description": "株・債券・現金・暗号資産の配分を円グラフ、リスク目安表示",
@@ -4775,6 +4460,47 @@
       }
     },
     {
+      "slug": "furigana",
+      "name": "ふりがな変換",
+      "description": "Add furigana readings to Japanese text",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1244
+      }
+    },
+    {
       "slug": "gacha-cost-ceiling",
       "name": "ガチャ 天井コスト計算",
       "description": "ガチャの天井・排出率・1回コストから期待値と最大コストを計算",
@@ -5226,6 +4952,47 @@
       }
     },
     {
+      "slug": "meeting-cost",
+      "name": "会議コスト計算機",
+      "description": "会議1回あたりのコストを参加者の年収・人数・時間から計算。無駄な会議の可視化に",
+      "market": "JP",
+      "category": "Business Tools",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 10,
+        "buttonCount": 6,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 725
+      }
+    },
+    {
       "slug": "menseki-keisan",
       "name": "面積計算",
       "description": "8図形の面積計算と坪・畳変換",
@@ -5636,6 +5403,47 @@
       }
     },
     {
+      "slug": "qr-generator",
+      "name": "QR Code Generator",
+      "description": "Generate QR codes from text or URLs",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 8,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 1020
+      }
+    },
+    {
       "slug": "regex-tester",
       "name": "Regex Tester",
       "description": "Test and debug regular expressions with live matching",
@@ -5715,6 +5523,88 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 806
+      }
+    },
+    {
+      "slug": "sql-formatter",
+      "name": "SQL Formatter",
+      "description": "Format and beautify SQL queries",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 3,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 769
+      }
+    },
+    {
+      "slug": "svg-to-png",
+      "name": "SVG to PNG Converter",
+      "description": "Convert SVG files to PNG images",
+      "market": "EN",
+      "category": "Image Tools",
+      "archetype": "image",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 9,
+        "inputCount": 5,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 827
       }
     },
     {
@@ -6005,6 +5895,47 @@
       }
     },
     {
+      "slug": "video-bitrate",
+      "name": "動画ビットレート / ファイルサイズ計算",
+      "description": "動画のビットレートと再生時間からファイルサイズを予測。解像度・fps・コーデック別の推奨値付き",
+      "market": "JP",
+      "category": "Creator Tools",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 9,
+        "buttonCount": 7,
+        "inputCount": 5,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 768
+      }
+    },
+    {
       "slug": "waribiki-keisan",
       "name": "割引計算",
       "description": "割引率から割引後の価格・税込価格を計算",
@@ -6084,6 +6015,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 479
+      }
+    },
+    {
+      "slug": "yaml-to-json",
+      "name": "YAML to JSON Converter",
+      "description": "Convert between YAML and JSON formats",
+      "market": "EN",
+      "category": "Data Format Tools",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 6,
+        "buttonCount": 8,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 806
       }
     },
     {

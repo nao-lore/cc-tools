@@ -16,7 +16,7 @@ function isKanji(char: string): boolean {
   );
 }
 
-// Check if a string contains any kanji
+// Check if a string contains kanji
 function containsKanji(str: string): boolean {
   return [...str].some(isKanji);
 }

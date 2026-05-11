@@ -1,176 +1,32 @@
-import Link from "next/link";
+import { tools } from "@/lib/tools-config";
+import { Faq, InfoCard, InfoSection, JsonLd, RelatedSection, ToolHeader, type FaqItem } from "@/components/ToolPageSections";
 import QrGenerator from "./components/QrGenerator";
 
+const faq: FaqItem[] = [
+  { q: "Is QR content uploaded?", a: "No. QR generation, preview, validation, reset, copy, PNG download, and SVG download run locally in your browser." },
+  { q: "Which format should I download?", a: "Use PNG for quick sharing and SVG for print or layouts that need scalable vector output." },
+  { q: "How do I make a reliable QR code?", a: "Keep content short, use strong contrast, leave margin around the code, and test the result on more than one device." },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            QR Code Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create QR codes for URLs, text, email, phone numbers, WiFi, and
-            contacts. Customize colors, adjust size, and download as PNG or SVG.
-          </p>
-        </div>
-
-        {/* QR Generator Tool */}
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <ToolHeader eyebrow="Generator tools" title="QR Code Generator" description="Create QR codes for URLs, text, email, phone, WiFi, and vCard data. Customize colors, validate readability, reset settings, and download PNG or SVG." tone="emerald" noteTitle="Local QR rendering" note="Encoded content stays in the browser while you preview, copy, download, and clear generated codes." />
         <QrGenerator />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a QR Code?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A QR code (Quick Response code) is a two-dimensional barcode that
-            stores information in a grid of black and white squares. QR codes can
-            be scanned by smartphone cameras and QR reader apps to quickly access
-            URLs, contact information, WiFi credentials, and more. They were
-            invented in 1994 by Denso Wave and have become ubiquitous in
-            marketing, payments, and everyday communication.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How QR Codes Work
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            QR codes encode data using a matrix of dark and light modules. The
-            code includes finder patterns (the three large squares in the
-            corners) that help scanners detect and orient the code. Data is
-            encoded in binary format with error correction, allowing the code to
-            be read even if partially damaged. This generator uses Reed-Solomon
-            error correction to ensure reliable scanning.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This QR Code Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Select the input type</strong> — choose from URL, Text,
-              Email, Phone, WiFi, or vCard to get the right format template.
-            </li>
-            <li>
-              <strong>Enter your content</strong> — type or paste the text, URL,
-              or information you want to encode.
-            </li>
-            <li>
-              <strong>Customize appearance</strong> — adjust the size with the
-              slider, and pick custom foreground and background colors.
-            </li>
-            <li>
-              <strong>Download your QR code</strong> — save as PNG for images or
-              SVG for scalable vector graphics.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            QR Code Use Cases
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Marketing</strong> — link to websites, landing pages, or
-              promotional content from print materials.
-            </li>
-            <li>
-              <strong>Business cards</strong> — encode vCard contact information
-              for easy sharing at events.
-            </li>
-            <li>
-              <strong>WiFi sharing</strong> — let guests connect to your network
-              by scanning a QR code instead of typing passwords.
-            </li>
-            <li>
-              <strong>Payments</strong> — many payment platforms use QR codes for
-              quick mobile transactions.
-            </li>
-            <li>
-              <strong>Event tickets</strong> — encode ticket data for fast
-              check-in at venues.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Tips for Better QR Codes
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Keep the encoded data short. Shorter data produces simpler QR codes
-              that scan faster and more reliably.
-            </li>
-            <li>
-              Use high contrast between foreground and background colors. Dark on
-              light works best for scanner compatibility.
-            </li>
-            <li>
-              Test your QR code with multiple devices before printing or
-              distributing.
-            </li>
-            <li>
-              Use SVG format for print materials to ensure crisp edges at any
-              size.
-            </li>
-          </ul>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Useful examples" body="Start from URL, WiFi, email, phone, or vCard patterns before customizing." />
+          <InfoCard title="Print-friendly SVG" body="Download vector QR codes for menus, flyers, labels, and event materials." />
+          <InfoCard title="Validation mindset" body="Check contrast and scan the final code before publishing or printing." />
         </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">QR Code Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/uuid-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">UUID Generator</Link>
-              <Link href="/password-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Password Generator</Link>
-              <Link href="/favicon-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Favicon Generator</Link>
-              <Link href="/placeholder-image" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Placeholder Image</Link>
-              <Link href="/base64-tools" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Base64 Tools</Link>
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
-
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <InfoSection title="QR Code Notes" items={[["Shorter data scans faster", "Long text creates denser QR codes, so use short URLs when the printed size is small."], ["Contrast matters", "Dark foreground on a light background is the most reliable choice across phone cameras."]]} />
+        <Faq items={faq} />
+        <RelatedSection links={[["/uuid-generator", "UUID Generator", "Generate IDs"], ["/password-generator", "Password Generator", "Create secrets"], ["/favicon-generator", "Favicon Generator", "Build icons"], ["/image-to-base64", "Image to Base64", "Encode assets"]]} />
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "QR Code Generator",
-  "description": "Create QR codes for URLs, text, email, phone numbers, WiFi, and\n            contacts. Customize colors, adjust size, and download as PNG or SVG.",
-  "url": "https://tools.loresync.dev/qr-generator",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+      <JsonLd faq={faq} name="QR Code Generator" description="Generate QR codes locally with validation, reset, copy, PNG download, and SVG download controls." url="https://tools.loresync.dev/qr-generator" />
+    </main>
   );
 }
