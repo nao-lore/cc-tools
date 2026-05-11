@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import ToolPage from "@/tools/password-generator/page";
 
 export const metadata: Metadata = {
-  title: "パスワード生成ツール - 安全なパスワードを自動生成",
-  description: "無料のパスワード生成ツール。大文字・小文字・数字・記号を組み合わせた安全なパスワードを自動生成。パスワード強度チェック機能付き。エントロピー表示対応。",
+  title: "パスワード生成ツール - Web Crypto APIで安全なランダム文字列を生成",
+  description: "ブラウザ内で安全なランダムパスワードを生成。長さ、文字種、紛らわしい文字除外、生成数、エントロピー表示、コピー、TXT保存に対応。",
   alternates: { canonical: "https://tools.loresync.dev/password-generator" },
 };
 

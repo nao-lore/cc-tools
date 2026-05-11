@@ -1,422 +1,411 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
-const NUMBERS = "0123456789";
-const SYMBOLS = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+type CharacterOption = "uppercase" | "lowercase" | "numbers" | "symbols";
 
-const AMBIGUOUS_CHARS = "0O1lI";
-
-interface PasswordOptions {
+type PasswordOptions = Record<CharacterOption, boolean> & {
   length: number;
-  uppercase: boolean;
-  lowercase: boolean;
-  numbers: boolean;
-  symbols: boolean;
-  excludeAmbiguous: boolean;
   count: number;
-}
+  excludeAmbiguous: boolean;
+  requireEachSelected: boolean;
+};
 
-interface StrengthResult {
+type Preset = {
   label: string;
-  color: string;
-  bgColor: string;
-  width: string;
-  entropy: number;
+  options: PasswordOptions;
+};
+
+const CHARSETS: Record<CharacterOption, { label: string; chars: string }> = {
+  uppercase: { label: "大文字 A-Z", chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+  lowercase: { label: "小文字 a-z", chars: "abcdefghijklmnopqrstuvwxyz" },
+  numbers: { label: "数字 0-9", chars: "0123456789" },
+  symbols: { label: "記号", chars: "!@#$%^&*()_+-=[]{}|;:,.<>?" },
+};
+
+const AMBIGUOUS_CHARS = new Set("0O1lI".split(""));
+const DEFAULT_OPTIONS: PasswordOptions = {
+  length: 20,
+  count: 5,
+  uppercase: true,
+  lowercase: true,
+  numbers: true,
+  symbols: true,
+  excludeAmbiguous: true,
+  requireEachSelected: true,
+};
+
+const PRESETS: Preset[] = [
+  { label: "Password manager", options: DEFAULT_OPTIONS },
+  {
+    label: "Easy to type",
+    options: { ...DEFAULT_OPTIONS, length: 18, symbols: false, excludeAmbiguous: true },
+  },
+  {
+    label: "API token",
+    options: { ...DEFAULT_OPTIONS, length: 32, count: 3, symbols: false, excludeAmbiguous: false },
+  },
+  {
+    label: "Short temporary",
+    options: { ...DEFAULT_OPTIONS, length: 12, count: 5, symbols: true },
+  },
+];
+
+function getEnabledOptions(options: PasswordOptions) {
+  return (Object.keys(CHARSETS) as CharacterOption[]).filter((key) => options[key]);
 }
 
-function getCharacterPool(options: PasswordOptions): string {
-  let pool = "";
-  if (options.uppercase) pool += UPPERCASE;
-  if (options.lowercase) pool += LOWERCASE;
-  if (options.numbers) pool += NUMBERS;
-  if (options.symbols) pool += SYMBOLS;
+function filterCharacters(chars: string, excludeAmbiguous: boolean) {
+  if (!excludeAmbiguous) return chars;
+  return chars
+    .split("")
+    .filter((char) => !AMBIGUOUS_CHARS.has(char))
+    .join("");
+}
 
-  if (options.excludeAmbiguous) {
-    pool = pool
-      .split("")
-      .filter((c) => !AMBIGUOUS_CHARS.includes(c))
-      .join("");
+function buildCharacterPool(options: PasswordOptions) {
+  return getEnabledOptions(options)
+    .map((key) => filterCharacters(CHARSETS[key].chars, options.excludeAmbiguous))
+    .join("");
+}
+
+function secureRandomIndex(maxExclusive: number) {
+  if (maxExclusive <= 0) return 0;
+  const maxUint = 0xffffffff;
+  const limit = maxUint - (maxUint % maxExclusive);
+  const buffer = new Uint32Array(1);
+
+  do {
+    crypto.getRandomValues(buffer);
+  } while (buffer[0] >= limit);
+
+  return buffer[0] % maxExclusive;
+}
+
+function pickOne(chars: string) {
+  return chars[secureRandomIndex(chars.length)] ?? "";
+}
+
+function shuffleSecure(chars: string[]) {
+  const copy = [...chars];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = secureRandomIndex(index + 1);
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
   }
-
-  return pool;
+  return copy.join("");
 }
 
-function generatePassword(options: PasswordOptions): string {
-  const pool = getCharacterPool(options);
-  if (pool.length === 0) return "";
+function generatePassword(options: PasswordOptions) {
+  const enabled = getEnabledOptions(options);
+  const pool = buildCharacterPool(options);
+  if (!pool) return "";
 
-  const array = new Uint32Array(options.length);
-  crypto.getRandomValues(array);
+  const requiredChars =
+    options.requireEachSelected && options.length >= enabled.length
+      ? enabled.map((key) => pickOne(filterCharacters(CHARSETS[key].chars, options.excludeAmbiguous))).filter(Boolean)
+      : [];
 
-  return Array.from(array, (v) => pool[v % pool.length]).join("");
+  const remainingLength = Math.max(0, options.length - requiredChars.length);
+  const remainingChars = Array.from({ length: remainingLength }, () => pickOne(pool));
+  return shuffleSecure([...requiredChars, ...remainingChars]);
 }
 
-function calculateEntropy(options: PasswordOptions): number {
-  const pool = getCharacterPool(options);
-  if (pool.length === 0) return 0;
-  return Math.floor(options.length * Math.log2(pool.length));
+function calculateEntropy(options: PasswordOptions) {
+  const poolLength = buildCharacterPool(options).length;
+  if (!poolLength) return 0;
+  return Math.round(options.length * Math.log2(poolLength));
 }
 
-function getStrength(entropy: number): StrengthResult {
-  if (entropy < 40) {
-    return {
-      label: "弱",
-      color: "text-red-500",
-      bgColor: "bg-red-500",
-      width: "25%",
-      entropy,
-    };
-  }
-  if (entropy < 60) {
-    return {
-      label: "普通",
-      color: "text-yellow-500",
-      bgColor: "bg-yellow-500",
-      width: "50%",
-      entropy,
-    };
-  }
-  if (entropy < 80) {
-    return {
-      label: "強",
-      color: "text-blue-500",
-      bgColor: "bg-blue-500",
-      width: "75%",
-      entropy,
-    };
-  }
-  return {
-    label: "最強",
-    color: "text-green-500",
-    bgColor: "bg-green-500",
-    width: "100%",
-    entropy,
-  };
+function getStrength(entropy: number) {
+  if (entropy < 50) return { label: "弱い", tone: "text-red-700 bg-red-50 border-red-200", bar: "bg-red-500", width: "25%" };
+  if (entropy < 75) return { label: "普通", tone: "text-amber-700 bg-amber-50 border-amber-200", bar: "bg-amber-500", width: "50%" };
+  if (entropy < 100) return { label: "強い", tone: "text-sky-700 bg-sky-50 border-sky-200", bar: "bg-sky-500", width: "75%" };
+  return { label: "非常に強い", tone: "text-emerald-700 bg-emerald-50 border-emerald-200", bar: "bg-emerald-500", width: "100%" };
 }
 
-function CopyIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
-
-function RefreshIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
-    </svg>
-  );
+function getError(options: PasswordOptions) {
+  if (options.length < 8) return "長さは8文字以上にしてください。";
+  if (options.length > 128) return "長さは128文字以下にしてください。";
+  if (options.count < 1 || options.count > 20) return "生成数は1から20個の範囲にしてください。";
+  if (!buildCharacterPool(options)) return "少なくとも1つの文字種を選択してください。";
+  return "";
 }
 
 export default function PasswordGenerator() {
-  const [options, setOptions] = useState<PasswordOptions>({
-    length: 16,
-    uppercase: true,
-    lowercase: true,
-    numbers: true,
-    symbols: true,
-    excludeAmbiguous: false,
-    count: 5,
-  });
-
+  const [options, setOptions] = useState<PasswordOptions>(DEFAULT_OPTIONS);
   const [passwords, setPasswords] = useState<string[]>([]);
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copied, setCopied] = useState("");
+
+  const entropy = useMemo(() => calculateEntropy(options), [options]);
+  const strength = getStrength(entropy);
+  const error = getError(options);
+  const poolSize = buildCharacterPool(options).length;
 
   const generate = useCallback(() => {
-    const pool = getCharacterPool(options);
-    if (pool.length === 0) {
+    const currentError = getError(options);
+    if (currentError) {
       setPasswords([]);
       return;
     }
-    const newPasswords = Array.from({ length: options.count }, () =>
-      generatePassword(options)
-    );
-    setPasswords(newPasswords);
+    setPasswords(Array.from({ length: options.count }, () => generatePassword(options)));
+    setCopied("");
   }, [options]);
 
   useEffect(() => {
     generate();
   }, [generate]);
 
-  const copyToClipboard = async (text: string, index: number) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 1500);
-    } catch {
-      // Fallback
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 1500);
-    }
-  };
+  function updateOption<T extends keyof PasswordOptions>(key: T, value: PasswordOptions[T]) {
+    setOptions((current) => ({ ...current, [key]: value }));
+    setCopied("");
+  }
 
-  const entropy = calculateEntropy(options);
-  const strength = getStrength(entropy);
-  const hasPool = getCharacterPool(options).length > 0;
+  function applyPreset(preset: Preset) {
+    setOptions(preset.options);
+    setCopied("");
+  }
 
-  const toggleOption = (key: keyof PasswordOptions) => {
-    setOptions((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
+  function reset() {
+    setOptions(DEFAULT_OPTIONS);
+    setCopied("");
+  }
+
+  async function copyText(text: string, key: string) {
+    await navigator.clipboard.writeText(text);
+    setCopied(key);
+    window.setTimeout(() => setCopied(""), 1600);
+  }
+
+  function downloadTxt() {
+    if (!passwords.length) return;
+    const blob = new Blob([passwords.join("\n") + "\n"], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "passwords.txt";
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      {/* Controls */}
-      <div
-        className="rounded-xl p-6 mb-6 shadow-sm border"
-        style={{
-          backgroundColor: "var(--card)",
-          borderColor: "var(--border)",
-        }}
-      >
-        {/* Length slider */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <label className="font-medium text-sm">パスワードの長さ</label>
-            <span
-              className="font-mono font-bold text-lg px-3 py-1 rounded-lg"
-              style={{ backgroundColor: "var(--background)" }}
-            >
-              {options.length}
-            </span>
-          </div>
-          <input
-            type="range"
-            min={8}
-            max={128}
-            value={options.length}
-            onChange={(e) =>
-              setOptions((prev) => ({
-                ...prev,
-                length: parseInt(e.target.value),
-              }))
-            }
-            className="w-full"
-          />
-          <div className="flex justify-between text-xs opacity-50 mt-1">
-            <span>8</span>
-            <span>128</span>
-          </div>
-        </div>
-
-        {/* Character type toggles */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <ToggleButton
-            active={options.uppercase}
-            onClick={() => toggleOption("uppercase")}
-            label="大文字 (A-Z)"
-          />
-          <ToggleButton
-            active={options.lowercase}
-            onClick={() => toggleOption("lowercase")}
-            label="小文字 (a-z)"
-          />
-          <ToggleButton
-            active={options.numbers}
-            onClick={() => toggleOption("numbers")}
-            label="数字 (0-9)"
-          />
-          <ToggleButton
-            active={options.symbols}
-            onClick={() => toggleOption("symbols")}
-            label="記号 (!@#$%...)"
-          />
-        </div>
-
-        {/* Exclude ambiguous */}
-        <label className="flex items-center gap-2 text-sm cursor-pointer mb-5">
-          <input
-            type="checkbox"
-            checked={options.excludeAmbiguous}
-            onChange={() => toggleOption("excludeAmbiguous")}
-            className="w-4 h-4 rounded accent-blue-500"
-          />
-          <span>紛らわしい文字を除外 (0/O, 1/l/I)</span>
-        </label>
-
-        {/* Strength meter */}
-        {hasPool && (
-          <div className="mb-4">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">パスワード強度</span>
-              <div className="flex items-center gap-2">
-                <span className={`text-sm font-bold ${strength.color}`}>
-                  {strength.label}
-                </span>
-                <span className="text-xs opacity-60 font-mono">
-                  {entropy} bits
-                </span>
-              </div>
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">生成条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                Web Crypto APIでランダムなパスワードを端末内生成します。
+              </p>
             </div>
-            <div
-              className="h-2.5 rounded-full overflow-hidden"
-              style={{ backgroundColor: "var(--border)" }}
-            >
-              <div
-                className={`strength-bar h-full rounded-full ${strength.bgColor}`}
-                style={{ width: strength.width }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Generate button */}
-        <button
-          onClick={generate}
-          disabled={!hasPool}
-          className="w-full py-3 px-4 rounded-lg font-bold text-white flex items-center justify-center gap-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-          style={{
-            backgroundColor: hasPool ? "var(--accent)" : undefined,
-          }}
-        >
-          <RefreshIcon />
-          パスワードを生成
-        </button>
-      </div>
-
-      {/* Password list */}
-      {!hasPool && (
-        <p className="text-center text-sm opacity-60 mb-4">
-          少なくとも1つの文字種を選択してください
-        </p>
-      )}
-
-      <div className="space-y-3">
-        {passwords.map((pw, i) => (
-          <div
-            key={`${pw}-${i}`}
-            className="flex items-center gap-3 rounded-lg p-4 border group"
-            style={{
-              backgroundColor: "var(--card)",
-              borderColor: "var(--border)",
-            }}
-          >
-            <code className="flex-1 font-mono text-sm break-all select-all leading-relaxed">
-              {pw}
-            </code>
             <button
-              onClick={() => copyToClipboard(pw, i)}
-              className={`flex-shrink-0 p-2 rounded-lg transition-colors ${
-                copiedIndex === i
-                  ? "text-green-500 bg-green-50 dark:bg-green-950 copy-success"
-                  : "opacity-50 hover:opacity-100 hover:bg-gray-100 dark:hover:bg-gray-800"
-              }`}
-              title="コピー"
+              type="button"
+              onClick={reset}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
-              {copiedIndex === i ? <CheckIcon /> : <CopyIcon />}
+              リセット
             </button>
           </div>
-        ))}
-      </div>
 
-      {/* FAQ */}
-      <div className="mt-8 rounded-xl p-6 border" style={{ backgroundColor: "var(--card)", borderColor: "var(--border)" }}>
-        <h2 className="text-lg font-semibold mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "安全なパスワードの長さはどのくらいですか？", a: "最低12文字以上、できれば16文字以上が推奨されます。大文字・小文字・数字・記号を組み合わせることでエントロピーが高まり、ブルートフォース攻撃への耐性が増します。" },
-            { q: "生成されたパスワードはサーバーに保存されますか？", a: "いいえ。このツールはすべてブラウザ上で動作しており、生成されたパスワードがサーバーに送信・保存されることは一切ありません。" },
-            { q: "「紛らわしい文字を除外」とはどういう意味ですか？", a: "0（ゼロ）とO（大文字O）、1（数字）とl（小文字L）とI（大文字i）など、見た目が似ている文字を除外します。手入力する際の入力ミスを防ぐことができます。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="rounded-lg p-4" style={{ backgroundColor: "var(--background)" }}>
-              <p className="font-medium mb-1">Q. {q}</p>
-              <p className="text-sm opacity-70">A. {a}</p>
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {PRESETS.map((preset) => (
+                <button
+                  key={preset.label}
+                  type="button"
+                  onClick={() => applyPreset(preset)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {preset.label} <span className="text-slate-400">{preset.options.length} chars</span>
+                </button>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            <NumberInput
+              id="password-length"
+              label="長さ"
+              value={options.length}
+              min={8}
+              max={128}
+              unit="文字"
+              onChange={(value) => updateOption("length", value)}
+            />
+            <NumberInput
+              id="password-count"
+              label="生成数"
+              value={options.count}
+              min={1}
+              max={20}
+              unit="個"
+              onChange={(value) => updateOption("count", value)}
+            />
+          </div>
+
+          <div className="mt-5 grid gap-2 sm:grid-cols-2">
+            {(Object.keys(CHARSETS) as CharacterOption[]).map((key) => (
+              <label
+                key={key}
+                className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm"
+              >
+                <span className="font-medium text-slate-700">{CHARSETS[key].label}</span>
+                <input
+                  type="checkbox"
+                  checked={options[key]}
+                  onChange={(event) => updateOption(key, event.target.checked)}
+                  className="h-5 w-5 rounded border-slate-300"
+                />
+              </label>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-2">
+            <label className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <span>
+                <span className="font-medium text-slate-700">紛らわしい文字を除外</span>
+                <span className="ml-2 text-slate-400">0/O, 1/l/I</span>
+              </span>
+              <input
+                type="checkbox"
+                checked={options.excludeAmbiguous}
+                onChange={(event) => updateOption("excludeAmbiguous", event.target.checked)}
+                className="h-5 w-5 rounded border-slate-300"
+              />
+            </label>
+            <label className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+              <span className="font-medium text-slate-700">選択した文字種を最低1文字ずつ含める</span>
+              <input
+                type="checkbox"
+                checked={options.requireEachSelected}
+                onChange={(event) => updateOption("requireEachSelected", event.target.checked)}
+                className="h-5 w-5 rounded border-slate-300"
+              />
+            </label>
+          </div>
+
+          <p className={`mt-3 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || `文字プール ${poolSize} 種類。生成結果は外部に送信されません。`}
+          </p>
+
+          <button
+            type="button"
+            onClick={generate}
+            disabled={Boolean(error)}
+            className="mt-4 w-full rounded-lg bg-slate-950 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            パスワードを再生成
+          </button>
         </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "安全なパスワードの長さはどのくらいですか？", "acceptedAnswer": { "@type": "Answer", "text": "最低12文字以上、できれば16文字以上が推奨されます。大文字・小文字・数字・記号を組み合わせることでエントロピーが高まります。" } },
-              { "@type": "Question", "name": "生成されたパスワードはサーバーに保存されますか？", "acceptedAnswer": { "@type": "Answer", "text": "いいえ。このツールはすべてブラウザ上で動作しており、生成されたパスワードがサーバーに送信・保存されることは一切ありません。" } },
-              { "@type": "Question", "name": "「紛らわしい文字を除外」とはどういう意味ですか？", "acceptedAnswer": { "@type": "Answer", "text": "0とO、1とlとIなど見た目が似ている文字を除外します。手入力時の入力ミスを防ぐことができます。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t" style={{ borderColor: "var(--border)" }}>
-          <p className="text-sm font-medium opacity-50 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/hash-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">ハッシュ生成ツール</Link>
-            <Link href="/uuid-generator" className="text-sm text-blue-500 hover:underline bg-blue-50 dark:bg-blue-950 px-3 py-1.5 rounded-lg">UUID ジェネレーター</Link>
+
+        <div className="p-5 sm:p-6">
+          <div className={`rounded-2xl border p-5 ${strength.tone}`}>
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold opacity-80">強度</p>
+                <p className="mt-1 text-3xl font-bold">{strength.label}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-semibold opacity-80">推定エントロピー</p>
+                <p className="mt-1 font-mono text-2xl font-bold">{entropy} bits</p>
+              </div>
+            </div>
+            <div className="mt-4 h-3 overflow-hidden rounded-full bg-white/70">
+              <div className={`h-full rounded-full ${strength.bar}`} style={{ width: strength.width }} />
+            </div>
+          </div>
+
+          <div className="mt-5 space-y-3">
+            {passwords.map((password, index) => (
+              <div key={`${password}-${index}`} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <div className="flex items-start gap-3">
+                  <code className="min-w-0 flex-1 break-all rounded-lg bg-white px-3 py-2 font-mono text-sm text-slate-950 ring-1 ring-slate-200">
+                    {password}
+                  </code>
+                  <button
+                    type="button"
+                    onClick={() => copyText(password, `password-${index}`)}
+                    className="whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                  >
+                    {copied === `password-${index}` ? "コピー済み" : "コピー"}
+                  </button>
+                </div>
+              </div>
+            ))}
+            {!passwords.length && (
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm font-medium text-slate-500">
+                条件を確認すると生成結果が表示されます。
+              </div>
+            )}
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => copyText(passwords.join("\n"), "all")}
+              disabled={!passwords.length}
+              className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {copied === "all" ? "全件コピー済み" : "全件コピー"}
+            </button>
+            <button
+              type="button"
+              onClick={downloadTxt}
+              disabled={!passwords.length}
+              className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              TXT保存
+            </button>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function ToggleButton({
-  active,
-  onClick,
+function NumberInput({
+  id,
   label,
+  value,
+  min,
+  max,
+  unit,
+  onChange,
 }: {
-  active: boolean;
-  onClick: () => void;
+  id: string;
   label: string;
+  value: number;
+  min: number;
+  max: number;
+  unit: string;
+  onChange: (value: number) => void;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`py-2.5 px-4 rounded-lg text-sm font-medium transition-colors border ${
-        active
-          ? "bg-blue-500 text-white border-blue-500"
-          : "border-current opacity-30 hover:opacity-60"
-      }`}
-    >
-      {label}
-    </button>
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-900">
+        <input
+          id={id}
+          type="text"
+          inputMode="numeric"
+          value={value}
+          onChange={(event) => {
+            const parsed = Number.parseInt(event.target.value.replace(/[^0-9]/g, ""), 10);
+            onChange(Number.isFinite(parsed) ? Math.min(max, Math.max(min, parsed)) : min);
+          }}
+          className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+        />
+        <span className="flex min-w-14 items-center justify-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">
+          {unit}
+        </span>
+      </div>
+      <div className="mt-1 flex justify-between text-xs text-slate-400">
+        <span>{min}</span>
+        <span>{max}</span>
+      </div>
+    </div>
   );
 }

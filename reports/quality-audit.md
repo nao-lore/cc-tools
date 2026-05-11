@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 78.4/100
-- Priority tiers: {"B": 32, "C": 110}
+- Average quality score: 78.7/100
+- Priority tiers: {"B": 31, "C": 111}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 53 | 61 | `password-generator` | generator | Developer Tools | examples, reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
 | B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
 | B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
 | B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 46 | 72 | `teigaku-genzei` | calculator | Tax Tools | copy, examples, reset_clear, validation, current_count |
 | B | 45 | 61 | `color-converter` | converter | Color Tools | faq, reset_clear, privacy; penalties: old_count, ad_placeholder, any_type |
 | B | 45 | 65 | `cloudflare-workers-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
+| B | 45 | 65 | `github-actions-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 
 ## Strongest Current Tools
 
@@ -70,7 +70,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | calculator | 82.7 |
 | comparison | 75.1 |
 | converter | 81.4 |
-| generator | 76.5 |
+| generator | 83 |
 | image | 88.2 |
 | reference | 77 |
 | utility | 70.8 |
@@ -88,9 +88,9 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | SaaS Pricing | 67.5 | 13 |
 | Time & Date | 68 | 2 |
 | Minifier Tools | 68 | 2 |
-| Developer Tools | 68.6 | 8 |
 | Design Tools | 69 | 1 |
 | Labor Tools | 69.5 | 4 |
+| EC Tools | 72.4 | 5 |
 
 ## Next Factory Steps
 
