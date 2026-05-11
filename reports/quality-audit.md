@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 76.7/100
-- Priority tiers: {"B": 38, "C": 104}
+- Average quality score: 77.0/100
+- Priority tiers: {"B": 37, "C": 105}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 57 | 56 | `kenpei-yoseki` | calculator | Life Tools | copy, reset_clear, validation, privacy, current_count; penalties: old_count, ad_placeholder |
 | B | 57 | 62 | `bank-code-lookup` | reference | Japanese Tools | h1, related_links, labels, reset_clear, validation |
 | B | 56 | 51 | `asset-allocation` | utility | Finance | h1, related_links, labels, copy, examples; penalties: ad_placeholder |
 | B | 54 | 53 | `ad-budget-estimator` | utility | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 46 | 69 | `qr-generator` | image | Image Tools | copy, privacy, current_count; penalties: old_count, any_type |
 | B | 46 | 69 | `sql-formatter` | converter | Data Format Tools | validation, privacy, current_count; penalties: old_count, any_type |
 | B | 46 | 69 | `yaml-to-json` | converter | Data Format Tools | labels, examples, privacy, current_count; penalties: old_count |
+| B | 46 | 72 | `aojiro-shinkoku-sim` | calculator | Tax Tools | copy, examples, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -60,14 +60,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `hebon-romaji` | converter | Japanese Tools |
 | 100 | `image-compressor` | image | Image Tools |
 | 100 | `jigyou-keihi-bunrui` | utility | Tax Tools |
+| 100 | `kenpei-yoseki` | calculator | Life Tools |
 | 100 | `loan-simulator` | calculator | Japanese Tools |
-| 100 | `measuring-converter` | converter | Cooking Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 81.2 |
+| calculator | 82.0 |
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 76.5 |

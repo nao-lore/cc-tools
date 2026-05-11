@@ -1,13 +1,13 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 76.7,
+    "averageQualityScore": 77.0,
     "priorityTierCounts": {
-      "B": 38,
-      "C": 104
+      "B": 37,
+      "C": 105
     },
     "averageByArchetype": {
-      "calculator": 81.2,
+      "calculator": 82.0,
       "comparison": 75.1,
       "converter": 81.4,
       "generator": 76.5,
@@ -193,51 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "kenpei-yoseki",
-      "name": "建蔽率・容積率 計算",
-      "description": "敷地面積と用途地域から最大建築面積・延べ床面積を計算",
-      "market": "JP",
-      "category": "Life Tools",
-      "archetype": "calculator",
-      "qualityScore": 56,
-      "priorityScore": 57,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "download_export",
-        "examples",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "copy",
-        "reset_clear",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "ad_placeholder"
-      ],
-      "signals": {
-        "h2Count": 5,
-        "buttonCount": 1,
-        "inputCount": 5,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 417
-      }
-    },
     {
       "slug": "bank-code-lookup",
       "name": "銀行・支店コード検索",
@@ -5746,6 +5701,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 564
+      }
+    },
+    {
+      "slug": "kenpei-yoseki",
+      "name": "建蔽率・容積率 計算",
+      "description": "敷地面積と用途地域から最大建築面積・延べ床面積を計算",
+      "market": "JP",
+      "category": "Life Tools",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 3,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 729
       }
     },
     {
