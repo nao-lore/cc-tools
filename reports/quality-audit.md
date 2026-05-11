@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 77.2/100
-- Priority tiers: {"B": 36, "C": 106}
+- Average quality score: 77.6/100
+- Priority tiers: {"B": 35, "C": 107}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 56 | 51 | `asset-allocation` | utility | Finance | h1, related_links, labels, copy, examples; penalties: ad_placeholder |
 | B | 54 | 53 | `ad-budget-estimator` | utility | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
 | B | 54 | 67 | `tax-calculator` | calculator | Japanese Tools | reset_clear, validation, current_count; penalties: old_count, ad_placeholder |
@@ -42,12 +41,14 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 46 | 69 | `yaml-to-json` | converter | Data Format Tools | labels, examples, privacy, current_count; penalties: old_count |
 | B | 46 | 72 | `aojiro-shinkoku-sim` | calculator | Tax Tools | copy, examples, reset_clear, validation, current_count |
 | B | 46 | 72 | `embedding-cost-calculator` | calculator | AI Tools | copy, examples, reset_clear, validation, current_count |
+| B | 46 | 72 | `iryouhi-koujo` | calculator | Tax Tools | copy, reset_clear, validation, responsive, current_count |
 
 ## Strongest Current Tools
 
 | Quality | Slug | Type | Category |
 | ---: | --- | --- | --- |
 | 100 | `ai-tool-roi` | calculator | AI Workflow |
+| 100 | `asset-allocation` | utility | Finance |
 | 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
@@ -61,7 +62,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `image-compressor` | image | Image Tools |
 | 100 | `jigyou-keihi-bunrui` | utility | Tax Tools |
 | 100 | `kenpei-yoseki` | calculator | Life Tools |
-| 100 | `loan-simulator` | calculator | Japanese Tools |
 
 ## Archetype Averages
 
@@ -73,7 +73,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | generator | 76.5 |
 | image | 82.2 |
 | reference | 77 |
-| utility | 68.1 |
+| utility | 69.5 |
 
 ## Weakest Categories
 
