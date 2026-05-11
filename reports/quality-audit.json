@@ -1,13 +1,13 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 78.7,
+    "averageQualityScore": 79.0,
     "priorityTierCounts": {
-      "B": 31,
-      "C": 111
+      "B": 30,
+      "C": 112
     },
     "averageByArchetype": {
-      "calculator": 82.7,
+      "calculator": 83.5,
       "comparison": 75.1,
       "converter": 81.4,
       "generator": 83,
@@ -20,11 +20,6 @@
         "category": "Color Tools",
         "averageQualityScore": 55.5,
         "toolCount": 2
-      },
-      {
-        "category": "Home",
-        "averageQualityScore": 60,
-        "toolCount": 1
       },
       {
         "category": "Text & String Tools",
@@ -75,6 +70,11 @@
         "category": "EC Tools",
         "averageQualityScore": 72.4,
         "toolCount": 5
+      },
+      {
+        "category": "Developer Tools",
+        "averageQualityScore": 73.5,
+        "toolCount": 8
       }
     ]
   },
@@ -193,48 +193,6 @@
     }
   ],
   "tools": [
-    {
-      "slug": "aircon-capacity",
-      "name": "エアコン適正容量 計算",
-      "description": "部屋の畳数・向き・階・断熱から必要kWを算出",
-      "market": "JP",
-      "category": "Home",
-      "archetype": "calculator",
-      "qualityScore": 60,
-      "priorityScore": 52,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "labels",
-        "download_export",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "h1",
-        "related_links",
-        "copy",
-        "examples",
-        "reset_clear",
-        "validation",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 2,
-        "buttonCount": 1,
-        "inputCount": 0,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 278
-      }
-    },
     {
       "slug": "neon-planetscale-comparison",
       "name": "Neon / PlanetScale / Turso 比較",
@@ -5027,6 +4985,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 730
+      }
+    },
+    {
+      "slug": "aircon-capacity",
+      "name": "エアコン適正容量 計算",
+      "description": "部屋の畳数・向き・階・断熱から必要kWを算出",
+      "market": "JP",
+      "category": "Home",
+      "archetype": "calculator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 5,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 696
       }
     },
     {

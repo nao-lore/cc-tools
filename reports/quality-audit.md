@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 78.7/100
-- Priority tiers: {"B": 31, "C": 111}
+- Average quality score: 79.0/100
+- Priority tiers: {"B": 30, "C": 112}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 52 | 60 | `aircon-capacity` | calculator | Home | h1, related_links, copy, examples, reset_clear |
 | B | 52 | 60 | `neon-planetscale-comparison` | comparison | SaaS Pricing | related_links, labels, copy, examples, reset_clear |
 | B | 52 | 65 | `chmod-calculator` | calculator | Developer Tools | faq, validation, privacy, current_count; penalties: old_count |
 | B | 52 | 65 | `context-window-visualizer` | utility | AI Tools | related_links, labels, copy, reset_clear, validation |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 45 | 61 | `color-converter` | converter | Color Tools | faq, reset_clear, privacy; penalties: old_count, ad_placeholder, any_type |
 | B | 45 | 65 | `cloudflare-workers-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
 | B | 45 | 65 | `github-actions-cost` | calculator | SaaS Pricing | related_links, copy, examples, reset_clear, validation |
+| B | 45 | 65 | `video-bitrate` | calculator | Creator Tools | related_links, copy, examples, validation, privacy |
 
 ## Strongest Current Tools
 
@@ -49,6 +49,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | ---: | --- | --- | --- |
 | 100 | `ad-budget-estimator` | utility | Business |
 | 100 | `ai-tool-roi` | calculator | AI Workflow |
+| 100 | `aircon-capacity` | calculator | Home |
 | 100 | `asset-allocation` | utility | Finance |
 | 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
@@ -61,13 +62,12 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `hash-generator` | generator | Encoding & Decoding |
 | 100 | `hebon-romaji` | converter | Japanese Tools |
 | 100 | `image-compressor` | image | Image Tools |
-| 100 | `jigyou-keihi-bunrui` | utility | Tax Tools |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 82.7 |
+| calculator | 83.5 |
 | comparison | 75.1 |
 | converter | 81.4 |
 | generator | 83 |
@@ -80,7 +80,6 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Category | Average quality | Tools |
 | --- | ---: | ---: |
 | Color Tools | 55.5 | 2 |
-| Home | 60 | 1 |
 | Text & String Tools | 60.5 | 6 |
 | CSS Tools | 62 | 8 |
 | Creator Tools | 67 | 2 |
@@ -91,6 +90,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Design Tools | 69 | 1 |
 | Labor Tools | 69.5 | 4 |
 | EC Tools | 72.4 | 5 |
+| Developer Tools | 73.5 | 8 |
 
 ## Next Factory Steps
 
