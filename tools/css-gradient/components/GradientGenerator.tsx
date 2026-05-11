@@ -340,11 +340,6 @@ export default function GradientGenerator() {
           </div>
         </div>
       </div>
-
-      {/* Ad placeholder */}
-      <div className="w-full h-24 rounded-xl border border-dashed border-border flex items-center justify-center text-muted text-sm">
-        Advertisement
-      </div>
     </div>
   );
 }

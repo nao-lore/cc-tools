@@ -1,159 +1,145 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import ColorConverter from "./components/ColorConverter";
 
+const faq = [
+  {
+    q: "Which color formats can I convert?",
+    a: "The converter keeps HEX, RGB, HSL, and CMYK values in sync and shows a closest CSS color name.",
+  },
+  {
+    q: "Can I check contrast?",
+    a: "Yes. Use the background color field to validate WCAG AA and AAA contrast status for sample text.",
+  },
+  {
+    q: "Does the selected color get uploaded?",
+    a: "No. Conversion, history, validation, and copy actions run locally in your browser.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <>
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 py-8 sm:py-12">
-        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2">
-          Color Converter
-        </h1>
-        <p className="text-center text-gray-500 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          Convert colors between HEX, RGB, HSL, and CMYK formats instantly. Pick
-          a color, edit any value, and watch all formats update in real time.
-        </p>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-teal-700">Color tools</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Color Converter
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Convert colors between HEX, RGB, HSL, and CMYK, pick colors visually, copy values, and check WCAG contrast.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-teal-200 bg-teal-50 p-4 text-sm leading-6 text-teal-900 shadow-sm">
+              <div className="font-semibold text-teal-950">Accessible color checks</div>
+              <p className="mt-2">Use examples, recent colors, validation badges, copy actions, and reset by choosing a history swatch.</p>
+            </div>
+          </div>
+        </header>
 
         <ColorConverter />
 
-        {/* SEO Content */}
-        <article className="mt-16 max-w-3xl mx-auto prose prose-gray dark:prose-invert prose-sm">
-          <h2>Understanding Color Formats</h2>
-          <p>
-            Colors on the web and in print are represented using several
-            different formats. Each format has its own strengths and is preferred
-            in different contexts. Whether you are a web developer writing CSS, a
-            designer preparing assets for print, or simply curious about how
-            colors work under the hood, understanding these formats will help you
-            make better decisions.
-          </p>
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Format sync" body="Edit HEX, RGB, or HSL and the other formats update immediately." />
+          <InfoCard title="Contrast badges" body="Check AA and AAA status against a chosen background color." />
+          <InfoCard title="Copy values" body="Copy CSS-friendly HEX, RGB, HSL, and CMYK strings from the result cards." />
+        </section>
 
-          <h3>HEX (Hexadecimal)</h3>
-          <p>
-            HEX is the most commonly used color format in web development. A HEX
-            color code starts with a hash symbol (#) followed by six hexadecimal
-            digits representing the red, green, and blue channels. For example,{" "}
-            <code>#3b82f6</code> encodes a vibrant blue. A shorthand three-digit
-            form also exists: <code>#fff</code> expands to <code>#ffffff</code>{" "}
-            (white). HEX values are compact and widely supported across all
-            browsers and CSS preprocessors.
-          </p>
-
-          <h3>RGB (Red, Green, Blue)</h3>
-          <p>
-            The RGB model defines colors by mixing red, green, and blue light at
-            varying intensities from 0 to 255. Pure red is{" "}
-            <code>rgb(255, 0, 0)</code>, while equal parts of all three channels
-            at maximum intensity produce white. RGB is the native color space of
-            screens and monitors, making it the foundation for all digital color
-            work. CSS accepts RGB values directly with the <code>rgb()</code>{" "}
-            function, and many image editing tools display colors in RGB by
-            default.
-          </p>
-
-          <h3>HSL (Hue, Saturation, Lightness)</h3>
-          <p>
-            HSL is a more intuitive way to think about color. Hue is a degree on
-            the color wheel from 0 to 360 (red at 0, green at 120, blue at 240).
-            Saturation controls the intensity of the color from 0% (gray) to
-            100% (full color). Lightness ranges from 0% (black) to 100% (white),
-            with 50% being the pure hue. Designers often prefer HSL because
-            adjusting lightness or saturation feels more natural than tweaking
-            individual red, green, and blue channels. CSS supports HSL through
-            the <code>hsl()</code> function.
-          </p>
-
-          <h3>CMYK (Cyan, Magenta, Yellow, Key/Black)</h3>
-          <p>
-            CMYK is the standard color model for printing. Unlike the additive
-            RGB model used by screens, CMYK is subtractive: colors are created
-            by layering inks that absorb light. Cyan, magenta, yellow, and black
-            inks combine in varying percentages to reproduce a wide range of
-            colors on paper. If you are preparing designs for physical print,
-            understanding the CMYK values of your colors is essential to avoid
-            unexpected shifts between what you see on screen and what comes off
-            the press.
-          </p>
-
-          <h3>When to Use Which Format</h3>
-          <p>
-            For web development, HEX and RGB are the default choices, with HSL
-            gaining popularity because of its readability and ease of
-            manipulation. If you need to create color palettes or generate
-            lighter and darker shades of a base color, HSL makes the task
-            straightforward: simply adjust the lightness value. For print design,
-            always check the CMYK equivalent of your screen colors to ensure
-            accurate reproduction. Many brands maintain color guidelines that
-            specify values in all four formats to guarantee consistency across
-            digital and physical media.
-          </p>
-
-          <h3>Accessibility and Contrast</h3>
-          <p>
-            Color choices directly affect the accessibility of your content. The
-            Web Content Accessibility Guidelines (WCAG) define minimum contrast
-            ratios between text and background colors. Level AA requires a ratio
-            of at least 4.5:1 for normal text and 3:1 for large text. Level AAA
-            raises the bar to 7:1 and 4.5:1 respectively. Our built-in contrast
-            checker lets you verify that your color combinations meet these
-            standards, helping you build interfaces that everyone can use
-            comfortably. Poor contrast is one of the most common accessibility
-            failures on the web, and choosing colors with sufficient contrast is
-            a simple step that makes a significant difference.
-          </p>
-
-          <h3>CSS Named Colors</h3>
-          <p>
-            CSS defines 148 named colors, from <code>aliceblue</code> to{" "}
-            <code>yellowgreen</code>. These names can be used directly in
-            stylesheets and are often easier to remember than hex codes. Our
-            converter shows the closest CSS named color for any color you pick,
-            which can be a helpful reference when you want a recognizable name
-            for a particular shade. While named colors are convenient, they cover
-            only a tiny fraction of the millions of colors available in the full
-            RGB spectrum.
-          </p>
-        </article>
-      </main>
-
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Color Converter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/color-palette" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Color Palette</Link>
-              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient</Link>
-              <Link href="/binary-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HEX Converter</Link>
-              <Link href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Convert</Link>
-              <Link href="/px-to-rem" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">PX to REM</Link>
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Format Notes</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">HEX and RGB</h3>
+              <p className="mt-1">Use HEX or RGB for CSS, design tokens, browser previews, and screen-focused assets.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">HSL and CMYK</h3>
+              <p className="mt-1">Use HSL for easier shade adjustments and CMYK as an approximate print reference.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">FAQ</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/color-palette" title="Color Palette" body="Generate palettes" />
+            <Related href="/css-gradient" title="CSS Gradient" body="Build gradient backgrounds" />
+            <Related href="/tailwindconvert" title="Tailwind Convert" body="Translate CSS utilities" />
+            <Related href="/px-to-rem" title="PX to REM" body="Convert CSS units" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Color Converter",
-  "description": "Convert colors between HEX, RGB, HSL, and CMYK formats instantly. Pick\n          a color, edit any value, and watch all formats update in real time.",
-  "url": "https://tools.loresync.dev/color-converter",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
         }}
       />
-      </>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Color Converter",
+            description: "Convert HEX, RGB, HSL, and CMYK colors with WCAG contrast checks locally in the browser.",
+            url: "https://tools.loresync.dev/color-converter",
+            applicationCategory: "UtilityApplication",
+            operatingSystem: "All",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

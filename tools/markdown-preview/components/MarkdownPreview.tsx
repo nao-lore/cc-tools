@@ -10,7 +10,7 @@ Welcome to the **Markdown Preview** tool! This editor supports real-time renderi
 
 - **Bold text** and *italic text*
 - Inline \`code\` formatting
-- [Links](https://example.com) and images
+- [Links](https://example.com), inline code, and tables
 - Lists, blockquotes, tables, and more
 
 ## Code Block
@@ -33,7 +33,7 @@ console.log(greet("World"));
 | Headings | Yes | h1 through h6 |
 | Bold/Italic | Yes | **bold** and *italic* |
 | Links | Yes | [text](url) |
-| Images | Yes | ![alt](url) |
+| Inline code | Yes | \`code\` |
 | Code Blocks | Yes | With language hint |
 | Tables | Yes | With alignment |
 | Lists | Yes | Ordered and unordered |
@@ -218,7 +218,7 @@ function parseMarkdown(md: string): string {
     i++;
   }
 
-  // Close any remaining open code block
+  // Close a still-open code block
   if (inCodeBlock) {
     const escaped = codeContent
       .replace(/&/g, "&amp;")

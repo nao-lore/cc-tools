@@ -11,7 +11,7 @@ const STOP_WORDS = new Set([
   "can", "not", "no", "so", "if", "as", "its", "i", "my", "me", "we",
   "our", "you", "your", "he", "she", "they", "them", "their", "his",
   "her", "us", "am", "just", "than", "then", "also", "into", "about",
-  "up", "out", "all", "more", "some", "any", "each", "which", "when",
+  "up", "out", "all", "more", "some", "each", "which", "when",
   "what", "where", "who", "how", "there", "here",
 ]);
 

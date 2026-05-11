@@ -1,154 +1,145 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import AsciiArtGenerator from "./components/AsciiArtGenerator";
 
+const faq = [
+  {
+    q: "Where can ASCII art be used?",
+    a: "ASCII art works in terminals, README files, code comments, plain-text emails, chat messages, and documentation where monospaced text is supported.",
+  },
+  {
+    q: "Does this tool upload my text?",
+    a: "No. The generator runs locally in your browser, and the input text is not sent to a server.",
+  },
+  {
+    q: "Why does alignment matter?",
+    a: "ASCII art relies on equal-width characters. Use a monospaced font when pasting the result into documentation or a terminal.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            ASCII Art Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert text into large ASCII art banners, wrap text in boxes, and
-            browse pre-made decorations. Copy the output instantly.
-          </p>
-        </div>
-
-        {/* ASCII Art Generator Tool */}
-        <AsciiArtGenerator />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is ASCII Art?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            ASCII art is a graphic design technique that uses printable characters
-            from the ASCII standard to create visual images and text banners.
-            Originally used in early computing when graphical displays were
-            limited, ASCII art remains popular today for README files, code
-            comments, terminal decorations, and creative expression in plain text
-            environments.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This ASCII Art Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Type your text</strong> in the input field above. The
-              generator converts each character into a large block letter.
-            </li>
-            <li>
-              <strong>Choose a character style</strong> to change the look of
-              your banner. Options include #, *, @, and more.
-            </li>
-            <li>
-              <strong>Use the box generator</strong> to wrap any text in an
-              ASCII box with single-line, double-line, or rounded borders.
-            </li>
-            <li>
-              <strong>Browse pre-made decorations</strong> including dividers,
-              arrows, faces, and borders for quick use.
-            </li>
-            <li>
-              <strong>Copy the output</strong> with one click and paste it
-              anywhere plain text is supported.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Where Can You Use ASCII Art?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            ASCII art works in any environment that supports monospaced text.
-            Common use cases include GitHub README headers, code comments and
-            documentation, terminal splash screens, email signatures, chat
-            messages, forum posts, and creative coding projects. The output from
-            this generator uses standard characters that display correctly across
-            all platforms and text editors.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Tips for Great ASCII Art
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Use a monospaced font when displaying ASCII art. Proportional
-              fonts will misalign the characters.
-            </li>
-            <li>
-              Keep text short for banner conversion. Long strings may wrap
-              awkwardly in narrow displays.
-            </li>
-            <li>
-              Try different character styles to find the density and look that
-              works best for your use case.
-            </li>
-            <li>
-              ASCII boxes are great for highlighting important information in
-              plain text documents.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">ascii-art — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/dummy-text" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Dummy Text</Link>
-              <Link href="/markdown-preview" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Preview</Link>
-              <Link href="/word-counter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Word Counter</Link>
-              <Link href="/text-diff" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Text Diff</Link>
-              <Link href="/qr-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">QR Generator</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-cyan-700">Text & terminal tools</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                ASCII Art Generator
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Convert text into large ASCII banners, wrap notes in boxes, and copy plain-text decorations for README files, terminals, and comments.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-sm leading-6 text-cyan-900 shadow-sm">
+              <div className="font-semibold text-cyan-950">Local text tool</div>
+              <p className="mt-2">Generation, preview, copy, examples, and clear actions run inside the browser for quick plain-text work.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <AsciiArtGenerator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Banner text" body="Turn short labels into large monospaced headers for docs and terminals." />
+          <InfoCard title="Boxed notes" body="Create boxed callouts with selectable border styles and copy-ready output." />
+          <InfoCard title="Validate width" body="Short input works best; reset or clear the editor when output gets too wide." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Practical Uses</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">README headers</h3>
+              <p className="mt-1">Use ASCII banners to split sections in project notes, release docs, and command-line examples.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">Plain-text export</h3>
+              <p className="mt-1">The result copies as raw text, so it stays usable in source files, email, tickets, and shell output.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">FAQ</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/dummy-text" title="Dummy Text" body="Generate filler copy for layouts" />
+            <Related href="/markdown-preview" title="Markdown Preview" body="Write and preview Markdown" />
+            <Related href="/word-counter" title="Word Counter" body="Count words and characters" />
+            <Related href="/text-diff" title="Text Diff" body="Compare two text versions" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
       </div>
-    
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "ASCII Art Generator",
-  "description": "Convert text into large ASCII art banners, wrap text in boxes, and\n            browse pre-made decorations. Copy the output instantly.",
-  "url": "https://tools.loresync.dev/ascii-art",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
         }}
       />
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "ASCII Art Generator",
+            description: "Convert text into ASCII banners, boxed notes, and plain-text decorations in the browser.",
+            url: "https://tools.loresync.dev/ascii-art",
+            applicationCategory: "UtilityApplication",
+            operatingSystem: "All",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }

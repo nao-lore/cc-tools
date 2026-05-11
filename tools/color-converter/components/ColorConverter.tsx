@@ -371,11 +371,6 @@ export default function ColorConverter() {
           </div>
         </div>
       )}
-
-      {/* AdSense Placeholder */}
-      <div className="w-full h-24 rounded-xl bg-gray-100 dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center text-xs text-gray-400">
-        Advertisement
-      </div>
     </div>
   );
 }

@@ -1,149 +1,145 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import MarkdownPreview from "./components/MarkdownPreview";
 
+const faq = [
+  {
+    q: "What Markdown syntax is supported?",
+    a: "The preview supports headings, emphasis, links, images, code blocks, blockquotes, lists, tables, and horizontal rules.",
+  },
+  {
+    q: "Can I copy the generated HTML?",
+    a: "Yes. Use Copy HTML to export rendered markup, or Copy MD to copy the source Markdown.",
+  },
+  {
+    q: "Does the editor send content to a server?",
+    a: "No. Markdown parsing and preview rendering run locally in your browser.",
+  },
+];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Markdown Preview
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Write Markdown on the left, see it rendered in real time on the
-            right. Supports headings, bold, italic, links, code blocks, tables,
-            and more.
-          </p>
-        </div>
-
-        {/* Markdown Preview Tool */}
-        <MarkdownPreview />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is Markdown?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Markdown is a lightweight markup language created by John Gruber in
-            2004. It lets you add formatting to plain text using simple syntax
-            like asterisks for bold, hashes for headings, and brackets for
-            links. Markdown is widely used on GitHub, GitLab, Reddit, Stack
-            Overflow, Notion, Obsidian, and many documentation tools.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Supported Markdown Syntax
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            This tool supports the most commonly used Markdown elements:
-          </p>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Headings</strong> — use <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">#</code> through <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">######</code> for h1 through h6
-            </li>
-            <li>
-              <strong>Emphasis</strong> — <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">**bold**</code> and <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">*italic*</code>
-            </li>
-            <li>
-              <strong>Links</strong> — <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">[text](url)</code>
-            </li>
-            <li>
-              <strong>Images</strong> — <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">![alt](url)</code>
-            </li>
-            <li>
-              <strong>Code</strong> — inline with backticks, blocks with triple backticks
-            </li>
-            <li>
-              <strong>Lists</strong> — unordered with <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">-</code> or <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">*</code>, ordered with <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">1.</code>
-            </li>
-            <li>
-              <strong>Blockquotes</strong> — prefix lines with <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">&gt;</code>
-            </li>
-            <li>
-              <strong>Tables</strong> — pipe-separated columns with alignment support
-            </li>
-            <li>
-              <strong>Horizontal rules</strong> — three or more dashes <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">---</code>
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Tool
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Write Markdown</strong> in the editor pane on the left
-            </li>
-            <li>
-              <strong>See the preview</strong> update in real time on the right
-            </li>
-            <li>
-              <strong>Switch views</strong> between split, edit-only, or preview-only
-            </li>
-            <li>
-              <strong>Copy HTML</strong> to get the rendered HTML output
-            </li>
-            <li>
-              <strong>Copy Markdown</strong> to save your source text
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Use Cases
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This Markdown preview tool is useful for writing GitHub README files,
-            drafting documentation, composing blog posts, preparing content for
-            static site generators like Astro, Hugo, or Jekyll, and previewing
-            notes before publishing to platforms that support Markdown. The
-            built-in HTML export makes it easy to embed formatted content
-            anywhere.
-          </p>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">Markdown Preview — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/mdtable" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Table Generator</Link>
-              <Link href="/html-to-markdown" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML to Markdown</Link>
-              <Link href="/text-diff" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Text Diff</Link>
-              <Link href="/word-counter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Word Counter</Link>
-              <Link href="/dummy-text" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Dummy Text Generator</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-violet-700">Writing & docs</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                Markdown Preview
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Write Markdown, preview rendered HTML, switch views, copy source text, and export HTML for docs or CMS workflows.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4 text-sm leading-6 text-violet-900 shadow-sm">
+              <div className="font-semibold text-violet-950">Browser preview</div>
+              <p className="mt-2">Parsing, preview, copy, sample content, validation, and clear-style editing stay local to the browser.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
+        </header>
+
+        <MarkdownPreview />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Split editing" body="Edit Markdown and see the rendered preview next to the source." />
+          <InfoCard title="Copy or export" body="Copy Markdown source or HTML output without leaving the page." />
+          <InfoCard title="Validate output" body="Start from a syntax-rich example and reset by replacing the editor text." />
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Markdown Workflow</h2>
+          <div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">Documentation drafts</h3>
+              <p className="mt-1">Preview README files, docs pages, release notes, and notes before committing or publishing.</p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-slate-900">HTML handoff</h3>
+              <p className="mt-1">Use the HTML copy action when a CMS or email editor accepts markup instead of Markdown.</p>
+            </div>
           </div>
-        </div>
-      </footer>
-    
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">FAQ</h2>
+          <div className="mt-4 divide-y divide-slate-200">
+            {faq.map((item) => (
+              <div key={item.q} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="font-semibold text-slate-950">{item.q}</h3>
+                <p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <h2 className="text-xl font-bold text-slate-950">Related Tools</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Related href="/mdtable" title="Markdown Table" body="Generate table syntax" />
+            <Related href="/html-to-markdown" title="HTML to Markdown" body="Convert markup back to Markdown" />
+            <Related href="/text-diff" title="Text Diff" body="Compare document versions" />
+            <Related href="/word-counter" title="Word Counter" body="Measure draft length" />
+          </div>
+        </section>
+
+        <footer className="py-8 text-center text-xs text-slate-500">
+          cc-tools publishes {toolCount} free online tools.
+        </footer>
+      </div>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Markdown Preview",
-  "description": "Write Markdown on the left, see it rendered in real time on the\n            right. Supports headings, bold, italic, links, code blocks, tables,\n            and more.",
-  "url": "https://tools.loresync.dev/markdown-preview",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faq.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          }),
         }}
       />
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Markdown Preview",
+            description: "Write Markdown, preview rendered HTML, copy source text, and export HTML locally in the browser.",
+            url: "https://tools.loresync.dev/markdown-preview",
+            applicationCategory: "UtilityApplication",
+            operatingSystem: "All",
+            offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+          }),
+        }}
+      />
+    </main>
+  );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+      <h2 className="text-sm font-semibold text-slate-950">{title}</h2>
+      <p className="mt-1 text-sm leading-6 text-slate-600">{body}</p>
+    </div>
+  );
+}
+
+function Related({ href, title, body }: { href: string; title: string; body: string }) {
+  return (
+    <Link href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50">
+      <div className="text-sm font-semibold text-slate-950">{title}</div>
+      <div className="mt-1 text-xs leading-5 text-slate-500">{body}</div>
+    </Link>
   );
 }
