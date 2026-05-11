@@ -1,181 +1,95 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import AnimationGenerator from "./components/AnimationGenerator";
 
+const faq = [
+  {
+    q: "Which CSS properties animate best?",
+    a: "Transform and opacity usually perform best because browsers can animate them without expensive layout recalculation.",
+  },
+  {
+    q: "Can I copy the generated keyframes?",
+    a: "Yes. Use Copy CSS to export the keyframes and animation declaration.",
+  },
+  {
+    q: "How should I validate accessibility?",
+    a: "Keep motion purposeful and test reduced-motion alternatives for users who prefer less animation.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            CSS Animation Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create custom CSS keyframe animations visually. Adjust timing,
-            transforms, and easing, then copy production-ready CSS.
-          </p>
-        </div>
-
-        {/* Animation Generator Tool */}
-        <AnimationGenerator />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Are CSS Animations?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            CSS animations allow you to animate HTML elements without JavaScript.
-            Using <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">@keyframes</code> rules
-            and the <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">animation</code> property,
-            you can define multi-step transitions that control how an element changes
-            over time. Animations are widely supported across all modern browsers
-            and are essential for creating engaging user interfaces.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            CSS Animation Syntax
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            A CSS animation has two parts: the keyframes definition and the
-            animation property. Here is an example:
-          </p>
-          <pre className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-800 overflow-x-auto mb-4">
-{`@keyframes fade-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-.element {
-  animation: fade-in 0.5s ease forwards;
-}`}
-          </pre>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            The <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">animation</code> shorthand
-            accepts the animation name, duration, timing function, delay, iteration
-            count, direction, and fill mode.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Choose a preset</strong> to start with a common animation
-              pattern, or build from scratch.
-            </li>
-            <li>
-              <strong>Edit keyframe stops</strong> by clicking each percentage
-              button and adjusting transform, opacity, and color values.
-            </li>
-            <li>
-              <strong>Adjust animation properties</strong> like duration, delay,
-              timing function, direction, and iteration count.
-            </li>
-            <li>
-              <strong>Preview in real-time</strong> with the live preview box.
-              Use Play, Pause, and Reset controls.
-            </li>
-            <li>
-              <strong>Copy the CSS</strong> with one click and paste it into your
-              stylesheet.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Animation Properties Explained
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Duration</strong> controls how long the animation takes to
-              complete one cycle (e.g., 1s, 500ms).
-            </li>
-            <li>
-              <strong>Delay</strong> adds a wait before the animation starts.
-            </li>
-            <li>
-              <strong>Timing function</strong> defines the acceleration curve.
-              Common values include ease, linear, ease-in, ease-out, and
-              ease-in-out. Custom cubic-bezier curves give you full control.
-            </li>
-            <li>
-              <strong>Iteration count</strong> sets how many times the animation
-              repeats. Use infinite for continuous animations.
-            </li>
-            <li>
-              <strong>Direction</strong> controls whether the animation plays
-              forward, backward, or alternates between both.
-            </li>
-            <li>
-              <strong>Fill mode</strong> determines the element&apos;s style before
-              and after the animation. Use forwards to keep the final state.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Tips for Better CSS Animations
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Animate transform and opacity for best performance. These
-              properties are GPU-accelerated and avoid layout recalculations.
-            </li>
-            <li>
-              Keep animations subtle and purposeful. Overly complex animations
-              can distract users and hurt accessibility.
-            </li>
-            <li>
-              Use the prefers-reduced-motion media query to respect user
-              preferences for reduced motion.
-            </li>
-            <li>
-              Test animations at different durations. What feels smooth at 0.3s
-              may feel sluggish at 2s.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">CSS Animation Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/css-flexbox" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Flexbox Generator</Link>
-              <Link href="/css-grid" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Grid Generator</Link>
-              <Link href="/border-radius" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Border Radius Generator</Link>
-              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient Generator</Link>
-              <Link href="/css-box-shadow" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Box Shadow Generator</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-violet-700">CSS motion tools</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">CSS Animation Generator</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Build keyframe animations visually, test presets, validate timing, reset states, and copy production-ready CSS.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-violet-200 bg-violet-50 p-4 text-sm leading-6 text-violet-900 shadow-sm">
+              <div className="font-semibold text-violet-950">Preview before copy</div>
+              <p className="mt-2">Experiment locally with presets, timing, easing, transforms, and clear motion settings in the browser.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "CSS Animation Generator",
-  "description": "Create custom CSS keyframe animations visually. Adjust timing,\n            transforms, and easing, then copy production-ready CSS.",
-  "url": "https://tools.loresync.dev/css-animation",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
+        </header>
+
+        <AnimationGenerator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Keyframe editor" body="Edit percent stops, transforms, opacity, color, and timing from one panel." />
+          <InfoCard title="Motion presets" body="Start with examples like fade, slide, bounce, rotate, and scale." />
+          <InfoCard title="Copy CSS" body="Export complete @keyframes and animation declarations for your stylesheet." />
+        </section>
+
+        <InfoSection title="Animation Notes" items={[
+          ["Performance", "Prefer transform and opacity for smooth animations, especially on mobile devices."],
+          ["Reduced motion", "Pair decorative motion with a prefers-reduced-motion fallback when shipping to production."],
+        ]} />
+
+        <Faq items={faq} />
+
+        <RelatedSection links={[
+          ["/css-flexbox", "CSS Flexbox", "Build alignment layouts"],
+          ["/css-grid", "CSS Grid", "Build grid layouts"],
+          ["/css-gradient", "CSS Gradient", "Create backgrounds"],
+          ["/css-box-shadow", "Box Shadow", "Tune shadow depth"],
+        ]} />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
+
+      <JsonLd faq={faq} name="CSS Animation Generator" description="Create CSS keyframe animations with local preview and copy-ready output." url="https://tools.loresync.dev/css-animation" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "DeveloperApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

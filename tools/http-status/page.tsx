@@ -1,146 +1,100 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import HttpStatusCodes from "./components/HttpStatusCodes";
 
+const faq = [
+  {
+    q: "What is the difference between 401 and 403?",
+    a: "401 means authentication is required or missing. 403 means the client is known, but access is not allowed for that resource.",
+  },
+  {
+    q: "Which status codes are most common in APIs?",
+    a: "200, 201, 204, 301, 302, 400, 401, 403, 404, 409, 422, 429, 500, 502, and 503 are common during API debugging.",
+  },
+  {
+    q: "Is search data uploaded?",
+    a: "No. Search, filtering, validation, expand/collapse, and copy actions run locally in your browser.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            HTTP Status Codes
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Complete reference guide for every HTTP response status code.
-            Search by code number or keyword, click to expand details.
-          </p>
-        </div>
-
-        {/* HTTP Status Codes Tool */}
-        <HttpStatusCodes />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Are HTTP Status Codes?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            HTTP status codes are three-digit numbers returned by a web server in
-            response to a client request. They indicate whether the request was
-            successful, redirected, or resulted in an error. Every time your
-            browser loads a page, makes an API call, or submits a form, the
-            server responds with one of these codes along with the actual content.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            HTTP Status Code Categories
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            Status codes are grouped into five categories based on their first
-            digit:
-          </p>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>1xx Informational</strong> — The server received the
-              request and is continuing the process.
-            </li>
-            <li>
-              <strong>2xx Success</strong> — The request was successfully
-              received, understood, and accepted.
-            </li>
-            <li>
-              <strong>3xx Redirection</strong> — Further action is needed to
-              complete the request, usually a redirect.
-            </li>
-            <li>
-              <strong>4xx Client Error</strong> — The request contains bad
-              syntax or cannot be fulfilled by the server.
-            </li>
-            <li>
-              <strong>5xx Server Error</strong> — The server failed to fulfill a
-              valid request.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Most Common HTTP Status Codes
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            While there are dozens of defined status codes, a handful appear far
-            more frequently in everyday web development. <strong>200 OK</strong>{" "}
-            means the request succeeded. <strong>301 Moved Permanently</strong>{" "}
-            tells the client the resource has a new URL. <strong>404 Not Found</strong>{" "}
-            means the server cannot find the requested resource.{" "}
-            <strong>500 Internal Server Error</strong> indicates something went
-            wrong on the server side. Understanding these codes helps developers
-            debug issues, configure proper redirects, and build better error
-            handling in their applications.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Reference
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Search</strong> by typing a status code number or keyword
-              in the search box above.
-            </li>
-            <li>
-              <strong>Browse by category</strong> — codes are color-coded and
-              grouped by their response type.
-            </li>
-            <li>
-              <strong>Click any code</strong> to expand its detailed explanation,
-              including when you encounter it and examples.
-            </li>
-            <li>
-              <strong>Copy descriptions</strong> with one click for use in
-              documentation, comments, or error messages.
-            </li>
-          </ol>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">HTTP Status Codes — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/robots-txt-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Robots.txt Generator</Link>
-              <Link href="/meta-tag-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Meta Tag Generator</Link>
-              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</Link>
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
-              <Link href="/url-encoder" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">URL Encoder</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-rose-700">Web reference</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">HTTP Status Codes</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Search HTTP response codes by number or keyword, expand practical explanations, validate categories, and copy descriptions for docs or debugging notes.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm leading-6 text-rose-900 shadow-sm">
+              <div className="font-semibold text-rose-950">Local reference</div>
+              <p className="mt-2">Search state, expanded details, and clipboard actions stay in the browser.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "HTTP Status Codes",
-  "description": "Complete reference guide for every HTTP response status code.\n            Search by code number or keyword, click to expand details.",
-  "url": "https://tools.loresync.dev/http-status",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
+        </header>
+
+        <HttpStatusCodes />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Grouped by class" body="Browse informational, success, redirect, client error, and server error responses." />
+          <InfoCard title="Practical examples" body="Each expanded code includes when it appears and a concrete debugging example." />
+          <InfoCard title="Copy snippets" body="Copy a concise status description into comments, runbooks, or API documentation." />
+        </section>
+
+        <InfoSection
+          title="HTTP Debugging Notes"
+          items={[
+            ["Client vs server", "4xx usually points to request, auth, or permission issues. 5xx usually points to upstream or server-side failure."],
+            ["Redirect methods", "Use 307 or 308 when the client must preserve the original HTTP method across a redirect."],
+          ]}
+        />
+
+        <Faq items={faq} />
+
+        <RelatedSection
+          links={[
+            ["/url-encoder", "URL Encoder", "Encode request URLs"],
+            ["/jwt-decoder", "JWT Decoder", "Inspect auth tokens"],
+            ["/json-formatter", "JSON Formatter", "Format API payloads"],
+            ["/regex-tester", "Regex Tester", "Test matching logic"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
+
+      <JsonLd faq={faq} name="HTTP Status Codes" description="Search and copy HTTP response code descriptions locally with practical API debugging examples." url="https://tools.loresync.dev/http-status" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "DeveloperApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

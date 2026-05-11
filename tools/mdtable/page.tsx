@@ -1,179 +1,100 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import TableEditor from "./components/TableEditor";
 
+const faq = [
+  {
+    q: "Can I import CSV into a Markdown table?",
+    a: "Yes. Paste comma-separated or tab-separated rows into the import dialog, then adjust headers and alignment before copying.",
+  },
+  {
+    q: "Does the tool support column alignment?",
+    a: "Yes. Each column can be left, center, or right aligned, and the generated Markdown separator row updates automatically.",
+  },
+  {
+    q: "Is table data uploaded?",
+    a: "No. Editing, CSV import, validation, reset, and copy actions run locally in your browser.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Markdown Table Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create Markdown tables with a visual spreadsheet editor. Edit cells,
-            set column alignment, import CSV, and copy the output instantly.
-          </p>
-        </div>
-
-        {/* Table Editor Tool */}
-        <TableEditor />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a Markdown Table?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Markdown is a lightweight markup language used to format plain text.
-            It is widely supported across platforms like GitHub, GitLab, Notion,
-            Reddit, Stack Overflow, and many static site generators. Markdown
-            tables let you present structured data in rows and columns using a
-            simple text-based syntax that is easy to read even without rendering.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Markdown Table Syntax
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            A Markdown table consists of three parts: the header row, the
-            separator row, and the data rows. The separator row uses dashes and
-            colons to define column alignment. Here is an example:
-          </p>
-          <pre className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-800 overflow-x-auto mb-4">
-{`| Name    | Role       | Status |
-|:--------|:----------:|-------:|
-| Alice   | Developer  | Active |
-| Bob     | Designer   | Active |`}
-          </pre>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            In the separator row, a colon on the left (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">:---</code>) means
-            left-aligned, colons on both sides (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">:---:</code>) means
-            center-aligned, and a colon on the right (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">---:</code>) means
-            right-aligned. Pipes (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">|</code>) separate each column.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Markdown Table Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Edit cells</strong> directly in the spreadsheet grid
-              above. Click any cell and start typing.
-            </li>
-            <li>
-              <strong>Add or remove rows and columns</strong> using the toolbar
-              buttons.
-            </li>
-            <li>
-              <strong>Set column alignment</strong> by clicking the alignment
-              button below each header. It cycles through left, center, and
-              right.
-            </li>
-            <li>
-              <strong>Import CSV data</strong> by clicking the Import CSV
-              button and pasting comma-separated or tab-separated text.
-            </li>
-            <li>
-              <strong>Copy the Markdown output</strong> with one click. Paste
-              it into your README, documentation, or any Markdown-supported
-              editor.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Where Can You Use Markdown Tables?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Markdown tables work anywhere Markdown is supported. Common use
-            cases include GitHub README files, pull request descriptions, wiki
-            pages, Jupyter notebooks, documentation sites built with tools like
-            Docusaurus or MkDocs, blog posts written in Markdown, and note-taking
-            apps like Obsidian and Notion. This generator produces
-            standard-compliant Markdown that renders correctly across all these
-            platforms.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Tips for Better Markdown Tables
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Keep cell content concise. Long text in table cells can be hard to
-              read in raw Markdown.
-            </li>
-            <li>
-              Use column alignment to improve readability. Numbers look better
-              right-aligned, while text is typically left-aligned.
-            </li>
-            <li>
-              Avoid special Markdown characters inside cells. If you need a pipe
-              character, escape it with a backslash (<code className="text-sm bg-gray-100 px-1 py-0.5 rounded">\|</code>).
-            </li>
-            <li>
-              For large datasets, consider importing from CSV rather than typing
-              each cell manually.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">
-            mdtable — Free Markdown Table Generator. No signup required.
-          </p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/text-diff" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Text Diff</Link>
-              <Link href="/json-to-csv" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON to CSV</Link>
-              <Link href="/html-to-markdown" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML to Markdown</Link>
-              <Link href="/markdown-preview" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Markdown Preview</Link>
-              <Link href="/word-counter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Word Counter</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">Markdown utilities</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Markdown Table Generator</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Build Markdown tables in a spreadsheet-style editor. Import CSV, edit cells, set alignment, validate output, reset the grid, and copy the final table.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-900 shadow-sm">
+              <div className="font-semibold text-emerald-950">Local table editor</div>
+              <p className="mt-2">Rows, columns, alignment, CSV import, clear, and clipboard actions stay in the browser.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <TableEditor />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Spreadsheet editing" body="Edit headers and cells directly before generating Markdown syntax." />
+          <InfoCard title="CSV import" body="Paste CSV or TSV data from spreadsheets, for example Name,Role,Status rows, and convert it into table rows." />
+          <InfoCard title="Copy-ready output" body="Generate GitHub-flavored Markdown with correct separator rows and alignment." />
+        </section>
+
+        <InfoSection
+          title="Markdown Table Notes"
+          items={[
+            ["Alignment syntax", "Left, center, and right alignment map to :---, :---:, and ---: in the separator row."],
+            ["Readable tables", "Keep cells short when the raw Markdown will be reviewed in pull requests or README files."],
+          ]}
+        />
+
+        <Faq items={faq} />
+
+        <RelatedSection
+          links={[
+            ["/markdown-preview", "Markdown Preview", "Preview rendered Markdown"],
+            ["/text-diff", "Text Diff", "Compare text changes"],
+            ["/json-to-csv", "JSON to CSV", "Convert structured data"],
+            ["/word-counter", "Word Counter", "Check document length"],
+          ]}
+        />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Markdown Table Generator",
-  "description": "Create Markdown tables with a visual spreadsheet editor. Edit cells,\n            set column alignment, import CSV, and copy the output instantly.",
-  "url": "https://tools.loresync.dev/mdtable",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+
+      <JsonLd faq={faq} name="Markdown Table Generator" description="Create Markdown tables locally with CSV import, alignment controls, reset, validation, and copy-ready output." url="https://tools.loresync.dev/mdtable" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "DeveloperApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

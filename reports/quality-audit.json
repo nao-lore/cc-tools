@@ -1,39 +1,24 @@
 {
   "summary": {
     "toolCount": 142,
-    "averageQualityScore": 84.4,
+    "averageQualityScore": 86.2,
     "priorityTierCounts": {
-      "B": 18,
-      "C": 124
+      "B": 17,
+      "C": 125
     },
     "averageByArchetype": {
       "calculator": 85.6,
       "comparison": 81.2,
-      "converter": 83.2,
-      "generator": 83,
+      "converter": 85.0,
+      "generator": 88.8,
       "image": 88.2,
-      "reference": 77,
-      "utility": 86.4
+      "reference": 84.4,
+      "utility": 89.4
     },
     "weakestCategories": [
       {
         "category": "Creator Tools",
         "averageQualityScore": 67,
-        "toolCount": 2
-      },
-      {
-        "category": "Music",
-        "averageQualityScore": 67,
-        "toolCount": 1
-      },
-      {
-        "category": "Time & Date",
-        "averageQualityScore": 68,
-        "toolCount": 2
-      },
-      {
-        "category": "Minifier Tools",
-        "averageQualityScore": 68,
         "toolCount": 2
       },
       {
@@ -75,6 +60,21 @@
         "category": "Business Tools",
         "averageQualityScore": 79.8,
         "toolCount": 6
+      },
+      {
+        "category": "Encoding & Decoding",
+        "averageQualityScore": 80.1,
+        "toolCount": 7
+      },
+      {
+        "category": "Life Tools",
+        "averageQualityScore": 85.3,
+        "toolCount": 3
+      },
+      {
+        "category": "AI Tools",
+        "averageQualityScore": 85.9,
+        "toolCount": 16
       }
     ]
   },
@@ -493,51 +493,6 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 661
-      }
-    },
-    {
-      "slug": "uuid-generator",
-      "name": "UUID Generator",
-      "description": "Generate UUID v4 identifiers",
-      "market": "EN",
-      "category": "Developer Tools",
-      "archetype": "generator",
-      "qualityScore": 65,
-      "priorityScore": 47,
-      "priorityTier": "B",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "reset_clear",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 5,
-        "buttonCount": 4,
-        "inputCount": 1,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 406
       }
     },
     {
@@ -965,51 +920,6 @@
         "internalLinkCount": 0,
         "componentCount": 1,
         "hasOpenGraphImage": false,
-        "sourceLines": 619
-      }
-    },
-    {
-      "slug": "timezone-converter",
-      "name": "Time Zone Converter",
-      "description": "Convert times between different time zones",
-      "market": "EN",
-      "category": "Time & Date",
-      "archetype": "converter",
-      "qualityScore": 62,
-      "priorityScore": 44,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "copy",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 9,
-        "buttonCount": 2,
-        "inputCount": 3,
-        "internalLinkCount": 8,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
         "sourceLines": 619
       }
     },
@@ -1737,51 +1647,6 @@
       }
     },
     {
-      "slug": "http-status",
-      "name": "HTTP Status Codes",
-      "description": "Reference for all HTTP status codes",
-      "market": "EN",
-      "category": "Developer Tools",
-      "archetype": "reference",
-      "qualityScore": 71,
-      "priorityScore": 39,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "validation",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "labels",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 7,
-        "buttonCount": 1,
-        "inputCount": 1,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 898
-      }
-    },
-    {
       "slug": "image-to-base64",
       "name": "Image to Base64",
       "description": "Convert images to Base64 encoded strings",
@@ -1824,48 +1689,6 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 699
-      }
-    },
-    {
-      "slug": "bpm-delay",
-      "name": "BPM ↔ ディレイタイム(ms)",
-      "description": "BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出",
-      "market": "JP",
-      "category": "Music",
-      "archetype": "reference",
-      "qualityScore": 67,
-      "priorityScore": 38,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "labels",
-        "copy",
-        "download_export",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "h1",
-        "related_links",
-        "examples",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [],
-      "signals": {
-        "h2Count": 1,
-        "buttonCount": 6,
-        "inputCount": 4,
-        "internalLinkCount": 0,
-        "componentCount": 1,
-        "hasOpenGraphImage": false,
-        "sourceLines": 500
       }
     },
     {
@@ -2215,50 +2038,6 @@
       }
     },
     {
-      "slug": "css-animation",
-      "name": "CSS Animation Generator",
-      "description": "Build CSS keyframe animations with a visual editor",
-      "market": "EN",
-      "category": "CSS Tools",
-      "archetype": "reference",
-      "qualityScore": 65,
-      "priorityScore": 35,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "faq",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count"
-      ],
-      "signals": {
-        "h2Count": 5,
-        "buttonCount": 8,
-        "inputCount": 16,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 799
-      }
-    },
-    {
       "slug": "base64-tools",
       "name": "Base64 Encoder/Decoder",
       "description": "Encode and decode Base64 strings",
@@ -2392,95 +2171,6 @@
       }
     },
     {
-      "slug": "minify-css",
-      "name": "CSS Minifier",
-      "description": "Minify CSS stylesheets to reduce file size",
-      "market": "EN",
-      "category": "Minifier Tools",
-      "archetype": "utility",
-      "qualityScore": 68,
-      "priorityScore": 32,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "reset_clear",
-        "privacy",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "examples",
-        "validation",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 7,
-        "buttonCount": 3,
-        "inputCount": 2,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 568
-      }
-    },
-    {
-      "slug": "minify-js",
-      "name": "JavaScript Minifier",
-      "description": "Minify JavaScript code to reduce file size",
-      "market": "EN",
-      "category": "Minifier Tools",
-      "archetype": "utility",
-      "qualityScore": 68,
-      "priorityScore": 32,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "examples",
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count"
-      ],
-      "signals": {
-        "h2Count": 7,
-        "buttonCount": 4,
-        "inputCount": 2,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 657
-      }
-    },
-    {
       "slug": "firebase-pricing",
       "name": "Firebase 料金試算",
       "description": "Firebaseの月額料金をFirestore読み書き数・Storage・Functions実行回数から試算",
@@ -2567,51 +2257,6 @@
         "componentCount": 3,
         "hasOpenGraphImage": true,
         "sourceLines": 2158
-      }
-    },
-    {
-      "slug": "mdtable",
-      "name": "Markdown Table Generator",
-      "description": "Create and edit Markdown tables visually",
-      "market": "EN",
-      "category": "Text & String Tools",
-      "archetype": "utility",
-      "qualityScore": 69,
-      "priorityScore": 31,
-      "priorityTier": "C",
-      "passed": [
-        "metadata",
-        "canonical",
-        "h1",
-        "h2_sections",
-        "faq",
-        "jsonld",
-        "related_links",
-        "labels",
-        "copy",
-        "download_export",
-        "examples",
-        "reset_clear",
-        "responsive",
-        "accessible_buttons"
-      ],
-      "missing": [
-        "validation",
-        "privacy",
-        "current_count"
-      ],
-      "penalties": [
-        "old_count",
-        "any_type"
-      ],
-      "signals": {
-        "h2Count": 8,
-        "buttonCount": 10,
-        "inputCount": 3,
-        "internalLinkCount": 6,
-        "componentCount": 1,
-        "hasOpenGraphImage": true,
-        "sourceLines": 789
       }
     },
     {
@@ -4433,6 +4078,47 @@
       }
     },
     {
+      "slug": "bpm-delay",
+      "name": "BPM ↔ ディレイタイム(ms)",
+      "description": "BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出",
+      "market": "JP",
+      "category": "Music",
+      "archetype": "reference",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 6,
+        "inputCount": 4,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 545
+      }
+    },
+    {
       "slug": "calorie-keisan",
       "name": "カロリー計算",
       "description": "基礎代謝量と1日の消費カロリーを計算",
@@ -4676,6 +4362,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": false,
         "sourceLines": 570
+      }
+    },
+    {
+      "slug": "css-animation",
+      "name": "CSS Animation Generator",
+      "description": "Build CSS keyframe animations with a visual editor",
+      "market": "EN",
+      "category": "CSS Tools",
+      "archetype": "utility",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 8,
+        "inputCount": 16,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 713
       }
     },
     {
@@ -5171,6 +4898,47 @@
       }
     },
     {
+      "slug": "http-status",
+      "name": "HTTP Status Codes",
+      "description": "Reference for all HTTP status codes",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "reference",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 1,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 781
+      }
+    },
+    {
       "slug": "image-compressor",
       "name": "Image Compressor",
       "description": "Compress images without losing quality",
@@ -5376,6 +5144,47 @@
       }
     },
     {
+      "slug": "mdtable",
+      "name": "Markdown Table Generator",
+      "description": "Create and edit Markdown tables visually",
+      "market": "EN",
+      "category": "Text & String Tools",
+      "archetype": "utility",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 10,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 638
+      }
+    },
+    {
       "slug": "measuring-converter",
       "name": "計量スプーン・カップ グラム換算",
       "description": "大さじ・小さじ・カップを食材別にグラム換算",
@@ -5455,6 +5264,88 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 740
+      }
+    },
+    {
+      "slug": "minify-css",
+      "name": "CSS Minifier",
+      "description": "Minify CSS stylesheets to reduce file size",
+      "market": "EN",
+      "category": "Minifier Tools",
+      "archetype": "utility",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 3,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 429
+      }
+    },
+    {
+      "slug": "minify-js",
+      "name": "JavaScript Minifier",
+      "description": "Minify JavaScript code to reduce file size",
+      "market": "EN",
+      "category": "Minifier Tools",
+      "archetype": "utility",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 4,
+        "inputCount": 2,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 509
       }
     },
     {
@@ -5950,6 +5841,47 @@
       }
     },
     {
+      "slug": "timezone-converter",
+      "name": "Time Zone Converter",
+      "description": "Convert times between different time zones",
+      "market": "EN",
+      "category": "Time & Date",
+      "archetype": "converter",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 7,
+        "buttonCount": 2,
+        "inputCount": 3,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 529
+      }
+    },
+    {
       "slug": "tsumitate-sim",
       "name": "積立シミュレーション",
       "description": "毎月の積立額から最終積立額・運用益を計算",
@@ -6029,6 +5961,47 @@
         "componentCount": 1,
         "hasOpenGraphImage": true,
         "sourceLines": 615
+      }
+    },
+    {
+      "slug": "uuid-generator",
+      "name": "UUID Generator",
+      "description": "Generate UUID v4 identifiers",
+      "market": "EN",
+      "category": "Developer Tools",
+      "archetype": "generator",
+      "qualityScore": 100,
+      "priorityScore": 0,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "related_links",
+        "labels",
+        "copy",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "missing": [],
+      "penalties": [],
+      "signals": {
+        "h2Count": 4,
+        "buttonCount": 4,
+        "inputCount": 1,
+        "internalLinkCount": 1,
+        "componentCount": 1,
+        "hasOpenGraphImage": true,
+        "sourceLines": 308
       }
     },
     {

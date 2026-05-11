@@ -1,166 +1,95 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import UuidGenerator from "./components/UuidGenerator";
 
+const faq = [
+  {
+    q: "What is a UUID v4?",
+    a: "A UUID v4 is a 128-bit identifier generated from random bytes and formatted with version and variant bits.",
+  },
+  {
+    q: "Are generated UUIDs uploaded?",
+    a: "No. Generation uses browser crypto APIs locally, and generated values stay on your device unless you copy them elsewhere.",
+  },
+  {
+    q: "Which format should I choose?",
+    a: "Use the standard dashed lowercase format for most APIs and databases. Use uppercase or no-dash formats only when a system requires them.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            UUID Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Generate random UUID v4 values instantly. Choose a count, pick a
-            format, and copy to clipboard with one click.
-          </p>
-        </div>
-
-        {/* UUID Generator Tool */}
-        <UuidGenerator />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a UUID?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A UUID (Universally Unique Identifier) is a 128-bit value used to
-            uniquely identify information in computer systems. Also known as a
-            GUID (Globally Unique Identifier), UUIDs are standardized by RFC
-            4122. The most common version, UUID v4, is generated using random or
-            pseudo-random numbers, making collisions extremely unlikely.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            UUID v4 Format
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            A UUID v4 follows the pattern{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">
-              xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
-            </code>{" "}
-            where each <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">x</code> is
-            a random hexadecimal digit and{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">y</code> is one of{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">8</code>,{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">9</code>,{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">a</code>, or{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">b</code>. The{" "}
-            <code className="text-sm bg-gray-100 px-1 py-0.5 rounded">4</code> indicates the
-            UUID version. Example:
-          </p>
-          <pre className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-800 overflow-x-auto mb-4">
-            550e8400-e29b-41d4-a716-446655440000
-          </pre>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Use Cases
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Database primary keys</strong> — UUIDs provide unique IDs
-              without a central authority or auto-increment sequence.
-            </li>
-            <li>
-              <strong>Distributed systems</strong> — Multiple services can
-              independently generate IDs without coordination.
-            </li>
-            <li>
-              <strong>Session tokens</strong> — Random UUIDs work well as
-              session identifiers in web applications.
-            </li>
-            <li>
-              <strong>File naming</strong> — Ensure unique filenames for uploads
-              or temporary files.
-            </li>
-            <li>
-              <strong>API request tracing</strong> — Attach a UUID to each
-              request for logging and debugging across microservices.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Generator
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Select a count</strong> — Choose how many UUIDs to
-              generate at once (1, 5, 10, 50, or 100).
-            </li>
-            <li>
-              <strong>Pick a format</strong> — Standard (with dashes), no
-              dashes, uppercase, or lowercase.
-            </li>
-            <li>
-              <strong>Click Generate</strong> — New UUIDs appear instantly.
-            </li>
-            <li>
-              <strong>Copy</strong> — Click Copy on any single UUID, or Copy All
-              to grab the entire list.
-            </li>
-          </ol>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            All UUIDs are generated entirely in your browser using the Web
-            Crypto API. No data is sent to any server.
-          </p>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">UUID Generator — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/password-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Password Generator</Link>
-              <Link href="/hash-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Hash Generator</Link>
-              <Link href="/qr-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">QR Generator</Link>
-              <Link href="/cron-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Cron Generator</Link>
-              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-emerald-700">Developer generator</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">UUID Generator</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Generate UUID v4 values in bulk, validate the output format, reset counts, and copy single IDs or full lists.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-6 text-emerald-900 shadow-sm">
+              <div className="font-semibold text-emerald-950">Browser crypto</div>
+              <p className="mt-2">IDs are generated locally with Web Crypto support. Use examples and clear regenerated lists without sending data out.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <UuidGenerator />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Bulk output" body="Generate 1, 5, 10, 50, or 100 identifiers for seed data and tests." />
+          <InfoCard title="Format choices" body="Switch dashed, no-dash, lowercase, and uppercase output for integration validation." />
+          <InfoCard title="Copy actions" body="Copy one identifier or the entire generated list to the clipboard." />
+        </section>
+
+        <InfoSection title="UUID Usage Notes" items={[
+          ["Distributed IDs", "UUIDs are useful when several systems need to create identifiers without a shared sequence."],
+          ["Storage format", "Keep one canonical format in a project so logs, URLs, and database records remain consistent."],
+        ]} />
+
+        <Faq items={faq} />
+
+        <RelatedSection links={[
+          ["/password-generator", "Password Generator", "Generate secure secrets"],
+          ["/hash-generator", "Hash Generator", "Create hashes"],
+          ["/qr-generator", "QR Generator", "Encode IDs as QR"],
+          ["/regex-tester", "Regex Tester", "Validate ID patterns"],
+        ]} />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "UUID Generator",
-  "description": "Generate random UUID v4 values instantly. Choose a count, pick a\n            format, and copy to clipboard with one click.",
-  "url": "https://tools.loresync.dev/uuid-generator",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+
+      <JsonLd faq={faq} name="UUID Generator" description="Generate UUID v4 values locally in the browser with copy-ready formats." url="https://tools.loresync.dev/uuid-generator" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "UtilityApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

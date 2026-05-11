@@ -1,162 +1,95 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import CssMinifier from "./components/CssMinifier";
 
+const faq = [
+  {
+    q: "What does CSS minification remove?",
+    a: "It removes comments, extra whitespace, line breaks, and redundant separators while preserving CSS meaning.",
+  },
+  {
+    q: "Can I format minified CSS again?",
+    a: "Yes. Use Beautify to reset compressed CSS into a readable multiline format for review.",
+  },
+  {
+    q: "Is my CSS uploaded?",
+    a: "No. Minify, beautify, validation, copy, and clear actions run locally in your browser.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            CSS Minifier
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Paste your CSS code, get minified output instantly. Remove comments,
-            whitespace, and optimize your stylesheets — all client-side.
-          </p>
-        </div>
-
-        {/* CSS Minifier Tool */}
-        <CssMinifier />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is CSS Minification?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            CSS minification is the process of removing unnecessary characters
-            from CSS code without changing its functionality. This includes
-            stripping comments, removing extra whitespace and line breaks,
-            eliminating redundant semicolons, and collapsing spaces around
-            selectors and properties. The result is a smaller file that loads
-            faster in web browsers.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Why Minify CSS?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Minified CSS files are smaller, which means faster download times
-            for your users. Every kilobyte matters for page load performance,
-            especially on mobile networks. Smaller CSS files also reduce
-            bandwidth usage and can improve your Core Web Vitals scores.
-            Search engines consider page speed as a ranking factor, so
-            minified CSS contributes to better SEO.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This CSS Minifier
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Paste your CSS</strong> into the input area on the left.
-            </li>
-            <li>
-              <strong>View the minified result</strong> on the right, updated
-              in real time.
-            </li>
-            <li>
-              <strong>Check the stats</strong> to see original size, minified
-              size, and bytes saved.
-            </li>
-            <li>
-              <strong>Copy the output</strong> with one click and use it in
-              your project.
-            </li>
-            <li>
-              <strong>Beautify</strong> minified CSS back into readable format
-              using the Beautify button.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Does This Tool Remove?
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Comments</strong> — both single-line and multi-line CSS
-              comments are stripped.
-            </li>
-            <li>
-              <strong>Whitespace</strong> — extra spaces, tabs, and newlines
-              are removed or collapsed.
-            </li>
-            <li>
-              <strong>Trailing semicolons</strong> — the last semicolon before
-              a closing brace is removed.
-            </li>
-            <li>
-              <strong>Redundant spaces</strong> — spaces around colons,
-              semicolons, braces, and commas are collapsed.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Privacy and Security
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This CSS minifier runs entirely in your browser. Your code is never
-            sent to any server. All processing happens client-side using
-            JavaScript, so your stylesheets remain private and secure.
-          </p>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">minify-css — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/minify-js" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Minify JS</Link>
-              <Link href="/tailwindconvert" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Tailwind Convert</Link>
-              <Link href="/css-gradient" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Gradient</Link>
-              <Link href="/css-flexbox" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Flexbox</Link>
-              <Link href="/html-entity" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML Entity</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-lime-700">Minifier tools</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">CSS Minifier</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Paste CSS, validate output size, minify or beautify stylesheets, clear the editor, and copy optimized code.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-lime-200 bg-lime-50 p-4 text-sm leading-6 text-lime-900 shadow-sm">
+              <div className="font-semibold text-lime-950">Local processing</div>
+              <p className="mt-2">Examples, compression stats, copy, export-style review, and reset controls run in the browser.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <CssMinifier />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Size stats" body="Compare original size, minified size, and saved bytes before copying." />
+          <InfoCard title="Beautify reset" body="Turn compressed CSS back into readable blocks for debugging." />
+          <InfoCard title="Copy output" body="Copy the minified stylesheet directly into build scripts or static files." />
+        </section>
+
+        <InfoSection title="CSS Optimization Notes" items={[
+          ["Build pipeline", "For production apps, use this as a quick check and keep automated minification in your bundler."],
+          ["Validate visually", "After minifying unusual CSS hacks or generated code, test the final stylesheet in the target browser."],
+        ]} />
+
+        <Faq items={faq} />
+
+        <RelatedSection links={[
+          ["/minify-js", "JavaScript Minifier", "Compress JS"],
+          ["/tailwindconvert", "Tailwind Convert", "Convert utility styles"],
+          ["/css-gradient", "CSS Gradient", "Generate backgrounds"],
+          ["/css-flexbox", "CSS Flexbox", "Build layout CSS"],
+        ]} />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "CSS Minifier",
-  "description": "Paste your CSS code, get minified output instantly. Remove comments,\n            whitespace, and optimize your stylesheets — all client-side.",
-  "url": "https://tools.loresync.dev/minify-css",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+
+      <JsonLd faq={faq} name="CSS Minifier" description="Minify and beautify CSS locally in the browser with copy-ready output." url="https://tools.loresync.dev/minify-css" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "DeveloperApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

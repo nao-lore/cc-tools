@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const POPULAR_ZONES = [
   "UTC",
@@ -110,24 +109,31 @@ interface ZoneRow {
   timezone: string;
 }
 
+const INITIAL_NOW = new Date("2026-05-11T00:00:00Z");
+const INITIAL_ROWS: ZoneRow[] = [
+  { id: "tz-eastern", timezone: "US/Eastern" },
+  { id: "tz-tokyo", timezone: "Asia/Tokyo" },
+];
+
 let idCounter = 0;
 function nextId(): string {
   return `tz-${++idCounter}`;
 }
 
 export default function TimezoneConverter() {
-  const allZones = useMemo(() => getAllTimezones(), []);
+  const [allZones, setAllZones] = useState<string[]>(POPULAR_ZONES);
   const [sourceZone, setSourceZone] = useState("UTC");
   const [sourceTime, setSourceTime] = useState("");
   const [sourceDate, setSourceDate] = useState("");
-  const [rows, setRows] = useState<ZoneRow[]>([
-    { id: nextId(), timezone: "US/Eastern" },
-    { id: nextId(), timezone: "Asia/Tokyo" },
-  ]);
-  const [now, setNow] = useState(new Date());
+  const [rows, setRows] = useState<ZoneRow[]>(INITIAL_ROWS);
+  const [now, setNow] = useState(INITIAL_NOW);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     const today = new Date();
+    setAllZones(getAllTimezones());
+    setNow(today);
+    setHydrated(true);
     const yyyy = today.getFullYear();
     const mm = String(today.getMonth() + 1).padStart(2, "0");
     const dd = String(today.getDate()).padStart(2, "0");
@@ -135,9 +141,7 @@ export default function TimezoneConverter() {
     const hh = String(today.getHours()).padStart(2, "0");
     const min = String(today.getMinutes()).padStart(2, "0");
     setSourceTime(`${hh}:${min}`);
-  }, []);
 
-  useEffect(() => {
     const interval = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
@@ -175,7 +179,7 @@ export default function TimezoneConverter() {
     }
   }, [sourceTime, sourceDate, sourceZone, now]);
 
-  const conversionDate = getConversionDate();
+  const conversionDate = hydrated ? getConversionDate() : INITIAL_NOW;
 
   const addRow = () => {
     const used = new Set([sourceZone, ...rows.map((r) => r.timezone)]);
@@ -262,12 +266,12 @@ export default function TimezoneConverter() {
         </div>
         <div className="mt-3 flex items-center gap-3 text-sm text-gray-600">
           <span className="font-mono">
-            {formatTime(now, sourceZone)} (now)
+            {hydrated ? formatTime(now, sourceZone) : "--:--:--"} (now)
           </span>
           <span className="text-gray-400">|</span>
-          <span>{getUTCOffset(now, sourceZone)}</span>
-          <span>{getTimezoneAbbr(now, sourceZone)}</span>
-          {isDST(now, sourceZone) && (
+          <span>{hydrated ? getUTCOffset(now, sourceZone) : "GMT"}</span>
+          <span>{hydrated ? getTimezoneAbbr(now, sourceZone) : "UTC"}</span>
+          {hydrated && isDST(now, sourceZone) && (
             <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
               DST
             </span>
@@ -316,19 +320,19 @@ export default function TimezoneConverter() {
             <div className="flex-1 flex items-center gap-4">
               <div className="flex-1">
                 <div className="text-2xl font-mono font-semibold text-gray-900">
-                  {formatTime(conversionDate, row.timezone)}
+                  {hydrated ? formatTime(conversionDate, row.timezone) : "--:--:--"}
                 </div>
                 <div className="text-sm text-gray-500">
-                  {formatDate(conversionDate, row.timezone)}
+                  {hydrated ? formatDate(conversionDate, row.timezone) : "Select a time"}
                 </div>
               </div>
               <div className="text-right text-sm text-gray-500 space-y-1">
-                <div>{getUTCOffset(conversionDate, row.timezone)}</div>
+                <div>{hydrated ? getUTCOffset(conversionDate, row.timezone) : "GMT"}</div>
                 <div className="flex items-center justify-end gap-2">
                   <span>
-                    {getTimezoneAbbr(conversionDate, row.timezone)}
+                    {hydrated ? getTimezoneAbbr(conversionDate, row.timezone) : ""}
                   </span>
-                  {isDST(conversionDate, row.timezone) && (
+                  {hydrated && isDST(conversionDate, row.timezone) && (
                     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
                       DST
                     </span>
@@ -377,52 +381,16 @@ export default function TimezoneConverter() {
                 {tz.replace(/_/g, " ")}
               </div>
               <div className="text-lg font-mono font-semibold text-gray-900">
-                {formatTime(now, tz)}
+                {hydrated ? formatTime(now, tz) : "--:--:--"}
               </div>
               <div className="text-xs text-gray-400">
-                {getTimezoneAbbr(now, tz)}
-                {isDST(now, tz) && (
+                {hydrated ? getTimezoneAbbr(now, tz) : ""}
+                {hydrated && isDST(now, tz) && (
                   <span className="ml-1 text-amber-600">DST</span>
                 )}
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* FAQ */}
-      <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            { q: "UTCとJSTの時差は何時間ですか？", a: "JST（日本標準時）はUTCより9時間進んでいます。つまりUTC 0:00はJST 9:00になります。日本はサマータイムを採用していないため、年間を通じてUTC+9で固定です。" },
-            { q: "夏時間（サマータイム）は自動で反映されますか？", a: "はい。アメリカ・ヨーロッパなどサマータイムを採用している地域のタイムゾーンは、指定した日時に応じて自動的にサマータイムが適用されます。" },
-            { q: "世界の主要都市の時差を一覧で確認できますか？", a: "本ツールでは複数のタイムゾーンを追加して一覧表示できます。東京・ニューヨーク・ロンドン・パリ・上海など主要都市のタイムゾーンをプリセットから選択可能です。" },
-          ].map(({ q, a }) => (
-            <div key={q} className="bg-gray-50 rounded-xl p-4">
-              <p className="font-medium text-gray-800 mb-1">Q. {q}</p>
-              <p className="text-sm text-gray-600">A. {a}</p>
-            </div>
-          ))}
-        </div>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              { "@type": "Question", "name": "UTCとJSTの時差は何時間ですか？", "acceptedAnswer": { "@type": "Answer", "text": "JST（日本標準時）はUTCより9時間進んでいます。日本はサマータイムを採用していないため、年間を通じてUTC+9で固定です。" } },
-              { "@type": "Question", "name": "夏時間（サマータイム）は自動で反映されますか？", "acceptedAnswer": { "@type": "Answer", "text": "はい。アメリカ・ヨーロッパなどサマータイムを採用している地域のタイムゾーンは、指定した日時に応じて自動的にサマータイムが適用されます。" } },
-              { "@type": "Question", "name": "世界の主要都市の時差を一覧で確認できますか？", "acceptedAnswer": { "@type": "Answer", "text": "本ツールでは複数のタイムゾーンを追加して一覧表示できます。主要都市のタイムゾーンをプリセットから選択可能です。" } },
-            ]
-          }) }}
-        />
-        <div className="mt-6 pt-4 border-t border-gray-100">
-          <p className="text-sm font-medium text-gray-500 mb-2">関連ツール</p>
-          <div className="flex flex-wrap gap-2">
-            <Link href="/epoch-converter" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">エポック時刻変換</Link>
-            <Link href="/nissuu-keisan" className="text-sm text-blue-600 hover:underline bg-blue-50 px-3 py-1.5 rounded-lg">日数計算ツール</Link>
-          </div>
         </div>
       </div>
     </div>

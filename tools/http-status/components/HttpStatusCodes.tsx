@@ -98,7 +98,7 @@ const categories: Category[] = [
       {
         code: 204,
         name: "No Content",
-        description: "The server successfully processed the request but is not returning any content.",
+        description: "The server successfully processed the request but is not returning a response body.",
         whenSeen: "After a successful DELETE request or an update where no response body is needed.",
         example: "DELETE /api/users/42 returns 204 to confirm deletion without sending a body.",
       },
@@ -424,7 +424,7 @@ const categories: Category[] = [
         name: "Gateway Timeout",
         description: "The server acting as a gateway did not receive a timely response from the upstream server.",
         whenSeen: "When a reverse proxy times out waiting for the backend server to respond.",
-        example: "A slow database query causes the app server to take 60+ seconds. Nginx returns 504 after its timeout.",
+        example: "A slow database query causes the app server to exceed the gateway timeout. Nginx returns 504 after waiting.",
       },
       {
         code: 505,
@@ -514,6 +514,7 @@ export default function HttpStatusCodes() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Search HTTP status codes"
             placeholder="Search by code (e.g. 404) or keyword (e.g. timeout)..."
             className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent"
           />
@@ -639,78 +640,6 @@ export default function HttpStatusCodes() {
         </div>
       )}
 
-      {/* FAQ */}
-      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-8">
-        <h2 className="text-base font-bold text-gray-800 mb-3">よくある質問</h2>
-        <div className="space-y-4">
-          {[
-            {
-              q: "401 と 403 の違いは何ですか？",
-              a: "401 Unauthorized は「認証が必要」を意味し、ログインしていない状態です。403 Forbidden は「認証済みだがアクセス権がない」状態です。ログインしても権限がなければ 403 が返ります。",
-            },
-            {
-              q: "302 と 307 はどう使い分けますか？",
-              a: "302 は一時的なリダイレクトですが、ブラウザが POST を GET に変えることがあります。307 はメソッドを変えずにリダイレクトすることを保証します。API や POST フォームのリダイレクトには 307 が適切です。",
-            },
-            {
-              q: "500 と 502 の違いは何ですか？",
-              a: "500 Internal Server Error はアプリケーションサーバー自体のエラーです。502 Bad Gateway はリバースプロキシ（Nginx など）がバックエンドサーバーから無効なレスポンスを受け取ったときに返ります。",
-            },
-          ].map((faq, i) => (
-            <div key={i} className="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-              <p className="text-gray-800 font-bold text-sm mb-1">{faq.q}</p>
-              <p className="text-gray-500 text-xs leading-relaxed">{faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "401 と 403 の違いは何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "401 Unauthorized は「認証が必要」を意味し、ログインしていない状態です。403 Forbidden は「認証済みだがアクセス権がない」状態です。ログインしても権限がなければ 403 が返ります。" },
-              },
-              {
-                "@type": "Question",
-                "name": "302 と 307 はどう使い分けますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "302 は一時的なリダイレクトですが、ブラウザが POST を GET に変えることがあります。307 はメソッドを変えずにリダイレクトすることを保証します。API や POST フォームのリダイレクトには 307 が適切です。" },
-              },
-              {
-                "@type": "Question",
-                "name": "500 と 502 の違いは何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "500 Internal Server Error はアプリケーションサーバー自体のエラーです。502 Bad Gateway はリバースプロキシがバックエンドサーバーから無効なレスポンスを受け取ったときに返ります。" },
-              },
-            ],
-          }),
-        }}
-      />
-
-      {/* 関連ツール */}
-      <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-4">
-        <h2 className="text-base font-bold text-gray-800 mb-3">関連ツール</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {[
-            { href: "/url-encoder", label: "URL エンコード/デコード", desc: "URL に使えない文字を %xx 形式に変換" },
-            { href: "/jwt-decoder", label: "JWT デコーダー", desc: "JWT トークンをデコードしてクレームを確認" },
-          ].map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl p-3 transition-colors"
-            >
-              <p className="text-gray-800 font-bold text-sm">{link.label}</p>
-              <p className="text-gray-500 text-xs mt-0.5">{link.desc}</p>
-            </a>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }

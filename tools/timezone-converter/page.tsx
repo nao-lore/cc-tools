@@ -1,153 +1,95 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import TimezoneConverter from "./components/TimezoneConverter";
 
+const faq = [
+  {
+    q: "How does the converter handle daylight saving time?",
+    a: "It uses browser time zone data, so offsets reflect daylight saving changes for the selected date when the runtime supports that zone.",
+  },
+  {
+    q: "Can I compare several cities?",
+    a: "Yes. Add target zones to compare meeting times across cities and regions in one view.",
+  },
+  {
+    q: "Is the time data sent outside the browser?",
+    a: "No. Date selection, conversion, copy-oriented review, and validation are handled locally in your browser.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            Time Zone Converter
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert time between any time zones worldwide. Compare multiple
-            zones at once, check DST status, and find the current time anywhere.
-          </p>
-        </div>
-
-        {/* Timezone Converter Tool */}
-        <TimezoneConverter />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is a Time Zone?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            A time zone is a region of the globe that observes a uniform
-            standard time for legal, commercial, and social purposes. Time zones
-            are based on the concept of dividing the Earth into 24 longitudinal
-            segments, each offset from Coordinated Universal Time (UTC). In
-            practice, time zone boundaries follow country and regional borders
-            rather than strict longitude lines.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How Time Zone Conversion Works
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Converting time between zones involves calculating the difference in
-            UTC offsets. For example, if it is 3:00 PM in New York (UTC-5) and
-            you want to know the time in Tokyo (UTC+9), you add 14 hours to get
-            5:00 AM the next day. This tool handles all the math automatically,
-            including edge cases like date changes and Daylight Saving Time
-            transitions.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Understanding Daylight Saving Time (DST)
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Many regions observe Daylight Saving Time, shifting clocks forward
-            by one hour in spring and back in fall. This means UTC offsets change
-            throughout the year. Not all countries observe DST, and those that do
-            may switch on different dates. This converter shows a DST indicator
-            for each timezone so you always know when DST is in effect.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How to Use This Time Zone Converter
-          </h2>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Select your source timezone</strong> from the dropdown.
-              Popular timezones like UTC, Eastern, Pacific, and Tokyo appear at
-              the top for quick access.
-            </li>
-            <li>
-              <strong>Set the time and date</strong> you want to convert. The
-              tool defaults to the current time.
-            </li>
-            <li>
-              <strong>View converted times</strong> in the target zones below.
-              Each zone shows the converted time, date, UTC offset, and DST
-              status.
-            </li>
-            <li>
-              <strong>Add more timezones</strong> by clicking the &quot;Add
-              timezone&quot; button to compare as many zones as you need.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Common Time Zone Conversions
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            Some of the most frequently converted time zones include EST to PST
-            (subtract 3 hours), UTC to EST (subtract 5 hours, or 4 during DST),
-            EST to JST (add 14 hours), and GMT to CET (add 1 hour). Whether you
-            are scheduling meetings across continents or coordinating with
-            remote teams, this tool makes it easy to find the right time in any
-            zone.
-          </p>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">timezone-converter — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/epoch-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Epoch Converter</Link>
-              <Link href="/cron-generator" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Cron Generator</Link>
-              <Link href="/eigyoubi" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Eigyoubi</Link>
-              <Link href="/wareki-converter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Wareki Converter</Link>
-              <Link href="/aspect-ratio" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Aspect Ratio</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-sky-700">Time & date utility</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">Time Zone Converter</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Convert a selected date and time across major time zones, validate offsets, compare cities, and copy results into scheduling notes.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm leading-6 text-sky-900 shadow-sm">
+              <div className="font-semibold text-sky-950">Local scheduling check</div>
+              <p className="mt-2">Conversion runs in the browser. Use examples, reset the date, and check DST-sensitive offsets before sending invites.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools &rarr;</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <TimezoneConverter />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Meeting planning" body="Compare Tokyo, UTC, New York, London, and other regions for calls." />
+          <InfoCard title="DST validation" body="Use the selected date to verify the current offset during daylight saving periods." />
+          <InfoCard title="Copy notes" body="Copy converted times into calendar descriptions, docs, or chat messages after review." />
+        </section>
+
+        <InfoSection title="Time Zone Tips" items={[
+          ["Use exact dates", "Offsets can change with daylight saving time, so validate the actual meeting date rather than using a rough hour difference."],
+          ["Prefer city zones", "City-based IANA zones are more reliable than fixed UTC offsets when DST can apply."],
+        ]} />
+
+        <Faq items={faq} />
+
+        <RelatedSection links={[
+          ["/epoch-converter", "Epoch Converter", "Convert Unix timestamps"],
+          ["/cron-generator", "Cron Generator", "Build cron schedules"],
+          ["/eigyoubi", "Business Days", "Count workdays"],
+          ["/wareki-converter", "Wareki Converter", "Convert Japanese eras"],
+        ]} />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Time Zone Converter",
-  "description": "Convert time between any time zones worldwide. Compare multiple\n            zones at once, check DST status, and find the current time anywhere.",
-  "url": "https://tools.loresync.dev/timezone-converter",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+
+      <JsonLd faq={faq} name="Time Zone Converter" description="Convert selected times across time zones locally in the browser." url="https://tools.loresync.dev/timezone-converter" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "UtilityApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }

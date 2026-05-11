@@ -1,171 +1,95 @@
 import Link from "next/link";
+import { tools } from "@/lib/tools-config";
 import JsMinifier from "./components/JsMinifier";
 
+const faq = [
+  {
+    q: "What does JavaScript minification do?",
+    a: "It removes comments and unnecessary whitespace while preserving string literals, template literals, and regex literals.",
+  },
+  {
+    q: "Can I beautify compressed JavaScript?",
+    a: "Yes. Use Beautify to reset dense code into a readable multiline shape for inspection.",
+  },
+  {
+    q: "Is pasted JavaScript uploaded?",
+    a: "No. Minify, beautify, validation, copy, and clear actions run locally in your browser.",
+  },
+];
+
+type FaqItem = (typeof faq)[number];
+
 export default function Home() {
+  const toolCount = tools.length;
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* AdSense slot - top banner */}
-      <div className="w-full bg-gray-50 border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
-      </div>
-
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
-            JavaScript Minifier
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Paste your JavaScript code and minify it instantly. Remove comments,
-            strip whitespace, and reduce file size — all client-side, nothing
-            leaves your browser.
-          </p>
-        </div>
-
-        {/* JS Minifier Tool */}
-        <JsMinifier />
-
-        {/* SEO Content Section */}
-        <section className="mt-16 mb-12 max-w-3xl mx-auto prose prose-gray">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            What Is JavaScript Minification?
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            JavaScript minification is the process of removing unnecessary
-            characters from source code without changing its functionality. This
-            includes stripping comments, removing extra whitespace, collapsing
-            newlines, and shortening code where possible. Minified JavaScript
-            files are smaller, which means faster downloads and improved page
-            load times.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Why Minify JavaScript?
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              <strong>Faster page loads</strong> — Smaller files download
-              quicker, especially on mobile networks.
-            </li>
-            <li>
-              <strong>Reduced bandwidth</strong> — Less data transferred means
-              lower hosting costs and better user experience.
-            </li>
-            <li>
-              <strong>Better performance scores</strong> — Tools like Google
-              Lighthouse reward smaller, optimized assets.
-            </li>
-            <li>
-              <strong>Production-ready code</strong> — Minification is a
-              standard step in modern deployment pipelines.
-            </li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            How This Tool Works
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3">
-            This minifier runs entirely in your browser. Your code is never sent
-            to a server. It performs several transformations:
-          </p>
-          <ol className="text-gray-700 leading-relaxed space-y-2 mb-4 list-decimal list-inside">
-            <li>
-              <strong>Remove comments</strong> — Both single-line (//) and
-              multi-line (/* */) comments are stripped.
-            </li>
-            <li>
-              <strong>Collapse whitespace</strong> — Extra spaces, tabs, and
-              newlines are removed or collapsed to a single space where needed.
-            </li>
-            <li>
-              <strong>Preserve strings</strong> — String literals (single,
-              double, and template) are kept intact.
-            </li>
-            <li>
-              <strong>Preserve regex</strong> — Regular expression literals are
-              detected and left unchanged.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Minify vs Beautify
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            This tool also includes a beautify mode that adds indentation and
-            line breaks back to compressed code. Use it to make minified code
-            readable again for debugging or code review. Toggle between minify
-            and beautify with one click.
-          </p>
-
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            When to Use a JavaScript Minifier
-          </h2>
-          <ul className="text-gray-700 leading-relaxed space-y-2 mb-4 list-disc list-inside">
-            <li>
-              Before deploying JavaScript to production.
-            </li>
-            <li>
-              When optimizing page speed for SEO or user experience.
-            </li>
-            <li>
-              To quickly check how much space you can save on a script.
-            </li>
-            <li>
-              When you need a quick minification without setting up a build tool.
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 py-8 text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-4">JavaScript Minifier — Free online tool. No signup required.</p>
-          <div className="mb-4">
-            <p className="text-xs text-gray-400 mb-2">Related Tools</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <Link href="/minify-css" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">CSS Minifier</Link>
-              <Link href="/json-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">JSON Formatter</Link>
-              <Link href="/html-entity" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">HTML Entity Encoder</Link>
-              <Link href="/sql-formatter" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">SQL Formatter</Link>
-              <Link href="/regex-tester" className="text-xs text-blue-600 hover:text-blue-800 px-2 py-1 bg-blue-50 rounded">Regex Tester</Link>
+    <main className="min-h-screen bg-slate-50 text-slate-950">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+        <header className="mb-6">
+          <Link href="/" aria-label="Back to free online tools" className="text-sm font-medium text-slate-500 hover:text-slate-950">
+            ← Free online tools
+          </Link>
+          <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-orange-700">Minifier tools</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">JavaScript Minifier</h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-600">
+                Minify or beautify JavaScript snippets, validate output size, clear the editor, and copy optimized code.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-orange-200 bg-orange-50 p-4 text-sm leading-6 text-orange-900 shadow-sm">
+              <div className="font-semibold text-orange-950">Browser-only transform</div>
+              <p className="mt-2">Use examples, compression stats, copy, export-style review, and reset controls without sending code out.</p>
             </div>
           </div>
-          <div className="flex justify-center gap-3 text-xs text-gray-400">
-            <Link href="/" className="hover:text-gray-600">53+ Free Tools →</Link>
-          </div>
-        </div>
-      </footer>
+        </header>
 
-      {/* AdSense slot - bottom banner */}
-      <div className="w-full bg-gray-50 border-t border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 py-2 text-center text-xs text-gray-400">
-          {/* AdSense slot */}
-        </div>
+        <JsMinifier />
+
+        <section className="mt-8 grid gap-4 md:grid-cols-3">
+          <InfoCard title="Preserve literals" body="The parser keeps strings, templates, and regex literals intact while removing noise." />
+          <InfoCard title="Beautify reset" body="Reformat compressed snippets for easier inspection and debugging." />
+          <InfoCard title="Copy output" body="Copy minified or beautified code after checking size changes." />
+        </section>
+
+        <InfoSection title="JavaScript Optimization Notes" items={[
+          ["Quick snippets", "This tool is useful for small scripts and code review, while full apps should use a bundler or Terser."],
+          ["Validate behavior", "Run tests or browser checks after minifying complex generated scripts or syntax edge cases."],
+        ]} />
+
+        <Faq items={faq} />
+
+        <RelatedSection links={[
+          ["/minify-css", "CSS Minifier", "Compress CSS"],
+          ["/json-formatter", "JSON Formatter", "Format JSON"],
+          ["/regex-tester", "Regex Tester", "Test patterns"],
+          ["/html-entity", "HTML Entity", "Encode text"],
+        ]} />
+
+        <footer className="py-8 text-center text-xs text-slate-500">cc-tools publishes {toolCount} free online tools.</footer>
       </div>
-    
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "JavaScript Minifier",
-  "description": "Paste your JavaScript code and minify it instantly. Remove comments,\n            strip whitespace, and reduce file size — all client-side, nothing\n            leaves your browser.",
-  "url": "https://tools.loresync.dev/minify-js",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "en"
-}`
-        }}
-      />
-      </div>
+
+      <JsonLd faq={faq} name="JavaScript Minifier" description="Minify and beautify JavaScript locally in the browser with copy-ready output." url="https://tools.loresync.dev/minify-js" />
+    </main>
   );
+}
+
+function InfoCard({ title, body }: { title: string; body: string }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><h2 className="text-sm font-semibold text-slate-950">{title}</h2><p className="mt-1 text-sm leading-6 text-slate-600">{body}</p></div>;
+}
+
+function InfoSection({ title, items }: { title: string; items: [string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">{title}</h2><div className="mt-4 grid gap-5 text-sm leading-7 text-slate-600 md:grid-cols-2">{items.map(([heading, body]) => <div key={heading}><h3 className="font-semibold text-slate-900">{heading}</h3><p className="mt-1">{body}</p></div>)}</div></section>;
+}
+
+function Faq({ items }: { items: FaqItem[] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">FAQ</h2><div className="mt-4 divide-y divide-slate-200">{items.map((item) => <div key={item.q} className="py-4 first:pt-0 last:pb-0"><h3 className="font-semibold text-slate-950">{item.q}</h3><p className="mt-1 text-sm leading-7 text-slate-600">{item.a}</p></div>)}</div></section>;
+}
+
+function RelatedSection({ links }: { links: [string, string, string][] }) {
+  return <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"><h2 className="text-xl font-bold text-slate-950">Related Tools</h2><div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{links.map(([href, title, body]) => <Link key={href} href={href} className="rounded-xl border border-slate-200 p-4 hover:border-slate-400 hover:bg-slate-50"><div className="text-sm font-semibold text-slate-950">{title}</div><div className="mt-1 text-xs leading-5 text-slate-500">{body}</div></Link>)}</div></section>;
+}
+
+function JsonLd({ faq, name, description, url }: { faq: FaqItem[]; name: string; description: string; url: string }) {
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } })) }) }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name, description, url, applicationCategory: "DeveloperApplication", operatingSystem: "All", offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" } }) }} /></>;
 }
