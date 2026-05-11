@@ -1,570 +1,641 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
-// --- 法定付与日数テーブル ---
-// 通常労働者（週5日以上 or 週所定30時間以上）
-const STANDARD_TABLE: { months: number; days: number }[] = [
-  { months: 6,  days: 10 },
-  { months: 18, days: 11 },
-  { months: 30, days: 12 },
-  { months: 42, days: 14 },
-  { months: 54, days: 16 },
-  { months: 66, days: 18 },
-  { months: 78, days: 20 }, // 6.5年以上
+type GrantRow = {
+  months: number;
+  label: string;
+  days: number;
+};
+
+type WorkPattern = {
+  weekDays: number;
+  annualRange: string;
+  rows: GrantRow[];
+};
+
+type Result = {
+  tenureMonths: number;
+  tenureLabel: string;
+  isStandard: boolean;
+  currentGrant: GrantRow | null;
+  nextGrant: GrantRow | null;
+  currentGrantDate: Date | null;
+  nextGrantDate: Date | null;
+  statutoryDays: number;
+  previousGrantDays: number;
+  carryoverCap: number;
+  carryoverUsed: number;
+  totalAvailable: number;
+  remainingDays: number;
+  obligationApplies: boolean;
+  obligationShortfall: number;
+};
+
+const SOURCE_DATE = "2026-05-11";
+const STANDARD_ROWS: GrantRow[] = [
+  { months: 6, label: "6か月", days: 10 },
+  { months: 18, label: "1年6か月", days: 11 },
+  { months: 30, label: "2年6か月", days: 12 },
+  { months: 42, label: "3年6か月", days: 14 },
+  { months: 54, label: "4年6か月", days: 16 },
+  { months: 66, label: "5年6か月", days: 18 },
+  { months: 78, label: "6年6か月以上", days: 20 },
 ];
 
-// 比例付与テーブル: { weekDays, rows: [{months, days}] }
-const PROPORTIONAL_TABLE: {
-  weekDays: number;
-  annualDays: number;
-  rows: { months: number; days: number }[];
-}[] = [
+const PROPORTIONAL_PATTERNS: WorkPattern[] = [
   {
     weekDays: 4,
-    annualDays: 169,
+    annualRange: "169〜216日",
     rows: [
-      { months: 6,  days: 7  },
-      { months: 18, days: 8  },
-      { months: 30, days: 9  },
-      { months: 42, days: 10 },
-      { months: 54, days: 12 },
-      { months: 66, days: 13 },
-      { months: 78, days: 15 },
+      { months: 6, label: "6か月", days: 7 },
+      { months: 18, label: "1年6か月", days: 8 },
+      { months: 30, label: "2年6か月", days: 9 },
+      { months: 42, label: "3年6か月", days: 10 },
+      { months: 54, label: "4年6か月", days: 12 },
+      { months: 66, label: "5年6か月", days: 13 },
+      { months: 78, label: "6年6か月以上", days: 15 },
     ],
   },
   {
     weekDays: 3,
-    annualDays: 121,
+    annualRange: "121〜168日",
     rows: [
-      { months: 6,  days: 5  },
-      { months: 18, days: 6  },
-      { months: 30, days: 6  },
-      { months: 42, days: 8  },
-      { months: 54, days: 9  },
-      { months: 66, days: 10 },
-      { months: 78, days: 11 },
+      { months: 6, label: "6か月", days: 5 },
+      { months: 18, label: "1年6か月", days: 6 },
+      { months: 30, label: "2年6か月", days: 6 },
+      { months: 42, label: "3年6か月", days: 8 },
+      { months: 54, label: "4年6か月", days: 9 },
+      { months: 66, label: "5年6か月", days: 10 },
+      { months: 78, label: "6年6か月以上", days: 11 },
     ],
   },
   {
     weekDays: 2,
-    annualDays: 73,
+    annualRange: "73〜120日",
     rows: [
-      { months: 6,  days: 3  },
-      { months: 18, days: 4  },
-      { months: 30, days: 4  },
-      { months: 42, days: 5  },
-      { months: 54, days: 6  },
-      { months: 66, days: 6  },
-      { months: 78, days: 7  },
+      { months: 6, label: "6か月", days: 3 },
+      { months: 18, label: "1年6か月", days: 4 },
+      { months: 30, label: "2年6か月", days: 4 },
+      { months: 42, label: "3年6か月", days: 5 },
+      { months: 54, label: "4年6か月", days: 6 },
+      { months: 66, label: "5年6か月", days: 6 },
+      { months: 78, label: "6年6か月以上", days: 7 },
     ],
   },
   {
     weekDays: 1,
-    annualDays: 48,
+    annualRange: "48〜72日",
     rows: [
-      { months: 6,  days: 1  },
-      { months: 18, days: 2  },
-      { months: 30, days: 2  },
-      { months: 42, days: 2  },
-      { months: 54, days: 3  },
-      { months: 66, days: 3  },
-      { months: 78, days: 3  },
+      { months: 6, label: "6か月", days: 1 },
+      { months: 18, label: "1年6か月", days: 2 },
+      { months: 30, label: "2年6か月", days: 2 },
+      { months: 42, label: "3年6か月", days: 2 },
+      { months: 54, label: "4年6か月", days: 3 },
+      { months: 66, label: "5年6か月", days: 3 },
+      { months: 78, label: "6年6か月以上", days: 3 },
     ],
   },
 ];
 
-// 段階ラベル
-const STAGE_LABELS = ["0.5年", "1.5年", "2.5年", "3.5年", "4.5年", "5.5年", "6.5年以上"];
+const SAMPLES = [
+  { label: "正社員 2年目", hireDate: "2024-04-01", baseDate: "2026-05-11", weekDays: 5, weeklyHours30: true },
+  { label: "週4パート", hireDate: "2023-10-01", baseDate: "2026-05-11", weekDays: 4, weeklyHours30: false },
+  { label: "週3アルバイト", hireDate: "2025-07-01", baseDate: "2026-05-11", weekDays: 3, weeklyHours30: false },
+];
 
-// --- ユーティリティ ---
-function parseDate(s: string): Date | null {
-  if (!s) return null;
-  const d = new Date(s);
-  return isNaN(d.getTime()) ? null : d;
+function todayString() {
+  return new Date().toISOString().slice(0, 10);
 }
 
-function monthDiff(from: Date, to: Date): number {
-  return (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+function parseDate(value: string) {
+  if (!value) return null;
+  const date = new Date(`${value}T00:00:00`);
+  return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function formatTenure(months: number): string {
-  if (months < 0) return "—";
-  const y = Math.floor(months / 12);
-  const m = months % 12;
-  if (y === 0) return `${m}ヶ月`;
-  if (m === 0) return `${y}年`;
-  return `${y}年${m}ヶ月`;
+function toDateInputValue(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
-// 付与日数取得（テーブル参照）
-function getGrantDays(tenureMonths: number, rows: { months: number; days: number }[]): number {
-  if (tenureMonths < 6) return 0;
-  let result = 0;
-  for (const row of rows) {
-    if (tenureMonths >= row.months) result = row.days;
-  }
+function addMonths(date: Date, months: number) {
+  const result = new Date(date);
+  const originalDay = result.getDate();
+  result.setMonth(result.getMonth() + months);
+  if (result.getDate() < originalDay) result.setDate(0);
   return result;
 }
 
-// 次回付与までの残月
-function nextGrantMonths(tenureMonths: number): number {
-  const stages = [6, 18, 30, 42, 54, 66, 78];
-  for (const s of stages) {
-    if (tenureMonths < s) return s - tenureMonths;
-  }
-  return 12 - ((tenureMonths - 78) % 12); // 6.5年超は毎年
+function diffFullMonths(from: Date, to: Date) {
+  let months = (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+  if (to.getDate() < from.getDate()) months -= 1;
+  return months;
 }
 
-// --- メインコンポーネント ---
-export default function YukyuNissuu() {
-  const today = new Date().toISOString().slice(0, 10);
+function formatDate(date: Date | null) {
+  if (!date) return "-";
+  return toDateInputValue(date).replaceAll("-", "/");
+}
 
-  const [joinDate, setJoinDate] = useState("");
-  const [baseDate, setBaseDate] = useState(today);
-  const [weekDays, setWeekDays] = useState<number>(5);
-  const [prevRemaining, setPrevRemaining] = useState(""); // 前年繰越残
-  const [usedDays, setUsedDays] = useState(""); // 当年取得済み
+function formatTenure(months: number) {
+  if (months < 0) return "未到来";
+  const years = Math.floor(months / 12);
+  const rest = months % 12;
+  if (years === 0) return `${rest}か月`;
+  return rest === 0 ? `${years}年` : `${years}年${rest}か月`;
+}
 
-  // --- 勤続月数 ---
-  const tenureMonths = useMemo(() => {
-    const join = parseDate(joinDate);
-    const base = parseDate(baseDate) ?? new Date();
-    if (!join || base < join) return -1;
-    return monthDiff(join, base);
-  }, [joinDate, baseDate]);
+function readNumber(value: string, fallback = 0) {
+  const parsed = Number.parseFloat(value);
+  return Number.isFinite(parsed) ? Math.max(0, parsed) : fallback;
+}
 
-  // --- 通常 or 比例付与 ---
-  const isStandard = weekDays >= 5;
+function rowsForPattern(weekDays: number, weeklyHours30: boolean) {
+  if (weeklyHours30 || weekDays >= 5) return STANDARD_ROWS;
+  return PROPORTIONAL_PATTERNS.find((pattern) => pattern.weekDays === weekDays)?.rows ?? STANDARD_ROWS;
+}
 
-  // --- 今回付与日数 ---
-  const currentGrantDays = useMemo(() => {
-    if (tenureMonths < 0) return 0;
-    if (isStandard) {
-      return getGrantDays(tenureMonths, STANDARD_TABLE);
+function previousGrantFor(rows: GrantRow[], current: GrantRow | null) {
+  if (!current) return 0;
+  const currentIndex = rows.findIndex((row) => row.months === current.months);
+  if (currentIndex <= 0) return 0;
+  return rows[currentIndex - 1].days;
+}
+
+function findCurrentGrant(rows: GrantRow[], tenureMonths: number) {
+  if (tenureMonths < 6) return null;
+  return rows.reduce<GrantRow | null>((current, row) => (tenureMonths >= row.months ? row : current), null);
+}
+
+function findNextGrant(rows: GrantRow[], tenureMonths: number) {
+  return rows.find((row) => tenureMonths < row.months) ?? rows[rows.length - 1];
+}
+
+function buildResult({
+  hire,
+  base,
+  weekDays,
+  weeklyHours30,
+  attendance80,
+  carryover,
+  used,
+}: {
+  hire: Date | null;
+  base: Date | null;
+  weekDays: number;
+  weeklyHours30: boolean;
+  attendance80: boolean;
+  carryover: number;
+  used: number;
+}): Result | null {
+  if (!hire || !base || base < hire) return null;
+
+  const tenureMonths = diffFullMonths(hire, base);
+  const rows = rowsForPattern(weekDays, weeklyHours30);
+  const currentGrant = attendance80 ? findCurrentGrant(rows, tenureMonths) : null;
+  const nextGrant = findNextGrant(rows, tenureMonths);
+  const previousGrantDays = previousGrantFor(rows, currentGrant);
+  const carryoverCap = Math.min(20, previousGrantDays || carryover);
+  const carryoverUsed = Math.min(carryover, carryoverCap);
+  const statutoryDays = currentGrant?.days ?? 0;
+  const totalAvailable = carryoverUsed + statutoryDays;
+  const remainingDays = Math.max(0, totalAvailable - used);
+  const currentGrantDate = currentGrant ? addMonths(hire, currentGrant.months) : null;
+  let nextGrantDate = nextGrant ? addMonths(hire, nextGrant.months) : null;
+
+  if (tenureMonths >= 78 && nextGrantDate && nextGrantDate <= base) {
+    while (nextGrantDate <= base) {
+      nextGrantDate = addMonths(nextGrantDate, 12);
     }
-    const tbl = PROPORTIONAL_TABLE.find((t) => t.weekDays === weekDays);
-    if (!tbl) return 0;
-    return getGrantDays(tenureMonths, tbl.rows);
-  }, [tenureMonths, isStandard, weekDays]);
+  }
 
-  // --- 繰越計算 ---
-  const prev = parseFloat(prevRemaining) || 0;
-  const used = parseFloat(usedDays) || 0;
-  // 繰越上限: 前年付与分（前々年分は時効消滅）
-  // 残有給 = 繰越 + 今回付与 - 取得済み
-  const totalDays = Math.max(0, prev + currentGrantDays);
-  const remainingDays = Math.max(0, totalDays - used);
+  const obligationApplies = statutoryDays >= 10;
+  const obligationShortfall = obligationApplies ? Math.max(0, 5 - used) : 0;
 
-  // 年5日取得義務（10日以上付与の場合）
-  const obligationApplies = currentGrantDays >= 10;
-  const obligationMet = used >= 5;
-  const obligationShortfall = Math.max(0, 5 - used);
+  return {
+    tenureMonths,
+    tenureLabel: formatTenure(tenureMonths),
+    isStandard: weeklyHours30 || weekDays >= 5,
+    currentGrant,
+    nextGrant,
+    currentGrantDate,
+    nextGrantDate,
+    statutoryDays,
+    previousGrantDays,
+    carryoverCap,
+    carryoverUsed,
+    totalAvailable,
+    remainingDays,
+    obligationApplies,
+    obligationShortfall,
+  };
+}
 
-  // 次回付与
-  const nextMonths = tenureMonths >= 0 ? nextGrantMonths(tenureMonths) : null;
+export default function YukyuNissuu() {
+  const [hireDate, setHireDate] = useState("2024-04-01");
+  const [baseDate, setBaseDate] = useState(todayString());
+  const [weekDays, setWeekDays] = useState(5);
+  const [weeklyHours30, setWeeklyHours30] = useState(true);
+  const [attendance80, setAttendance80] = useState(true);
+  const [carryover, setCarryover] = useState("0");
+  const [usedDays, setUsedDays] = useState("0");
+  const [copied, setCopied] = useState(false);
 
-  // --- 全段階テーブル（表示用） ---
-  const displayRows = useMemo(() => {
-    const rows = isStandard
-      ? STANDARD_TABLE
-      : PROPORTIONAL_TABLE.find((t) => t.weekDays === weekDays)?.rows ?? STANDARD_TABLE;
+  const hire = parseDate(hireDate);
+  const base = parseDate(baseDate);
+  const carryoverValue = readNumber(carryover);
+  const usedValue = readNumber(usedDays);
+  const result = useMemo(
+    () =>
+      buildResult({
+        hire,
+        base,
+        weekDays,
+        weeklyHours30,
+        attendance80,
+        carryover: carryoverValue,
+        used: usedValue,
+      }),
+    [hire, base, weekDays, weeklyHours30, attendance80, carryoverValue, usedValue]
+  );
 
-    return STAGE_LABELS.map((label, i) => ({
-      label,
-      months: rows[i].months,
-      days: rows[i].days,
-      isCurrent: tenureMonths >= 0 && tenureMonths >= rows[i].months &&
-        (i === rows.length - 1 || tenureMonths < rows[i + 1].months),
-    }));
-  }, [isStandard, weekDays, tenureMonths]);
+  const rows = rowsForPattern(weekDays, weeklyHours30);
+  const error = !hireDate
+    ? "入社日を入力してください。"
+    : !baseDate
+    ? "基準日を入力してください。"
+    : result === null
+    ? "基準日は入社日以降の日付にしてください。"
+    : "";
 
-  const hasResult = tenureMonths >= 6;
+  async function copyResult() {
+    if (!result) return;
+    const lines = [
+      "有給休暇 付与日数計算",
+      `更新日: ${SOURCE_DATE}`,
+      `入社日: ${hireDate}`,
+      `基準日: ${baseDate}`,
+      `勤続: ${result.tenureLabel}`,
+      `区分: ${result.isStandard ? "通常付与" : `比例付与 週${weekDays}日`}`,
+      `法定付与日数: ${result.statutoryDays}日`,
+      `繰越反映: ${result.carryoverUsed}日`,
+      `取得済み: ${usedValue}日`,
+      `残日数目安: ${result.remainingDays}日`,
+    ];
+    await navigator.clipboard.writeText(lines.join("\n"));
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
+  }
+
+  function applySample(sample: (typeof SAMPLES)[number]) {
+    setHireDate(sample.hireDate);
+    setBaseDate(sample.baseDate);
+    setWeekDays(sample.weekDays);
+    setWeeklyHours30(sample.weeklyHours30);
+    setAttendance80(true);
+    setCarryover("0");
+    setUsedDays("0");
+    setCopied(false);
+  }
+
+  function clearInputs() {
+    setHireDate("");
+    setBaseDate(todayString());
+    setWeekDays(5);
+    setWeeklyHours30(true);
+    setAttendance80(true);
+    setCarryover("0");
+    setUsedDays("0");
+    setCopied(false);
+  }
 
   return (
-    <div className="space-y-6">
-      {/* 入力セクション */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-5">基本情報</h2>
-
-        <div className="space-y-5">
-          {/* 入社日 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              入社日
-            </label>
-            <input
-              type="date"
-              value={joinDate}
-              onChange={(e) => setJoinDate(e.target.value)}
-              max={today}
-              className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-blue-800"
-              style={{ colorScheme: "light" }}
-            />
+    <section className="space-y-6">
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">基本条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                入社日、基準日、週所定労働日数から法定付与日数を計算します。
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={clearInputs}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              クリア
+            </button>
           </div>
 
-          {/* 基準日 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              基準日
-              <span className="text-xs text-gray-400 ml-1.5">（付与日 or 本日）</span>
-            </label>
-            <input
-              type="date"
-              value={baseDate}
-              onChange={(e) => setBaseDate(e.target.value)}
-              className="w-full px-4 py-2.5 text-base border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-blue-800"
-              style={{ colorScheme: "light" }}
+          <div className="mt-5 grid gap-4">
+            <DateInput id="yukyu-hire" label="入社日" value={hireDate} onChange={setHireDate} />
+            <DateInput id="yukyu-base" label="基準日" value={baseDate} onChange={setBaseDate} />
+            <div>
+              <p className="text-sm font-medium text-slate-700">週所定労働日数</p>
+              <div className="mt-2 grid grid-cols-5 gap-2">
+                {[1, 2, 3, 4, 5].map((days) => (
+                  <button
+                    key={days}
+                    type="button"
+                    onClick={() => {
+                      setWeekDays(days);
+                      if (days >= 5) setWeeklyHours30(true);
+                    }}
+                    className={`rounded-xl border px-2 py-2 text-sm font-semibold ${
+                      weekDays === days
+                        ? "border-slate-950 bg-slate-950 text-white"
+                        : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                    }`}
+                  >
+                    {days}日
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <Toggle
+              label="週所定労働時間が30時間以上"
+              description="30時間以上なら、週4日以下でも通常付与として扱います。"
+              checked={weeklyHours30}
+              onChange={setWeeklyHours30}
             />
+            <Toggle
+              label="直前期間の出勤率が8割以上"
+              description="8割未満の場合は、その基準日の法定付与なしとして表示します。"
+              checked={attendance80}
+              onChange={setAttendance80}
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <DayInput id="yukyu-carryover" label="前年からの繰越残" value={carryover} onChange={setCarryover} />
+              <DayInput id="yukyu-used" label="当年取得済み" value={usedDays} onChange={setUsedDays} />
+            </div>
           </div>
 
-          {/* 週所定労働日数 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              週所定労働日数
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              {[1, 2, 3, 4, 5].map((d) => (
+          <p className={`mt-4 min-h-5 text-sm ${error ? "text-red-600" : "text-slate-500"}`}>
+            {error || `計算はブラウザ上で完結し、入力情報は外部に送信されません。参照日: ${SOURCE_DATE}`}
+          </p>
+
+          <div className="mt-4">
+            <p className="text-xs font-medium uppercase text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SAMPLES.map((sample) => (
                 <button
-                  key={d}
-                  onClick={() => setWeekDays(d)}
-                  className={`flex-1 min-w-0 py-2.5 rounded-xl text-sm font-semibold transition-all border ${
-                    weekDays === d
-                      ? "bg-blue-900 text-white border-blue-900 shadow-sm"
-                      : "text-gray-600 border-gray-200 hover:bg-gray-50"
-                  }`}
+                  key={sample.label}
+                  type="button"
+                  onClick={() => applySample(sample)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
                 >
-                  {d}日
+                  {sample.label}
                 </button>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-1.5">
-              {weekDays >= 5
-                ? "週5日以上（または週30時間以上）→ 通常付与"
-                : `週${weekDays}日 → 比例付与`}
-            </p>
           </div>
         </div>
 
-        {/* 勤続年数バッジ */}
-        {tenureMonths >= 0 && (
-          <div
-            className="mt-5 rounded-xl p-4 border"
-            style={{ background: "#0f172a", borderColor: "#1e3a5f" }}
-          >
-            <div className="text-xs font-medium mb-1" style={{ color: "#93c5fd" }}>
-              勤続年数（自動計算）
+        <div className="rounded-2xl border border-slate-200 bg-slate-950 p-5 text-white shadow-sm sm:p-6">
+          <p className="text-sm font-medium text-slate-300">法定付与日数</p>
+          <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-5xl font-bold tracking-tight">{result?.statutoryDays ?? 0}日</p>
+              <p className="mt-2 text-sm text-slate-300">
+                {result ? (result.isStandard ? "通常付与" : `比例付与（週${weekDays}日）`) : "条件を入力してください"}
+              </p>
             </div>
-            <div className="text-2xl font-bold text-white">
-              {formatTenure(tenureMonths)}
+            <div className="sm:text-right">
+              <p className="text-sm text-slate-400">勤続</p>
+              <p className="mt-1 text-2xl font-semibold">{result?.tenureLabel ?? "-"}</p>
             </div>
-            {tenureMonths < 6 && (
-              <div className="text-xs mt-1" style={{ color: "#fbbf24" }}>
-                初回付与まであと{6 - tenureMonths}ヶ月
-              </div>
-            )}
           </div>
-        )}
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <Metric label="今回付与日" value={formatDate(result?.currentGrantDate ?? null)} />
+            <Metric label="次回付与日" value={formatDate(result?.nextGrantDate ?? null)} />
+            <Metric label="残日数目安" value={`${result?.remainingDays ?? 0}日`} />
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={copyResult}
+              disabled={!result || Boolean(error)}
+              className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {copied ? "コピーしました" : "結果をコピー"}
+            </button>
+            <a
+              href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/faq/kijyunhou_6_00001.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10"
+            >
+              厚労省の表を見る
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* 結果カード */}
-      {hasResult && (
-        <div
-          className="rounded-2xl shadow-lg p-6 text-white"
-          style={{ background: "linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%)" }}
+      {result && (
+        <div className="grid gap-4 md:grid-cols-3">
+          <SummaryCard label="繰越反映" value={`${result.carryoverUsed}日`} note={`法定上の繰越目安上限: ${result.carryoverCap}日`} />
+          <SummaryCard label="当年取得済み" value={`${usedValue}日`} note="本人取得・計画年休・時季指定分を合算" />
+          <SummaryCard label="利用可能残" value={`${result.remainingDays}日`} note={`${result.carryoverUsed} + ${result.statutoryDays} - ${usedValue}`} />
+        </div>
+      )}
+
+      {result?.obligationApplies && (
+        <section
+          className={`rounded-2xl border p-5 shadow-sm ${
+            result.obligationShortfall === 0
+              ? "border-emerald-200 bg-emerald-50"
+              : "border-amber-200 bg-amber-50"
+          }`}
         >
-          <div className="text-base font-semibold opacity-90 mb-4">今回の法定付与日数</div>
-          <div className="text-5xl font-bold mb-1">
-            {currentGrantDays}
-            <span className="text-2xl font-medium ml-1 opacity-80">日</span>
-          </div>
-          <div className="text-blue-200 text-sm mt-1">
-            {isStandard ? "通常労働者（週5日以上）" : `比例付与（週${weekDays}日）`}
-            {" · "}
-            勤続{formatTenure(tenureMonths)}
-          </div>
-          {nextMonths !== null && (
-            <div
-              className="mt-3 px-3 py-2 rounded-xl text-xs"
-              style={{ background: "rgba(255,255,255,0.12)", color: "#bfdbfe" }}
-            >
-              次回付与まであと約{nextMonths}ヶ月
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* 繰越・残日数 */}
-      {hasResult && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-5">繰越・残日数</h2>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                前年繰越残日数
-                <span className="text-xs text-gray-400 ml-1.5">（2年時効のため前年分のみ）</span>
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  inputMode="decimal"
-                  value={prevRemaining}
-                  onChange={(e) => setPrevRemaining(e.target.value)}
-                  placeholder="0"
-                  className="flex-1 px-4 py-2.5 text-right text-base font-semibold border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700"
-                />
-                <span className="text-gray-600 font-medium text-sm w-8 shrink-0">日</span>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                当年取得済み日数
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  inputMode="decimal"
-                  value={usedDays}
-                  onChange={(e) => setUsedDays(e.target.value)}
-                  placeholder="0"
-                  className="flex-1 px-4 py-2.5 text-right text-base font-semibold border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-700"
-                />
-                <span className="text-gray-600 font-medium text-sm w-8 shrink-0">日</span>
-              </div>
-            </div>
-          </div>
-
-          {/* サマリー */}
-          <div className="mt-5 grid grid-cols-3 gap-3">
-            <div className="rounded-xl p-4 text-center" style={{ background: "#f0f9ff", border: "1px solid #bae6fd" }}>
-              <div className="text-xs font-medium mb-1" style={{ color: "#0369a1" }}>前年繰越</div>
-              <div className="text-xl font-bold" style={{ color: "#0c4a6e" }}>{prev}<span className="text-sm ml-0.5">日</span></div>
-            </div>
-            <div className="rounded-xl p-4 text-center" style={{ background: "#eff6ff", border: "1px solid #bfdbfe" }}>
-              <div className="text-xs font-medium mb-1" style={{ color: "#1d4ed8" }}>今回付与</div>
-              <div className="text-xl font-bold" style={{ color: "#1e3a8a" }}>{currentGrantDays}<span className="text-sm ml-0.5">日</span></div>
-            </div>
-            <div className="rounded-xl p-4 text-center" style={{ background: "#0f172a", border: "1px solid #1e3a5f" }}>
-              <div className="text-xs font-medium mb-1" style={{ color: "#93c5fd" }}>残日数</div>
-              <div className="text-xl font-bold text-white">{remainingDays}<span className="text-sm ml-0.5">日</span></div>
-            </div>
-          </div>
-
-          {/* 計算式 */}
-          <div className="mt-3 text-xs text-gray-500 text-center">
-            {prev}日（繰越）+ {currentGrantDays}日（付与）− {used}日（取得済み）= {remainingDays}日
-          </div>
-
-          {/* 時効注意 */}
-          <div
-            className="mt-4 p-3 rounded-xl text-xs"
-            style={{ background: "#fefce8", border: "1px solid #fde68a", color: "#92400e" }}
-          >
-            <span className="font-medium">時効（2年）：</span>
-            付与日から2年経過で消滅します。前年付与分は今年度末まで有効です。
-          </div>
-        </div>
-      )}
-
-      {/* 年5日取得義務 */}
-      {hasResult && obligationApplies && (
-        <div
-          className="rounded-2xl shadow-sm p-5 border"
-          style={
-            obligationMet
-              ? { background: "#f0fdf4", borderColor: "#bbf7d0" }
-              : { background: "#fff7ed", borderColor: "#fed7aa" }
-          }
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-base">{obligationMet ? "✓" : "⚠️"}</span>
-            <span
-              className="font-semibold text-sm"
-              style={{ color: obligationMet ? "#166534" : "#9a3412" }}
-            >
-              年5日取得義務（労基法39条7項）
-            </span>
-          </div>
-          <p className="text-xs" style={{ color: obligationMet ? "#15803d" : "#c2410c" }}>
-            {obligationMet
-              ? `取得済み${used}日 — 年5日の義務を満たしています。`
-              : `取得済み${used}日 — あと${obligationShortfall}日の取得が必要です。`}
+          <h2 className="text-base font-semibold text-slate-950">年5日の取得義務</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-700">
+            法定付与日数が10日以上なので、基準日から1年以内に5日分を取得させる義務の対象です。
+            {result.obligationShortfall === 0
+              ? " 入力上は5日以上取得済みです。"
+              : ` 入力上はあと${result.obligationShortfall}日の取得が必要です。`}
           </p>
-          <p className="text-xs mt-1" style={{ color: "#9ca3af" }}>
-            10日以上付与された労働者は付与日から1年以内に5日取得が義務。違反時は使用者に罰則。
-          </p>
-        </div>
+        </section>
       )}
 
-      {/* 付与日数テーブル */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-        <h2 className="text-base font-semibold text-gray-800 mb-1">法定付与日数テーブル</h2>
-        <p className="text-xs text-gray-500 mb-4">
-          {isStandard
-            ? "通常労働者（週5日以上 / 週所定30時間以上）"
-            : `比例付与 — 週${weekDays}日（年間所定日数${PROPORTIONAL_TABLE.find((t) => t.weekDays === weekDays)?.annualDays ?? "—"}日以下）`}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-bold text-slate-950">法定付与日数テーブル</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          {weeklyHours30 || weekDays >= 5
+            ? "週5日以上、週30時間以上、または年間217日以上は通常付与です。"
+            : `週${weekDays}日・年間${PROPORTIONAL_PATTERNS.find((pattern) => pattern.weekDays === weekDays)?.annualRange}の比例付与です。`}
         </p>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr style={{ borderBottom: "2px solid #e5e7eb" }}>
-                <th className="text-left pb-2 text-gray-600 font-medium">勤続年数</th>
-                <th className="text-right pb-2 text-gray-600 font-medium">付与日数</th>
-                <th className="text-right pb-2 text-gray-600 font-medium">累計上限</th>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[680px] text-sm">
+            <thead className="border-b border-slate-200 text-left text-xs uppercase text-slate-500">
+              <tr>
+                <th className="py-2 pr-4">勤続期間</th>
+                <th className="py-2 pr-4 text-right">通常付与</th>
+                <th className="py-2 pr-4 text-right">週4日</th>
+                <th className="py-2 pr-4 text-right">週3日</th>
+                <th className="py-2 pr-4 text-right">週2日</th>
+                <th className="py-2 text-right">週1日</th>
               </tr>
             </thead>
-            <tbody>
-              {displayRows.map((row, i) => {
-                const cumulative = displayRows.slice(0, i + 1).reduce((sum, r) => sum + r.days, 0);
-                return (
-                  <tr
-                    key={row.label}
-                    style={{
-                      borderBottom: "1px solid #f3f4f6",
-                      background: row.isCurrent ? "#eff6ff" : "transparent",
-                    }}
-                  >
-                    <td className="py-2.5 font-medium" style={{ color: row.isCurrent ? "#1d4ed8" : "#374151" }}>
-                      {row.label}
-                      {row.isCurrent && (
-                        <span
-                          className="ml-2 text-xs px-1.5 py-0.5 rounded-full font-semibold"
-                          style={{ background: "#1e40af", color: "white" }}
-                        >
-                          現在
-                        </span>
-                      )}
+            <tbody className="divide-y divide-slate-100">
+              {STANDARD_ROWS.map((row, index) => (
+                <tr key={row.months} className={result?.currentGrant?.months === row.months ? "bg-sky-50" : undefined}>
+                  <td className="py-3 pr-4 font-medium text-slate-900">{row.label}</td>
+                  <td className="py-3 pr-4 text-right font-semibold text-slate-900">{row.days}日</td>
+                  {PROPORTIONAL_PATTERNS.map((pattern) => (
+                    <td key={pattern.weekDays} className="py-3 pr-4 text-right text-slate-700">
+                      {pattern.rows[index].days}日
                     </td>
-                    <td
-                      className="py-2.5 text-right font-bold text-lg"
-                      style={{ color: row.isCurrent ? "#1d4ed8" : "#111827" }}
-                    >
-                      {row.days}日
-                    </td>
-                    <td className="py-2.5 text-right text-xs text-gray-400">
-                      /{cumulative}日
-                    </td>
-                  </tr>
-                );
-              })}
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
+      </section>
 
-        {!isStandard && (
-          <div
-            className="mt-4 p-3 rounded-xl text-xs"
-            style={{ background: "#f0f9ff", border: "1px solid #bae6fd", color: "#0369a1" }}
-          >
-            <span className="font-medium">比例付与の適用条件：</span>
-            週所定労働日数が4日以下かつ年間所定労働日数が216日以下の短時間労働者に適用。
-            週所定30時間以上の場合は週4日でも通常付与。
-          </div>
-        )}
-      </div>
-
-      {/* 全区分テーブル（週5日のみ並列表示） */}
-      {weekDays < 5 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-base font-semibold text-gray-800 mb-4">比例付与 全区分一覧</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs">
-              <thead>
-                <tr style={{ borderBottom: "2px solid #e5e7eb" }}>
-                  <th className="text-left pb-2 text-gray-600 font-medium">勤続</th>
-                  {PROPORTIONAL_TABLE.map((t) => (
-                    <th
-                      key={t.weekDays}
-                      className="text-right pb-2 font-medium"
-                      style={{ color: t.weekDays === weekDays ? "#1d4ed8" : "#6b7280" }}
-                    >
-                      週{t.weekDays}日
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {STAGE_LABELS.map((label, i) => (
-                  <tr key={label} style={{ borderBottom: "1px solid #f3f4f6" }}>
-                    <td className="py-2 text-gray-700 font-medium">{label}</td>
-                    {PROPORTIONAL_TABLE.map((t) => (
-                      <td
-                        key={t.weekDays}
-                        className="py-2 text-right font-semibold"
-                        style={{ color: t.weekDays === weekDays ? "#1d4ed8" : "#374151" }}
-                      >
-                        {t.rows[i].days}日
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* 免責・参考リンク */}
-      <div className="rounded-2xl border border-gray-200 p-5" style={{ background: "#f9fafb" }}>
-        <p className="text-xs text-gray-500 mb-2">
-          本ツールは概算計算を目的としており、実際の付与日数は就業規則・雇用契約等により異なる場合があります。
-          正確な判断は社会保険労務士等の専門家にご相談ください。
-          労働基準法第39条（2024年現在）に基づいて計算しています。
-        </p>
-        <a
-          href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/zigyonushi/yukyu/index.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs underline"
-          style={{ color: "#1d4ed8" }}
-        >
-          厚生労働省「年次有給休暇の付与日数は法律で決まっています」を確認する
-        </a>
-      </div>
-    
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">この有給休暇 付与日数計算ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <h2 className="text-xl font-bold text-slate-950">計算上の注意点</h2>
+        <div className="mt-4 grid gap-4 text-sm leading-7 text-slate-600 md:grid-cols-3">
+          <InfoBlock
+            title="8割出勤が前提"
+            body="年次有給休暇の付与には、雇入れから6か月継続勤務し、全労働日の8割以上出勤していることが必要です。"
+          />
+          <InfoBlock
+            title="比例付与の対象"
+            body="週30時間未満かつ週4日以下、または年間48〜216日の短時間労働者は比例付与表を使います。"
+          />
+          <InfoBlock
+            title="時効は2年"
+            body="年休権は発生日から2年間行使可能です。会社独自の上乗せ分や特別休暇は就業規則を確認してください。"
+          />
         </div>
       </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この有給休暇 付与日数計算ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "有給休暇 付与日数計算",
-  "description": "有給休暇の法定付与日数を勤続年数と週所定労働日数から計算。繰越・時効も表示",
-  "url": "https://tools.loresync.dev/yukyu-nissuu",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
-        }}
+    </section>
+  );
+}
+
+function DateInput({
+  id,
+  label,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <input
+        id={id}
+        type="date"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-slate-950"
       />
+    </div>
+  );
+}
+
+function DayInput({
+  id,
+  label,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <div className="mt-2 flex overflow-hidden rounded-xl border border-slate-300 bg-white focus-within:border-slate-950">
+        <input
+          id={id}
+          type="number"
+          min="0"
+          step="0.5"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="min-w-0 flex-1 px-4 py-3 text-right font-mono text-lg outline-none"
+        />
+        <span className="flex items-center border-l border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">日</span>
       </div>
+    </div>
+  );
+}
+
+function Toggle({
+  label,
+  description,
+  checked,
+  onChange,
+}: {
+  label: string;
+  description: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(!checked)}
+      className={`rounded-2xl border p-4 text-left ${
+        checked ? "border-slate-950 bg-slate-950 text-white" : "border-slate-300 bg-white text-slate-800 hover:bg-slate-50"
+      }`}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="font-semibold">{label}</div>
+        <div className={`h-5 w-9 rounded-full p-0.5 ${checked ? "bg-white" : "bg-slate-300"}`}>
+          <div className={`h-4 w-4 rounded-full ${checked ? "translate-x-4 bg-slate-950" : "bg-white"} transition-transform`} />
+        </div>
+      </div>
+      <p className={`mt-1 text-sm leading-6 ${checked ? "text-slate-300" : "text-slate-500"}`}>{description}</p>
+    </button>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+      <p className="text-xs text-slate-400">{label}</p>
+      <p className="mt-1 font-semibold text-white">{value}</p>
+    </div>
+  );
+}
+
+function SummaryCard({ label, value, note }: { label: string; value: string; note: string }) {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <p className="text-xs font-medium uppercase text-slate-500">{label}</p>
+      <p className="mt-1 text-3xl font-bold text-slate-950">{value}</p>
+      <p className="mt-2 text-sm leading-6 text-slate-500">{note}</p>
+    </div>
+  );
+}
+
+function InfoBlock({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <h3 className="font-semibold text-slate-950">{title}</h3>
+      <p className="mt-1">{body}</p>
+    </div>
   );
 }

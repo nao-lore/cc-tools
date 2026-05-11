@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 80.0/100
-- Priority tiers: {"B": 26, "C": 116}
+- Average quality score: 80.3/100
+- Priority tiers: {"B": 25, "C": 117}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
 | B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 | B | 51 | 69 | `meeting-cost` | calculator | Business Tools | related_links, copy, examples, validation, current_count |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | C | 44 | 56 | `word-counter` | utility | Text & String Tools | labels, examples, validation, current_count; penalties: old_count, ad_placeholder, any_type |
 | C | 44 | 62 | `timezone-converter` | converter | Time & Date | copy, validation, privacy, current_count; penalties: old_count, any_type |
 | C | 42 | 68 | `takuhaibin-hikaku` | comparison | EC Tools | copy, examples, reset_clear, validation, accessible_buttons |
+| C | 42 | 69 | `ascii-flowchart` | reference | Developer Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
 
 ## Strongest Current Tools
 
@@ -67,7 +67,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 84.2 |
+| calculator | 85.0 |
 | comparison | 81.2 |
 | converter | 81.4 |
 | generator | 83 |
@@ -87,10 +87,10 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Time & Date | 68 | 2 |
 | Minifier Tools | 68 | 2 |
 | Design Tools | 69 | 1 |
-| Labor Tools | 69.5 | 4 |
 | EC Tools | 72.4 | 5 |
 | SaaS Pricing | 73.6 | 13 |
 | Data Format Tools | 76.3 | 6 |
+| SEO Tools | 77.7 | 3 |
 
 ## Next Factory Steps
 
