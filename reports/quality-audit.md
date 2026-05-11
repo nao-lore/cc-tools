@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 79.7/100
-- Priority tiers: {"B": 27, "C": 115}
+- Average quality score: 80.0/100
+- Priority tiers: {"B": 26, "C": 116}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 51 | 61 | `cdn-pricing-comparison` | comparison | SaaS Pricing | related_links, copy, examples, reset_clear, validation; penalties: any_type |
 | B | 51 | 61 | `yukyu-nissuu` | calculator | Labor Tools | related_links, copy, examples, reset_clear, validation |
 | B | 51 | 69 | `ai-cost-calculator` | calculator | AI Tools | related_links, copy, examples, validation, current_count |
 | B | 51 | 69 | `furigana` | converter | Japanese Tools | privacy, current_count; penalties: old_count, ad_placeholder, any_type |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | C | 44 | 56 | `border-radius` | utility | CSS Tools | faq, examples, validation, privacy, current_count; penalties: old_count, any_type |
 | C | 44 | 56 | `word-counter` | utility | Text & String Tools | labels, examples, validation, current_count; penalties: old_count, ad_placeholder, any_type |
 | C | 44 | 62 | `timezone-converter` | converter | Time & Date | copy, validation, privacy, current_count; penalties: old_count, any_type |
+| C | 42 | 68 | `takuhaibin-hikaku` | comparison | EC Tools | copy, examples, reset_clear, validation, accessible_buttons |
 
 ## Strongest Current Tools
 
@@ -54,6 +54,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `base-stores-fee` | comparison | EC |
 | 100 | `bmi-keisan` | calculator | Japanese Tools |
 | 100 | `calorie-keisan` | calculator | Japanese Tools |
+| 100 | `cdn-pricing-comparison` | comparison | SaaS Pricing |
 | 100 | `chmod-calculator` | calculator | Developer Tools |
 | 100 | `context-window-visualizer` | utility | AI Tools |
 | 100 | `denki-keisan` | calculator | Japanese Tools |
@@ -61,14 +62,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | 100 | `elevenlabs-pricing` | calculator | AI Tools |
 | 100 | `favicon-generator` | image | Image Tools |
 | 100 | `gacha-cost-ceiling` | calculator | Game Tools |
-| 100 | `hash-generator` | generator | Encoding & Decoding |
 
 ## Archetype Averages
 
 | Type | Average quality |
 | --- | ---: |
 | calculator | 84.2 |
-| comparison | 78.2 |
+| comparison | 81.2 |
 | converter | 81.4 |
 | generator | 83 |
 | image | 88.2 |
@@ -88,8 +88,8 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | Minifier Tools | 68 | 2 |
 | Design Tools | 69 | 1 |
 | Labor Tools | 69.5 | 4 |
-| SaaS Pricing | 70.6 | 13 |
 | EC Tools | 72.4 | 5 |
+| SaaS Pricing | 73.6 | 13 |
 | Data Format Tools | 76.3 | 6 |
 
 ## Next Factory Steps
