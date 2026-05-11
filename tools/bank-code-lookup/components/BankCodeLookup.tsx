@@ -389,13 +389,24 @@ function normalize(s: string): string {
 }
 
 export default function BankCodeLookup() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("みずほ");
   const [mode, setMode] = useState<SearchMode>("bank");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
+  const allRows = useMemo<ResultRow[]>(() => {
+    return BANKS.flatMap((bank) =>
+      bank.branches.map((branch) => ({
+        bankName: bank.name,
+        bankCode: bank.code,
+        branchName: branch.name,
+        branchCode: branch.code,
+      }))
+    );
+  }, []);
+
   const results = useMemo<ResultRow[]>(() => {
     const q = normalize(query);
-    if (!q) return [];
+    if (!q) return allRows.slice(0, 20);
 
     const rows: ResultRow[] = [];
 
@@ -432,8 +443,8 @@ export default function BankCodeLookup() {
       }
     }
 
-    return rows;
-  }, [query, mode]);
+    return rows.slice(0, 80);
+  }, [allRows, query, mode]);
 
   const handleCopy = useCallback(
     async (text: string, key: string) => {
@@ -444,204 +455,204 @@ export default function BankCodeLookup() {
     []
   );
 
+  const handleCopyRow = useCallback(
+    async (row: ResultRow, key: string) => {
+      await handleCopy(
+        `${row.bankName} ${row.bankCode} / ${row.branchName} ${row.branchCode}`,
+        key
+      );
+    },
+    [handleCopy]
+  );
+
+  function clear() {
+    setQuery("");
+    setCopiedKey(null);
+  }
+
   return (
-    <div className="space-y-6">
-      {/* Search mode */}
-      <div className="bg-surface rounded-2xl border border-border p-4">
-        <p className="text-sm font-medium text-muted mb-3">検索対象</p>
-        <div className="flex gap-2">
-          {(
-            [
-              { value: "bank", label: "銀行名・銀行コード" },
-              { value: "branch", label: "支店名・支店コード" },
-            ] as { value: SearchMode; label: string }[]
-          ).map((m) => (
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <div className="border-b border-slate-200 p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">検索条件</h2>
+              <p className="mt-1 text-sm leading-6 text-slate-500">
+                主要銀行の簡易データから、銀行コードと支店コードを検索します。
+              </p>
+            </div>
             <button
-              key={m.value}
-              onClick={() => {
-                setMode(m.value);
-                setQuery("");
-              }}
-              className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                mode === m.value
-                  ? "bg-accent text-white"
-                  : "bg-background border border-border text-foreground hover:border-accent"
-              }`}
+              type="button"
+              onClick={clear}
+              className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
-              {m.label}
+              クリア
             </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Search input */}
-      <div className="bg-surface rounded-2xl border border-border p-4">
-        <p className="text-sm font-medium text-muted mb-3">
-          {mode === "bank"
-            ? "銀行名・よみがな・銀行コードで検索"
-            : "支店名・支店コードで検索"}
-        </p>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={
-            mode === "bank"
-              ? "例: みずほ、三菱、0001…"
-              : "例: 新宿、東京、001…"
-          }
-          className="w-full bg-background border border-border rounded-xl px-3 py-2.5 text-sm text-foreground focus:outline-none focus:border-accent transition-colors"
-        />
-      </div>
-
-      {/* Results */}
-      {query && (
-        <div className="bg-surface rounded-2xl border border-border p-4">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-sm font-medium text-muted">検索結果</p>
-            <span className="text-xs text-muted">{results.length} 件</span>
           </div>
 
-          {results.length === 0 ? (
-            <p className="text-sm text-muted text-center py-6">
-              該当する銀行・支店が見つかりませんでした
+          <div className="mt-5">
+            <p className="text-sm font-medium text-slate-700">検索対象</p>
+            <div className="mt-2 grid grid-cols-2 gap-2 rounded-xl border border-slate-200 bg-slate-50 p-1">
+              {(
+                [
+                  { value: "bank", label: "銀行" },
+                  { value: "branch", label: "支店" },
+                ] as { value: SearchMode; label: string }[]
+              ).map((item) => (
+                <button
+                  key={item.value}
+                  type="button"
+                  onClick={() => {
+                    setMode(item.value);
+                    setQuery("");
+                    setCopiedKey(null);
+                  }}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold ${
+                    mode === item.value
+                      ? "bg-slate-950 text-white shadow-sm"
+                      : "text-slate-600 hover:bg-white"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <label htmlFor="bank-code-query" className="text-sm font-medium text-slate-700">
+              {mode === "bank" ? "銀行名・よみがな・銀行コード" : "支店名・支店コード"}
+            </label>
+            <input
+              id="bank-code-query"
+              type="search"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setCopiedKey(null);
+              }}
+              placeholder={mode === "bank" ? "例: みずほ、三菱、0001" : "例: 新宿、東京、001"}
+              className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base outline-none focus:border-slate-900"
+            />
+            <p className="mt-2 text-sm text-slate-500">
+              入力値はブラウザ上で処理され、外部に送信されません。
             </p>
+          </div>
+
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">サンプル</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {["みずほ", "三菱", "0009", "新宿", "001"].map((sample) => (
+                <button
+                  key={sample}
+                  type="button"
+                  onClick={() => setQuery(sample)}
+                  className="rounded-full border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:border-slate-900 hover:bg-slate-50"
+                >
+                  {sample}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
+            振込や口座登録に使う場合は、必ず金融機関の公式サイト・アプリ・通帳・キャッシュカードでも確認してください。支店統廃合でコードが変わる場合があります。
+          </div>
+
+          <div className="mt-6">
+            <p className="text-sm font-semibold text-slate-950">収録銀行</p>
+            <div className="mt-2 flex max-h-48 flex-wrap gap-2 overflow-y-auto rounded-xl border border-slate-200 bg-slate-50 p-3">
+              {BANKS.map((bank) => (
+                <button
+                  key={bank.code}
+                  type="button"
+                  onClick={() => {
+                    setMode("bank");
+                    setQuery(bank.code);
+                  }}
+                  className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-slate-900"
+                >
+                  {bank.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="p-5 sm:p-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-950">検索結果</h2>
+              <p className="mt-1 text-sm text-slate-500">
+                {query ? `${results.length}件表示` : "未入力時は先頭20件を表示"}
+              </p>
+            </div>
+            <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+              銀行 {BANKS.length} / 支店 {allRows.length}
+            </div>
+          </div>
+
+          {query && results.length === 0 ? (
+            <div className="mt-5 flex min-h-[320px] items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50 text-center">
+              <div>
+                <p className="text-sm font-semibold text-slate-800">該当データがありません</p>
+                <p className="mt-1 text-sm text-slate-500">表記ゆれを変えるか、金融機関の公式情報を確認してください。</p>
+              </div>
+            </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left text-xs font-medium text-muted pb-2 pr-3">
-                      銀行名
-                    </th>
-                    <th className="text-left text-xs font-medium text-muted pb-2 pr-3">
-                      銀行コード
-                    </th>
-                    <th className="text-left text-xs font-medium text-muted pb-2 pr-3">
-                      支店名
-                    </th>
-                    <th className="text-left text-xs font-medium text-muted pb-2">
-                      支店コード
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {results.map((row, i) => {
-                    const bankKey = `bank-${i}`;
-                    const branchKey = `branch-${i}`;
-                    return (
-                      <tr
-                        key={i}
-                        className="border-b border-border/50 last:border-0"
+            <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200">
+              <div className="hidden grid-cols-[1.4fr_90px_1fr_90px_80px] gap-0 border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold text-slate-500 md:grid">
+                <div>銀行名</div>
+                <div>銀行コード</div>
+                <div>支店名</div>
+                <div>支店コード</div>
+                <div className="text-right">操作</div>
+              </div>
+              <div className="max-h-[560px] divide-y divide-slate-200 overflow-y-auto">
+                {results.map((row, index) => {
+                  const rowKey = `${row.bankCode}-${row.branchCode}-${index}`;
+                  return (
+                    <div
+                      key={rowKey}
+                      className="grid gap-3 px-4 py-3 text-sm md:grid-cols-[1.4fr_90px_1fr_90px_80px] md:items-center md:gap-0"
+                    >
+                      <div>
+                        <div className="font-semibold text-slate-950">{row.bankName}</div>
+                        <div className="mt-1 text-xs text-slate-500 md:hidden">銀行コード {row.bankCode}</div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(row.bankCode, `bank-${rowKey}`)}
+                        className="hidden text-left font-mono font-semibold text-slate-950 hover:underline md:block"
                       >
-                        <td className="py-2.5 pr-3 text-foreground">
-                          {row.bankName}
-                        </td>
-                        <td className="py-2.5 pr-3">
-                          <button
-                            onClick={() =>
-                              handleCopy(row.bankCode, bankKey)
-                            }
-                            title="クリックでコピー"
-                            className="font-mono font-semibold text-accent hover:underline"
-                          >
-                            {copiedKey === bankKey
-                              ? "コピー済"
-                              : row.bankCode}
-                          </button>
-                        </td>
-                        <td className="py-2.5 pr-3 text-foreground">
-                          {row.branchName}
-                        </td>
-                        <td className="py-2.5">
-                          <button
-                            onClick={() =>
-                              handleCopy(row.branchCode, branchKey)
-                            }
-                            title="クリックでコピー"
-                            className="font-mono font-semibold text-accent hover:underline"
-                          >
-                            {copiedKey === branchKey
-                              ? "コピー済"
-                              : row.branchCode}
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                        {copiedKey === `bank-${rowKey}` ? "コピー済" : row.bankCode}
+                      </button>
+                      <div>
+                        <div className="text-slate-800">{row.branchName}</div>
+                        <div className="mt-1 text-xs text-slate-500 md:hidden">支店コード {row.branchCode}</div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(row.branchCode, `branch-${rowKey}`)}
+                        className="hidden text-left font-mono font-semibold text-slate-950 hover:underline md:block"
+                      >
+                        {copiedKey === `branch-${rowKey}` ? "コピー済" : row.branchCode}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleCopyRow(row, `row-${rowKey}`)}
+                        className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                      >
+                        {copiedKey === `row-${rowKey}` ? "済" : "コピー"}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
-      )}
-
-      {/* Info */}
-      {!query && (
-        <div className="bg-surface rounded-2xl border border-border p-4">
-          <p className="text-sm font-medium text-muted mb-2">対応銀行一覧</p>
-          <div className="flex flex-wrap gap-1.5">
-            {BANKS.map((b) => (
-              <button
-                key={b.code}
-                onClick={() => {
-                  setMode("bank");
-                  setQuery(b.code);
-                }}
-                className="px-2.5 py-1 text-xs rounded-lg bg-background border border-border text-foreground hover:border-accent transition-colors"
-              >
-                {b.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Ad placeholder */}
-      <div className="w-full h-24 rounded-xl border border-dashed border-border flex items-center justify-center text-muted text-sm">
-        Advertisement
       </div>
-    
-      {/* FAQ */}
-      <section className="mt-12 space-y-4">
-        <h2 className="text-lg font-bold text-gray-800">よくある質問</h2>
-        <div className="space-y-3">
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">この銀行・支店コード検索ツールは何ができますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">銀行名/支店名↔コードの相互検索。入力するだけで即座に結果を表示します。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">利用料金はかかりますか？</summary>
-      <p className="mt-2 text-sm text-gray-600">完全無料でご利用いただけます。会員登録も不要です。</p>
-    </details>
-    <details className="bg-gray-50 rounded-lg p-4 open:bg-gray-100">
-      <summary className="font-medium text-gray-700 cursor-pointer select-none">計算結果は正確ですか？</summary>
-      <p className="mt-2 text-sm text-gray-600">一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。</p>
-    </details>
-        </div>
-      </section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "この銀行・支店コード検索ツールは何ができますか？", "acceptedAnswer": {"@type": "Answer", "text": "銀行名/支店名↔コードの相互検索。入力するだけで即座に結果を表示します。"}}, {"@type": "Question", "name": "利用料金はかかりますか？", "acceptedAnswer": {"@type": "Answer", "text": "完全無料でご利用いただけます。会員登録も不要です。"}}, {"@type": "Question", "name": "計算結果は正確ですか？", "acceptedAnswer": {"@type": "Answer", "text": "一般的な計算式に基づいた概算値です。正確な数値が必要な場合は、専門家へのご相談をお勧めします。"}}]})}} />
-      
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: `{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "銀行・支店コード検索",
-  "description": "銀行名/支店名↔コードの相互検索",
-  "url": "https://tools.loresync.dev/bank-code-lookup",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "All",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "JPY"
-  },
-  "inLanguage": "ja"
-}`
-        }}
-      />
-      </div>
+    </section>
   );
 }

@@ -5,14 +5,13 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 ## Summary
 
 - Tools audited: 142
-- Average quality score: 77.0/100
-- Priority tiers: {"B": 37, "C": 105}
+- Average quality score: 77.2/100
+- Priority tiers: {"B": 36, "C": 106}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
-| B | 57 | 62 | `bank-code-lookup` | reference | Japanese Tools | h1, related_links, labels, reset_clear, validation |
 | B | 56 | 51 | `asset-allocation` | utility | Finance | h1, related_links, labels, copy, examples; penalties: ad_placeholder |
 | B | 54 | 53 | `ad-budget-estimator` | utility | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 54 | 64 | `placeholder-image` | image | Image Tools | examples, validation, privacy, current_count; penalties: old_count, any_type |
@@ -42,6 +41,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | B | 46 | 69 | `sql-formatter` | converter | Data Format Tools | validation, privacy, current_count; penalties: old_count, any_type |
 | B | 46 | 69 | `yaml-to-json` | converter | Data Format Tools | labels, examples, privacy, current_count; penalties: old_count |
 | B | 46 | 72 | `aojiro-shinkoku-sim` | calculator | Tax Tools | copy, examples, reset_clear, validation, current_count |
+| B | 46 | 72 | `embedding-cost-calculator` | calculator | AI Tools | copy, examples, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -72,7 +72,7 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | converter | 81.4 |
 | generator | 76.5 |
 | image | 82.2 |
-| reference | 74.2 |
+| reference | 77 |
 | utility | 68.1 |
 
 ## Weakest Categories
