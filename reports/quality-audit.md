@@ -4,14 +4,17 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 ## Summary
 
-- Tools audited: 142
-- Average quality score: 89.5/100
-- Priority tiers: {"B": 10, "C": 132}
+- Tools audited: 147
+- Average quality score: 88.4/100
+- Priority tiers: {"A": 1, "B": 12, "C": 134}
 
 ## Highest Priority Tools
 
 | Tier | Priority | Quality | Slug | Type | Category | Main gaps |
 | --- | ---: | ---: | --- | --- | --- | --- |
+| A | 70 | 39 | `cat-human-age` | utility | Pets | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
+| B | 66 | 49 | `chien-songai-kin` | calculator | Legal | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
+| B | 66 | 49 | `churn-mrr-calculator` | calculator | Business | h1, related_links, copy, examples, reset_clear; penalties: ad_placeholder |
 | B | 48 | 71 | `ai-model-comparison` | comparison | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `fine-tuning-cost` | calculator | AI Tools | related_links, copy, reset_clear, validation, current_count |
 | B | 48 | 71 | `ideco-tax-saving` | calculator | Tax Tools | related_links, copy, reset_clear, validation, current_count |
@@ -35,13 +38,10 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 | C | 40 | 69 | `shopify-fee-jp` | calculator | EC Tools | related_links, copy, examples, validation, current_count |
 | C | 40 | 69 | `youtube-revenue` | calculator | Creator Tools | related_links, copy, examples, validation, current_count |
 | C | 40 | 76 | `ai-coding-tool-comparison` | comparison | AI Tools | copy, examples, reset_clear, validation |
+| C | 40 | 76 | `chat-export-converter` | converter | AI Workflow | related_links, examples, current_count; penalties: ad_placeholder |
 | C | 40 | 76 | `houjin-nari` | comparison | Tax Tools | copy, examples, validation, current_count |
 | C | 40 | 76 | `stripe-fee-calculator` | calculator | Business Tools | copy, examples, validation, current_count |
 | C | 38 | 71 | `amazon-fba-fee` | calculator | EC Tools | related_links, copy, reset_clear, validation, current_count |
-| C | 38 | 72 | `jwt-decoder` | utility | Encoding & Decoding | faq, current_count; penalties: old_count, any_type |
-| C | 36 | 72 | `aws-s3-cost` | calculator | SaaS Pricing | related_links, examples, reset_clear, validation, current_count |
-| C | 36 | 72 | `render-fly-railway-comparison` | comparison | SaaS Pricing | copy, examples, reset_clear, validation, current_count |
-| C | 36 | 72 | `zangyou-dai` | calculator | Labor Tools | copy, examples, reset_clear, validation, current_count |
 
 ## Strongest Current Tools
 
@@ -67,30 +67,30 @@ This is a static quality proxy for deciding what to improve next. It is not a li
 
 | Type | Average quality |
 | --- | ---: |
-| calculator | 86.9 |
+| calculator | 85.5 |
 | comparison | 81.2 |
-| converter | 93.2 |
+| converter | 92.4 |
 | generator | 92.8 |
 | image | 98.8 |
 | reference | 95.1 |
-| utility | 90.4 |
+| utility | 88.7 |
 
 ## Weakest Categories
 
 | Category | Average quality | Tools |
 | --- | ---: | ---: |
+| Pets | 39 | 1 |
+| Legal | 49 | 1 |
 | Design Tools | 69 | 1 |
 | EC Tools | 72.4 | 5 |
 | SaaS Pricing | 73.6 | 13 |
+| Business | 74.5 | 2 |
 | Tax Tools | 78.3 | 9 |
 | Labor Tools | 79.2 | 4 |
 | Creator Tools | 84.5 | 2 |
 | Business Tools | 85 | 6 |
 | Life Tools | 85.3 | 3 |
 | SEO Tools | 85.7 | 3 |
-| AI Tools | 85.9 | 16 |
-| Time & Date | 87 | 2 |
-| Game Tools | 91 | 2 |
 
 ## Next Factory Steps
 

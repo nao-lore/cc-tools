@@ -1,21 +1,32 @@
 {
   "summary": {
-    "toolCount": 142,
-    "averageQualityScore": 89.5,
+    "toolCount": 147,
+    "averageQualityScore": 88.4,
     "priorityTierCounts": {
-      "B": 10,
-      "C": 132
+      "A": 1,
+      "B": 12,
+      "C": 134
     },
     "averageByArchetype": {
-      "calculator": 86.9,
+      "calculator": 85.5,
       "comparison": 81.2,
-      "converter": 93.2,
+      "converter": 92.4,
       "generator": 92.8,
       "image": 98.8,
       "reference": 95.1,
-      "utility": 90.4
+      "utility": 88.7
     },
     "weakestCategories": [
+      {
+        "category": "Pets",
+        "averageQualityScore": 39,
+        "toolCount": 1
+      },
+      {
+        "category": "Legal",
+        "averageQualityScore": 49,
+        "toolCount": 1
+      },
       {
         "category": "Design Tools",
         "averageQualityScore": 69,
@@ -30,6 +41,11 @@
         "category": "SaaS Pricing",
         "averageQualityScore": 73.6,
         "toolCount": 13
+      },
+      {
+        "category": "Business",
+        "averageQualityScore": 74.5,
+        "toolCount": 2
       },
       {
         "category": "Tax Tools",
@@ -60,21 +76,6 @@
         "category": "SEO Tools",
         "averageQualityScore": 85.7,
         "toolCount": 3
-      },
-      {
-        "category": "AI Tools",
-        "averageQualityScore": 85.9,
-        "toolCount": 16
-      },
-      {
-        "category": "Time & Date",
-        "averageQualityScore": 87,
-        "toolCount": 2
-      },
-      {
-        "category": "Game Tools",
-        "averageQualityScore": 91,
-        "toolCount": 2
       }
     ]
   },
@@ -193,6 +194,138 @@
     }
   ],
   "tools": [
+    {
+      "slug": "cat-human-age",
+      "name": "猫の年齢 人間換算",
+      "description": "最新研究ベースの換算式で算出",
+      "market": "JP",
+      "category": "Pets",
+      "archetype": "utility",
+      "qualityScore": 39,
+      "priorityScore": 70,
+      "priorityTier": "A",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 0,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 316
+      }
+    },
+    {
+      "slug": "chien-songai-kin",
+      "name": "遅延損害金 計算",
+      "description": "元本・期間・利率から遅延損害金を算出",
+      "market": "JP",
+      "category": "Legal",
+      "archetype": "calculator",
+      "qualityScore": 49,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 0,
+        "inputCount": 5,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 306
+      }
+    },
+    {
+      "slug": "churn-mrr-calculator",
+      "name": "Churn率 / MRR 計算機",
+      "description": "月次解約率・純増MRR・ネットレベニューリテンションを可視化",
+      "market": "JP",
+      "category": "Business",
+      "archetype": "calculator",
+      "qualityScore": 49,
+      "priorityScore": 66,
+      "priorityTier": "B",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "privacy",
+        "responsive"
+      ],
+      "missing": [
+        "h1",
+        "related_links",
+        "copy",
+        "examples",
+        "reset_clear",
+        "validation",
+        "accessible_buttons",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 1,
+        "buttonCount": 0,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 393
+      }
+    },
     {
       "slug": "ai-model-comparison",
       "name": "AIモデル比較",
@@ -1162,6 +1295,50 @@
       }
     },
     {
+      "slug": "chat-export-converter",
+      "name": "AI会話ログ 相互変換",
+      "description": "ChatGPT/Claude/Geminiのエクスポート形式を相互変換＋Markdown化",
+      "market": "JP",
+      "category": "AI Workflow",
+      "archetype": "converter",
+      "qualityScore": 76,
+      "priorityScore": 40,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "copy",
+        "download_export",
+        "reset_clear",
+        "validation",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "examples",
+        "current_count"
+      ],
+      "penalties": [
+        "ad_placeholder"
+      ],
+      "signals": {
+        "h2Count": 2,
+        "buttonCount": 5,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 495
+      }
+    },
+    {
       "slug": "houjin-nari",
       "name": "法人成り 損益分岐シミュレーター",
       "description": "年収別に個人事業主と法人（1人社長）の手取り・税金・社会保険を比較",
@@ -1330,6 +1507,48 @@
         "componentCount": 5,
         "hasOpenGraphImage": true,
         "sourceLines": 1258
+      }
+    },
+    {
+      "slug": "bunshou-nanido",
+      "name": "文章難易度判定",
+      "description": "文字数・漢字含有率・平均文長・語彙難易度から可読性スコア算出",
+      "market": "JP",
+      "category": "Japanese Tools",
+      "archetype": "utility",
+      "qualityScore": 75,
+      "priorityScore": 38,
+      "priorityTier": "C",
+      "passed": [
+        "metadata",
+        "canonical",
+        "h1",
+        "h2_sections",
+        "faq",
+        "jsonld",
+        "labels",
+        "download_export",
+        "examples",
+        "reset_clear",
+        "privacy",
+        "responsive",
+        "accessible_buttons"
+      ],
+      "missing": [
+        "related_links",
+        "copy",
+        "validation",
+        "current_count"
+      ],
+      "penalties": [],
+      "signals": {
+        "h2Count": 5,
+        "buttonCount": 2,
+        "inputCount": 1,
+        "internalLinkCount": 0,
+        "componentCount": 1,
+        "hasOpenGraphImage": false,
+        "sourceLines": 515
       }
     },
     {
