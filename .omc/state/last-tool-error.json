@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"ls /Users/nn/projects/cc-tools/tools/ab-test-significance/ && cat /Users/nn/projects/cc-tools/tools/ab-test-significance/meta.json\"}",
-  "error": "Exit code 1\ncomponents\npage.tsx\ncat: /Users/nn/projects/cc-tools/tools/ab-test-significance/meta.json: No such file or directory",
-  "timestamp": "2026-04-24T06:08:01.090Z",
-  "retry_count": 1
-}

@@ -415,7 +415,7 @@ export default function ChatExportConverter() {
               <span className="font-medium">Claude</span>: 設定 → Privacy → Export data → JSONファイルの中身を貼り付け
             </li>
             <li>
-              <span className="font-medium">JSONL</span>: 1行につき <code className="text-xs bg-gray-100 px-1 rounded">{"{"}"role":"user","content":"..."{"}"}</code> 形式
+              <span className="font-medium">JSONL</span>: 1行につき <code className="text-xs bg-gray-100 px-1 rounded">{'{"role":"user","content":"..."}'}</code> 形式
             </li>
           </ul>
         </div>
