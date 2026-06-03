@@ -150,6 +150,11 @@ export const tools: Tool[] = [
   { slug: "bank-code-lookup", name: "銀行・支店コード検索", description: "銀行名/支店名↔コードの相互検索", market: "JP", category: "Japanese Tools", oldUrl: "" },
   { slug: "base-stores-fee", name: "BASE / STORES 手数料比較", description: "売上規模別の両サービスの実質手数料と損益分岐点", market: "JP", category: "EC", oldUrl: "" },
   { slug: "bpm-delay", name: "BPM ↔ ディレイタイム(ms)", description: "BPMから1/4音符、1/8音符、1/16音符のディレイタイムを算出", market: "JP", category: "Music", oldUrl: "" },
+  { slug: "bunshou-nanido", name: "文章難易度判定", description: "文字数・漢字含有率・平均文長・語彙難易度から可読性スコア算出", market: "JP", category: "Japanese Tools", oldUrl: "" },
+  { slug: "cat-human-age", name: "猫の年齢 人間換算", description: "最新研究ベースの換算式で算出", market: "JP", category: "Pets", oldUrl: "" },
+  { slug: "chat-export-converter", name: "AI会話ログ 相互変換", description: "ChatGPT/Claude/Geminiのエクスポート形式を相互変換＋Markdown化", market: "JP", category: "AI Workflow", oldUrl: "" },
+  { slug: "chien-songai-kin", name: "遅延損害金 計算", description: "元本・期間・利率から遅延損害金を算出", market: "JP", category: "Legal", oldUrl: "" },
+  { slug: "churn-mrr-calculator", name: "Churn率 / MRR 計算機", description: "月次解約率・純増MRR・ネットレベニューリテンションを可視化", market: "JP", category: "Business", oldUrl: "" },
 ];
 
 export const categories = [...new Set(tools.map(t => t.category))];
